@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/pagePadding"
+    android:orientation="vertical"
+    tools:context="com.averi.worldscribe.CreateOrLoadWorldActivity"
+    android:gravity="center"
+    android:id="@+id/root">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createText"
+        android:id="@+id/create"
+        android:background="?attr/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/headerTextSize"
+        android:padding="@dimen/buttonPadding"
+        android:textAllCaps="false"
+        android:onClick="clickCreate" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/verticalSpacing" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LoadText"
+        android:id="@+id/load"
+        android:background="?attr/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/headerTextSize"
+        android:padding="@dimen/buttonPadding"
+        android:textAllCaps="false"
+        android:onClick="clickLoad" />
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    package="com.averi.worldscribe">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".PermissionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PersonActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".GroupActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".PlaceActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ItemActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ConceptActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ArticleListActivity" />
+        <activity android:name=".EditConnectionActivity" />
+        <activity android:name=".CreateWorldActivity" />
+        <activity android:name=".LoadWorldActivity" />
+        <activity android:name=".CreateOrLoadWorldActivity" />
+        <activity android:name=".CreateArticleActivity"></activity>
+    </application>
+
+</manifest>

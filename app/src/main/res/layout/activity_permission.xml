@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.averi.worldscribe.PermissionActivity"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical"
+    android:id="@+id/linearScreen"
+    android:gravity="center"
+    android:padding="@dimen/pagePadding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/welcomeText"
+        android:id="@+id/textWelcome"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/welcomeTextSize"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/verticalSpacing" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permissionExplanation"
+        android:id="@+id/textExplanation"
+        android:textColor="@android:color/white"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/standardTextSize"
+        android:gravity="center" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/verticalSpacing" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permissionButtonText"
+        android:id="@+id/buttonPermission"
+        android:textSize="@dimen/headerTextSize"
+        android:textAllCaps="false"
+        android:background="@android:color/white"
+        android:textColor="?attr/colorPrimary"
+        android:padding="@dimen/buttonPadding"
+        android:onClick="askForWritePermission" />
+</LinearLayout>

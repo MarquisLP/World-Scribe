@@ -1,0 +1,33 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="standardTextSize">20sp</dimen>
+    <dimen name="pagePadding">20dp</dimen>
+    <dimen name="buttonPadding">8dp</dimen>
+    <dimen name="genderTopPadding">10dp</dimen>
+    <dimen name="bottomButtonPadding">5dp</dimen>
+    <dimen name="borderWidth">3dp</dimen>
+    <dimen name="verticalSpacing">10dp</dimen>
+    <dimen name="borderedTextPadding">8dp</dimen>
+    <dimen name="scrollBottomPadding">70dp</dimen>
+    <dimen name="radioButtonSpacing">15dp</dimen>
+    <dimen name="headerTextSize">36sp</dimen>
+    <dimen name="headerSpacing">40dp</dimen>
+    <dimen name="addConnectionSnippetTextSize">30sp</dimen>
+    <dimen name="dashedBorderWidth">10dp</dimen>
+    <dimen name="dashedBorderGap">10dp</dimen>
+    <dimen name="welcomeTextSize">50sp</dimen>
+    <dimen name="marginBelowToolbar">50dp</dimen>
+    <dimen name="listPadding">5dp</dimen>
+    <dimen name="articleListItemBorderRadius">5dp</dimen>
+    <dimen name="articleListItemMargin">5dp</dimen>
+    <dimen name="cardCornerRadius">15dp</dimen>
+    <dimen name="recyclerPadding">3dp</dimen>
+
+    <dimen name="stringListItemTextSize">30sp</dimen>
+
+    <dimen name="cardMargin">5dp</dimen>
+    <dimen name="articleRoleTextSize">24sp</dimen>
+    <dimen name="connectedArticleNameTextSize">30dp</dimen>
+</resources>

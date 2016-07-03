@@ -1,0 +1,32 @@
+<resources>
+
+    <style name="OverflowStyle" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/overflow_button</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:name">Sky Blue</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/averiBlue</item>
+        <item name="colorPrimaryDark">@color/averiBlueHighlight</item>
+        <item name="colorAccent">@color/averiBlue</item>
+    </style>
+
+    <style name="SunsetOrange" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:name">Sunset Orange</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/sunsetOrange</item>
+        <item name="colorPrimaryDark">@color/sunsetOrangeHighlight</item>
+        <item name="colorAccent">@color/sunsetOrange</item>
+    </style>
+
+    <style name="EnchantedGreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:name">Enchanted Green</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/enchantedGreen</item>
+        <item name="colorPrimaryDark">@color/enchantedGreenHighlight</item>
+    </style>
+
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.averi.worldscribe.BottomBar"
+    android:id="@+id/linearBar">
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/peopleButton"
+        android:layout_weight="1"
+        android:src="@drawable/people_icon"
+        android:contentDescription="@string/peopleText"
+        android:background="?attr/colorPrimary"
+        android:clickable="true"
+        android:paddingBottom="@dimen/bottomButtonPadding"
+        android:paddingTop="@dimen/bottomButtonPadding"
+        android:layout_gravity="bottom"/>
+
+    <ImageButton
+        android:contentDescription="@string/groupsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/groupsButton"
+        android:layout_weight="1"
+        android:src="@drawable/groups_icon"
+        android:background="?attr/colorPrimary"
+        android:paddingBottom="@dimen/bottomButtonPadding"
+        android:paddingTop="@dimen/bottomButtonPadding"
+        android:layout_gravity="bottom"/>
+
+    <ImageButton
+        android:contentDescription="@string/placesText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/placesButton"
+        android:layout_weight="1"
+        android:src="@drawable/places_icon"
+        android:background="?attr/colorPrimary"
+        android:paddingBottom="@dimen/bottomButtonPadding"
+        android:paddingTop="@dimen/bottomButtonPadding"
+        android:layout_gravity="bottom"/>
+
+    <ImageButton
+        android:contentDescription="@string/itemsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemsButton"
+        android:layout_weight="1"
+        android:src="@drawable/items_icon"
+        android:background="?attr/colorPrimary"
+        android:paddingBottom="@dimen/bottomButtonPadding"
+        android:paddingTop="@dimen/bottomButtonPadding"
+        android:layout_gravity="bottom"/>
+
+    <ImageButton
+        android:contentDescription="@string/conceptsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/conceptsButton"
+        android:layout_weight="1"
+        android:src="@drawable/concepts_icon"
+        android:background="?attr/colorPrimary"
+        android:paddingBottom="@dimen/bottomButtonPadding"
+        android:paddingTop="@dimen/bottomButtonPadding"
+        android:layout_gravity="bottom"/>
+</LinearLayout>

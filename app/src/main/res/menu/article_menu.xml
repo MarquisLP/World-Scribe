@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/createArticleItem"
+        android:title="@string/createArticleItemText"
+        android:icon="@drawable/add_article"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/createWorldItem"
+        android:title="@string/createWorldItemText"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/loadWorldItem"
+        android:title="@string/loadWorldItemText"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/deleteWorldItem"
+        android:title="@string/deleteWorldItem"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/settingsItem"
+        android:title="@string/settingsItemText"
+        app:showAsAction="never"
+        />
+
+</menu>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.averi.worldscribe.PersonActivity"
+    android:id="@+id/relativeScreen">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@android:color/white"
+        style="@style/AppTheme" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/scrollView"
+        android:paddingBottom="@dimen/scrollBottomPadding"
+        android:fillViewport="false"
+        android:layout_marginTop="@dimen/marginBelowToolbar">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearPlace"
+            android:padding="@dimen/pagePadding"
+            android:paddingBottom="0dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imagePlace"
+                android:clickable="true"
+                android:contentDescription="@string/personImageDescription"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/border"
+                android:src="@drawable/blank_person" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editName"
+                android:hint="@string/nameHint"
+                android:textColor="?attr/colorPrimary"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:maxLines="1"
+                android:textSize="@dimen/standardTextSize" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editDescription"
+                android:hint="@string/descriptionHint"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:textColor="?attr/colorPrimary"
+                android:background="@drawable/border"
+                android:padding="@dimen/borderedTextPadding"
+                android:scrollbars="vertical" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editHistory"
+                android:hint="@string/historyHint"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:textColor="?attr/colorPrimary"
+                android:background="@drawable/border"
+                android:padding="@dimen/borderedTextPadding"
+                android:scrollbars="vertical" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerSpacing" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inhabitantsText"
+                android:id="@+id/textInhabitants"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/headerTextSize"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearMembers"
+                android:background="@drawable/dashed_border"
+                android:padding="@dimen/pagePadding" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddMembers"
+                    android:layout_gravity="end"
+                    android:background="?attr/colorPrimary"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerSpacing" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connectionsText"
+                android:id="@+id/textConnections"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/headerTextSize"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearConnections"
+                android:background="@drawable/dashed_border"
+                android:padding="@dimen/pagePadding">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddConnection"
+                    android:layout_gravity="end"
+                    android:background="?attr/colorPrimary"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerSpacing" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/snippetsText"
+                android:id="@+id/textSnippets"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/headerTextSize"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearSnippets"
+                android:background="@drawable/dashed_border"
+                android:padding="@dimen/pagePadding" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddSnippet"
+                    android:layout_gravity="end"
+                    android:background="?attr/colorPrimary"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        layout="@layout/activity_bottom_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottomBar" />
+
+</RelativeLayout>

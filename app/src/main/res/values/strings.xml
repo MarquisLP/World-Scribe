@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">World Scribe</string>
+
+    <string name="categoryText">Category</string>
+    <string name="personText">Person</string>
+    <string name="groupText">Group</string>
+    <string name="placeText">Place</string>
+    <string name="itemText">Item</string>
+    <string name="conceptText">Concept</string>
+
+    <string-array name="categories_array">
+        <item name="person">Person</item>
+        <item name="group">Group</item>
+        <item name="place">Place</item>
+        <item name="item">Item</item>
+        <item name="concept">Concept</item>
+    </string-array>
+
+    <string name="peopleText">People</string>
+    <string name="groupsText">Groups</string>
+    <string name="placesText">Places</string>
+    <string name="itemsText">Items</string>
+    <string name="conceptsText">Concepts</string>
+
+    <string name="createArticleItemText">New Article</string>
+    <string name="createWorldItemText">Create World</string>
+    <string name="loadWorldItemText">Open World</string>
+    <string name="deleteWorldItem">Delete World</string>
+    <string name="settingsItemText">Settings</string>
+
+    <string name="connectionsText">Connections</string>
+    <string name="snippetsText">Snippets</string>
+
+    <string name="people_description">People</string>
+    <string name="nameHint">Name</string>
+    <string name="ageHint">Age</string>
+    <string name="changeImageText">Change Image</string>
+    <string name="maleText">Male</string>
+    <string name="femaleText">Female</string>
+    <string name="otherGenderText">Other</string>
+    <string name="bioHint">Biography / Description</string>
+    <string name="genderText">Gender</string>
+    <string name="personImageDescription">Character\'s Profile Image</string>
+    <string name="addConnectionSnippetText">+</string>
+    <string name="mandateHint">Mandate / Purpose</string>
+    <string name="membersText">Members</string>
+    <string name="descriptionHint">Description</string>
+    <string name="inhabitantsText">Inhabitants</string>
+    <string name="welcomeText">Welcome to World Scribe!</string>
+    <string name="beginText">Let\'s start by creating your first World.</string>
+
+
+    <string name="nameWorldHint">Name the new World</string>
+    <string name="createButtonText">Create!</string>
+    <string name="relationHintText">Relation to the other article</string>
+    <string name="relationHintTopText">Relation to the article below</string>
+    <string name="relationHintBottomText">Relation to the article above</string>
+    <string name="connectionArrowsDescription">Arrows representing a Connection</string>
+    <string name="propertiesHint">Properties</string>
+    <string name="historyHint">History</string>
+    <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
+    <string name="permissionButtonText">Continue</string>
+    <string name="emptyListText">Nothing yet!</string>
+    <string name="loadWorldTitle">Enter a World…</string>
+    <string name="worldAlreadyExistsText">A World with this name already exists.\nPlease choose a different name.</string>
+    <string name="worldCreationErrorText">An error occurred during World creation.</string>
+    <string name="LoadText">Load</string>
+    <string name="createText">Create</string>
+    <string name="articleNameHint">Name the new Article</string>
+    <string name="aliasesHint">Nicknames / Aliases</string>
+
+    <string name="articleConnectionRoleSuffix">%1$s of…</string>
+</resources>
