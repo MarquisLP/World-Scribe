@@ -51,45 +51,25 @@
             android:id="@+id/settingsArea"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
             android:gravity="center">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
 
             <ImageButton
                 android:id="@+id/edit"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/people_icon"
-                android:background="@android:color/transparent"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/white" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
+                android:src="@drawable/edit_icon"
+                android:background="?attr/colorPrimary"
+                android:padding="@dimen/buttonPadding" />
 
             <ImageButton
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/places_icon"
-                android:background="@android:color/transparent"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
+                android:src="@drawable/erase_icon"
+                android:background="?attr/colorPrimary"
+                android:padding="@dimen/buttonPadding" />
 
         </LinearLayout>
 
