@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
 
 public class CreateArticleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

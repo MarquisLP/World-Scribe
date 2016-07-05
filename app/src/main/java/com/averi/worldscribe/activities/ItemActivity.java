@@ -1,9 +1,11 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
+
+import com.averi.worldscribe.R;
 
 public class ItemActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import tools.AppPreferences;
-import tools.AttributeGetter;
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
+import com.averi.worldscribe.activities.ArticleListActivity;
+
+import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.AttributeGetter;
 
 public class BottomBar extends RelativeLayout {
 

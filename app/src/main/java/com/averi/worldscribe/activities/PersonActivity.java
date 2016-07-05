@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import tools.AppPreferences;
+import com.averi.worldscribe.views.BottomBar;
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
+import com.averi.worldscribe.adapters.ConnectionsAdapter;
+
+import com.averi.worldscribe.utilities.AppPreferences;
 
 public class PersonActivity extends AppCompatActivity {
 

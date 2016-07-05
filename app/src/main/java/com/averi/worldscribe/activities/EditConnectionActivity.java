@@ -1,7 +1,9 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.averi.worldscribe.R;
 
 public class EditConnectionActivity extends AppCompatActivity {
 

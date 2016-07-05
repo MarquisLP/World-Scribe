@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PermissionActivity">
+        <activity android:name=".activities.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,26 +19,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PersonActivity"
+            android:name=".activities.PersonActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".GroupActivity"
+            android:name=".activities.GroupActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".PlaceActivity"
+            android:name=".activities.PlaceActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ItemActivity"
+            android:name=".activities.ItemActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ConceptActivity"
+            android:name=".activities.ConceptActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ArticleListActivity" />
-        <activity android:name=".EditConnectionActivity" />
-        <activity android:name=".CreateWorldActivity" />
-        <activity android:name=".LoadWorldActivity" />
-        <activity android:name=".CreateOrLoadWorldActivity" />
-        <activity android:name=".CreateArticleActivity"></activity>
+        <activity android:name=".activities.ArticleListActivity" />
+        <activity android:name=".activities.EditConnectionActivity" />
+        <activity android:name=".activities.CreateWorldActivity" />
+        <activity android:name=".activities.LoadWorldActivity" />
+        <activity android:name=".activities.CreateOrLoadWorldActivity" />
+        <activity android:name=".activities.CreateArticleActivity"></activity>
     </application>
 
 </manifest>

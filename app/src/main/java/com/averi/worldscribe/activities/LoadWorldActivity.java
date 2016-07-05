@@ -1,6 +1,5 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
-import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,12 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.averi.worldscribe.R;
+import com.averi.worldscribe.adapters.StringListAdapter;
+import com.averi.worldscribe.adapters.StringListContext;
 
 import java.util.ArrayList;
 
-import tools.ActivityUtilities;
-import tools.ExternalReader;
+import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.ExternalReader;
 
 public class LoadWorldActivity extends AppCompatActivity implements StringListContext {
 

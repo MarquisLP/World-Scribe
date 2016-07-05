@@ -1,24 +1,20 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.test.ActivityTestCase;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import tools.ActivityUtilities;
-import tools.ExternalReader;
-import tools.ExternalWriter;
+import com.averi.worldscribe.R;
+
+import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 
 public class CreateWorldActivity extends AppCompatActivity {
 
@@ -108,11 +104,11 @@ public class CreateWorldActivity extends AppCompatActivity {
     }
 
     private void showWorldAlreadyExistsMessage() {
-        tools.ErrorMessager.showSnackbarMessage(this,coordinatorLayout, worldAlreadyExistsMessage);
+        com.averi.worldscribe.utilities.ErrorMessager.showSnackbarMessage(this,coordinatorLayout, worldAlreadyExistsMessage);
     }
 
     private void showWorldCreationErrorMessage() {
-        tools.ErrorMessager.showSnackbarMessage(this, coordinatorLayout, worldCreationErrorMessage);
+        com.averi.worldscribe.utilities.ErrorMessager.showSnackbarMessage(this, coordinatorLayout, worldCreationErrorMessage);
     }
 
     private void saveNewWorldAsLastOpened(String worldName) {

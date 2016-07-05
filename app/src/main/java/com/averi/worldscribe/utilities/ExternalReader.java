@@ -1,4 +1,4 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 
@@ -8,7 +8,6 @@ import com.averi.worldscribe.Connection;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,10 +1,8 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
-
-import com.averi.worldscribe.R;
 
 /**
  * Created by mark on 24/06/16.

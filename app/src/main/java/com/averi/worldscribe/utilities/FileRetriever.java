@@ -1,4 +1,4 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.os.Environment;

@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -13,8 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import tools.AppPreferences;
-import tools.ExternalReader;
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
+
+import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.ExternalReader;
 
 public class PermissionActivity extends AppCompatActivity {
 

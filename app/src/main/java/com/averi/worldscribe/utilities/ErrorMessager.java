@@ -1,9 +1,8 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 

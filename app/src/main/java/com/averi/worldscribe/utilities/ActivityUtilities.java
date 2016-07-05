@@ -1,11 +1,11 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
-import com.averi.worldscribe.ArticleListActivity;
+import com.averi.worldscribe.activities.ArticleListActivity;
 import com.averi.worldscribe.Category;
 
 /**

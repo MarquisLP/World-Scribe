@@ -1,4 +1,4 @@
-package tools;
+package com.averi.worldscribe.utilities;
 
 /**
  * Created by mark on 21/06/16.

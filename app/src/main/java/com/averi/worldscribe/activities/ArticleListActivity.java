@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.averi.worldscribe.views.BottomBar;
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
+import com.averi.worldscribe.adapters.StringListAdapter;
+import com.averi.worldscribe.adapters.StringListContext;
+
 import java.util.ArrayList;
 
-import tools.AppPreferences;
-import tools.ExternalReader;
+import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.ExternalReader;
 
 public class ArticleListActivity extends AppCompatActivity implements StringListContext {
 

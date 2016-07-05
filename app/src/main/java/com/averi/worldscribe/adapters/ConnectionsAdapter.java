@@ -1,9 +1,7 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.adapters;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.FileReader;
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.activities.ConceptActivity;
+import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.activities.GroupActivity;
+import com.averi.worldscribe.activities.ItemActivity;
+import com.averi.worldscribe.activities.PersonActivity;
+import com.averi.worldscribe.activities.PlaceActivity;
+import com.averi.worldscribe.R;
+
 import java.util.ArrayList;
 
-import tools.AppPreferences;
-import tools.AttributeGetter;
-import tools.ExternalReader;
+import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.ExternalReader;
 
 /**
  * Created by mark on 02/07/16.

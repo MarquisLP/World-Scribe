@@ -2,6 +2,8 @@ package com.averi.worldscribe;
 
 import android.content.Context;
 
+import com.averi.worldscribe.exceptions.InvalidCategoryNameException;
+
 /**
  * Created by mark on 14/06/16.
  */

@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.adapters;
 
 /**
  * Created by mark on 23/06/16.

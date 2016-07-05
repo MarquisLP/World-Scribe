@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.averi.worldscribe.CreateArticleActivity"
+    tools:context=".activities.CreateArticleActivity"
     android:id="@+id/root"
     android:gravity="center">
 

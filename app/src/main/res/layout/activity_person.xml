@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.averi.worldscribe.PersonActivity"
+    tools:context=".activities.PersonActivity"
     android:id="@+id/relativeScreen"
     android:background="@android:color/white">
 
@@ -250,7 +250,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.averi.worldscribe.BottomBar
+    <com.averi.worldscribe.views.BottomBar
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/bottomBar"

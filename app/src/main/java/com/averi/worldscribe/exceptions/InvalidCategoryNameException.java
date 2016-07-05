@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.exceptions;
 
 /**
  * Created by mark on 30/06/16.
