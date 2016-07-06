@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
@@ -34,6 +35,9 @@ public class PersonActivity extends ArticleActivity {
     protected int getLayoutResourceID() {
         return R.layout.activity_person;
     }
+
+    @Override
+    protected ImageView getImageView() { return (ImageView) findViewById(R.id.imagePerson); }
 
     @Override
     protected BottomBar getBottomBar() {

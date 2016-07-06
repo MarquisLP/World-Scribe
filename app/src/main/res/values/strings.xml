@@ -28,6 +28,8 @@
     <string name="deleteWorldItem">Delete World</string>
     <string name="settingsItemText">Settings</string>
 
+    <string name="imageFileName">Image</string>
+
     <!-- Text Field Names -->
     <string name="aliasesField">Aliases</string>
     <string name="ageField">Age</string>

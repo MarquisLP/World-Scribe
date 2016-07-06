@@ -1,9 +1,12 @@
 package com.averi.worldscribe.utilities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.R;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +22,7 @@ public class ExternalReader {
 
     public static final String TEXT_FIELD_FILE_EXTENSION = ".txt";
     public static final int TEXT_FILE_EXTENSION_LENGTH = 4;
+    public static final String IMAGE_FILE_EXTENSION = ".jpg";
 
     public static ArrayList<String> getWorldList() {
         ArrayList<String> worldNames = new ArrayList<>();
@@ -61,6 +65,32 @@ public class ExternalReader {
         Collections.sort(articleNames, String.CASE_INSENSITIVE_ORDER);
 
         return articleNames;
+    }
+
+    /**
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @param viewWidth The width of the view that will display the Bitmap.
+     * @param viewHeight The height of the view that will display the Bitmap.
+     * @return The Article's image, scaled to fit the View as best as possible.
+     */
+    public static Bitmap getArticleImage(Context context, String worldName, Category category,
+                                         String articleName, int viewWidth, int viewHeight) {
+        File imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                context.getResources().getString(R.string.imageFileName) + IMAGE_FILE_EXTENSION);
+        Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(imageFile, viewWidth, viewHeight);
+
+        // If the Article's image doesn't exist or can't be decoded, then return a default image
+        // based on the Article's Category.
+        if (articleBitmap == null) {
+            // TODO: Create and set default images for all Categories.
+            articleBitmap = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.blank_person);
+        }
+
+        return articleBitmap;
     }
 
     /**

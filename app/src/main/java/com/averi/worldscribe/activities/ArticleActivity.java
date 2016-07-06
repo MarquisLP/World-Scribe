@@ -1,6 +1,8 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.ImageView;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.views.BottomBar;
+
+import java.io.File;
 
 /**
  * Created by mark on 05/07/16.
@@ -26,6 +33,10 @@ import com.averi.worldscribe.views.BottomBar;
  */
 public abstract class ArticleActivity extends AppCompatActivity {
 
+    /**
+     * The display for the Article's image.
+     */
+    private ImageView imageView;
     /**
      * The BottomBar navigation View.
      */
@@ -59,6 +70,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceID());
 
+        imageView = getImageView();
         bottomBar = getBottomBar();
         Intent intent = getIntent();
         worldName = intent.getStringExtra(AppPreferences.WORLD_NAME);
@@ -79,6 +91,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
     protected abstract int getLayoutResourceID();
 
     /**
+     * @return The Article ImageView for this Activity.
+     */
+    protected abstract ImageView getImageView();
+
+    /**
      * @return The bottom navigation bar for this Activity.
      */
     protected abstract BottomBar getBottomBar();
@@ -95,6 +112,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
      */
     private void setUpArticleCore() {
         setAppBar();
+        setArticleImage();
         bottomBar.highlightCategoryButton(this, Category.Person);
         populateConnections();
     }
@@ -116,6 +134,17 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void populateConnections() {
         connectionsList.setLayoutManager(new LinearLayoutManager(this));
         connectionsList.setAdapter(new ConnectionsAdapter(this, worldName, category, articleName));
+    }
+
+    /**
+     * Load and scale this Article's image, then display it.
+     */
+    private void setArticleImage() {
+        Resources resources = getResources();
+        Bitmap articleImage = ExternalReader.getArticleImage(this, worldName, category, articleName,
+                (int) resources.getDimension(R.dimen.articleImageWidth),
+                (int) resources.getDimension(R.dimen.articleImageHeight));
+        imageView.setImageBitmap(articleImage);
     }
 
     @Override
