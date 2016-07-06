@@ -58,7 +58,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
         category = (Category) intent.getSerializableExtra(AppPreferences.CATEGORY);
         articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
         connectionsList = getConnectionsRecycler();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         setUpArticleCore();
     }
 
