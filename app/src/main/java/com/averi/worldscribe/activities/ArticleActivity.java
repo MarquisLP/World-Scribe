@@ -21,7 +21,8 @@ import com.averi.worldscribe.views.BottomBar;
  * ArticleActivity is the superclass for each Activity that displays a certain Category of Articles.
  *
  * All subclasses must implement {@link #getLayoutResourceID} using the Layout Resource file
- * corresponding to their respective Categories.
+ * corresponding to their respective Categories, as well as the other abstract methods for
+ * obtaining specific Views.
  */
 public abstract class ArticleActivity extends AppCompatActivity {
 
@@ -51,12 +52,12 @@ public abstract class ArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceID());
 
-        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar = getBottomBar();
         Intent intent = getIntent();
         worldName = intent.getStringExtra(AppPreferences.WORLD_NAME);
         category = (Category) intent.getSerializableExtra(AppPreferences.CATEGORY);
         articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
-        connectionsList = (RecyclerView) findViewById(R.id.recyclerConnections);
+        connectionsList = getConnectionsRecycler();
 
         setUpArticleCore();
     }
@@ -76,6 +77,16 @@ public abstract class ArticleActivity extends AppCompatActivity {
      */
     protected abstract int getLayoutResourceID();
 
+    /**
+     * @return The bottom navigation bar for this Activity.
+     */
+    protected abstract BottomBar getBottomBar();
+
+    /**
+     * @return The RecyclerView for this Article's
+     * {@link com.averi.worldscribe.Connection Connection}s.
+     */
+    protected abstract RecyclerView getConnectionsRecycler();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,7 +106,8 @@ public abstract class ArticleActivity extends AppCompatActivity {
     }
 
     /**
-     * Populate the Connections RecyclerView with cards for this Article's Connections.
+     * Populate the Connections RecyclerView with cards for this Article's
+     * {@link com.averi.worldscribe.Connection Connection}s.
      */
     private void populateConnections() {
         connectionsList.setLayoutManager(new LinearLayoutManager(this));

@@ -17,6 +17,7 @@ import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 
 public class PersonActivity extends ArticleActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,4 +27,15 @@ public class PersonActivity extends ArticleActivity {
     protected int getLayoutResourceID() {
         return R.layout.activity_person;
     }
+
+    @Override
+    protected BottomBar getBottomBar() {
+        return (BottomBar) findViewById(R.id.bottomBar);
+    }
+
+    @Override
+    protected RecyclerView getConnectionsRecycler() {
+        return (RecyclerView) findViewById(R.id.recyclerConnections);
+    }
+
 }
