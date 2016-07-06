@@ -42,6 +42,13 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * The name of the Article displayed by this Activity.
      */
     private String articleName;
+
+    public String getWorldName() { return worldName; }
+
+    public Category getCategory() { return category; }
+
+    public String getArticleName() { return articleName; }
+
     /**
      * Contains cards for all of the Article's {@link com.averi.worldscribe.Connection}s.
      */

@@ -28,6 +28,11 @@
     <string name="deleteWorldItem">Delete World</string>
     <string name="settingsItemText">Settings</string>
 
+    <!-- Text Field Names -->
+    <string name="aliasesField">Aliases</string>
+    <string name="ageField">Age</string>
+    <string name="biographyField">Biography</string>
+
     <string name="connectionsText">Connections</string>
     <string name="snippetsText">Snippets</string>
 
@@ -48,7 +53,6 @@
     <string name="inhabitantsText">Inhabitants</string>
     <string name="welcomeText">Welcome to World Scribe!</string>
     <string name="beginText">Let\'s start by creating your first World.</string>
-
 
     <string name="nameWorldHint">Name the new World</string>
     <string name="createButtonText">Create!</string>
