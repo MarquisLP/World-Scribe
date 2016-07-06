@@ -106,7 +106,7 @@ public class ExternalReader {
      */
     public static String getArticleTextFieldData(Context context, String worldName,
             Category category, String articleName, String textFieldName) {
-        String textFieldData;
+        StringBuilder textFieldData = new StringBuilder();
         File textFieldFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
                 textFieldName + TEXT_FIELD_FILE_EXTENSION);
 
@@ -114,15 +114,21 @@ public class ExternalReader {
             try {
                 FileInputStream inputStream = new FileInputStream(textFieldFile);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                textFieldData = reader.readLine();
+
+                String line;
+                textFieldData.append(reader.readLine());
+                while ((line = reader.readLine()) != null) {
+                    textFieldData.append("\n");
+                    textFieldData.append(line);
+                }
             } catch (java.io.IOException e) {
-                textFieldData = "";
+                textFieldData.setLength(0);
             }
         } else {
-            textFieldData = "";
+            textFieldData.setLength(0);
         }
 
-        return textFieldData;
+        return textFieldData.toString();
     }
 
     public static ArrayList<Connection> getConnections(Context context, String worldName,
