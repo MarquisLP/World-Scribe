@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/worldscribe_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -38,7 +38,7 @@
         <activity android:name=".activities.CreateWorldActivity" />
         <activity android:name=".activities.LoadWorldActivity" />
         <activity android:name=".activities.CreateOrLoadWorldActivity" />
-        <activity android:name=".activities.CreateArticleActivity"></activity>
+        <activity android:name=".activities.CreateArticleActivity" />
     </application>
 
 </manifest>
