@@ -35,8 +35,8 @@
             android:paddingBottom="0dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/articleImageWidth"
+                android:layout_height="@dimen/articleImageHeight"
                 android:id="@+id/imageItem"
                 android:clickable="true"
                 android:contentDescription="@string/personImageDescription"
