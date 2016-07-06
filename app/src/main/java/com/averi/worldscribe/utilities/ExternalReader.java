@@ -17,6 +17,7 @@ import java.util.Collections;
  */
 public class ExternalReader {
 
+    public static final String TEXT_FIELD_FILE_EXTENSION = ".txt";
     public static final int TEXT_FILE_EXTENSION_LENGTH = 4;
 
     public static ArrayList<String> getWorldList() {
@@ -60,6 +61,38 @@ public class ExternalReader {
         Collections.sort(articleNames, String.CASE_INSENSITIVE_ORDER);
 
         return articleNames;
+    }
+
+    /**
+     * Given the name of a text field in the current Article, return the String data entered for
+     * that field.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @param textFieldName The name of the text field from the current Article.
+     * @return The data stored in the text field for this Article, if a file for that field exists
+     * and it can be read; empty String otherwise.
+     */
+    public static String getArticleTextFieldData(Context context, String worldName,
+            Category category, String articleName, String textFieldName) {
+        String textFieldData;
+        File textFieldFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                textFieldName + TEXT_FIELD_FILE_EXTENSION);
+
+        if (textFieldFile.exists()) {
+            try {
+                FileInputStream inputStream = new FileInputStream(textFieldFile);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                textFieldData = reader.readLine();
+            } catch (java.io.IOException e) {
+                textFieldData = "";
+            }
+        } else {
+            textFieldData = "";
+        }
+
+        return textFieldData;
     }
 
     public static ArrayList<Connection> getConnections(Context context, String worldName,
