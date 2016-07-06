@@ -63,16 +63,6 @@ public abstract class ArticleActivity extends AppCompatActivity {
     }
 
     /**
-     * Load data pertaining to the selected Article, and use it in set-up processes that are common
-     * to Article Activities of all Categories.
-     */
-    private void setUpArticleCore() {
-        setAppBar();
-        bottomBar.highlightCategoryButton(this, Category.Person);
-        populateConnections();
-    }
-
-    /**
      * @return The Android Resource ID of this Activity's layout resource file.
      */
     protected abstract int getLayoutResourceID();
@@ -88,11 +78,14 @@ public abstract class ArticleActivity extends AppCompatActivity {
      */
     protected abstract RecyclerView getConnectionsRecycler();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.article_menu, menu);
-        return true;
+    /**
+     * Load data pertaining to the selected Article, and use it in set-up processes that are common
+     * to Article Activities of all Categories.
+     */
+    private void setUpArticleCore() {
+        setAppBar();
+        bottomBar.highlightCategoryButton(this, Category.Person);
+        populateConnections();
     }
 
     /**
@@ -113,4 +106,12 @@ public abstract class ArticleActivity extends AppCompatActivity {
         connectionsList.setLayoutManager(new LinearLayoutManager(this));
         connectionsList.setAdapter(new ConnectionsAdapter(this, worldName, category, articleName));
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.article_menu, menu);
+        return true;
+    }
+
 }
