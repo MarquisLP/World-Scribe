@@ -32,6 +32,12 @@ public class FileRetriever {
         return new File(getCategoryDirectory(context, worldName, category), articleName);
     }
 
+    public static File getArticleFile(Context context, String worldName, Category category,
+                                      String articleName, String fileName) {
+        return new File(getArticleDirectory(context, worldName, category, articleName),
+                fileName);
+    }
+
     public static File getConnectionsDirectory(Context context, String worldName, Category category,
                                                String articleName) {
         return new File(getArticleDirectory(context, worldName, category, articleName),
