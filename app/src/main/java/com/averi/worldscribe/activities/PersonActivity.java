@@ -31,8 +31,10 @@ public class PersonActivity extends ArticleActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadTextFieldsData();
-        loadGender();
+        Resources resources = getResources();
+
+        loadTextFieldsData(resources);
+        loadGender(resources);
     }
 
     @Override
@@ -56,10 +58,9 @@ public class PersonActivity extends ArticleActivity {
     /**
      * Retrieve this Person's aliases, age, biography data and display them in the corresponding
      * text fields.
+     * @param resources A Resources instance containing this app's resource files and values.
      */
-    private void loadTextFieldsData() {
-        Resources resources = getResources();
-
+    private void loadTextFieldsData(Resources resources) {
         aliasesField.setText(ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
                 super.getCategory(), super.getArticleName(),
                 resources.getString(R.string.aliasesField)));
@@ -73,9 +74,9 @@ public class PersonActivity extends ArticleActivity {
 
     /**
      * Load this Person's gender and display it.
+     * @param resources A Resources instance containing this app's resource files and values.
      */
-    private void loadGender() {
-        Resources resources = getResources();
+    private void loadGender(Resources resources) {
         String genderString = ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
                 super.getCategory(), super.getArticleName(),
                 resources.getString(R.string.genderText));
