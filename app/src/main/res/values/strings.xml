@@ -74,6 +74,4 @@
     <string name="createText">Create</string>
     <string name="articleNameHint">Name the new Article</string>
     <string name="aliasesHint">Nicknames / Aliases</string>
-
-    <string name="articleConnectionRoleSuffix">%1$s of…</string>
 </resources>
