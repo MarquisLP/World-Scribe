@@ -205,7 +205,9 @@ public class ExternalReader {
 
         for (File snippetFile : listOfSnippets) {
             if (snippetFile.isFile()) {
-                snippetNames.add(snippetFile.getName());
+                String snippetName = snippetFile.getName();
+                snippetNames.add(snippetName.substring(0,
+                        snippetName.length() - TEXT_FILE_EXTENSION_LENGTH));
             }
         }
 
