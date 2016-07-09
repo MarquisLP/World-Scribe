@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
+import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
-import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.views.BottomBar;
 
 import java.io.File;
@@ -64,6 +64,10 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * Contains cards for all of the Article's {@link com.averi.worldscribe.Connection}s.
      */
     private RecyclerView connectionsList;
+    /**
+     * Contains cards for all of the Article's Snippets.
+     */
+    private RecyclerView snippetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         category = (Category) intent.getSerializableExtra(AppPreferences.CATEGORY);
         articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
         connectionsList = getConnectionsRecycler();
+        snippetsList = getSnippetsRecycler();
     }
 
     @Override
@@ -107,6 +112,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
     protected abstract RecyclerView getConnectionsRecycler();
 
     /**
+     * @return The RecyclerView for this Article's Snippets.
+     */
+    protected abstract RecyclerView getSnippetsRecycler();
+
+    /**
      * Load data pertaining to the selected Article, and use it in set-up processes that are common
      * to Article Activities of all Categories.
      */
@@ -115,6 +125,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         setArticleImage();
         bottomBar.highlightCategoryButton(this, Category.Person);
         populateConnections();
+        populateSnippets();
     }
 
     /**
@@ -134,6 +145,14 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void populateConnections() {
         connectionsList.setLayoutManager(new LinearLayoutManager(this));
         connectionsList.setAdapter(new ConnectionsAdapter(this, worldName, category, articleName));
+    }
+
+    /**
+     * Populate the Snippets RecyclerView with cards for this Article's Snippets.
+     */
+    private void populateSnippets() {
+        snippetsList.setLayoutManager(new LinearLayoutManager(this));
+        snippetsList.setAdapter(new SnippetsAdapter(this, worldName, category, articleName));
     }
 
     /**

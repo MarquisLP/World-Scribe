@@ -55,6 +55,11 @@ public class PersonActivity extends ArticleActivity {
         return (RecyclerView) findViewById(R.id.recyclerConnections);
     }
 
+    @Override
+    protected RecyclerView getSnippetsRecycler() {
+        return (RecyclerView) findViewById(R.id.recyclerSnippets);
+    }
+
     /**
      * Retrieve this Person's aliases, age, biography data and display them in the corresponding
      * text fields.
