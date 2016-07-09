@@ -214,4 +214,41 @@ public class ExternalReader {
         return snippetNames;
     }
 
+    /**
+     * Get the text stored in an Article's Snippet.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of Article the Snippet belongs to.
+     * @param articleName The name of the Article the Snippet belongs to.
+     * @param snippetName The name of the Snippet being loaded.
+     * @return The contents of the specified Snippet if the Snippet's file exists and can be read;
+     * empty string otherwise.
+     */
+    public static String getSnippetText(Context context, String worldName, Category category,
+                                 String articleName, String snippetName) {
+        StringBuilder snippetData = new StringBuilder();
+        File snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                snippetName);
+
+        if (snippetFile.exists()) {
+            try {
+                FileInputStream inputStream = new FileInputStream(snippetFile);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                snippetData.append(reader.readLine());
+                while ((line = reader.readLine()) != null) {
+                    snippetData.append("\n");
+                    snippetData.append(line);
+                }
+            } catch (java.io.IOException e) {
+                snippetData.setLength(0);
+            }
+        } else {
+            snippetData.setLength(0);
+        }
+
+        return snippetData.toString();
+    }
+
 }
