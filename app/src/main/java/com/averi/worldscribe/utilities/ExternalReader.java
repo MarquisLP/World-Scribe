@@ -188,4 +188,30 @@ public class ExternalReader {
         return connection;
     }
 
+    /**
+     * Retrieves the names of all Snippets belonging to the specified Article.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @return An ArrayList of all of the Article's Snippets' names.
+     */
+    public static ArrayList<String> getSnippetNames(Context context, String worldName,
+                                                    Category category, String articleName) {
+        ArrayList<String> snippetNames = new ArrayList<>();
+        File snippetsDirectory = FileRetriever.getSnippetsDirectory(context, worldName, category,
+                articleName);
+        File[] listOfSnippets = snippetsDirectory.listFiles();
+
+        for (File snippetFile : listOfSnippets) {
+            if (snippetFile.isFile()) {
+                snippetNames.add(snippetFile.getName());
+            }
+        }
+
+        Collections.sort(snippetNames, String.CASE_INSENSITIVE_ORDER);
+
+        return snippetNames;
+    }
+
 }
