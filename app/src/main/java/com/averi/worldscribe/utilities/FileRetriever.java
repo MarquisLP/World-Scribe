@@ -50,4 +50,18 @@ public class FileRetriever {
         return new File(getConnectionsDirectory(context, worldName, category, articleName),
                 connectionCategory.pluralName(context));
     }
+
+    /**
+     * Retrieve the folder containing all of an Article's Snippets.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @return A File referring to the specified Article's Snippets directory.
+     */
+    public static File getSnippetsDirectory(Context context, String worldName, Category category,
+                                            String articleName) {
+        return new File(getArticleDirectory(context, worldName, category, articleName),
+                context.getResources().getString(R.string.snippetsText));
+    }
 }
