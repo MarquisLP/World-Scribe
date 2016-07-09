@@ -14,6 +14,7 @@ import java.io.File;
 public class FileRetriever {
 
     public static final String APP_DIRECTORY_NAME = "WorldScribe";
+    public static final String SNIPPET_FILE_EXTENSION = ".txt";
 
     public static File getAppDirectory() {
         return new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY_NAME);
@@ -63,5 +64,20 @@ public class FileRetriever {
                                             String articleName) {
         return new File(getArticleDirectory(context, worldName, category, articleName),
                 context.getResources().getString(R.string.snippetsText));
+    }
+
+    /**
+     * Retrieve a Snippet's file.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of Article the Snippet belongs to.
+     * @param articleName The name of the Article the Snippet belongs to.
+     * @param snippetName The name of the Snippet being loaded.
+     * @return A File referencing the specified Snippet.
+     */
+    public static File getSnippetFile(Context context, String worldName, Category category,
+                                      String articleName, String snippetName) {
+        return new File(getSnippetsDirectory(context, worldName, category, articleName),
+                snippetName + SNIPPET_FILE_EXTENSION);
     }
 }
