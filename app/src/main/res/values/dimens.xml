@@ -31,6 +31,6 @@
     <dimen name="stringListItemTextSize">30sp</dimen>
 
     <dimen name="cardMargin">5dp</dimen>
-    <dimen name="articleRoleTextSize">24sp</dimen>
-    <dimen name="connectedArticleNameTextSize">30dp</dimen>
+    <dimen name="cardSubtitleTextSize">24sp</dimen>
+    <dimen name="cardMainTextSize">30dp</dimen>
 </resources>
