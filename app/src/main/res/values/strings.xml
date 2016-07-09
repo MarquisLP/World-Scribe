@@ -74,4 +74,5 @@
     <string name="createText">Create</string>
     <string name="articleNameHint">Name the new Article</string>
     <string name="aliasesHint">Nicknames / Aliases</string>
+    <string name="snippetHint">Enter your snippet here.</string>
 </resources>

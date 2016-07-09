@@ -39,6 +39,7 @@
         <activity android:name=".activities.LoadWorldActivity" />
         <activity android:name=".activities.CreateOrLoadWorldActivity" />
         <activity android:name=".activities.CreateArticleActivity" />
+        <activity android:name=".activities.SnippetActivity" />
     </application>
 
 </manifest>
