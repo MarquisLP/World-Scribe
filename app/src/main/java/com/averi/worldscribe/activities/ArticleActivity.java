@@ -123,7 +123,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void setUpArticleCore() {
         setAppBar();
         setArticleImage();
-        bottomBar.highlightCategoryButton(this, Category.Person);
+        bottomBar.highlightCategoryButton(this, category);
         populateConnections();
         populateSnippets();
     }
