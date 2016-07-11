@@ -3,22 +3,41 @@ package com.averi.worldscribe.activities;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.views.BottomBar;
 
-public class ConceptActivity extends AppCompatActivity {
+public class ConceptActivity extends ArticleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_concept);
-
-        highlightConceptButton();
     }
 
-    private  void highlightConceptButton() {
-        ImageButton conceptButton = (ImageButton) (findViewById(R.id.bottomBar).findViewById(R.id.conceptsButton));
-        conceptButton.setBackgroundColor(ContextCompat.getColor(this, R.color.averiBlueHighlight));
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_concept;
     }
+
+    @Override
+    protected ImageView getImageView() { return (ImageView) findViewById(R.id.imageConcept); }
+
+    @Override
+    protected BottomBar getBottomBar() {
+        return (BottomBar) findViewById(R.id.bottomBar);
+    }
+
+    @Override
+    protected RecyclerView getConnectionsRecycler() {
+        return (RecyclerView) findViewById(R.id.recyclerConnections);
+    }
+
+    @Override
+    protected RecyclerView getSnippetsRecycler() {
+        return (RecyclerView) findViewById(R.id.recyclerSnippets);
+    }
+
 }

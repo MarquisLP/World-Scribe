@@ -5,17 +5,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.PersonActivity"
-    android:id="@+id/relativeScreen">
+    android:id="@+id/relativeScreen"
+    android:background="@android:color/white" >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@android:color/white"
-        style="@style/AppTheme" />
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@android:color/white"
+            style="@style/AppTheme" />
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -37,7 +43,7 @@
             <ImageView
                 android:layout_width="@dimen/articleImageWidth"
                 android:layout_height="@dimen/articleImageHeight"
-                android:id="@+id/imageGroup"
+                android:id="@+id/imageConcept"
                 android:clickable="true"
                 android:contentDescription="@string/personImageDescription"
                 android:layout_gravity="center_horizontal"
@@ -99,7 +105,17 @@
                 android:layout_height="match_parent"
                 android:id="@+id/linearConnections"
                 android:background="@drawable/dashed_border"
-                android:padding="@dimen/pagePadding">
+                android:padding="@dimen/recyclerPadding">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerConnections"
+                    android:fastScrollEnabled="true"
+                    android:fastScrollAlwaysVisible="true"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/listPadding"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -110,7 +126,8 @@
                     android:background="?attr/colorPrimary"
                     android:padding="@dimen/buttonPadding"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+                    android:textSize="@dimen/addConnectionSnippetTextSize"
+                    android:layout_margin="@dimen/pagePadding" />
             </LinearLayout>
 
             <Space
@@ -136,7 +153,17 @@
                 android:layout_height="match_parent"
                 android:id="@+id/linearSnippets"
                 android:background="@drawable/dashed_border"
-                android:padding="@dimen/pagePadding" >
+                android:padding="@dimen/recyclerPadding" >
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerSnippets"
+                    android:fastScrollEnabled="true"
+                    android:fastScrollAlwaysVisible="true"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/listPadding"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -147,17 +174,18 @@
                     android:background="?attr/colorPrimary"
                     android:padding="@dimen/buttonPadding"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+                    android:textSize="@dimen/addConnectionSnippetTextSize"
+                    android:layout_margin="@dimen/pagePadding" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <include
-        layout="@layout/activity_bottom_bar"
+    <com.averi.worldscribe.views.BottomBar
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottomBar" />
+        android:layout_width="match_parent"
+        android:id="@+id/bottomBar"
+        android:layout_gravity="bottom"
+        />
 
 </RelativeLayout>
