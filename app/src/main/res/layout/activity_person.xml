@@ -157,6 +157,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/membershipsText"
+                android:id="@+id/textMemberships"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/headerTextSize"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearMemberships"
+                android:background="@drawable/dashed_border"
+                android:padding="@dimen/recyclerPadding">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerMemberships"
+                    android:fastScrollEnabled="true"
+                    android:fastScrollAlwaysVisible="true"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/listPadding"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddMembership"
+                    android:layout_gravity="end"
+                    android:background="?attr/colorPrimary"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize"
+                    android:layout_margin="@dimen/pagePadding" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerSpacing" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/residencesText"
                 android:id="@+id/textResidences"
                 android:textColor="?attr/colorPrimary"
