@@ -53,7 +53,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
 
             this.context = context;
             snippetCard = (CardView) itemView;
-            snippetNameText = (TextView) snippetCard.findViewById(R.id.snippetName);
+            snippetNameText = (TextView) snippetCard.findViewById(R.id.itemName);
             deleteButton = (ImageButton) snippetCard.findViewById(R.id.delete);
             this.worldName = worldName;
             this.category = category;
@@ -123,7 +123,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     @Override
     public SnippetHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.snippet_card, parent, false);
+                .inflate(R.layout.erasable_item_card, parent, false);
         return new SnippetHolder(context, worldName, category, articleName, view);
     }
 
