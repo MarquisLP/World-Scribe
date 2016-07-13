@@ -2,11 +2,14 @@ package com.averi.worldscribe.activities;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
+import com.averi.worldscribe.adapters.ResidencesAdapter;
+import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.R;
@@ -17,6 +20,7 @@ public class PersonActivity extends ArticleActivity {
     private EditText ageField;
     private EditText biographyField;
     private RadioGroup genderGroup;
+    private RecyclerView residencesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,7 @@ public class PersonActivity extends ArticleActivity {
         ageField = (EditText) findViewById(R.id.editAge);
         biographyField = (EditText) findViewById(R.id.editBio);
         genderGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
+        residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
     }
 
     @Override
@@ -35,6 +40,7 @@ public class PersonActivity extends ArticleActivity {
 
         loadTextFieldsData(resources);
         loadGender(resources);
+        populateResidences();
     }
 
     @Override
@@ -93,6 +99,14 @@ public class PersonActivity extends ArticleActivity {
         } else {
             genderGroup.check(R.id.radioButtonOtherGender);
         }
+    }
+
+    /**
+     * Populate the Residences RecyclerView with cards for this Person's Residences.
+     */
+    private void populateResidences() {
+        residencesList.setLayoutManager(new LinearLayoutManager(this));
+        residencesList.setAdapter(new ResidencesAdapter(this, getWorldName(), getArticleName()));
     }
 
 }
