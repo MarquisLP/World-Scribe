@@ -253,4 +253,31 @@ public class ExternalReader {
         return snippetData.toString();
     }
 
+    /**
+     * Retrieves the names of all Residences for a specified Person.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param personName The name of the Person whose Residences are being retrieved.
+     * @return An ArrayList of all of the Article's Residences' names.
+     */
+    public static ArrayList<String> getResidences(Context context, String worldName,
+                                                  String personName) {
+        ArrayList<String> residenceNames = new ArrayList<>();
+        File residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
+                personName);
+        File[] listOfResidences = residencesDirectory.listFiles();
+
+        for (File residenceFile : listOfResidences) {
+            if (residenceFile.isFile()) {
+                String snippetName = residenceFile.getName();
+                residenceNames.add(snippetName.substring(0,
+                        snippetName.length() - TEXT_FILE_EXTENSION_LENGTH));
+            }
+        }
+
+        Collections.sort(residenceNames, String.CASE_INSENSITIVE_ORDER);
+
+        return residenceNames;
+    }
+
 }
