@@ -80,4 +80,18 @@ public class FileRetriever {
         return new File(getSnippetsDirectory(context, worldName, category, articleName),
                 snippetName + SNIPPET_FILE_EXTENSION);
     }
+
+    /**
+     * Retrieve the folder containing all of a Person's Residences.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param personName The name of the Person whose Residences are being retrieved.
+     * @return A File referring to the specified Person's Residences folder.
+     */
+    public static File getResidencesDirectory(Context context, String worldName,
+                                              String personName) {
+        return new File(getArticleDirectory(context, worldName, Category.Person, personName),
+                context.getResources().getString(R.string.residencesText));
+    }
+
 }
