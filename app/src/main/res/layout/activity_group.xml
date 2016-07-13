@@ -55,16 +55,6 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/verticalSpacing" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText"
-                android:hint="@string/nameHint"
-                android:textColor="?attr/colorPrimary"
-                android:textColorHint="?attr/colorPrimaryDark"
-                android:maxLines="1"
-                android:textSize="@dimen/standardTextSize" />
-
             <Space
                 android:layout_width="0dp"
                 android:layout_height="@dimen/verticalSpacing" />
