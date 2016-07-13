@@ -52,7 +52,7 @@
     <string name="mandateHint">Mandate / Purpose</string>
     <string name="membersText">Members</string>
     <string name="descriptionHint">Description</string>
-    <string name="inhabitantsText">Inhabitants</string>
+    <string name="residentsText">Residents</string>
     <string name="welcomeText">Welcome to World Scribe!</string>
     <string name="beginText">Let\'s start by creating your first World.</string>
 
