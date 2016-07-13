@@ -198,22 +198,32 @@ public class ExternalReader {
      */
     public static ArrayList<String> getSnippetNames(Context context, String worldName,
                                                     Category category, String articleName) {
-        ArrayList<String> snippetNames = new ArrayList<>();
         File snippetsDirectory = FileRetriever.getSnippetsDirectory(context, worldName, category,
                 articleName);
-        File[] listOfSnippets = snippetsDirectory.listFiles();
+        return getSortedFileNames(snippetsDirectory);
+    }
 
-        for (File snippetFile : listOfSnippets) {
+    /**
+     * Get the names of all files in a given directory as a sorted list of Strings.
+     * @param folder A File referencing the specified directory to read.
+     * @return An ArrayList containing all filenames in the specified directory, sorted in
+     * descending order.
+     */
+    private static ArrayList<String> getSortedFileNames(File folder) {
+        ArrayList<String> fileNames = new ArrayList<>();
+        File[] listOfFiles = folder.listFiles();
+
+        for (File snippetFile : listOfFiles) {
             if (snippetFile.isFile()) {
                 String snippetName = snippetFile.getName();
-                snippetNames.add(snippetName.substring(0,
+                fileNames.add(snippetName.substring(0,
                         snippetName.length() - TEXT_FILE_EXTENSION_LENGTH));
             }
         }
 
-        Collections.sort(snippetNames, String.CASE_INSENSITIVE_ORDER);
+        Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
 
-        return snippetNames;
+        return fileNames;
     }
 
     /**
@@ -262,22 +272,9 @@ public class ExternalReader {
      */
     public static ArrayList<String> getResidences(Context context, String worldName,
                                                   String personName) {
-        ArrayList<String> residenceNames = new ArrayList<>();
         File residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
                 personName);
-        File[] listOfResidences = residencesDirectory.listFiles();
-
-        for (File residenceFile : listOfResidences) {
-            if (residenceFile.isFile()) {
-                String snippetName = residenceFile.getName();
-                residenceNames.add(snippetName.substring(0,
-                        snippetName.length() - TEXT_FILE_EXTENSION_LENGTH));
-            }
-        }
-
-        Collections.sort(residenceNames, String.CASE_INSENSITIVE_ORDER);
-
-        return residenceNames;
+        return getSortedFileNames(residencesDirectory);
     }
 
 }
