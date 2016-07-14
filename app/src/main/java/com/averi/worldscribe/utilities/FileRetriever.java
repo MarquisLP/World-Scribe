@@ -94,4 +94,17 @@ public class FileRetriever {
                 context.getResources().getString(R.string.residencesText));
     }
 
+    /**
+     * Retrieve the folder containing all of a Place's Residents.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param placeName The name of the Place whose Residents are being retrieved.
+     * @return A File referring to the specified Place's folder.
+     */
+    public static File getResidentsDirectory(Context context, String worldName,
+                                              String placeName) {
+        return new File(getArticleDirectory(context, worldName, Category.Place, placeName),
+                context.getResources().getString(R.string.residentsText));
+    }
+
 }
