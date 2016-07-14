@@ -277,4 +277,18 @@ public class ExternalReader {
         return getSortedFileNames(residencesDirectory);
     }
 
+    /**
+     * Retrieves the names of all Residents for a specified Place.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param placeName The name of the Place whose Residents are being retrieved.
+     * @return An ArrayList of all of the Places' Residents' names.
+     */
+    public static ArrayList<String> getResidents(Context context, String worldName,
+                                                  String placeName) {
+        File residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
+                placeName);
+        return getSortedFileNames(residentsDirectory);
+    }
+
 }
