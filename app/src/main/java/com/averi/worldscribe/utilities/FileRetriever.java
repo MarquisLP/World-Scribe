@@ -107,4 +107,17 @@ public class FileRetriever {
                 context.getResources().getString(R.string.residentsText));
     }
 
+    /**
+     * Retrieve the folder containing all of a Person's Memberships.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param personName The name of the Person whose Memberships are being retrieved.
+     * @return A File referring to the specified Person's Memberships folder.
+     */
+    public static File getMembershipsDirectory(Context context, String worldName,
+                                              String personName) {
+        return new File(getArticleDirectory(context, worldName, Category.Person, personName),
+                context.getResources().getString(R.string.membershipsText));
+    }
+
 }
