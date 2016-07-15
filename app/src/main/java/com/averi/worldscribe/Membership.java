@@ -11,7 +11,7 @@ public class Membership {
     public String groupName;
     /**
      * The role or rank the Person has within the Group.
-     * This field is optional; an empty String signifies no role or rank.
+     * This field is optional; null signifies no role or rank.
      */
-    public String memberRole = "";
+    public String memberRole = null;
 }
