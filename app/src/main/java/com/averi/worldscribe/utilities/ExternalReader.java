@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 
 import java.io.BufferedReader;
@@ -289,6 +290,59 @@ public class ExternalReader {
         File residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
                 placeName);
         return getSortedFileNames(residentsDirectory);
+    }
+
+    /**
+     * Retrieves the names of all Memberships for a specified Person.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param personName The name of the Person whose Memberships are being retrieved.
+     * @return An ArrayList of all Memberships belonging to the specified Person.
+     */
+    public static ArrayList<Membership> getMemberships(Context context, String worldName,
+                                                       String personName) {
+        ArrayList<Membership> memberships = new ArrayList<>();
+        File membershipsDirectory = FileRetriever.getMembershipsDirectory(context, worldName,
+                personName);
+
+        for (File membershipFile : membershipsDirectory.listFiles()) {
+            if (membershipFile.isFile()) {
+                Membership membership = makeMembershipFromFile(membershipFile);
+                if (membership != null) {
+                    memberships.add(membership);
+                }
+            }
+        }
+
+        return memberships;
+    }
+
+    /**
+     * Return a Membership containing data from the specified Membership file.
+     * @param membershipFile A text file containing Membership data.
+     * @return A Membership with the extracted data; null if an I/O error occurs.
+     */
+    private static Membership makeMembershipFromFile(File membershipFile) {
+        Membership membership;
+
+        try {
+            FileInputStream inputStream = new FileInputStream(membershipFile);
+            membership = new Membership();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            membership.memberRole = reader.readLine();
+
+            String groupName = membershipFile.getName();
+            membership.groupName = groupName.substring(0,
+                    groupName.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+            inputStream.close();
+        }
+        catch (java.io.IOException e) {
+            membership = null;
+        }
+
+        return membership;
     }
 
 }
