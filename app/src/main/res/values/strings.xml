@@ -77,4 +77,5 @@
     <string name="snippetHint">Enter your snippet here.</string>
     <string name="membershipsText">Memberships</string>
     <string name="residencesText">Residences</string>
+    <string name="memberRoleText">(%1$s)</string>
 </resources>
