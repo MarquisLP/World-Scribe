@@ -120,4 +120,17 @@ public class FileRetriever {
                 context.getResources().getString(R.string.membershipsText));
     }
 
+    /**
+     * Retrieve the folder containing all of a Group's Members.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param groupName The name of the Group whose Members are being retrieved.
+     * @return A File referring to the specified Group's Members folder.
+     */
+    public static File getMembersDirectory(Context context, String worldName,
+                                               String groupName) {
+        return new File(getArticleDirectory(context, worldName, Category.Group, groupName),
+                context.getResources().getString(R.string.membersText));
+    }
+
 }
