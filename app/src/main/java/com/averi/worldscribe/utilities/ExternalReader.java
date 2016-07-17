@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.Member;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 
@@ -293,7 +294,7 @@ public class ExternalReader {
     }
 
     /**
-     * Retrieves the names of all Memberships for a specified Person.
+     * Retrieves all Memberships for a specified Person.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
      * @param personName The name of the Person whose Memberships are being retrieved.
@@ -343,6 +344,60 @@ public class ExternalReader {
         }
 
         return membership;
+    }
+
+    /**
+     * Retrieves all Members of a specified Group.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param groupName The name of the Group whose Members are being retrieved.
+     * @return An ArrayList containing all Members belonging to the specified Group; may be empty
+     * if the Group has no Members.
+     */
+    public static ArrayList<Member> getMembers(Context context, String worldName,
+                                               String groupName) {
+        ArrayList<Member> members = new ArrayList<>();
+        File membersDirectory = FileRetriever.getMembersDirectory(context, worldName,
+                groupName);
+
+        for (File memberFile : membersDirectory.listFiles()) {
+            if (memberFile.isFile()) {
+                Member member = makeMemberFromFile(memberFile);
+                if (member != null) {
+                    members.add(member);
+                }
+            }
+        }
+
+        return members;
+    }
+
+    /**
+     * Return a Member containing data from the specified Member file.
+     * @param memberFile A text file containing Member data.
+     * @return A Member with the extracted data; null if an I/O error occurs.
+     */
+    private static Member makeMemberFromFile(File memberFile) {
+        Member member;
+
+        try {
+            FileInputStream inputStream = new FileInputStream(memberFile);
+            member = new Member();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            member.memberRole = reader.readLine();
+
+            String memberName = memberFile.getName();
+            member.memberName = memberName.substring(0,
+                    memberName.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+            inputStream.close();
+        }
+        catch (java.io.IOException e) {
+            member = null;
+        }
+
+        return member;
     }
 
 }
