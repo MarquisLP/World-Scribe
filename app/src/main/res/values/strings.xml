@@ -50,6 +50,7 @@
     <string name="personImageDescription">Character\'s Profile Image</string>
     <string name="addConnectionSnippetText">+</string>
     <string name="mandateHint">Mandate / Purpose</string>
+    <string name="mandateText">Mandate</string>
     <string name="membersText">Members</string>
     <string name="descriptionHint">Description</string>
     <string name="residentsText">Residents</string>
