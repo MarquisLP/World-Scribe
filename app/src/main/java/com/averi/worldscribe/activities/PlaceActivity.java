@@ -22,25 +22,14 @@ import java.util.ArrayList;
 public class PlaceActivity extends ArticleActivity {
 
     private RecyclerView residentsList;
-    private EditText descriptionField;
-    private EditText historyField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         residentsList = (RecyclerView) findViewById(R.id.recyclerResidents);
-        descriptionField = (EditText) findViewById(R.id.editDescription);
-        historyField = (EditText) findViewById(R.id.editHistory);
 
         populateResidences();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        loadTextFields();
     }
 
     @Override
@@ -87,17 +76,6 @@ public class PlaceActivity extends ArticleActivity {
     private void populateResidences() {
         residentsList.setLayoutManager(new LinearLayoutManager(this));
         residentsList.setAdapter(new ResidentsAdapter(this, getWorldName(), getArticleName()));
-    }
-
-    /**
-     * Load data for the Place's text fields and display them.
-     */
-    private void loadTextFields() {
-        Resources resources = getResources();
-        descriptionField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.descriptionHint)));
-        historyField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.historyHint)));
     }
 
 }

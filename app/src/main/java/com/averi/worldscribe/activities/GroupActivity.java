@@ -19,25 +19,14 @@ import java.util.ArrayList;
 public class GroupActivity extends ArticleActivity {
 
     private RecyclerView membersList;
-    private EditText mandateField;
-    private EditText historyField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         membersList = (RecyclerView) findViewById(R.id.recyclerMembers);
-        mandateField = (EditText) findViewById(R.id.editMandate);
-        historyField = (EditText) findViewById(R.id.editHistory);
 
         populateMembers();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        loadTextFields();
     }
 
     @Override
@@ -83,14 +72,4 @@ public class GroupActivity extends ArticleActivity {
         membersList.setAdapter(new MembersAdapter(this, getWorldName(), getArticleName()));
     }
 
-    /**
-     * Load data for the Group's text fields and display them.
-     */
-    private void loadTextFields() {
-        Resources resources = getResources();
-        mandateField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.mandateText)));
-        historyField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.historyHint)));
-    }
 }

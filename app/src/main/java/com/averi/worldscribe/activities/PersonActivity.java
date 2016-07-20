@@ -21,9 +21,6 @@ import java.util.ArrayList;
 
 public class PersonActivity extends ArticleActivity {
 
-    private EditText aliasesField;
-    private EditText ageField;
-    private EditText biographyField;
     private RadioGroup genderGroup;
     private RecyclerView membershipsList;
     private RecyclerView residencesList;
@@ -32,9 +29,6 @@ public class PersonActivity extends ArticleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        aliasesField = (EditText) findViewById(R.id.editAliases);
-        ageField = (EditText) findViewById(R.id.editAge);
-        biographyField = (EditText) findViewById(R.id.editBio);
         genderGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
         membershipsList = (RecyclerView) findViewById(R.id.recyclerMemberships);
         residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
@@ -45,7 +39,6 @@ public class PersonActivity extends ArticleActivity {
         super.onResume();
         Resources resources = getResources();
 
-        loadTextFieldsData(resources);
         loadGender(resources);
         populateMemberships();
         populateResidences();
@@ -90,23 +83,6 @@ public class PersonActivity extends ArticleActivity {
                 this, getWorldName(), Category.Person, getArticleName()));
 
         return textFields;
-    }
-
-    /**
-     * Retrieve this Person's aliases, age, biography data and display them in the corresponding
-     * text fields.
-     * @param resources A Resources instance containing this app's resource files and values.
-     */
-    private void loadTextFieldsData(Resources resources) {
-        aliasesField.setText(ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
-                super.getCategory(), super.getArticleName(),
-                resources.getString(R.string.aliasesField)));
-        ageField.setText(ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
-                super.getCategory(), super.getArticleName(),
-                resources.getString(R.string.ageField)));
-        biographyField.setText(ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
-                super.getCategory(), super.getArticleName(),
-                resources.getString(R.string.biographyField)));
     }
 
     /**

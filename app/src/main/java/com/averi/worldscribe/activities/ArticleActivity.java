@@ -21,7 +21,6 @@ import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -136,6 +135,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         setAppBar();
         setArticleImage();
         bottomBar.highlightCategoryButton(this, category);
+        loadTextFieldsData();
         populateConnections();
         populateSnippets();
     }
@@ -176,6 +176,15 @@ public abstract class ArticleActivity extends AppCompatActivity {
                 (int) resources.getDimension(R.dimen.articleImageWidth),
                 (int) resources.getDimension(R.dimen.articleImageHeight));
         imageView.setImageBitmap(articleImage);
+    }
+
+    /**
+     * Load data for all of the Article's text fields and display them.
+     */
+    private void loadTextFieldsData() {
+        for (ArticleTextField textField : textFields) {
+            textField.loadData();
+        }
     }
 
     @Override

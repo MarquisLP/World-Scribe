@@ -19,20 +19,9 @@ import java.util.ArrayList;
 
 public class ConceptActivity extends ArticleActivity {
 
-    private EditText descriptionField;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        descriptionField = (EditText) findViewById(R.id.editDescription);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        loadTextFields();
     }
 
     @Override
@@ -68,15 +57,6 @@ public class ConceptActivity extends ArticleActivity {
                 this, getWorldName(), Category.Concept, getArticleName()));
 
         return textFields;
-    }
-
-    /**
-     * Load data for the Concept's text fields and display them.
-     */
-    private void loadTextFields() {
-        Resources resources = getResources();
-        descriptionField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.descriptionHint)));
     }
 
 }

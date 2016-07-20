@@ -19,22 +19,9 @@ import java.util.ArrayList;
 
 public class ItemActivity extends ArticleActivity {
 
-    private EditText propertiesField;
-    private EditText historyField;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        propertiesField = (EditText) findViewById(R.id.editProperties);
-        historyField = (EditText) findViewById(R.id.editHistory);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        loadTextFields();
     }
 
     @Override
@@ -73,17 +60,6 @@ public class ItemActivity extends ArticleActivity {
                 this, getWorldName(), Category.Item, getArticleName()));
 
         return textFields;
-    }
-
-    /**
-     * Load data for the Item's text fields and display them.
-     */
-    private void loadTextFields() {
-        Resources resources = getResources();
-        propertiesField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.propertiesHint)));
-        historyField.setText(ExternalReader.getArticleTextFieldData(this, getWorldName(),
-                getCategory(), getArticleName(), resources.getString(R.string.historyHint)));
     }
 
 }
