@@ -72,9 +72,11 @@ public class PlaceActivity extends ArticleActivity {
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
         textFields.add(new ArticleTextField(resources.getString(R.string.descriptionHint),
-                descriptionField, this, getWorldName(), Category.Place, getArticleName()));
+                (EditText) findViewById(R.id.editDescription),
+                this, getWorldName(), Category.Place, getArticleName()));
         textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),
-                historyField, this, getWorldName(), Category.Place, getArticleName()));
+                (EditText) findViewById(R.id.editHistory),
+                this, getWorldName(), Category.Place, getArticleName()));
 
         return textFields;
     }

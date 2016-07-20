@@ -64,7 +64,8 @@ public class ConceptActivity extends ArticleActivity {
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
         textFields.add(new ArticleTextField(resources.getString(R.string.descriptionHint),
-                descriptionField, this, getWorldName(), Category.Concept, getArticleName()));
+                (EditText) findViewById(R.id.editDescription),
+                this, getWorldName(), Category.Concept, getArticleName()));
 
         return textFields;
     }

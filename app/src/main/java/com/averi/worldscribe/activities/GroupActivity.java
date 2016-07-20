@@ -69,9 +69,11 @@ public class GroupActivity extends ArticleActivity {
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
         textFields.add(new ArticleTextField(resources.getString(R.string.mandateText),
-                mandateField, this, getWorldName(), Category.Group, getArticleName()));
+                (EditText) findViewById(R.id.editMandate),
+                this, getWorldName(), Category.Group, getArticleName()));
         textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),
-                historyField, this, getWorldName(), Category.Group, getArticleName()));
+                (EditText) findViewById(R.id.editHistory),
+                this, getWorldName(), Category.Group, getArticleName()));
 
         return textFields;
     }

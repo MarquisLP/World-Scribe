@@ -80,11 +80,14 @@ public class PersonActivity extends ArticleActivity {
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
         textFields.add(new ArticleTextField(resources.getString(R.string.aliasesField),
-                aliasesField, this, getWorldName(), Category.Person, getArticleName()));
+                (EditText) findViewById(R.id.editAliases),
+                this, getWorldName(), Category.Person, getArticleName()));
         textFields.add(new ArticleTextField(resources.getString(R.string.ageField),
-                ageField, this, getWorldName(), Category.Person, getArticleName()));
+                (EditText) findViewById(R.id.editAge),
+                this, getWorldName(), Category.Person, getArticleName()));
         textFields.add(new ArticleTextField(resources.getString(R.string.biographyField),
-                biographyField, this, getWorldName(), Category.Person, getArticleName()));
+                (EditText) findViewById(R.id.editBio),
+                this, getWorldName(), Category.Person, getArticleName()));
 
         return textFields;
     }
