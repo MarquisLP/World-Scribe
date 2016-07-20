@@ -8,12 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
+import com.averi.worldscribe.ArticleTextField;
+import com.averi.worldscribe.Category;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.R;
+
+import java.util.ArrayList;
 
 public class PersonActivity extends ArticleActivity {
 
@@ -68,6 +72,21 @@ public class PersonActivity extends ArticleActivity {
     @Override
     protected RecyclerView getSnippetsRecycler() {
         return (RecyclerView) findViewById(R.id.recyclerSnippets);
+    }
+
+    @Override
+    protected ArrayList<ArticleTextField> getTextFields() {
+        Resources resources = getResources();
+        ArrayList<ArticleTextField> textFields = new ArrayList<>();
+
+        textFields.add(new ArticleTextField(resources.getString(R.string.aliasesField),
+                aliasesField, this, getWorldName(), Category.Person, getArticleName()));
+        textFields.add(new ArticleTextField(resources.getString(R.string.ageField),
+                ageField, this, getWorldName(), Category.Person, getArticleName()));
+        textFields.add(new ArticleTextField(resources.getString(R.string.biographyField),
+                biographyField, this, getWorldName(), Category.Person, getArticleName()));
+
+        return textFields;
     }
 
     /**

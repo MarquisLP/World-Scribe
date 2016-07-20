@@ -7,10 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.averi.worldscribe.ArticleTextField;
+import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.MembersAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
+
+import java.util.ArrayList;
 
 public class GroupActivity extends ArticleActivity {
 
@@ -57,6 +61,19 @@ public class GroupActivity extends ArticleActivity {
     @Override
     protected RecyclerView getSnippetsRecycler() {
         return (RecyclerView) findViewById(R.id.recyclerSnippets);
+    }
+
+    @Override
+    protected ArrayList<ArticleTextField> getTextFields() {
+        Resources resources = getResources();
+        ArrayList<ArticleTextField> textFields = new ArrayList<>();
+
+        textFields.add(new ArticleTextField(resources.getString(R.string.mandateText),
+                mandateField, this, getWorldName(), Category.Group, getArticleName()));
+        textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),
+                historyField, this, getWorldName(), Category.Group, getArticleName()));
+
+        return textFields;
     }
 
     private void populateMembers() {

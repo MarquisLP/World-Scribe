@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ImageView;
 
+import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
@@ -21,6 +22,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by mark on 05/07/16.
@@ -53,6 +55,10 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * The name of the Article displayed by this Activity.
      */
     private String articleName;
+    /**
+     * A list of all of the text fields for this Article.
+     */
+    private ArrayList<ArticleTextField> textFields;
 
     public String getWorldName() { return worldName; }
 
@@ -82,6 +88,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
         connectionsList = getConnectionsRecycler();
         snippetsList = getSnippetsRecycler();
+        textFields = getTextFields();
     }
 
     @Override
@@ -115,6 +122,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * @return The RecyclerView for this Article's Snippets.
      */
     protected abstract RecyclerView getSnippetsRecycler();
+
+    /**
+     * @return An ArrayList containing all text fields for this Article.
+     */
+    protected abstract ArrayList<ArticleTextField> getTextFields();
 
     /**
      * Load data pertaining to the selected Article, and use it in set-up processes that are common

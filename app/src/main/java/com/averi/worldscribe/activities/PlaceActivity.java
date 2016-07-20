@@ -10,10 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.averi.worldscribe.ArticleTextField;
+import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ResidentsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
+
+import java.util.ArrayList;
 
 public class PlaceActivity extends ArticleActivity {
 
@@ -60,6 +64,19 @@ public class PlaceActivity extends ArticleActivity {
     @Override
     protected RecyclerView getSnippetsRecycler() {
         return (RecyclerView) findViewById(R.id.recyclerSnippets);
+    }
+
+    @Override
+    protected ArrayList<ArticleTextField> getTextFields() {
+        Resources resources = getResources();
+        ArrayList<ArticleTextField> textFields = new ArrayList<>();
+
+        textFields.add(new ArticleTextField(resources.getString(R.string.descriptionHint),
+                descriptionField, this, getWorldName(), Category.Place, getArticleName()));
+        textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),
+                historyField, this, getWorldName(), Category.Place, getArticleName()));
+
+        return textFields;
     }
 
     /**
