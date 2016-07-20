@@ -57,8 +57,6 @@ public class ArticleTextField {
         this.worldName = worldName;
         this.category = category;
         this.articleName = articleName;
-
-        loadData();
     }
 
     /**
