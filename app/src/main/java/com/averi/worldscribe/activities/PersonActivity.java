@@ -24,6 +24,7 @@ public class PersonActivity extends ArticleActivity {
     private RadioGroup genderGroup;
     private RecyclerView membershipsList;
     private RecyclerView residencesList;
+    private Boolean genderWasEditedSinceLastSave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,13 @@ public class PersonActivity extends ArticleActivity {
         genderGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
         membershipsList = (RecyclerView) findViewById(R.id.recyclerMemberships);
         residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
+
+        genderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                genderWasEditedSinceLastSave = true;
+            }
+        });
     }
 
     @Override
