@@ -6,6 +6,10 @@ import android.os.Environment;
 import com.averi.worldscribe.Category;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by mark on 08/06/16.
@@ -64,5 +68,33 @@ public final class ExternalWriter {
         }
 
         return directoriesWereCreated;
+    }
+
+    /**
+     * Saves a String to a text file within an Article's directory.
+     * @param context The Context calling this method.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article whose directory will possess the text file.
+     * @param fileName The name of the text file that will be written to, with the file extension
+     *                 omitted.
+     * @param contents The String that will be saved in a text file.
+     * @return True if the String was saved successfully; false if an I/O error occurs.
+     */
+    public static boolean writeStringToArticleFile(Context context, String worldName,
+                                                   Category category, String articleName,
+                                                   String fileName, String contents) {
+        Boolean result = true;
+
+        try {
+            PrintWriter writer = new PrintWriter(FileRetriever.getArticleFile(context, worldName,
+                    category, articleName, fileName + ExternalReader.TEXT_FIELD_FILE_EXTENSION));
+            writer.println(contents);
+            writer.close();
+        } catch (IOException error) {
+            result = false;
+        }
+
+        return result;
     }
 }
