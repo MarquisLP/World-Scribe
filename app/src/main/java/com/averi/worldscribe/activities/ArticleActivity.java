@@ -96,6 +96,13 @@ public abstract class ArticleActivity extends AppCompatActivity {
         setUpArticleCore();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        saveTextFieldsData();
+    }
+
     /**
      * @return The Android Resource ID of this Activity's layout resource file.
      */
@@ -184,6 +191,15 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void loadTextFieldsData() {
         for (ArticleTextField textField : textFields) {
             textField.loadData();
+        }
+    }
+
+    /**
+     * Save all text field data for this Article.
+     */
+    private void saveTextFieldsData() {
+        for (ArticleTextField textField : textFields) {
+            textField.saveDataIfEdited();
         }
     }
 
