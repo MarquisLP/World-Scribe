@@ -14,6 +14,7 @@ import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.R;
 
@@ -50,6 +51,13 @@ public class PersonActivity extends ArticleActivity {
         loadGender(resources);
         populateMemberships();
         populateResidences();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        saveGenderIfEdited();
     }
 
     @Override
@@ -125,6 +133,30 @@ public class PersonActivity extends ArticleActivity {
     private void populateResidences() {
         residencesList.setLayoutManager(new LinearLayoutManager(this));
         residencesList.setAdapter(new ResidencesAdapter(this, getWorldName(), getArticleName()));
+    }
+
+    /**
+     * Saves the Person's Gender if it was changed since the last save.
+     */
+    private void saveGenderIfEdited() {
+        if (genderWasEditedSinceLastSave) {
+            Resources resources = getResources();
+            String genderFilename = resources.getString(R.string.genderText);
+
+            if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonMale) {
+                ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
+                        getArticleName(), genderFilename, resources.getString(R.string.maleText));
+            } else if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonFemale) {
+                ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
+                        getArticleName(), genderFilename, resources.getString(R.string.femaleText));
+            } else {
+                ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
+                        getArticleName(), genderFilename,
+                        resources.getString(R.string.otherGenderText));
+            }
+
+            genderWasEditedSinceLastSave = false;
+        }
     }
 
 }
