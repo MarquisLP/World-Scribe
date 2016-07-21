@@ -1,9 +1,12 @@
 package com.averi.worldscribe;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 
 /**
  * Created by mark on 19/07/16.
@@ -41,6 +44,12 @@ public class ArticleTextField {
     private String articleName;
 
     /**
+     * Set to True if the contents of this text field were edited since the last time contents
+     * were saved to the corresponding text file.
+     */
+    private Boolean editedSinceLastSave = false;
+
+    /**
      * Instantiates a new ArticleTextField.
      * @param name The name of this text field.
      * @param editText The EditText that will allow the user to edit this text field.
@@ -57,6 +66,23 @@ public class ArticleTextField {
         this.worldName = worldName;
         this.category = category;
         this.articleName = articleName;
+
+        this.editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editedSinceLastSave = true;
+            }
+        });
     }
 
     /**
@@ -66,5 +92,18 @@ public class ArticleTextField {
     public void loadData() {
         editText.setText(ExternalReader.getArticleTextFieldData(context, worldName, category,
                 articleName, name));
+    }
+
+    /**
+     * If the EditText has been edited since the last save, write its contents to this text field's
+     * corresponding text file.
+     */
+    public void saveDataIfEdited() {
+        if (editedSinceLastSave) {
+            ExternalWriter.writeStringToArticleFile(context, worldName, category, articleName,
+                    name, editText.getText().toString());
+        }
+
+        editedSinceLastSave = false;
     }
 }
