@@ -40,6 +40,7 @@
         <activity android:name=".activities.CreateOrLoadWorldActivity" />
         <activity android:name=".activities.CreateArticleActivity" />
         <activity android:name=".activities.SnippetActivity" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
     </application>
 
 </manifest>
