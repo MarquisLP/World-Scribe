@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.averi.worldscribe.ArticleTextField;
@@ -33,6 +34,11 @@ import java.util.ArrayList;
  * obtaining specific Views.
  */
 public abstract class ArticleActivity extends AppCompatActivity {
+
+    /**
+     * The request code for selecting a new Article image.
+     */
+    public static final int RESULT_SELECT_IMAGE = 100;
 
     /**
      * The display for the Article's image.
@@ -88,6 +94,13 @@ public abstract class ArticleActivity extends AppCompatActivity {
         connectionsList = getConnectionsRecycler();
         snippetsList = getSnippetsRecycler();
         textFields = getTextFields();
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectNewArticleImage();
+            }
+        });
     }
 
     @Override
@@ -200,6 +213,25 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void saveTextFieldsData() {
         for (ArticleTextField textField : textFields) {
             textField.saveDataIfEdited();
+        }
+    }
+
+    /**
+     * Select a new image to use for this Article from the user's gallery.
+     */
+    private void selectNewArticleImage() {
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_SELECT_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_SELECT_IMAGE:
+                // Crop and save the selected image.
         }
     }
 
