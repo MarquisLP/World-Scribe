@@ -2,9 +2,12 @@ package com.averi.worldscribe.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.averi.worldscribe.Category;
@@ -19,17 +22,22 @@ public class CreateArticleActivity extends AppCompatActivity {
     public static final int ITEM_ITEM_POSITION = 3;
     public static final int CONCEPT_ITEM_POSITION = 4;
 
+    private EditText nameField;
     private Spinner categorySpinner;
+    private Button createButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_article);
 
+        nameField = (EditText) findViewById(R.id.articleName);
         categorySpinner = (Spinner) findViewById(R.id.categorySelection);
+        createButton = (Button) findViewById(R.id.create);
 
         populateCategorySpinner();
         selectInitialCategory();
+        addTextListener();
     }
 
     private void populateCategorySpinner() {
@@ -64,6 +72,49 @@ public class CreateArticleActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * Add an EditText listener to disable the Create button when the EditText is empty.
+     */
+    private void addTextListener() {
+        nameField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                activateCreateButtonWhenNameIsNonempty();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    /**
+     * Activate the Create button if and only if the Article's name is non-empty.
+     */
+    private void activateCreateButtonWhenNameIsNonempty() {
+        if (nameIsEmpty()) {
+            createButton.setEnabled(false);
+        } else {
+            createButton.setEnabled(true);
+        }
+    }
+
+    /**
+     * @return True if the Article's name is non-empty; false otherwise.
+     */
+    private boolean nameIsEmpty() { return (getArticleName().length() == 0); }
+
+    /**
+     * @return The name entered for the Article.
+     */
+    private String getArticleName() { return nameField.getText().toString(); }
 
     public void createArticle(View view) {
 
