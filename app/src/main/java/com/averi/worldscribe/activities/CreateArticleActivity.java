@@ -65,7 +65,7 @@ public class CreateArticleActivity extends AppCompatActivity {
         }
     }
 
-    public void createWorld(View view) {
+    public void createArticle(View view) {
 
     }
 

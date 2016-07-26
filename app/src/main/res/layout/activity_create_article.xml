@@ -60,5 +60,5 @@
         android:textSize="@dimen/headerTextSize"
         android:padding="@dimen/buttonPadding"
         android:enabled="false"
-        android:onClick="createWorld" />
+        android:onClick="createArticle" />
 </LinearLayout>
