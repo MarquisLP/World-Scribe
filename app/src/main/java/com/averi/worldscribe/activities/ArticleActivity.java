@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.nsd.NsdManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.views.BottomBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -238,19 +240,31 @@ public abstract class ArticleActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null) {
-            switch (requestCode) {
-                case RESULT_SELECT_IMAGE:
+        switch (requestCode) {
+            case RESULT_SELECT_IMAGE:
+                if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
                     CropImage.activity(imageUri)
                             .setAspectRatio(1, 1)
                             .setFixAspectRatio(true)
                             .setAllowRotation(true)
                             .start(this);
+                }
+                break;
 
-                case RESULT_CROP_IMAGE:
-                    // Save the selected image to the Article's directory.
-            }
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = CropImage.getActivityResult(data).getUri();
+                    Boolean imageWasSaved = ExternalWriter.saveArticleImage(this, worldName,
+                            category, articleName, resultUri);
+                    if (!(imageWasSaved)) {
+                        Toast.makeText(this, getResources().getString(R.string.saveImageError),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, getResources().getString(R.string.cropImageError),
+                            Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
