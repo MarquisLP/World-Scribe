@@ -70,6 +70,21 @@ public class ExternalReader {
     }
 
     /**
+     * Checks if a certain Article already exists.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World that the Article belongs to.
+     * @param category The {@link Category} that the Article belongs to.
+     * @param articleName The name of the Article to check.
+     * @return True if the Article exists with a directory in the World folder; false otherwise.
+     */
+    public static boolean articleExists(Context context, String worldName, Category category,
+                                        String articleName) {
+        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName);
+        return ((articleDirectory.exists()) && (articleDirectory.isDirectory()));
+    }
+
+    /**
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
      * @param category The {@link Category} of the current Article.

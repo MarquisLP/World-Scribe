@@ -79,6 +79,8 @@
     <string name="membershipsText">Memberships</string>
     <string name="residencesText">Residences</string>
     <string name="memberRoleText">(%1$s)</string>
-    <string name="cropImageError">TAn error occurred while cropping the selected image.</string>
+
+    <string name="cropImageError">An error occurred while cropping the selected image.</string>
     <string name="saveImageError">An error occurred while saving the selected image.</string>
+    <string name="articleAlreadyExistsError">An article with this name and category already exists.</string>
 </resources>

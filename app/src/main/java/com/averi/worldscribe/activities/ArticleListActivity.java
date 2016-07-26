@@ -101,6 +101,7 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
         switch (item.getItemId()) {
             case R.id.createArticleItem:
                 Intent goToArticleCreationIntent = new Intent(this, CreateArticleActivity.class);
+                goToArticleCreationIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
                 goToArticleCreationIntent.putExtra(AppPreferences.CATEGORY, category);
                 startActivity(goToArticleCreationIntent);
                 return true;
