@@ -11,7 +11,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.AppPreferences;
 
-public class CreateArticleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreateArticleActivity extends AppCompatActivity {
 
     public static final int PERSON_ITEM_POSITION = 0;
     public static final int GROUP_ITEM_POSITION = 1;
@@ -68,14 +68,5 @@ public class CreateArticleActivity extends AppCompatActivity implements AdapterV
     public void createWorld(View view) {
 
     }
-
-    // Listeners for the Category Spinner.
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        String categoryName = (String) parent.getItemAtPosition(pos);
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {}
 
 }
