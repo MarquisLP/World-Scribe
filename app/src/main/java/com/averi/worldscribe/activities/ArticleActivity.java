@@ -47,11 +47,6 @@ public abstract class ArticleActivity extends AppCompatActivity {
     public static final int RESULT_SELECT_IMAGE = 100;
 
     /**
-     * The request code for cropping a new Article image.
-     */
-    public static final int RESULT_CROP_IMAGE = 200;
-
-    /**
      * The display for the Article's image.
      */
     private ImageView imageView;
