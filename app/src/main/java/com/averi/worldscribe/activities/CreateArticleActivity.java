@@ -27,11 +27,9 @@ public class CreateArticleActivity extends AppCompatActivity implements AdapterV
 
     private void populateCategorySpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.categories_array, R.layout.spinner_item);
         categorySpinner.setAdapter(adapter);
     }
-
 
     public void createWorld(View view) {
 

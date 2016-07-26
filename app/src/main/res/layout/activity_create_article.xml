@@ -13,8 +13,9 @@
     android:gravity="center">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:id="@+id/articleName"
         android:inputType="text"
         android:hint="@string/articleNameHint"
@@ -39,7 +40,7 @@
         android:layout_height="@dimen/verticalSpacing" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/categorySelection"
         android:background="@drawable/border" />
@@ -49,7 +50,7 @@
         android:layout_height="@dimen/headerSpacing" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/createButtonText"
         android:id="@+id/create"

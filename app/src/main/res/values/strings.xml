@@ -73,7 +73,7 @@
     <string name="worldCreationErrorText">An error occurred during World creation.</string>
     <string name="LoadText">Load</string>
     <string name="createText">Create</string>
-    <string name="articleNameHint">Name the new Article</string>
+    <string name="articleNameHint">Article Name</string>
     <string name="aliasesHint">Nicknames / Aliases</string>
     <string name="snippetHint">Enter your snippet here.</string>
     <string name="membershipsText">Memberships</string>

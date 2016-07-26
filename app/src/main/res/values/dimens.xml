@@ -33,4 +33,6 @@
     <dimen name="cardMargin">5dp</dimen>
     <dimen name="cardSubtitleTextSize">24sp</dimen>
     <dimen name="cardMainTextSize">30sp</dimen>
+    <dimen name="spinnerTextSize">30sp</dimen>
+    <dimen name="spinnerItemPadding">5dp</dimen>
 </resources>
