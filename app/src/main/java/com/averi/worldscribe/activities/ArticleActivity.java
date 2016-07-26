@@ -3,6 +3,7 @@ package com.averi.worldscribe.activities;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
@@ -21,6 +23,8 @@ import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 
@@ -39,6 +43,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * The request code for selecting a new Article image.
      */
     public static final int RESULT_SELECT_IMAGE = 100;
+
+    /**
+     * The request code for cropping a new Article image.
+     */
+    public static final int RESULT_CROP_IMAGE = 200;
 
     /**
      * The display for the Article's image.
@@ -229,9 +238,19 @@ public abstract class ArticleActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case RESULT_SELECT_IMAGE:
-                // Crop and save the selected image.
+        if (data != null) {
+            switch (requestCode) {
+                case RESULT_SELECT_IMAGE:
+                    Uri imageUri = data.getData();
+                    CropImage.activity(imageUri)
+                            .setAspectRatio(1, 1)
+                            .setFixAspectRatio(true)
+                            .setAllowRotation(true)
+                            .start(this);
+
+                case RESULT_CROP_IMAGE:
+                    // Save the selected image to the Article's directory.
+            }
         }
     }
 
