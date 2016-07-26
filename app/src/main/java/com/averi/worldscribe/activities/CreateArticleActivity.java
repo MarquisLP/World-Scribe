@@ -1,5 +1,6 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 
 public class CreateArticleActivity extends AppCompatActivity {
 
@@ -138,8 +140,50 @@ public class CreateArticleActivity extends AppCompatActivity {
             ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
                     getString(R.string.articleAlreadyExistsError));
         } else {
-            // Create the new Article.
+            boolean articleWasCreated = ExternalWriter.createArticleDirectory(
+                    this, worldName, category, articleName);
+            if (articleWasCreated) {
+                goToNewArticle(worldName, category, articleName);
+            } else {
+                ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
+                        getString(R.string.articleCreationError));
+            }
         }
+    }
+
+    /**
+     * Display the newly-created Article in the appropriate Activity.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The {@link Category} the Article belongs to.
+     * @param articleName The name of the new Article.
+     */
+    private void goToNewArticle(String worldName, Category category, String articleName) {
+        Intent goToNewArticleIntent;
+
+        switch (category) {
+            case Person:
+                goToNewArticleIntent = new Intent(this, PersonActivity.class);
+                break;
+            case Group:
+                goToNewArticleIntent = new Intent(this, GroupActivity.class);
+                break;
+            case Place:
+                goToNewArticleIntent = new Intent(this, PlaceActivity.class);
+                break;
+            case Item:
+                goToNewArticleIntent = new Intent(this, ItemActivity.class);
+                break;
+            case Concept:
+            default:
+                goToNewArticleIntent = new Intent(this, ConceptActivity.class);
+        }
+
+        goToNewArticleIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
+        goToNewArticleIntent.putExtra(AppPreferences.CATEGORY, category);
+        goToNewArticleIntent.putExtra(AppPreferences.ARTICLE_NAME, articleName);
+
+        startActivity(goToNewArticleIntent);
+        finish();
     }
 
 }

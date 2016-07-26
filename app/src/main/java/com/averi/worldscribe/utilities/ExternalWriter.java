@@ -80,6 +80,56 @@ public final class ExternalWriter {
     }
 
     /**
+     * Create a directory for a new Article.
+     * Note that this does not overwrite an existing directory, so make sure to check before calling
+     * this method.
+     * @param context The context calling this method.
+     * @param worldName The name of the World where the Article belongs.
+     * @param category The {@link Category} the Article belongs to.
+     * @param articleName The name of the new Article.
+     * @return True if the directory was created successfully; false otherwise.
+     */
+    public static boolean createArticleDirectory(Context context, String worldName,
+                                                  Category category, String articleName) {
+        Boolean successful = true;
+
+        successful = (
+                (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
+                        articleName, Category.Person).mkdirs())
+                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
+                        articleName, Category.Group).mkdirs())
+                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
+                        articleName, Category.Place).mkdirs())
+                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
+                        articleName, Category.Item).mkdirs())
+                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
+                        articleName, Category.Concept).mkdirs())
+                && (FileRetriever.getSnippetsDirectory(context, worldName, category,
+                        articleName).mkdirs())
+                );
+
+        if (successful) {
+            if (category == Category.Person) {
+                successful = ((FileRetriever.getMembershipsDirectory(
+                                  context, worldName, articleName).mkdirs())
+                              && (FileRetriever.getResidencesDirectory(
+                                  context, worldName, articleName).mkdirs()));
+            } else if (category == Category.Group) {
+                successful = FileRetriever.getMembersDirectory(
+                        context, worldName, articleName).mkdirs();
+            } else if (category == Category.Place) {
+                successful = FileRetriever.getResidentsDirectory(
+                        context, worldName, articleName).mkdirs();
+            }
+        }
+
+        // TODO: If any of the folders failed to be created, delete all other folders created during
+        // the process.
+
+        return successful;
+    }
+
+    /**
      * Saves a String to a text file within an Article's directory.
      * @param context The Context calling this method.
      * @param worldName The name of the world the Article belongs to.

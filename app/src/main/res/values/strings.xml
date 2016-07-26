@@ -83,4 +83,5 @@
     <string name="cropImageError">An error occurred while cropping the selected image.</string>
     <string name="saveImageError">An error occurred while saving the selected image.</string>
     <string name="articleAlreadyExistsError">An article with this name and category already exists.</string>
+    <string name="articleCreationError">An error occurred while creating the Article.</string>
 </resources>
