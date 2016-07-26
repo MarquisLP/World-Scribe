@@ -99,6 +99,10 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.createArticleItem:
+                Intent goToArticleCreationIntent = new Intent(this, CreateArticleActivity.class);
+                startActivity(goToArticleCreationIntent);
+                return true;
             case R.id.createWorldItem:
                 Intent goToWorldCreationIntent = new Intent(this, CreateWorldActivity.class);
                 startActivity(goToWorldCreationIntent);
