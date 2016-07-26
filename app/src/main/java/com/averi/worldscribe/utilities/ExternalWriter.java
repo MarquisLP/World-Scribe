@@ -1,12 +1,18 @@
 package com.averi.worldscribe.utilities;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOError;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +21,9 @@ import java.io.PrintWriter;
  * Created by mark on 08/06/16.
  */
 public final class ExternalWriter {
+
+    public static final int IMAGE_BYTE_SIZE = 1024;
+
 //    public static boolean createAppDirectory() {
 //        boolean directoryExists = true;
 //
@@ -93,6 +102,49 @@ public final class ExternalWriter {
             writer.close();
         } catch (IOException error) {
             result = false;
+        }
+
+        return result;
+    }
+
+    /**
+     * Saves an image to a specific Article's directory.
+     * If the Article already has an image, it will be overwritten.
+     * @param context The Context calling this method.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article whose image will be saved.
+     * @param imageUri The URI to the new image's original location.
+     * @return True if the image was saved successfully; false otherwise.
+     */
+    public static boolean saveArticleImage(Context context, String worldName, Category category,
+                                           String articleName, Uri imageUri) {
+        Boolean result = true;
+
+        String sourceFilename= imageUri.getPath();
+        String destinationFilename = FileRetriever.getArticleFile(context, worldName, category,
+                articleName, context.getString(R.string.imageFileName)).getAbsolutePath();
+        destinationFilename += ExternalReader.IMAGE_FILE_EXTENSION;
+
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
+
+        try {
+            bufferedInputStream = new BufferedInputStream(new FileInputStream(sourceFilename));
+            bufferedOutputStream = new BufferedOutputStream(
+                    new FileOutputStream(destinationFilename, false));
+            byte[] buf = new byte[IMAGE_BYTE_SIZE];
+            bufferedInputStream.read(buf);
+            do {
+                bufferedOutputStream.write(buf);
+            } while (bufferedInputStream.read(buf) != -1);
+        } catch (IOException e) {
+            result = false;
+        } finally {
+            try {
+                if (bufferedInputStream != null) bufferedInputStream.close();
+                if (bufferedOutputStream != null) bufferedOutputStream.close();
+            } catch (IOException e) { }
         }
 
         return result;
