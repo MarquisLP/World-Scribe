@@ -199,4 +199,31 @@ public final class ExternalWriter {
 
         return result;
     }
+
+    /**
+     * Saves a String as a Snippet's new contents.
+     * @param context The Context calling this method.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article who possesses the specified Snippet.
+     * @param snippetName The name of the Snippet that will be written to.
+     * @param contents The String that will be saved to the Snippet.
+     * @return True if the String was saved successfully; false if an I/O error occurs.
+     */
+    public static boolean writeSnippetContents(Context context, String worldName, Category category,
+                                               String articleName, String snippetName,
+                                               String contents) {
+        Boolean result = true;
+
+        try {
+            PrintWriter writer = new PrintWriter(FileRetriever.getSnippetFile(context, worldName,
+                    category, articleName, snippetName));
+            writer.println(contents);
+            writer.close();
+        } catch (IOException error) {
+            result = false;
+        }
+
+        return result;
+    }
 }
