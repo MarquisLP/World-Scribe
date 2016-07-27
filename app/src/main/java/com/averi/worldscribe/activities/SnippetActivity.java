@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 
 public class SnippetActivity extends AppCompatActivity {
 
@@ -17,6 +20,31 @@ public class SnippetActivity extends AppCompatActivity {
      * The text field for editing the Snippet's content.
      */
     private EditText editText;
+
+    /**
+     * Set to true if the Snippet was edited since the last time it was saved.
+     */
+    private boolean editedSinceLastSave = false;
+
+    /**
+     * The name of the World that the Article possessing the Snippet belongs to.
+     */
+    private String worldName;
+
+    /**
+     * The Category of the Article possessing the Snippet.
+     */
+    private Category category;
+
+    /**
+     * The name of the Article possessing the Snippet.
+     */
+    private String articleName;
+
+    /**
+     * The name of the Snippet displayed in this Activity.
+     */
+    private String snippetName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +54,34 @@ public class SnippetActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.editText);
 
         Intent intent = getIntent();
-        String snippetName = intent.getStringExtra(AppPreferences.SNIPPET_NAME);
+        worldName = intent.getStringExtra(AppPreferences.WORLD_NAME);
+        category = (Category) intent.getSerializableExtra(AppPreferences.CATEGORY);
+        articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
+        snippetName = intent.getStringExtra(AppPreferences.SNIPPET_NAME);
+
         setAppBarTitle(snippetName);
         loadSnippetContent(intent.getStringExtra(AppPreferences.WORLD_NAME),
                 (Category) intent.getSerializableExtra(AppPreferences.CATEGORY),
                 intent.getStringExtra(AppPreferences.ARTICLE_NAME),
                 snippetName);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) { editedSinceLastSave = true; }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        saveSnippetContentIfEdited();
     }
 
     /**
@@ -53,5 +103,18 @@ public class SnippetActivity extends AppCompatActivity {
         String snippetContent = ExternalReader.getSnippetText(this, worldName, category,
                 articleName, snippetName);
         editText.setText(snippetContent);
+    }
+
+    /**
+     * Saves any edits made to the Snippet's content to the corresponding text file.
+     */
+    private void saveSnippetContentIfEdited() {
+        if (editedSinceLastSave) {
+            String snippetContent = editText.getText().toString();
+            ExternalWriter.writeSnippetContents(this, worldName, category, articleName,
+                    snippetName, snippetContent);
+            editedSinceLastSave = false;
+        }
+
     }
 }
