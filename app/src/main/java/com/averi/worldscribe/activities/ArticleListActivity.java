@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.averi.worldscribe.views.BottomBar;
@@ -28,6 +29,8 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
     private String worldName;
     private Category category;
     private BottomBar bottomBar;
+    private TextView textEmpty;
+    private ArrayList<String> articleNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +41,10 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
         category = loadCategory(intent);
         worldName = loadWorldName(intent);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        textEmpty = (TextView) findViewById(R.id.empty);
 
         setupRecyclerView();
         setAppBar(worldName, category);
-        populateList(worldName, category);
         bottomBar.highlightCategoryButton(this, category);
     }
 
@@ -49,6 +52,9 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(true);
+
+        StringListAdapter adapter = new StringListAdapter(this, articleNames);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setAppBar(String worldName, Category category) {
@@ -62,17 +68,23 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        populateList(worldName, category);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     private void populateList(String worldName, Category category) {
-        ArrayList<String> articleNames = ExternalReader.getArticleNamesInCategory(this, worldName, category);
-        TextView textEmpty = (TextView) findViewById(R.id.empty);
-
-        StringListAdapter adapter = new StringListAdapter(this, articleNames);
-        recyclerView.setAdapter(adapter);
+        articleNames = ExternalReader.getArticleNamesInCategory(this, worldName, category);
+        StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
+        adapter.updateList(articleNames);
+        adapter.notifyDataSetChanged();
 
         if (articleNames.isEmpty()) {
             if (textEmpty != null) {

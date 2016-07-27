@@ -58,4 +58,13 @@ public class StringListAdapter extends RecyclerView.Adapter<StringListAdapter.Vi
         return strings.size();
     }
 
+    /**
+     * Set a new list of strings as this Adapter's content.
+     * @param strings The new contents held by this Adapter.
+     */
+    public void updateList(ArrayList<String> strings) {
+        this.strings.clear();
+        this.strings.addAll(strings);
+    }
+
 }
