@@ -57,7 +57,7 @@
     <string name="welcomeText">Welcome to World Scribe!</string>
     <string name="beginText">Let\'s start by creating your first World.</string>
 
-    <string name="nameWorldHint">Name the new World</string>
+    <string name="nameWorldHint">World Name</string>
     <string name="createButtonText">Create!</string>
     <string name="relationHintText">Relation to the other article</string>
     <string name="relationHintTopText">Relation to the article below</string>
@@ -79,6 +79,8 @@
     <string name="membershipsText">Memberships</string>
     <string name="residencesText">Residences</string>
     <string name="memberRoleText">(%1$s)</string>
+
+    <string name="createWorldTitle">A World is Born</string>
 
     <string name="confirmWorldDeletionTitle">Delete %1$s</string>
     <string name="confirmWorldDeletion">Are you sure you wish to delete %1$s?\nOnce a World is deleted, it cannot be recovered.</string>

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.averi.worldscribe.utilities.ExternalWriter;
 public class CreateWorldActivity extends AppCompatActivity {
 
     private SharedPreferences preferences = null;
+    private Toolbar appBar;
     private EditText editName;
     private Button createButton;
     private CoordinatorLayout coordinatorLayout;
@@ -31,12 +33,14 @@ public class CreateWorldActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_world);
 
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
+        appBar = (Toolbar) findViewById(R.id.my_toolbar);
         editName = (EditText) findViewById(R.id.editName);
         createButton = (Button) findViewById(R.id.createButton);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         worldAlreadyExistsMessage = this.getResources().getString(R.string.worldAlreadyExistsText);
         worldCreationErrorMessage = this.getResources().getString(R.string.worldCreationErrorText);
 
+        appBar.setTitle(R.string.createWorldTitle);
         addTextListener();
     }
 
