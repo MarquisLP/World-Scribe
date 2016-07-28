@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
@@ -118,12 +119,10 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
                 startActivity(goToArticleCreationIntent);
                 return true;
             case R.id.createWorldItem:
-                Intent goToWorldCreationIntent = new Intent(this, CreateWorldActivity.class);
-                startActivity(goToWorldCreationIntent);
-                return true;
             case R.id.loadWorldItem:
-                Intent goToLoadWorldIntent = new Intent(this, LoadWorldActivity.class);
-                startActivity(goToLoadWorldIntent);
+            case R.id.deleteWorldItem:
+            case R.id.settingsItem:
+                ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
