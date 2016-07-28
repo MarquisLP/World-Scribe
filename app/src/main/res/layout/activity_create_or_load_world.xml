@@ -12,7 +12,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createText"
+        android:text="@string/createWorldText"
         android:id="@+id/create"
         android:background="?attr/colorPrimary"
         android:textColor="@android:color/white"
@@ -28,7 +28,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/LoadText"
+        android:text="@string/loadWorldText"
         android:id="@+id/load"
         android:background="?attr/colorPrimary"
         android:textColor="@android:color/white"

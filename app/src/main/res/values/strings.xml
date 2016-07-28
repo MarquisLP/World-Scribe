@@ -71,8 +71,8 @@
     <string name="loadWorldTitle">Enter a World…</string>
     <string name="worldAlreadyExistsText">A World with this name already exists.\nPlease choose a different name.</string>
     <string name="worldCreationErrorText">An error occurred during World creation.</string>
-    <string name="LoadText">Load</string>
-    <string name="createText">Create</string>
+    <string name="loadWorldText">Load World</string>
+    <string name="createWorldText">Create World</string>
     <string name="articleNameHint">Article Name</string>
     <string name="aliasesHint">Nicknames / Aliases</string>
     <string name="snippetHint">Enter your snippet here.</string>
