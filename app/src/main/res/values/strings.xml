@@ -80,8 +80,12 @@
     <string name="residencesText">Residences</string>
     <string name="memberRoleText">(%1$s)</string>
 
+    <string name="confirmWorldDeletionTitle">Delete %1$s</string>
+    <string name="confirmWorldDeletion">Are you sure you wish to delete %1$s?\nOnce a World is deleted, it cannot be recovered.</string>
+
     <string name="cropImageError">An error occurred while cropping the selected image.</string>
     <string name="saveImageError">An error occurred while saving the selected image.</string>
     <string name="articleAlreadyExistsError">An article with this name and category already exists.</string>
     <string name="articleCreationError">An error occurred while creating the Article.</string>
+    <string name="deleteWorldError">An error occurred while deleting this World.</string>
 </resources>
