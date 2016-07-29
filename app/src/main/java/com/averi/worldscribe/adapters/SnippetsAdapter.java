@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.SnippetActivity;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 import java.util.ArrayList;
@@ -89,10 +89,10 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
         private void goToSnippet() {
             Intent goToSnippetIntent = new Intent(context, SnippetActivity.class);
 
-            goToSnippetIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-            goToSnippetIntent.putExtra(AppPreferences.CATEGORY, category);
-            goToSnippetIntent.putExtra(AppPreferences.ARTICLE_NAME, articleName);
-            goToSnippetIntent.putExtra(AppPreferences.SNIPPET_NAME, snippetName);
+            goToSnippetIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToSnippetIntent.putExtra(IntentFields.CATEGORY, category);
+            goToSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
+            goToSnippetIntent.putExtra(IntentFields.SNIPPET_NAME, snippetName);
 
             context.startActivity(goToSnippetIntent);
         }

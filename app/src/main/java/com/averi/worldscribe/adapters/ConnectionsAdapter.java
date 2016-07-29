@@ -21,7 +21,7 @@ import com.averi.worldscribe.R;
 
 import java.util.ArrayList;
 
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 /**
@@ -92,9 +92,9 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                     goToArticleIntent = new Intent(context, ConceptActivity.class);
             }
 
-            goToArticleIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-            goToArticleIntent.putExtra(AppPreferences.CATEGORY, connection.connectedArticleCategory);
-            goToArticleIntent.putExtra(AppPreferences.ARTICLE_NAME, connection.connectedArticleName);
+            goToArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToArticleIntent.putExtra(IntentFields.CATEGORY, connection.connectedArticleCategory);
+            goToArticleIntent.putExtra(IntentFields.ARTICLE_NAME, connection.connectedArticleName);
 
             context.startActivity(goToArticleIntent);
         }

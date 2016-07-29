@@ -14,7 +14,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Member;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PersonActivity;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 import java.util.ArrayList;
@@ -90,9 +90,9 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MemberHo
         private void goToMember() {
             Intent goToMemberIntent = new Intent(context, PersonActivity.class);
 
-            goToMemberIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-            goToMemberIntent.putExtra(AppPreferences.CATEGORY, Category.Person);
-            goToMemberIntent.putExtra(AppPreferences.ARTICLE_NAME, member.memberName);
+            goToMemberIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToMemberIntent.putExtra(IntentFields.CATEGORY, Category.Person);
+            goToMemberIntent.putExtra(IntentFields.ARTICLE_NAME, member.memberName);
 
             context.startActivity(goToMemberIntent);
         }

@@ -17,6 +17,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 
 import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 public class PermissionActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     public void askForWritePermission(View view) {
-        if (preferences.getBoolean("permissionPromptIsEnabled", true)) {
+        if (preferences.getBoolean(AppPreferences.WRITE_PERMISSION_PROMPT_IS_ENABLED, true)) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_EXTERNAL_STORAGE);
@@ -72,11 +73,13 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void enableWritePermissionPrompt() {
-        preferences.edit().putBoolean("permissionPromptIsEnabled", true).apply();
+        preferences.edit().putBoolean(AppPreferences.WRITE_PERMISSION_PROMPT_IS_ENABLED,
+                true).apply();
     }
 
     private void recordDisablingOfWritePermissionPrompt() {
-        preferences.edit().putBoolean("permissionPromptIsEnabled", false).apply();
+        preferences.edit().putBoolean(AppPreferences.WRITE_PERMISSION_PROMPT_IS_ENABLED,
+                false).apply();
     }
 
     private boolean userDisabledAskingForWritePermission() {
@@ -92,7 +95,7 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void goToNextActivity() {
-        String lastOpenedWorldName = preferences.getString("lastOpenedWorldName", "");
+        String lastOpenedWorldName = preferences.getString(AppPreferences.LAST_OPENED_WORLD, "");
         if ((!(lastOpenedWorldName.isEmpty())) && (ExternalReader.worldAlreadyExists(lastOpenedWorldName))) {
             goToLastOpenedWorld(lastOpenedWorldName);
 
@@ -109,14 +112,14 @@ public class PermissionActivity extends AppCompatActivity {
 
     private void goToLastOpenedWorld(String lastOpenedWorldName) {
         Intent goToPeopleListIntent = new Intent(this, ArticleListActivity.class);
-        goToPeopleListIntent.putExtra(AppPreferences.WORLD_NAME, lastOpenedWorldName);
-        goToPeopleListIntent.putExtra("category", Category.Person);
+        goToPeopleListIntent.putExtra(IntentFields.WORLD_NAME, lastOpenedWorldName);
+        goToPeopleListIntent.putExtra(IntentFields.CATEGORY, Category.Person);
         startActivity(goToPeopleListIntent);
         finish();
     }
 
     private void setLastOpenedWorldToNothing() {
-        preferences.edit().putString("lastOpenedWorldName", "").apply();
+        preferences.edit().putString(AppPreferences.LAST_OPENED_WORLD, "").apply();
     }
 
     private void goToWorldCreation() {

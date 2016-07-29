@@ -13,7 +13,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleListActivity;
 
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.AttributeGetter;
 
 public class BottomBar extends RelativeLayout {
@@ -67,8 +67,8 @@ public class BottomBar extends RelativeLayout {
 
     private void goToCategoryList(Category category) {
         Intent intent = new Intent(context, ArticleListActivity.class);
-        intent.putExtra(AppPreferences.WORLD_NAME,
-                ((Activity) context).getIntent().getStringExtra(AppPreferences.WORLD_NAME));
+        intent.putExtra(IntentFields.WORLD_NAME,
+                ((Activity) context).getIntent().getStringExtra(IntentFields.WORLD_NAME));
         intent.putExtra("category", category);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

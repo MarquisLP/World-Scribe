@@ -21,7 +21,7 @@ import com.averi.worldscribe.adapters.StringListContext;
 
 import java.util.ArrayList;
 
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 public class ArticleListActivity extends AppCompatActivity implements StringListContext {
@@ -102,11 +102,11 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
     }
 
     private Category loadCategory(Intent intent) {
-        return ((Category) intent.getSerializableExtra(AppPreferences.CATEGORY));
+        return ((Category) intent.getSerializableExtra(IntentFields.CATEGORY));
     }
 
     private String loadWorldName(Intent intent) {
-        return (intent.getStringExtra(AppPreferences.WORLD_NAME));
+        return (intent.getStringExtra(IntentFields.WORLD_NAME));
     }
 
     @Override
@@ -114,8 +114,8 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
         switch (item.getItemId()) {
             case R.id.createArticleItem:
                 Intent goToArticleCreationIntent = new Intent(this, CreateArticleActivity.class);
-                goToArticleCreationIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-                goToArticleCreationIntent.putExtra(AppPreferences.CATEGORY, category);
+                goToArticleCreationIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+                goToArticleCreationIntent.putExtra(IntentFields.CATEGORY, category);
                 startActivity(goToArticleCreationIntent);
                 return true;
             case R.id.createWorldItem:
@@ -151,9 +151,9 @@ public class ArticleListActivity extends AppCompatActivity implements StringList
                 break;
         }
 
-        goToArticleIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-        goToArticleIntent.putExtra(AppPreferences.CATEGORY, category);
-        goToArticleIntent.putExtra(AppPreferences.ARTICLE_NAME, itemText);
+        goToArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        goToArticleIntent.putExtra(IntentFields.CATEGORY, category);
+        goToArticleIntent.putExtra(IntentFields.ARTICLE_NAME, itemText);
 
         startActivity(goToArticleIntent);
     }

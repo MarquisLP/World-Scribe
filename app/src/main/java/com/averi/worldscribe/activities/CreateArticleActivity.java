@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -42,7 +42,7 @@ public class CreateArticleActivity extends AppCompatActivity {
         nameField = (EditText) findViewById(R.id.articleName);
         categorySpinner = (Spinner) findViewById(R.id.categorySelection);
         createButton = (Button) findViewById(R.id.create);
-        worldName = getIntent().getStringExtra(AppPreferences.WORLD_NAME);
+        worldName = getIntent().getStringExtra(IntentFields.WORLD_NAME);
 
         populateCategorySpinner();
         selectInitialCategory();
@@ -61,7 +61,7 @@ public class CreateArticleActivity extends AppCompatActivity {
      */
     private void selectInitialCategory() {
         Category previousCategory = (Category) getIntent().getSerializableExtra(
-                AppPreferences.CATEGORY);
+                IntentFields.CATEGORY);
         switch (previousCategory) {
             case Person:
                 categorySpinner.setSelection(PERSON_ITEM_POSITION);
@@ -178,9 +178,9 @@ public class CreateArticleActivity extends AppCompatActivity {
                 goToNewArticleIntent = new Intent(this, ConceptActivity.class);
         }
 
-        goToNewArticleIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-        goToNewArticleIntent.putExtra(AppPreferences.CATEGORY, category);
-        goToNewArticleIntent.putExtra(AppPreferences.ARTICLE_NAME, articleName);
+        goToNewArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        goToNewArticleIntent.putExtra(IntentFields.CATEGORY, category);
+        goToNewArticleIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
 
         startActivity(goToNewArticleIntent);
         finish();

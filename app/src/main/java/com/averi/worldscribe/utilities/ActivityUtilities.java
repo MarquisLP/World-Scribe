@@ -26,7 +26,7 @@ public class ActivityUtilities {
 
         Intent goToWorldIntent = new Intent(context, ArticleListActivity.class);
         goToWorldIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        goToWorldIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
+        goToWorldIntent.putExtra(IntentFields.WORLD_NAME, worldName);
         goToWorldIntent.putExtra("category", Category.Person);
         context.startActivity(goToWorldIntent);
     }

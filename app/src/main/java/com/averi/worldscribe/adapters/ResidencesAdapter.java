@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PlaceActivity;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 import java.util.ArrayList;
@@ -86,9 +86,9 @@ public class ResidencesAdapter extends RecyclerView.Adapter<ResidencesAdapter.Re
         private void goToResidence() {
             Intent goToResidenceIntent = new Intent(context, PlaceActivity.class);
 
-            goToResidenceIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-            goToResidenceIntent.putExtra(AppPreferences.CATEGORY, Category.Place);
-            goToResidenceIntent.putExtra(AppPreferences.ARTICLE_NAME, residenceName);
+            goToResidenceIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToResidenceIntent.putExtra(IntentFields.CATEGORY, Category.Place);
+            goToResidenceIntent.putExtra(IntentFields.ARTICLE_NAME, residenceName);
 
             context.startActivity(goToResidenceIntent);
         }

@@ -10,9 +10,10 @@ import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.IntentFields;
 
 public class SnippetActivity extends AppCompatActivity {
 
@@ -54,15 +55,15 @@ public class SnippetActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.editText);
 
         Intent intent = getIntent();
-        worldName = intent.getStringExtra(AppPreferences.WORLD_NAME);
-        category = (Category) intent.getSerializableExtra(AppPreferences.CATEGORY);
-        articleName = intent.getStringExtra(AppPreferences.ARTICLE_NAME);
-        snippetName = intent.getStringExtra(AppPreferences.SNIPPET_NAME);
+        worldName = intent.getStringExtra(IntentFields.WORLD_NAME);
+        category = (Category) intent.getSerializableExtra(IntentFields.CATEGORY);
+        articleName = intent.getStringExtra(IntentFields.ARTICLE_NAME);
+        snippetName = intent.getStringExtra(IntentFields.SNIPPET_NAME);
 
         setAppBarTitle(snippetName);
-        loadSnippetContent(intent.getStringExtra(AppPreferences.WORLD_NAME),
-                (Category) intent.getSerializableExtra(AppPreferences.CATEGORY),
-                intent.getStringExtra(AppPreferences.ARTICLE_NAME),
+        loadSnippetContent(intent.getStringExtra(IntentFields.WORLD_NAME),
+                (Category) intent.getSerializableExtra(IntentFields.CATEGORY),
+                intent.getStringExtra(IntentFields.ARTICLE_NAME),
                 snippetName);
 
         editText.addTextChangedListener(new TextWatcher() {

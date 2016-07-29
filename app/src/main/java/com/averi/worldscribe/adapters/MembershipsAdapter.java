@@ -14,7 +14,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.GroupActivity;
-import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
 import java.util.ArrayList;
@@ -90,9 +90,9 @@ public class MembershipsAdapter extends RecyclerView.Adapter<MembershipsAdapter.
         private void goToGroup() {
             Intent goToGroupIntent = new Intent(context, GroupActivity.class);
 
-            goToGroupIntent.putExtra(AppPreferences.WORLD_NAME, worldName);
-            goToGroupIntent.putExtra(AppPreferences.CATEGORY, Category.Group);
-            goToGroupIntent.putExtra(AppPreferences.ARTICLE_NAME, membership.groupName);
+            goToGroupIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToGroupIntent.putExtra(IntentFields.CATEGORY, Category.Group);
+            goToGroupIntent.putExtra(IntentFields.ARTICLE_NAME, membership.groupName);
 
             context.startActivity(goToGroupIntent);
         }
