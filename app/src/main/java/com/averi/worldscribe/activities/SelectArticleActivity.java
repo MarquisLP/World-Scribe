@@ -72,6 +72,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
             placesButton = (ImageButton) bottomBarLayout.findViewById(R.id.placesButton);
             itemsButton = (ImageButton) bottomBarLayout.findViewById(R.id.itemsButton);
             conceptsButton = (ImageButton) bottomBarLayout.findViewById(R.id.conceptsButton);
+            setBottomBarListeners();
         }
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         setUpRecyclerView();
@@ -191,6 +192,43 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
             }
             recyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Sets listeners for the Bottom Bar buttons so that Activity displays the selected button's
+     * Category when clicked.
+     */
+    private void setBottomBarListeners() {
+        peopleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCategory(Category.Person);
+            }
+        });
+        groupsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCategory(Category.Group);
+            }
+        });
+        placesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCategory(Category.Place);
+            }
+        });
+        itemsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCategory(Category.Item);
+            }
+        });
+        conceptsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCategory(Category.Concept);
+            }
+        });
     }
 
     /**
