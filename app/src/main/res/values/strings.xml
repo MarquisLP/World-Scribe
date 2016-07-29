@@ -8,6 +8,7 @@
     <string name="itemText">Item</string>
     <string name="conceptText">Concept</string>
 
+    <string name="article">Article</string>
     <string-array name="categories_array">
         <item name="person">Person</item>
         <item name="group">Group</item>
@@ -79,6 +80,7 @@
     <string name="membershipsText">Memberships</string>
     <string name="residencesText">Residences</string>
     <string name="memberRoleText">(%1$s)</string>
+    <string name="selectArticleTitle">Select the %1$s to link</string>
 
     <string name="createWorldTitle">A World is Born</string>
 
