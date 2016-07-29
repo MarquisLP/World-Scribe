@@ -153,7 +153,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
                 categoryButton = peopleButton;
                 break;
             case Group:
-                categoryButton = placesButton;
+                categoryButton = groupsButton;
                 break;
             case Place:
                 categoryButton = placesButton;
