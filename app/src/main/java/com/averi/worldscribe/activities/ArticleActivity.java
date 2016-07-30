@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -82,6 +83,10 @@ public abstract class ArticleActivity extends AppCompatActivity {
      */
     private RecyclerView connectionsList;
     /**
+     * Clicking this begins Connection creation.
+     */
+    private Button addConnectionButton;
+    /**
      * Contains cards for all of the Article's Snippets.
      */
     private RecyclerView snippetsList;
@@ -98,6 +103,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         category = (Category) intent.getSerializableExtra(IntentFields.CATEGORY);
         articleName = intent.getStringExtra(IntentFields.ARTICLE_NAME);
         connectionsList = getConnectionsRecycler();
+        addConnectionButton = getAddConnectionButton();
         snippetsList = getSnippetsRecycler();
         textFields = getTextFields();
 
@@ -142,6 +148,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * {@link com.averi.worldscribe.Connection Connection}s.
      */
     protected abstract RecyclerView getConnectionsRecycler();
+
+    /**
+     * @return The Button used for creating new Connections to this Article.
+     */
+    protected abstract Button getAddConnectionButton();
 
     /**
      * @return The RecyclerView for this Article's Snippets.

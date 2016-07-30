@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -76,6 +77,11 @@ public class PersonActivity extends ArticleActivity {
     @Override
     protected RecyclerView getConnectionsRecycler() {
         return (RecyclerView) findViewById(R.id.recyclerConnections);
+    }
+
+    @Override
+    protected Button getAddConnectionButton() {
+        return (Button) findViewById(R.id.buttonAddConnection);
     }
 
     @Override
