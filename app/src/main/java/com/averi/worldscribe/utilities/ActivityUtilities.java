@@ -22,19 +22,13 @@ import com.averi.worldscribe.activities.LoadWorldActivity;
 public class ActivityUtilities {
 
     public static void goToWorld(Context context, String worldName) {
-        saveLastOpenedWorld(context, worldName);
+        AppPreferences.saveLastOpenedWorld(context, worldName);
 
         Intent goToWorldIntent = new Intent(context, ArticleListActivity.class);
         goToWorldIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         goToWorldIntent.putExtra(IntentFields.WORLD_NAME, worldName);
         goToWorldIntent.putExtra("category", Category.Person);
         context.startActivity(goToWorldIntent);
-    }
-
-    private static void saveLastOpenedWorld(Context context, String worldName) {
-        SharedPreferences preferences = context.getSharedPreferences("com.averi.worldscribe",
-                AppCompatActivity.MODE_PRIVATE);
-        preferences.edit().putString("lastOpenedWorldName", worldName).apply();
     }
 
     /**
