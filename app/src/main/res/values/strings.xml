@@ -81,6 +81,7 @@
     <string name="residencesText">Residences</string>
     <string name="memberRoleText">(%1$s)</string>
     <string name="selectArticleTitle">Select the %1$s to link</string>
+    <string name="saveEditText">SAVE</string>
 
     <string name="createWorldTitle">A World is Born</string>
 
