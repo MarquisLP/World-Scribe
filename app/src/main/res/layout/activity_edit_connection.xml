@@ -49,16 +49,15 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/headerSpacing" />
 
-    <Button
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:id="@+id/buttonOtherArticleName"
-        android:textColor="?attr/colorPrimary"
+        android:id="@+id/textOtherArticleName"
+        android:gravity="center"
         android:text="Other Article"
-        android:background="@drawable/border"
         android:textSize="@dimen/headerTextSize"
-        android:padding="@dimen/buttonPadding" />
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="wrap_content"
