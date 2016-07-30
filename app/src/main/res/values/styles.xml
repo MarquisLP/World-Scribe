@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/averiBlue</item>
         <item name="colorPrimaryDark">@color/averiBlueHighlight</item>
         <item name="colorAccent">@color/averiBlue</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
     <style name="SunsetOrange" parent="Theme.AppCompat.Light.NoActionBar">
@@ -20,6 +21,7 @@
         <item name="colorPrimary">@color/sunsetOrange</item>
         <item name="colorPrimaryDark">@color/sunsetOrangeHighlight</item>
         <item name="colorAccent">@color/sunsetOrange</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
     <style name="EnchantedGreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -27,6 +29,7 @@
         <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
         <item name="colorPrimary">@color/enchantedGreen</item>
         <item name="colorPrimaryDark">@color/enchantedGreenHighlight</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
 </resources>
