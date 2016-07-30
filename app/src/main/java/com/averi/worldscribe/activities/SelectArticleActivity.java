@@ -232,11 +232,15 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     }
 
     /**
-     * Return the name of the selected Article to the Activity that called this Activity.
+     * Return the name and {@link Category} of the selected Article to the Activity that called this
+     * Activity.
      * @param itemText The name of the selected Article.
      */
     public void respondToListItemSelection(String itemText) {
-        // TODO: Add the name and Category of the selected Article to the result Intent.
+        Intent data = new Intent();
+        data.putExtra(IntentFields.CATEGORY, category);
+        data.putExtra(IntentFields.ARTICLE_NAME, itemText);
+        setResult(RESULT_OK, data);
         finish();
     }
 }
