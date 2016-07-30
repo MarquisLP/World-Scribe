@@ -16,6 +16,7 @@ import android.view.View;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
@@ -111,10 +112,7 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void goToLastOpenedWorld(String lastOpenedWorldName) {
-        Intent goToPeopleListIntent = new Intent(this, ArticleListActivity.class);
-        goToPeopleListIntent.putExtra(IntentFields.WORLD_NAME, lastOpenedWorldName);
-        goToPeopleListIntent.putExtra(IntentFields.CATEGORY, Category.Person);
-        startActivity(goToPeopleListIntent);
+        ActivityUtilities.goToWorld(this, lastOpenedWorldName);
         finish();
     }
 
