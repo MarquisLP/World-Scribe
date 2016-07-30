@@ -46,6 +46,10 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * The request code for selecting a new Article image.
      */
     public static final int RESULT_SELECT_IMAGE = 100;
+    /**
+     * The request code for creating a new Connection to this Article.
+     */
+    public static final int RESULT_NEW_CONNECTION = 200;
 
     /**
      * The display for the Article's image.
@@ -111,6 +115,12 @@ public abstract class ArticleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectNewArticleImage();
+            }
+        });
+        addConnectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewConnection();
             }
         });
     }
@@ -279,6 +289,15 @@ public abstract class ArticleActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_menu, menu);
         return true;
+    }
+
+    /**
+     * Create a new {@link com.averi.worldscribe.Connection Connection} to this Article.
+     */
+    private void createNewConnection() {
+        Intent selectConnectedArticleIntent = new Intent(this, SelectArticleActivity.class);
+        selectConnectedArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        startActivityForResult(selectConnectedArticleIntent, RESULT_NEW_CONNECTION);
     }
 
 }
