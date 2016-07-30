@@ -281,6 +281,25 @@ public abstract class ArticleActivity extends AppCompatActivity {
                     Toast.makeText(this, getResources().getString(R.string.cropImageError),
                             Toast.LENGTH_SHORT).show();
                 }
+
+            case RESULT_NEW_CONNECTION:
+                if (resultCode == RESULT_OK) {
+                    Category otherArticleCategory = (Category) data.getSerializableExtra(
+                            IntentFields.CATEGORY);
+                    String otherArticleName = data.getStringExtra(IntentFields.ARTICLE_NAME);
+
+                    Intent startConnectionEditIntent = new Intent(this,
+                            EditConnectionActivity.class);
+                    startConnectionEditIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+                    startConnectionEditIntent.putExtra(IntentFields.CATEGORY, category);
+                    startConnectionEditIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
+                    startConnectionEditIntent.putExtra(IntentFields.CONNECTED_ARTICLE_CATEGORY,
+                            otherArticleCategory);
+                    startConnectionEditIntent.putExtra(IntentFields.CONNECTED_ARTICLE_NAME,
+                            otherArticleName);
+
+                    startActivity(startConnectionEditIntent);
+                }
         }
     }
 
