@@ -58,7 +58,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     private ImageButton conceptsButton;
     private TextView textEmpty;
     private LinkedArticleList existingLinks;
-    private ArrayList<String> articleNames = new ArrayList<>();
+    private HashSet<String> articleNames = new HashSet<>();
     private boolean canChooseOneCategoryOnly;
 
     @Override
@@ -102,7 +102,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     private void setUpRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(true);
-        recyclerView.setAdapter(new StringListAdapter(this, articleNames));
+        recyclerView.setAdapter(new StringListAdapter(this, new ArrayList<String>()));
     }
 
     /**
@@ -181,9 +181,10 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
      * @param listCategory The Category of Articles that will be displayed in the list.
      */
     private void populateList(Category listCategory) {
-        articleNames = ExternalReader.getArticleNamesInCategory(this, worldName, listCategory);
+        articleNames.clear();
+        articleNames.addAll(ExternalReader.getArticleNamesInCategory(this, worldName, listCategory));
         StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
-        adapter.updateList(articleNames);
+        adapter.updateList(new ArrayList<>(articleNames));
         adapter.notifyDataSetChanged();
 
         if (articleNames.isEmpty()) {
