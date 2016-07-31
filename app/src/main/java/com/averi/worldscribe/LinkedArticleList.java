@@ -15,11 +15,11 @@ import java.util.HashSet;
  */
 public class LinkedArticleList implements Serializable {
 
-    private HashSet<String> personNames;
-    private HashSet<String> groupNames;
-    private HashSet<String> placeNames;
-    private HashSet<String> itemNames;
-    private HashSet<String> conceptNames;
+    private HashSet<String> personNames = new HashSet<>();
+    private HashSet<String> groupNames = new HashSet<>();
+    private HashSet<String> placeNames = new HashSet<>();
+    private HashSet<String> itemNames = new HashSet<>();
+    private HashSet<String> conceptNames = new HashSet<>();
 
     /**
      * Adds an Article to this list.
