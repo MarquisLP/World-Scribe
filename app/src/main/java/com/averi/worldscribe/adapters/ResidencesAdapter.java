@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.LinkedArticleList;
+import com.averi.worldscribe.Member;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PlaceActivity;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -22,7 +24,8 @@ import java.util.ArrayList;
  * Created by mark on 02/07/16.
  * An Adapter for RecyclerViews displaying a Person's Residences.
  */
-public class ResidencesAdapter extends RecyclerView.Adapter<ResidencesAdapter.ResidenceHolder> {
+public class ResidencesAdapter extends RecyclerView.Adapter<ResidencesAdapter.ResidenceHolder>
+implements ArticleLinkAdapter {
 
     /**
      * A ViewHolder containing a Residence Card. Clicking on it will navigate the user to a
@@ -128,5 +131,15 @@ public class ResidencesAdapter extends RecyclerView.Adapter<ResidencesAdapter.Re
     @Override
     public int getItemCount() {
         return residences.size();
+    }
+
+    public LinkedArticleList getLinkedArticleList() {
+        LinkedArticleList linkedArticleList = new LinkedArticleList();
+
+        for (String residenceName : residences) {
+            linkedArticleList.addArticle(Category.Place, residenceName);
+        }
+
+        return  linkedArticleList;
     }
 }

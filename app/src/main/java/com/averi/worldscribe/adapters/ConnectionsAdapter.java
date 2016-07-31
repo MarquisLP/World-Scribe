@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.activities.ConceptActivity;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.activities.GroupActivity;
@@ -27,7 +28,8 @@ import com.averi.worldscribe.utilities.ExternalReader;
 /**
  * Created by mark on 02/07/16.
  */
-public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionHolder> {
+public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionHolder>
+implements ArticleLinkAdapter {
 
     public class ConnectionHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final Context context;
@@ -128,5 +130,16 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     @Override
     public int getItemCount() {
         return connections.size();
+    }
+
+    public LinkedArticleList getLinkedArticleList() {
+        LinkedArticleList linkedArticleList = new LinkedArticleList();
+
+        for (Connection connection : connections) {
+            linkedArticleList.addArticle(connection.connectedArticleCategory,
+                    connection.connectedArticleName);
+        }
+
+        return linkedArticleList;
     }
 }

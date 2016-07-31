@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.Member;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PersonActivity;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
  * Created by mark on 02/07/16.
  * An Adapter for RecyclerViews displaying a Group's Members.
  */
-public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MemberHolder> {
+public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MemberHolder>
+implements ArticleLinkAdapter {
 
     public class MemberHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final Context context;
@@ -130,5 +132,15 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MemberHo
     @Override
     public int getItemCount() {
         return members.size();
+    }
+
+    public LinkedArticleList getLinkedArticleList() {
+        LinkedArticleList linkedArticleList = new LinkedArticleList();
+
+        for (Member member : members) {
+            linkedArticleList.addArticle(Category.Person, member.memberName);
+        }
+
+        return  linkedArticleList;
     }
 }
