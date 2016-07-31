@@ -143,11 +143,21 @@ public final class ExternalWriter {
     public static boolean writeStringToArticleFile(Context context, String worldName,
                                                    Category category, String articleName,
                                                    String fileName, String contents) {
+        return writeStringToFile(FileRetriever.getArticleFile(context, worldName, category,
+                articleName, fileName + ExternalReader.TEXT_FIELD_FILE_EXTENSION), contents);
+    }
+
+    /**
+     * Saves a String message to a file.
+     * @param textFile The File that will be written to.
+     * @param contents The message to save to the file.
+     * @return True if the String was saved successfully; false if an I/O error occurs.
+     */
+    private static boolean writeStringToFile(File textFile, String contents) {
         Boolean result = true;
 
         try {
-            PrintWriter writer = new PrintWriter(FileRetriever.getArticleFile(context, worldName,
-                    category, articleName, fileName + ExternalReader.TEXT_FIELD_FILE_EXTENSION));
+            PrintWriter writer = new PrintWriter(textFile);
             writer.println(contents);
             writer.close();
         } catch (IOException error) {
@@ -216,19 +226,8 @@ public final class ExternalWriter {
                                                  Category category, String articleName,
                                                  Category connectedArticleCategory,
                                                  String connectedArticleName, String relation) {
-        Boolean successful = true;
-
-        try {
-            PrintWriter writer = new PrintWriter(FileRetriever.getConnectionRelationFile(
-                    context, worldName, category, articleName,
-                    connectedArticleCategory, connectedArticleName));
-            writer.println(relation);
-            writer.close();
-        } catch (IOException error) {
-            successful = false;
-        }
-
-        return successful;
+        return writeStringToFile(FileRetriever.getConnectionRelationFile( context, worldName,
+                category, articleName, connectedArticleCategory, connectedArticleName), relation);
     }
 
     /**
@@ -244,17 +243,7 @@ public final class ExternalWriter {
     public static boolean writeSnippetContents(Context context, String worldName, Category category,
                                                String articleName, String snippetName,
                                                String contents) {
-        Boolean result = true;
-
-        try {
-            PrintWriter writer = new PrintWriter(FileRetriever.getSnippetFile(context, worldName,
-                    category, articleName, snippetName));
-            writer.println(contents);
-            writer.close();
-        } catch (IOException error) {
-            result = false;
-        }
-
-        return result;
+        return writeStringToFile(FileRetriever.getSnippetFile(context, worldName, category,
+                articleName, snippetName), contents);
     }
 }
