@@ -319,6 +319,8 @@ public abstract class ArticleActivity extends AppCompatActivity {
     private void createNewConnection() {
         Intent selectConnectedArticleIntent = new Intent(this, SelectArticleActivity.class);
         selectConnectedArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        selectConnectedArticleIntent.putExtra(IntentFields.MAIN_ARTICLE_CATEGORY, category);
+        selectConnectedArticleIntent.putExtra(IntentFields.MAIN_ARTICLE_NAME, articleName);
         ConnectionsAdapter connectionsAdapter = (ConnectionsAdapter) connectionsList.getAdapter();
         selectConnectedArticleIntent.putExtra(IntentFields.EXISTING_LINKS,
                 connectionsAdapter.getLinkedArticleList());

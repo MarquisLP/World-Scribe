@@ -30,13 +30,20 @@ import java.util.HashSet;
  * </p>
  *
  * <p>
- * The Intent used to create this Activity can optionally include the "Category" field. If it is
+ * The Intent used to create this Activity can optionally include the "category" field. If it is
  * specified, then this Activity will only show Articles of that {@link Category}, and the BottomBar
  * will be hidden so that the user cannot switch Categories. This is useful if, for example, the
  * selection specifically requires a Person.
  * <br />
  * If a Category isn't specified, then the user is free to choose from any Category, using the
  * BottomBar to navigate between Categories of Articles.
+ * </p>
+ *
+ * <p>
+ * The Category of the Article who will receive the link must still be passed, though the Intent
+ * must pass it via the "mainArticleCategory" field instead, to avoid mix-ups with the field above.
+ * Similarly, the name of that Article must also be passed via "mainArticleName" instead of
+ * "articleName".
  * </p>
  */
 public class SelectArticleActivity extends AppCompatActivity implements StringListContext {
@@ -49,6 +56,8 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     private Toolbar appBar;
     private RecyclerView recyclerView;
     private String worldName;
+    private Category mainArticleCategory;
+    private String mainArticleName;
     private Category category;
     private LinearLayout bottomBarLayout;
     private ImageButton peopleButton;
@@ -85,6 +94,9 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
                 IntentFields.EXISTING_LINKS);
         canChooseOneCategoryOnly = startupIntent.hasExtra(IntentFields.CATEGORY);
         worldName = startupIntent.getStringExtra(IntentFields.WORLD_NAME);
+        mainArticleCategory=  (Category) startupIntent.getSerializableExtra(
+                IntentFields.MAIN_ARTICLE_CATEGORY);
+        mainArticleName = startupIntent.getStringExtra(IntentFields.MAIN_ARTICLE_NAME);
         setCategory(getInitialCategory(startupIntent));
 
         if (canChooseOneCategoryOnly) {
@@ -182,7 +194,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
      */
     private void populateList(Category listCategory) {
         articleNames.clear();
-        articleNames.addAll(getUnlinkedArticleNames(listCategory));
+        articleNames.addAll(getLinkableArticleNames(listCategory));
 
         StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
         adapter.updateList(new ArrayList<>(articleNames));
@@ -202,15 +214,23 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     }
 
     /**
-     * Gets the names of all Articles in the current Category, excluding those already linked to the
-     * main Article.
+     * Gets the names of all Articles in the current Category, excluding the main Article and
+     * those already linked to the main Article.
      * @param listCategory  The Category of the Articles that will be retrieved.
      */
-    private HashSet<String> getUnlinkedArticleNames(Category listCategory) {
+    private HashSet<String> getLinkableArticleNames(Category listCategory) {
         HashSet<String> allArticleNames = new HashSet<>(ExternalReader.getArticleNamesInCategory(
                 this, worldName, listCategory));
-        return new HashSet<>(com.google.common.collect.Sets.symmetricDifference(allArticleNames,
+
+        HashSet<String> linkableNames = new HashSet<>(
+                com.google.common.collect.Sets.symmetricDifference(allArticleNames,
                 existingLinks.getAllLinksInCategory(listCategory)));
+
+        if (category == mainArticleCategory) {
+            linkableNames.remove(mainArticleName);
+        }
+
+        return linkableNames;
     }
 
     /**
