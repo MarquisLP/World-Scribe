@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
@@ -105,12 +106,31 @@ public class EditConnectionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveEditItem:
-                saveRelationsIfEdited();
-                finish();
+                if (relationFieldsAreNotEmpty()) {
+                    saveRelationsIfEdited();
+                    finish();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Checks if both relation fields are non-empty.
+     * If one or both are, the user will be prompted to fill in both.
+     * @return True if both relation fields are non-empty.
+     */
+    private boolean relationFieldsAreNotEmpty() {
+        boolean bothFieldsAreFilled = ((!(mainArticleRelationText.getText().toString().isEmpty()))
+                && (!(otherArticleRelationText.getText().toString().isEmpty())));
+
+        if (!(bothFieldsAreFilled)) {
+            ErrorMessager.showSnackbarMessage(this, layoutRoot,
+                    getString(R.string.emptyRelationError));
+        }
+
+        return bothFieldsAreFilled;
     }
 
     /**
