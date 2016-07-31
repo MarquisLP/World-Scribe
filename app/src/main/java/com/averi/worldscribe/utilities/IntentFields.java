@@ -11,4 +11,5 @@ public class IntentFields {
     public static final String ARTICLE_NAME = "articleName";
     public static final String SNIPPET_NAME = "snippetName";
     public static final String CONNECTION = "connection";
+    public static final String EXISTING_LINKS = "existingLinks";
 }

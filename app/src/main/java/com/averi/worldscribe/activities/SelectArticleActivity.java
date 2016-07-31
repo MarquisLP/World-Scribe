@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
@@ -20,6 +21,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * <p>
@@ -55,6 +57,7 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
     private ImageButton itemsButton;
     private ImageButton conceptsButton;
     private TextView textEmpty;
+    private LinkedArticleList existingLinks;
     private ArrayList<String> articleNames = new ArrayList<>();
     private boolean canChooseOneCategoryOnly;
 
@@ -78,6 +81,8 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
         setUpRecyclerView();
 
         Intent startupIntent = getIntent();
+        existingLinks = (LinkedArticleList) startupIntent.getSerializableExtra(
+                IntentFields.EXISTING_LINKS);
         canChooseOneCategoryOnly = startupIntent.hasExtra(IntentFields.CATEGORY);
         worldName = startupIntent.getStringExtra(IntentFields.WORLD_NAME);
         setCategory(getInitialCategory(startupIntent));
