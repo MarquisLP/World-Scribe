@@ -201,6 +201,37 @@ public final class ExternalWriter {
     }
 
     /**
+     * Saves the relation between an Article and one of its connected Articles.
+     * @param context The Context calling this method.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article who possesses the specified Connection.
+     * @param connectedArticleCategory
+     * @param connectedArticleName
+     * @param relation A description of how the specified Article is related to the connected
+     *                 Article.
+     * @return True if the relation was saved successfully; false an I/O error occurs.
+     */
+    public static boolean saveConnectionRelation(Context context, String worldName,
+                                                 Category category, String articleName,
+                                                 Category connectedArticleCategory,
+                                                 String connectedArticleName, String relation) {
+        Boolean successful = true;
+
+        try {
+            PrintWriter writer = new PrintWriter(FileRetriever.getConnectionRelationFile(
+                    context, worldName, category, articleName,
+                    connectedArticleCategory, connectedArticleName));
+            writer.println(relation);
+            writer.close();
+        } catch (IOException error) {
+            successful = false;
+        }
+
+        return successful;
+    }
+
+    /**
      * Saves a String as a Snippet's new contents.
      * @param context The Context calling this method.
      * @param worldName The name of the world the Article belongs to.
