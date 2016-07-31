@@ -182,7 +182,8 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
      */
     private void populateList(Category listCategory) {
         articleNames.clear();
-        articleNames.addAll(ExternalReader.getArticleNamesInCategory(this, worldName, listCategory));
+        articleNames.addAll(getUnlinkedArticleNames(listCategory));
+
         StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
         adapter.updateList(new ArrayList<>(articleNames));
         adapter.notifyDataSetChanged();
@@ -198,6 +199,18 @@ public class SelectArticleActivity extends AppCompatActivity implements StringLi
             }
             recyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Gets the names of all Articles in the current Category, excluding those already linked to the
+     * main Article.
+     * @param listCategory  The Category of the Articles that will be retrieved.
+     */
+    private HashSet<String> getUnlinkedArticleNames(Category listCategory) {
+        HashSet<String> allArticleNames = new HashSet<>(ExternalReader.getArticleNamesInCategory(
+                this, worldName, listCategory));
+        return new HashSet<>(com.google.common.collect.Sets.symmetricDifference(allArticleNames,
+                existingLinks.getAllLinksInCategory(listCategory)));
     }
 
     /**
