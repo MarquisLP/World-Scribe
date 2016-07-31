@@ -62,7 +62,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         }
 
         private void setConnectionText() {
-            articleRoleText.setText(connection.articleRole);
+            articleRoleText.setText(connection.articleRelation);
             connectedArticleNameText.setText(connection.connectedArticleName);
         }
 
