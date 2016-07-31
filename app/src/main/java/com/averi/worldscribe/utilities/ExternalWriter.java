@@ -24,21 +24,6 @@ public final class ExternalWriter {
 
     public static final int IMAGE_BYTE_SIZE = 1024;
 
-//    public static boolean createAppDirectory() {
-//        boolean directoryExists = true;
-//
-//        File appDirectory = new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY_NAME);
-//        Log.d("WorldScribe", appDirectory.getAbsolutePath());
-//
-//        if (externalStorageIsWritable()) {
-//            if (!(appDirectory.exists())) {
-//                directoryExists = appDirectory.mkdirs();
-//            }
-//        }
-//
-//        return directoryExists;
-//    }
-
     private static boolean externalStorageIsWritable() {
         String state = Environment.getExternalStorageState();
         return (Environment.MEDIA_MOUNTED.equals(state));
