@@ -148,6 +148,20 @@ public class ExternalReader {
         return textFieldData.toString();
     }
 
+    /**
+     * Gets the relation an Article has to one of its connected Articles.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @param connectedArticleName The name of the Article connected to the current Article.
+     * @return A description of the main Article's relation to the connected Article.
+     */
+    public static String getConnectionRelation(Context context, String worldName, Category category,
+                                           String articleName, String connectedArticleName) {
+        return "";
+    }
+
     public static ArrayList<Connection> getConnections(Context context, String worldName,
                                                        Category category, String articleName) {
         ArrayList<Connection> connections = new ArrayList<>();
@@ -166,8 +180,17 @@ public class ExternalReader {
         File connectionCategoryFolder = FileRetriever.getConnectionCategoryDirectory(context,
                 worldName, category, articleName, connectionCategory);
 
-        for (File connectionFile : connectionCategoryFolder.listFiles()) {
-            Connection connection = makeConnectionFromFile(connectionCategory, connectionFile);
+        for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
+            String mainArticleRelationFilename = mainArticleRelationFile.getName();
+            String connectedArticleName = mainArticleRelationFilename.substring(0,
+                    mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+            File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
+                    worldName, category, articleName, connectionCategory, connectedArticleName);
+
+            Connection connection = makeConnectionFromFile(worldName, category, articleName,
+                    mainArticleRelationFile, connectionCategory, connectedArticleName,
+                    connectedArticleRelationFile);
+
             if (connection != null) {
                 connections.add(connection);
             }
@@ -176,30 +199,45 @@ public class ExternalReader {
         return connections;
     }
 
-    private static Connection makeConnectionFromFile(Category connectionCategory,
-                                                     File connectionFile) {
-        Connection connection;
+    private static Connection makeConnectionFromFile(String worldName, Category mainArticleCategory,
+                                                     String mainArticleName,
+                                                     File mainArticleRelationFile,
+                                                     Category connectedArticleCategory,
+                                                     String connectedArticleName,
+                                                     File connectedArticleRelationFile) {
+        Connection connection = new Connection();
+        connection.worldName = worldName;
+        connection.articleCategory = mainArticleCategory;
+        connection.articleName = mainArticleName;
+        connection.connectedArticleCategory = connectedArticleCategory;
+        connection.connectedArticleName = connectedArticleName;
 
         try {
-            FileInputStream inputStream = new FileInputStream(connectionFile);
-            connection = new Connection();
-
+            FileInputStream inputStream = new FileInputStream(mainArticleRelationFile);
             String line;
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = reader.readLine()) != null) {
-                connection.articleRole = line;
+                connection.articleRelation = line;
             }
-
-            connection.connectedArticleCategory = connectionCategory;
-
-            String connectionFileName = connectionFile.getName();
-            connection.connectedArticleName = connectionFileName.substring(0,
-                    connectionFileName.length() - TEXT_FILE_EXTENSION_LENGTH);
-
             inputStream.close();
         }
         catch (java.io.IOException e) {
             connection = null;
+        }
+
+        if (connection != null) {
+            try {
+                FileInputStream inputStream = new FileInputStream(connectedArticleRelationFile);
+                String line;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                while ((line = reader.readLine()) != null) {
+                    connection.connectedArticleRelation = line;
+                }
+                inputStream.close();
+            }
+            catch (java.io.IOException e) {
+                connection = null;
+            }
         }
 
         return connection;

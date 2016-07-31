@@ -53,6 +53,25 @@ public class FileRetriever {
     }
 
     /**
+     * Retrieve the file containing an Article's relation to a connected Article.
+     * @param context The Context calling this method.
+     * @param worldName The name of the current World.
+     * @param category The {@link Category} of the current Article.
+     * @param articleName The name of the current Article.
+     * @param connectionCategory The Category of the connected Article.
+     * @param connectedArticleName The name of the connected Article.
+     * @return A File referring to the specified Article's Snippets directory.
+     */
+    public static File getConnectionRelationFile(Context context, String worldName,
+                                                 Category category, String articleName,
+                                                 Category connectionCategory,
+                                                 String connectedArticleName) {
+        return new File(getConnectionCategoryDirectory(context, worldName, category, articleName,
+                                                       connectionCategory),
+                        connectedArticleName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
+    }
+
+    /**
      * Retrieve the folder containing all of an Article's Snippets.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
