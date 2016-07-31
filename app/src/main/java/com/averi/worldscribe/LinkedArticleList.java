@@ -1,5 +1,6 @@
 package com.averi.worldscribe;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -12,7 +13,7 @@ import java.util.HashSet;
  * of the three types of links (Connection, Membership, or Residence).
  * </p>
  */
-public class LinkedArticleList {
+public class LinkedArticleList implements Serializable {
 
     private HashSet<String> personNames;
     private HashSet<String> groupNames;
