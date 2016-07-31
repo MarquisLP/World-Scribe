@@ -10,6 +10,5 @@ public class IntentFields {
     public static final String CATEGORY = "category";
     public static final String ARTICLE_NAME = "articleName";
     public static final String SNIPPET_NAME = "snippetName";
-    public static final String CONNECTED_ARTICLE_CATEGORY = "connectedArticleCategory";
-    public static final String CONNECTED_ARTICLE_NAME = "connectedArticleName";
+    public static final String CONNECTION = "connection";
 }

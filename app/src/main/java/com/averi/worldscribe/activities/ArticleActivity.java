@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
@@ -288,16 +289,18 @@ public abstract class ArticleActivity extends AppCompatActivity {
                             IntentFields.CATEGORY);
                     String otherArticleName = data.getStringExtra(IntentFields.ARTICLE_NAME);
 
+                    Connection connection = new Connection();
+                    connection.worldName = worldName;
+                    connection.articleCategory = category;
+                    connection.articleName = articleName;
+                    connection.articleRelation = "";
+                    connection.connectedArticleCategory = otherArticleCategory;
+                    connection.connectedArticleName = otherArticleName;
+                    connection.connectedArticleRelation = "";
+
                     Intent startConnectionEditIntent = new Intent(this,
                             EditConnectionActivity.class);
-                    startConnectionEditIntent.putExtra(IntentFields.WORLD_NAME, worldName);
-                    startConnectionEditIntent.putExtra(IntentFields.CATEGORY, category);
-                    startConnectionEditIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
-                    startConnectionEditIntent.putExtra(IntentFields.CONNECTED_ARTICLE_CATEGORY,
-                            otherArticleCategory);
-                    startConnectionEditIntent.putExtra(IntentFields.CONNECTED_ARTICLE_NAME,
-                            otherArticleName);
-
+                    startConnectionEditIntent.putExtra(IntentFields.CONNECTION, connection);
                     startActivity(startConnectionEditIntent);
                 }
         }
