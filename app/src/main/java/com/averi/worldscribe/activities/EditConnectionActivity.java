@@ -1,10 +1,10 @@
 package com.averi.worldscribe.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Connection;
@@ -15,7 +15,9 @@ public class EditConnectionActivity extends AppCompatActivity {
 
     private Connection connection;
     private TextView mainArticleNameText;
+    private EditText mainArticleRelationText;
     private TextView otherArticleNameText;
+    private EditText otherArticleRelationText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +25,15 @@ public class EditConnectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_connection);
 
         mainArticleNameText = (TextView) findViewById(R.id.textCurrentArticleName);
+        mainArticleRelationText = (EditText) findViewById(R.id.editCurrentArticleRelation);
         otherArticleNameText = (TextView) findViewById(R.id.textOtherArticleName);
+        otherArticleRelationText = (EditText) findViewById(R.id.editOtherArticleRelation);
 
         connection = (Connection) getIntent().getSerializableExtra(IntentFields.CONNECTION);
         mainArticleNameText.setText(connection.articleName);
+        mainArticleRelationText.setText(connection.articleRelation);
         otherArticleNameText.setText(connection.connectedArticleName);
+        otherArticleRelationText.setText(connection.connectedArticleRelation);
 
         setAppBar();
     }
