@@ -282,6 +282,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
                     Toast.makeText(this, getResources().getString(R.string.cropImageError),
                             Toast.LENGTH_SHORT).show();
                 }
+                break;
 
             case RESULT_NEW_CONNECTION:
                 if (resultCode == RESULT_OK) {
