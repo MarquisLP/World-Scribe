@@ -3,6 +3,7 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
@@ -185,7 +186,7 @@ public class ExternalReader {
             String connectedArticleName = mainArticleRelationFilename.substring(0,
                     mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
             File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
-                    worldName, category, articleName, connectionCategory, connectedArticleName);
+                    worldName, connectionCategory, connectedArticleName, category, articleName);
 
             Connection connection = makeConnectionFromFile(worldName, category, articleName,
                     mainArticleRelationFile, connectionCategory, connectedArticleName,
