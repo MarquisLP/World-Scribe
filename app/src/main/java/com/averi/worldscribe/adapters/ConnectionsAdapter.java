@@ -14,6 +14,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.activities.ConceptActivity;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.activities.EditConnectionActivity;
 import com.averi.worldscribe.activities.GroupActivity;
 import com.averi.worldscribe.activities.ItemActivity;
 import com.averi.worldscribe.activities.PersonActivity;
@@ -55,6 +56,7 @@ implements ArticleLinkAdapter {
             this.articleName = articleName;
 
             connectionCard.setOnClickListener(this);
+            editButton.setOnClickListener(this);
         }
 
         public void bindConnection(Connection connection) {
@@ -70,7 +72,23 @@ implements ArticleLinkAdapter {
 
         @Override
         public void onClick(View view) {
-            goToConnectedArticle();
+            if (view.getId() == editButton.getId()) {
+                goToConnectionEditor();
+            } else if (view.getId() == deleteButton.getId()) {
+                // Delete the Connection.
+            } else {
+                goToConnectedArticle();
+            }
+        }
+
+        /**
+         * Open EditConnectionActivity so that the user can edit the Connection contained within
+         * this ConnectionHolder.
+         */
+        private void goToConnectionEditor() {
+            Intent editConnectionIntent = new Intent(context, EditConnectionActivity.class);
+            editConnectionIntent.putExtra(IntentFields.CONNECTION, connection);
+            context.startActivity(editConnectionIntent);
         }
 
         private void goToConnectedArticle() {
