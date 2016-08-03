@@ -1,9 +1,11 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.R;
 
@@ -23,9 +26,15 @@ import java.util.ArrayList;
 
 public class PersonActivity extends ArticleActivity {
 
+    /**
+     * The request code for creating a new Membership for this Person.
+     */
+    public static final int RESULT_NEW_MEMBERSHIP = 300;
+
     private RadioGroup genderGroup;
     private RecyclerView membershipsList;
     private RecyclerView residencesList;
+    private Button addMembershipButton;
     private Boolean genderWasEditedSinceLastSave = false;
 
     @Override
@@ -35,11 +44,19 @@ public class PersonActivity extends ArticleActivity {
         genderGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
         membershipsList = (RecyclerView) findViewById(R.id.recyclerMemberships);
         residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
+        addMembershipButton = (Button) findViewById(R.id.buttonAddMembership);
 
         genderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 genderWasEditedSinceLastSave = true;
+            }
+        });
+
+        addMembershipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createMembership();
             }
         });
     }
@@ -163,6 +180,23 @@ public class PersonActivity extends ArticleActivity {
 
             genderWasEditedSinceLastSave = false;
         }
+    }
+
+    /**
+     * Opens SelectArticleActivity so the user can select the Group to be part of in a new
+     * {@link com.averi.worldscribe.Membership Membership} for this Person.
+     */
+    private void createMembership() {
+        Intent selectGroupIntent = new Intent(this, SelectArticleActivity.class);
+        MembershipsAdapter membershipsAdapter = (MembershipsAdapter) membershipsList.getAdapter();
+
+        selectGroupIntent.putExtra(IntentFields.WORLD_NAME, getWorldName());
+        selectGroupIntent.putExtra(IntentFields.CATEGORY, Category.Group);
+        selectGroupIntent.putExtra(IntentFields.MAIN_ARTICLE_CATEGORY, Category.Person);
+        selectGroupIntent.putExtra(IntentFields.MAIN_ARTICLE_NAME, getArticleName());
+        selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
+                membershipsAdapter.getLinkedArticleList());
+        startActivityForResult(selectGroupIntent, RESULT_NEW_MEMBERSHIP);
     }
 
 }
