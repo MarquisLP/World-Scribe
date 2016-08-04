@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
-import com.averi.worldscribe.Member;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PlaceActivity;
 import com.averi.worldscribe.utilities.IntentFields;

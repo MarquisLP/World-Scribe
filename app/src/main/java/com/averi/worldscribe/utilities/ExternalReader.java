@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
-import com.averi.worldscribe.Member;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 
