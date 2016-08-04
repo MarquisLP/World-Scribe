@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 
 import java.io.BufferedInputStream;
@@ -211,7 +212,7 @@ public final class ExternalWriter {
                                                  Category category, String articleName,
                                                  Category connectedArticleCategory,
                                                  String connectedArticleName, String relation) {
-        return writeStringToFile(FileRetriever.getConnectionRelationFile( context, worldName,
+        return writeStringToFile(FileRetriever.getConnectionRelationFile(context, worldName,
                 category, articleName, connectedArticleCategory, connectedArticleName), relation);
     }
 
@@ -231,4 +232,26 @@ public final class ExternalWriter {
         return writeStringToFile(FileRetriever.getSnippetFile(context, worldName, category,
                 articleName, snippetName), contents);
     }
+
+    /**
+     * Saves a Membership between a Person and a Group.
+     * @param context The Context calling this method.
+     * @param membership Contains data on the Membership that will be saved.
+     * @return True if the Membership was successfully saved to both the Person's and the Group's
+     * directories; false if an I/O error occurs.
+     */
+    public static boolean saveMembership(Context context, Membership membership) {
+        File fileInMemberDirectory = FileRetriever.getMembershipFile(context, membership.worldName,
+                membership.memberName, membership.groupName);
+        File fileInGroupDirectory = FileRetriever.getMemberFile(context, membership.worldName,
+                membership.groupName, membership.memberName);
+
+        boolean savedToMemberDirectory = writeStringToFile(fileInMemberDirectory,
+                membership.memberRole);
+        boolean savedToGroupDirectory = writeStringToFile(fileInGroupDirectory,
+                membership.memberRole);
+
+        return ((savedToMemberDirectory) && (savedToGroupDirectory));
+    }
+
 }

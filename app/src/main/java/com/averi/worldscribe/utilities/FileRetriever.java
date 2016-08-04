@@ -140,6 +140,20 @@ public class FileRetriever {
     }
 
     /**
+     * Retrieves the Membership file linking the specified Person to a Group.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World where the Person and Group reside.
+     * @param personName The name of the Person whose Memberships are being searched.
+     * @param groupName The name of the Group who Membership is being retrieved.
+     * @return The File containing the Person's role within the Group.
+     */
+    public static File getMembershipFile(Context context, String worldName, String personName,
+                                         String groupName) {
+        return new File(getMembershipsDirectory(context, worldName, personName),
+                groupName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
+    }
+
+    /**
      * Retrieve the folder containing all of a Group's Members.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
@@ -150,6 +164,20 @@ public class FileRetriever {
                                                String groupName) {
         return new File(getArticleDirectory(context, worldName, Category.Group, groupName),
                 context.getResources().getString(R.string.membersText));
+    }
+
+    /**
+     * Retrieves the file representing a certain member within the specified Group.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World where the Group and Person reside.
+     * @param groupName The name of the Group whose members are being searched..
+     * @param memberName The name of a Person who has a Membership with the Group.
+     * @return The File containing the member's role within the Group.
+     */
+    public static File getMemberFile(Context context, String worldName, String groupName,
+                                         String memberName) {
+        return new File(getMembersDirectory(context, worldName, groupName),
+                memberName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
 }

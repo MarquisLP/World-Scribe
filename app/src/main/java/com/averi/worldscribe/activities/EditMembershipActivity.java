@@ -1,15 +1,19 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
 public class EditMembershipActivity extends AppCompatActivity {
@@ -42,6 +46,18 @@ public class EditMembershipActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.saveEditItem:
+                saveMembership();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Displays the Group name, member name, and member's role (if it exists) when this Activity is
      * created.
@@ -64,4 +80,19 @@ public class EditMembershipActivity extends AppCompatActivity {
             setSupportActionBar(appBar);
         }
     }
+
+    /**
+     * Saves the Membership in both the Group's and the member's directories.
+     * If an error occurs while saving, an error message is displayed.
+     */
+    private void saveMembership() {
+        membership.memberRole = memberRoleField.getText().toString();
+
+        boolean saveWasSuccessful = ExternalWriter.saveMembership(this, membership);
+        if (!(saveWasSuccessful)) {
+            Toast.makeText(this, getString(R.string.saveMembershipError),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
