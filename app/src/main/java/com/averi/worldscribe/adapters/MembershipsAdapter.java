@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
-import com.averi.worldscribe.Member;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.GroupActivity;
@@ -73,7 +72,7 @@ implements ArticleLinkAdapter {
         private void setMembershipText() {
             groupNameText.setText(membership.groupName);
 
-            // A null String means
+            // A null String means that the Member has no designated role/rank.
             if (membership.memberRole == null) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
@@ -115,7 +114,7 @@ implements ArticleLinkAdapter {
         this.context = context;
         this.worldName = worldName;
 
-        memberships = ExternalReader.getMemberships(context, worldName, personName);
+        memberships = ExternalReader.getMembershipsForPerson(context, worldName, personName);
     }
 
     @Override

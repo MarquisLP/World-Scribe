@@ -354,15 +354,20 @@ public class ExternalReader {
      * @param personName The name of the Person whose Memberships are being retrieved.
      * @return An ArrayList of all Memberships belonging to the specified Person.
      */
-    public static ArrayList<Membership> getMemberships(Context context, String worldName,
-                                                       String personName) {
+    public static ArrayList<Membership> getMembershipsForPerson(Context context, String worldName,
+                                                                String personName) {
         ArrayList<Membership> memberships = new ArrayList<>();
         File membershipsDirectory = FileRetriever.getMembershipsDirectory(context, worldName,
                 personName);
 
         for (File membershipFile : membershipsDirectory.listFiles()) {
             if (membershipFile.isFile()) {
-                Membership membership = makeMembershipFromFile(membershipFile);
+                String membershipFilename = membershipFile.getName();
+                String groupName = membershipFilename.substring(0,
+                        membershipFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+                Membership membership = makeMembershipFromFile(worldName, groupName, personName,
+                        membershipFile);
                 if (membership != null) {
                     memberships.add(membership);
                 }
@@ -374,22 +379,25 @@ public class ExternalReader {
 
     /**
      * Return a Membership containing data from the specified Membership file.
+     * @param worldName The name of the World where the Group and its members reside.
+     * @param groupName The name of the Group in the Membership.
+     * @param memberName The name of the Person in the Membership.
      * @param membershipFile A text file containing Membership data.
      * @return A Membership with the extracted data; null if an I/O error occurs.
      */
-    private static Membership makeMembershipFromFile(File membershipFile) {
-        Membership membership;
+    private static Membership makeMembershipFromFile(String worldName, String groupName,
+                                                     String memberName,
+                                                     File membershipFile) {
+        Membership membership = new Membership();
+        membership.worldName = worldName;
+        membership.groupName = groupName;
+        membership.memberName = memberName;
 
         try {
             FileInputStream inputStream = new FileInputStream(membershipFile);
-            membership = new Membership();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             membership.memberRole = reader.readLine();
-
-            String groupName = membershipFile.getName();
-            membership.groupName = groupName.substring(0,
-                    groupName.length() - TEXT_FILE_EXTENSION_LENGTH);
 
             inputStream.close();
         }
