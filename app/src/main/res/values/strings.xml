@@ -96,4 +96,5 @@
     <string name="deleteWorldError">An error occurred while deleting this World.</string>
     <string name="saveConnectionError">An error occurred while saving the Connection.</string>
     <string name="emptyRelationError">Relations for both Articles must be filled in.</string>
+    <string name="memberRoleHint">Role in group (optional)</string>
 </resources>
