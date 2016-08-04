@@ -85,6 +85,7 @@
 
     <string name="createWorldTitle">A World is Born</string>
     <string name="editConnectionTitle">Edit Connection</string>
+    <string name="editMembershipTitle">Edit Membership</string>
 
     <string name="confirmWorldDeletionTitle">Delete %1$s</string>
     <string name="confirmWorldDeletion">Are you sure you wish to delete %1$s?\nOnce a World is deleted, it cannot be recovered.</string>
