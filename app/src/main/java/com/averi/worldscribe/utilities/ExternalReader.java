@@ -409,57 +409,34 @@ public class ExternalReader {
     }
 
     /**
-     * Retrieves all Members of a specified Group.
+     * Retrieves all Memberships to a specified Group.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
-     * @param groupName The name of the Group whose Members are being retrieved.
-     * @return An ArrayList containing all Members belonging to the specified Group; may be empty
-     * if the Group has no Members.
+     * @param groupName The name of the Group whose Memberships are being retrieved.
+     * @return An ArrayList containing all Memberships belonging to the specified Group; may be
+     * empty if the Group has no members.
      */
-    public static ArrayList<Member> getMembers(Context context, String worldName,
-                                               String groupName) {
-        ArrayList<Member> members = new ArrayList<>();
+    public static ArrayList<Membership> getMembershipsInGroup(Context context, String worldName,
+                                                          String groupName) {
+        ArrayList<Membership> memberships = new ArrayList<>();
         File membersDirectory = FileRetriever.getMembersDirectory(context, worldName,
                 groupName);
 
-        for (File memberFile : membersDirectory.listFiles()) {
-            if (memberFile.isFile()) {
-                Member member = makeMemberFromFile(memberFile);
-                if (member != null) {
-                    members.add(member);
+        for (File membershipFile : membersDirectory.listFiles()) {
+            if (membershipFile.isFile()) {
+                String membershipFilename = membershipFile.getName();
+                String personName = membershipFilename.substring(0,
+                        membershipFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+                Membership membership = makeMembershipFromFile(worldName, groupName, personName,
+                        membershipFile);
+                if (membership != null) {
+                    memberships.add(membership);
                 }
             }
         }
 
-        return members;
-    }
-
-    /**
-     * Return a Member containing data from the specified Member file.
-     * @param memberFile A text file containing Member data.
-     * @return A Member with the extracted data; null if an I/O error occurs.
-     */
-    private static Member makeMemberFromFile(File memberFile) {
-        Member member;
-
-        try {
-            FileInputStream inputStream = new FileInputStream(memberFile);
-            member = new Member();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            member.memberRole = reader.readLine();
-
-            String memberName = memberFile.getName();
-            member.memberName = memberName.substring(0,
-                    memberName.length() - TEXT_FILE_EXTENSION_LENGTH);
-
-            inputStream.close();
-        }
-        catch (java.io.IOException e) {
-            member = null;
-        }
-
-        return member;
+        return memberships;
     }
 
 }

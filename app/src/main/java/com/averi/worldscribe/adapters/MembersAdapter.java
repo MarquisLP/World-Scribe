@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
-import com.averi.worldscribe.Member;
+import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.PersonActivity;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 /**
  * Created by mark on 02/07/16.
- * An Adapter for RecyclerViews displaying a Group's Members.
+ * An Adapter for RecyclerViews displaying Membership data for a Group's members.
  */
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MemberHolder>
 implements ArticleLinkAdapter {
@@ -35,7 +35,7 @@ implements ArticleLinkAdapter {
         private final ImageButton editButton;
         private final ImageButton deleteButton;
         private final String worldName;
-        private Member member;
+        private Membership membership;
 
         /**
          * Instantiate a new MemberHolder.
@@ -58,26 +58,26 @@ implements ArticleLinkAdapter {
         }
 
         /**
-         * Store Member data and use it to set the card's text.
-         * @param member The Member represented by the card.
+         * Store the member's Membership data and use it to set the card's text.
+         * @param membership The Membership containing the member's data.
          */
-        public void bindMember(Member member) {
-            this.member = member;
+        public void bindMembership(Membership membership) {
+            this.membership = membership;
             setMemberText();
         }
 
         /**
-         * Set the card's text using data from the attached Member.
+         * Set the card's text using data from the attached Membership.
          */
         private void setMemberText() {
-            memberNameText.setText(member.memberName);
+            memberNameText.setText(membership.memberName);
 
             // A null String means no role or rank.
-            if (member.memberRole == null) {
+            if (membership.memberRole == null) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
                 memberRoleText.setText(context.getString(R.string.memberRoleText,
-                        member.memberRole));
+                        membership.memberRole));
             }
         }
 
@@ -94,13 +94,13 @@ implements ArticleLinkAdapter {
 
             goToMemberIntent.putExtra(IntentFields.WORLD_NAME, worldName);
             goToMemberIntent.putExtra(IntentFields.CATEGORY, Category.Person);
-            goToMemberIntent.putExtra(IntentFields.ARTICLE_NAME, member.memberName);
+            goToMemberIntent.putExtra(IntentFields.ARTICLE_NAME, membership.memberName);
 
             context.startActivity(goToMemberIntent);
         }
     }
 
-    private final ArrayList<Member> members;
+    private final ArrayList<Membership> memberships;
     private final Context context;
     private final String worldName;
 
@@ -114,7 +114,7 @@ implements ArticleLinkAdapter {
         this.context = context;
         this.worldName = worldName;
 
-        members = ExternalReader.getMembers(context, worldName, groupName);
+        memberships = ExternalReader.getMembershipsInGroup(context, worldName, groupName);
     }
 
     @Override
@@ -126,19 +126,19 @@ implements ArticleLinkAdapter {
 
     @Override
     public void onBindViewHolder(MemberHolder holder, int pos) {
-        holder.bindMember(members.get(pos));
+        holder.bindMembership(memberships.get(pos));
     }
 
     @Override
     public int getItemCount() {
-        return members.size();
+        return memberships.size();
     }
 
     public LinkedArticleList getLinkedArticleList() {
         LinkedArticleList linkedArticleList = new LinkedArticleList();
 
-        for (Member member : members) {
-            linkedArticleList.addArticle(Category.Person, member.memberName);
+        for (Membership membership : memberships) {
+            linkedArticleList.addArticle(Category.Person, membership.memberName);
         }
 
         return  linkedArticleList;
