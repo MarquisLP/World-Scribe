@@ -14,6 +14,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.GroupActivity;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
@@ -55,6 +56,7 @@ implements ArticleLinkAdapter {
             this.worldName = worldName;
 
             this.membershipCard.setOnClickListener(this);
+            editButton.setOnClickListener(this);
         }
 
         /**
@@ -83,7 +85,22 @@ implements ArticleLinkAdapter {
 
         @Override
         public void onClick(View view) {
-            goToGroup();
+            if (view.getId() == editButton.getId()) {
+                editMembership();
+            } else if (view.getId() == deleteButton.getId()) {
+                // Delete Membership.
+            } else {
+                goToGroup();
+            }
+        }
+
+        /**
+         * Open the contained Membership in EditMembershipActivity for editing.
+         */
+        private void editMembership() {
+            Intent editMembershipIntent = new Intent(context, EditMembershipActivity.class);
+            editMembershipIntent.putExtra(IntentFields.MEMBERSHIP, membership);
+            context.startActivity(editMembershipIntent);
         }
 
         /**
