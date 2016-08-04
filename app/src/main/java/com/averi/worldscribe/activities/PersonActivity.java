@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
@@ -122,6 +123,25 @@ public class PersonActivity extends ArticleActivity {
                 this, getWorldName(), Category.Person, getArticleName()));
 
         return textFields;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_NEW_MEMBERSHIP:
+                if (resultCode == RESULT_OK) {
+                    Membership newMembership = new Membership();
+                    newMembership.worldName = getWorldName();
+                    newMembership.groupName = data.getStringExtra(IntentFields.ARTICLE_NAME);
+                    newMembership.memberName = getArticleName();
+
+                    Intent editMembershipIntent = new Intent(this, EditMembershipActivity.class);
+                    editMembershipIntent.putExtra(IntentFields.MEMBERSHIP, newMembership);
+                    startActivity(editMembershipIntent);
+                }
+        }
     }
 
     /**

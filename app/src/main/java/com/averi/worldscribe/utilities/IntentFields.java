@@ -14,4 +14,5 @@ public class IntentFields {
     public static final String EXISTING_LINKS = "existingLinks";
     public static final String MAIN_ARTICLE_CATEGORY = "mainArticleCategory";
     public static final String MAIN_ARTICLE_NAME = "mainArticleName";
+    public static final String MEMBERSHIP = "membership";
 }
