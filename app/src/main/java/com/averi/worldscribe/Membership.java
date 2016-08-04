@@ -1,10 +1,12 @@
 package com.averi.worldscribe;
 
+import java.io.Serializable;
+
 /**
  * Created by mark on 14/07/16.
  * A class containing data on a Person's Membership within a certain Group.
  */
-public class Membership {
+public class Membership implements Serializable {
     /**
      * The name of the World where the Group and its members reside.
      */
