@@ -6,11 +6,19 @@ package com.averi.worldscribe;
  */
 public class Membership {
     /**
+     * The name of the World where the Group and its members reside.
+     */
+    public String worldName;
+    /**
      * The name of the Group this Membership is for.
      */
     public String groupName;
     /**
-     * The role or rank the Person has within the Group.
+     * The name of the Person involved in this Membership.
+     */
+    public String memberName;
+    /**
+     * The role or rank the Member has within the Group.
      * This field is optional; null signifies no role or rank.
      */
     public String memberRole = null;
