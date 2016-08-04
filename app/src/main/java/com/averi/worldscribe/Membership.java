@@ -21,7 +21,7 @@ public class Membership implements Serializable {
     public String memberName;
     /**
      * The role or rank the Member has within the Group.
-     * This field is optional; null signifies no role or rank.
+     * This field is optional; empty string signifies no role or rank.
      */
-    public String memberRole = null;
+    public String memberRole = "";
 }

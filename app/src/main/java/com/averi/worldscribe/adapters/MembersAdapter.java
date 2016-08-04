@@ -72,8 +72,8 @@ implements ArticleLinkAdapter {
         private void setMemberText() {
             memberNameText.setText(membership.memberName);
 
-            // A null String means no role or rank.
-            if (membership.memberRole == null) {
+            // An empty string means no role or rank.
+            if (membership.memberRole.isEmpty()) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
                 memberRoleText.setText(context.getString(R.string.memberRoleText,
