@@ -34,8 +34,6 @@ public class GroupActivity extends ArticleActivity {
         membersList = (RecyclerView) findViewById(R.id.recyclerMembers);
         addMemberButton = (Button) findViewById(R.id.buttonAddMember);
 
-        populateMembers();
-
         addMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { addMember(); }
@@ -83,6 +81,12 @@ public class GroupActivity extends ArticleActivity {
                 this, getWorldName(), Category.Group, getArticleName()));
 
         return textFields;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateMembers();
     }
 
     @Override
