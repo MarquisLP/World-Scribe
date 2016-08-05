@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.activities.PlaceActivity;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
@@ -36,44 +37,38 @@ implements ArticleLinkAdapter {
         private final CardView residenceCard;
         private final TextView residenceNameText;
         private final ImageButton deleteButton;
-        private final String worldName;
-        private final String articleName;
-        private String residenceName;
+        private Residence residence;
 
         /**
          * Instantiates a new ResidenceHolder.
          * @param context The Context calling this method.
-         * @param worldName The name of the current World.
-         * @param personName The name of the current Article.
          * @param itemView The Residences Card that this ViewHolder will handle.
          */
-        public ResidenceHolder(Context context, String worldName, String personName, View itemView) {
+        public ResidenceHolder(Context context, View itemView) {
             super(itemView);
 
             this.context = context;
             residenceCard = (CardView) itemView;
             residenceNameText = (TextView) residenceCard.findViewById(R.id.itemName);
             deleteButton = (ImageButton) residenceCard.findViewById(R.id.delete);
-            this.worldName = worldName;
-            this.articleName = personName;
 
             residenceCard.setOnClickListener(this);
         }
 
         /**
-         * Stores the name of the Residence and displays it.
-         * @param residenceName The name of the Residence represented by the card.
+         * Stores Residence data and displays the name of the Place involved.
+         * @param residence The Residence that is represented by this ViewHolder.
          */
-        public void bindResidence(String residenceName) {
-            this.residenceName = residenceName;
-            setSnippetName();
+        public void bindResidence(Residence residence) {
+            this.residence = residence;
+            setResidenceName();
         }
 
         /**
          * Displays the name of the referenced Residence.
          */
-        private void setSnippetName() {
-            residenceNameText.setText(residenceName);
+        private void setResidenceName() {
+            residenceNameText.setText(residence.placeName);
         }
 
         @Override
@@ -88,18 +83,16 @@ implements ArticleLinkAdapter {
         private void goToResidence() {
             Intent goToResidenceIntent = new Intent(context, PlaceActivity.class);
 
-            goToResidenceIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToResidenceIntent.putExtra(IntentFields.WORLD_NAME, residence.worldName);
             goToResidenceIntent.putExtra(IntentFields.CATEGORY, Category.Place);
-            goToResidenceIntent.putExtra(IntentFields.ARTICLE_NAME, residenceName);
+            goToResidenceIntent.putExtra(IntentFields.ARTICLE_NAME, residence.placeName);
 
             context.startActivity(goToResidenceIntent);
         }
     }
 
-    private final ArrayList<String> residences;
+    private final ArrayList<Residence> residences;
     private final Context context;
-    private final String worldName;
-    private final String personName;
 
     /**
      * Instantiates a new ResidencesAdapter.
@@ -109,8 +102,6 @@ implements ArticleLinkAdapter {
      */
     public ResidencesAdapter(Context context, String worldName, String personName) {
         this.context = context;
-        this.worldName = worldName;
-        this.personName = personName;
 
         residences = ExternalReader.getResidences(context, worldName, personName);
     }
@@ -119,7 +110,7 @@ implements ArticleLinkAdapter {
     public ResidenceHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.erasable_item_card, parent, false);
-        return new ResidenceHolder(context, worldName, personName, view);
+        return new ResidenceHolder(context, view);
     }
 
     @Override
@@ -135,8 +126,8 @@ implements ArticleLinkAdapter {
     public LinkedArticleList getLinkedArticleList() {
         LinkedArticleList linkedArticleList = new LinkedArticleList();
 
-        for (String residenceName : residences) {
-            linkedArticleList.addArticle(Category.Place, residenceName);
+        for (Residence residence : residences) {
+            linkedArticleList.addArticle(Category.Place, residence.placeName);
         }
 
         return  linkedArticleList;

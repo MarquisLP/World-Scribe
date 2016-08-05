@@ -9,6 +9,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.Residence;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -319,31 +320,63 @@ public class ExternalReader {
     }
 
     /**
-     * Retrieves the names of all Residences for a specified Person.
+     * Retrieves all {@link com.averi.worldscribe.Residence Residences} for a specified Person.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
      * @param personName The name of the Person whose Residences are being retrieved.
-     * @return An ArrayList of all of the Article's Residences' names.
+     * @return An ArrayList of all of the Article's Residences.
      */
-    public static ArrayList<String> getResidences(Context context, String worldName,
-                                                  String personName) {
+    public static ArrayList<Residence> getResidences(Context context, String worldName,
+                                                     String personName) {
         File residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
                 personName);
-        return getSortedFileNames(residencesDirectory);
+        ArrayList<Residence> residences = new ArrayList<>();
+
+        for (File residenceFile : residencesDirectory.listFiles()) {
+            if (residenceFile.isFile()) {
+                Residence newResidence = new Residence();
+                String residenceFilename = residenceFile.getName();
+
+                newResidence.worldName = worldName;
+                newResidence.residentName = personName;
+                newResidence.placeName = residenceFilename.substring(0,
+                        residenceFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+                residences.add(newResidence);
+            }
+        }
+
+        return residences;
     }
 
     /**
-     * Retrieves the names of all Residents for a specified Place.
+     * Retrieves Residence data for all residents of a specified Place.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
-     * @param placeName The name of the Place whose Residents are being retrieved.
-     * @return An ArrayList of all of the Places' Residents' names.
+     * @param placeName The name of the Place whose Resident data is being retrieved.
+     * @return An ArrayList of all of Residences within the specified Place.
      */
-    public static ArrayList<String> getResidents(Context context, String worldName,
+    public static ArrayList<Residence> getResidents(Context context, String worldName,
                                                   String placeName) {
         File residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
                 placeName);
-        return getSortedFileNames(residentsDirectory);
+        ArrayList<Residence> residences = new ArrayList<>();
+
+        for (File residentFile : residentsDirectory.listFiles()) {
+            if (residentFile.isFile()) {
+                Residence newResidence = new Residence();
+                String residentFilename = residentFile.getName();
+
+                newResidence.worldName = worldName;
+                newResidence.placeName = placeName;
+                newResidence.residentName = residentFilename.substring(0,
+                        residentFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+
+                residences.add(newResidence);
+            }
+        }
+
+        return residences;
     }
 
     /**

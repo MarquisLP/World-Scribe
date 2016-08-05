@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.activities.PersonActivity;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -36,43 +37,39 @@ implements ArticleLinkAdapter {
         private final CardView residentCard;
         private final TextView residentNameText;
         private final ImageButton deleteButton;
-        private final String worldName;
-        private String residentName;
+        private Residence residence;
 
         /**
          * Instantiates a new ResidentHolder.
          * @param context The Context calling this method.
-         * @param worldName The name of the current World.
-         * @param personName The name of the current Article.
          * @param itemView The Residents Card that this ViewHolder will handle.
          */
-        public ResidentHolder(Context context, String worldName, String personName, View itemView) {
+        public ResidentHolder(Context context, View itemView) {
             super(itemView);
 
             this.context = context;
             residentCard = (CardView) itemView;
             residentNameText = (TextView) residentCard.findViewById(R.id.itemName);
             deleteButton = (ImageButton) residentCard.findViewById(R.id.delete);
-            this.worldName = worldName;
-            this.residentName = personName;
 
             residentCard.setOnClickListener(this);
         }
 
         /**
-         * Stores the name of the Resident and displays it.
-         * @param residentName The name of the Resident represented by the card.
+         * Stores the Residence that this ViewHolder will represent and displays the name of the
+         * resident involved.
+         * @param residence The name of the Resident represented by the card.
          */
-        public void bindResident(String residentName) {
-            this.residentName = residentName;
-            setSnippetName();
+        public void bindResident(Residence residence) {
+            this.residence = residence;
+            setResidentName();
         }
 
         /**
-         * Displays the name of the referenced Resident.
+         * Displays the name of the resident involved in the contained Residence.
          */
-        private void setSnippetName() {
-            residentNameText.setText(residentName);
+        private void setResidentName() {
+            residentNameText.setText(residence.residentName);
         }
 
         @Override
@@ -86,15 +83,15 @@ implements ArticleLinkAdapter {
         private void goToResident() {
             Intent goToResidentIntent = new Intent(context, PersonActivity.class);
 
-            goToResidentIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+            goToResidentIntent.putExtra(IntentFields.WORLD_NAME, residence.worldName);
             goToResidentIntent.putExtra(IntentFields.CATEGORY, Category.Person);
-            goToResidentIntent.putExtra(IntentFields.ARTICLE_NAME, residentName);
+            goToResidentIntent.putExtra(IntentFields.ARTICLE_NAME, residence.residentName);
 
             context.startActivity(goToResidentIntent);
         }
     }
 
-    private final ArrayList<String> residents;
+    private final ArrayList<Residence> residentData;
     private final Context context;
     private final String worldName;
     private final String personName;
@@ -110,31 +107,31 @@ implements ArticleLinkAdapter {
         this.worldName = worldName;
         this.personName = placeActivity;
 
-        residents = ExternalReader.getResidents(context, worldName, placeActivity);
+        residentData = ExternalReader.getResidents(context, worldName, placeActivity);
     }
 
     @Override
     public ResidentHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.erasable_item_card, parent, false);
-        return new ResidentHolder(context, worldName, personName, view);
+        return new ResidentHolder(context, view);
     }
 
     @Override
     public void onBindViewHolder(ResidentHolder holder, int pos) {
-        holder.bindResident(residents.get(pos));
+        holder.bindResident(residentData.get(pos));
     }
 
     @Override
     public int getItemCount() {
-        return residents.size();
+        return residentData.size();
     }
 
     public LinkedArticleList getLinkedArticleList() {
         LinkedArticleList linkedArticleList = new LinkedArticleList();
 
-        for (String residentName : residents) {
-            linkedArticleList.addArticle(Category.Person, residentName);
+        for (Residence residence : residentData) {
+            linkedArticleList.addArticle(Category.Person, residence.residentName);
         }
 
         return  linkedArticleList;
