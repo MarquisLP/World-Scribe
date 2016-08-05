@@ -31,11 +31,16 @@ public class PersonActivity extends ArticleActivity {
      * The request code for creating a new Membership for this Person.
      */
     public static final int RESULT_NEW_MEMBERSHIP = 300;
+    /**
+     * The request code for creating a new Residence for this Person.
+     */
+    public static final int RESULT_NEW_RESIDENCE = 400;
 
     private RadioGroup genderGroup;
     private RecyclerView membershipsList;
     private RecyclerView residencesList;
     private Button addMembershipButton;
+    private Button addResidenceButton;
     private Boolean genderWasEditedSinceLastSave = false;
 
     @Override
@@ -46,6 +51,7 @@ public class PersonActivity extends ArticleActivity {
         membershipsList = (RecyclerView) findViewById(R.id.recyclerMemberships);
         residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
         addMembershipButton = (Button) findViewById(R.id.buttonAddMembership);
+        addResidenceButton = (Button) findViewById(R.id.buttonAddResidence);
 
         genderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -58,6 +64,12 @@ public class PersonActivity extends ArticleActivity {
             @Override
             public void onClick(View v) {
                 createMembership();
+            }
+        });
+        addResidenceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createResidence();
             }
         });
     }
@@ -217,6 +229,23 @@ public class PersonActivity extends ArticleActivity {
         selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
                 membershipsAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_MEMBERSHIP);
+    }
+
+    /**
+     * Opens SelectArticleActivity so the user can select the Place for a new
+     * {@link com.averi.worldscribe.Residence Residence} for this Person.
+     */
+    private void createResidence() {
+        Intent selectGroupIntent = new Intent(this, SelectArticleActivity.class);
+        ResidencesAdapter residencesAdapter = (ResidencesAdapter) residencesList.getAdapter();
+
+        selectGroupIntent.putExtra(IntentFields.WORLD_NAME, getWorldName());
+        selectGroupIntent.putExtra(IntentFields.CATEGORY, Category.Place);
+        selectGroupIntent.putExtra(IntentFields.MAIN_ARTICLE_CATEGORY, Category.Person);
+        selectGroupIntent.putExtra(IntentFields.MAIN_ARTICLE_NAME, getArticleName());
+        selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
+                residencesAdapter.getLinkedArticleList());
+        startActivityForResult(selectGroupIntent, RESULT_NEW_RESIDENCE);
     }
 
 }
