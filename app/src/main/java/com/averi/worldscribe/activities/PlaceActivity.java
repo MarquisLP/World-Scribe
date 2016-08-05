@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.ResidentsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
@@ -92,6 +93,23 @@ public class PlaceActivity extends ArticleActivity {
                 this, getWorldName(), Category.Place, getArticleName()));
 
         return textFields;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_NEW_RESIDENT:
+                if (resultCode == RESULT_OK) {
+                    Residence newResidence = new Residence();
+                    newResidence.worldName = getWorldName();
+                    newResidence.placeName = getArticleName();
+                    newResidence.residentName = data.getStringExtra(IntentFields.ARTICLE_NAME);
+                    ExternalWriter.saveResidence(this, newResidence);
+                }
+        }
     }
 
     /**
