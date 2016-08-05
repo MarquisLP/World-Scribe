@@ -20,6 +20,7 @@ import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.ResidentsAdapter;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -41,8 +42,6 @@ public class PlaceActivity extends ArticleActivity {
 
         residentsList = (RecyclerView) findViewById(R.id.recyclerResidents);
         addResidentButton = (Button) findViewById(R.id.buttonAddResident);
-
-        populateResidences();
 
         addResidentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +94,12 @@ public class PlaceActivity extends ArticleActivity {
         return textFields;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        populateResidences();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
