@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
+import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
@@ -152,6 +153,15 @@ public class PersonActivity extends ArticleActivity {
                     Intent editMembershipIntent = new Intent(this, EditMembershipActivity.class);
                     editMembershipIntent.putExtra(IntentFields.MEMBERSHIP, newMembership);
                     startActivity(editMembershipIntent);
+                }
+                break;
+            case RESULT_NEW_RESIDENCE:
+                if (resultCode == RESULT_OK) {
+                    Residence newResidence = new Residence();
+                    newResidence.worldName = getWorldName();
+                    newResidence.residentName = getArticleName();
+                    newResidence.placeName = data.getStringExtra(IntentFields.ARTICLE_NAME);
+                    ExternalWriter.saveResidence(this, newResidence);
                 }
         }
     }

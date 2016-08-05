@@ -114,6 +114,20 @@ public class FileRetriever {
     }
 
     /**
+     * Retrieves the Residence file linking the specified Person to a Place.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World where this Residence takes place.
+     * @param personName The name of the Person whose Residences are being searched.
+     * @param placeName The name of a Place where the specified Person resides.
+     * @return The File named after the Place of Residence.
+     */
+    public static File getResidenceFile(Context context, String worldName, String personName,
+                                        String placeName) {
+        return new File(getResidencesDirectory(context, worldName, personName),
+                placeName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
+    }
+
+    /**
      * Retrieve the folder containing all of a Place's Residents.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
@@ -124,6 +138,20 @@ public class FileRetriever {
                                               String placeName) {
         return new File(getArticleDirectory(context, worldName, Category.Place, placeName),
                 context.getResources().getString(R.string.residentsText));
+    }
+
+    /**
+     * Retrieves the file representing a certain resident of the specified Place.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World where this Residence takes place.
+     * @param placeName The name of the Place whose residents are being searched.
+     * @param personName The name of a Person who resides in the specified Place.
+     * @return The File named after the specified resident.
+     */
+    public static File getResidentFile(Context context, String worldName, String placeName,
+                                        String personName) {
+        return new File(getResidentsDirectory(context, worldName, placeName),
+                personName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**

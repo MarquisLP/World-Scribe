@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.Residence;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -252,6 +253,36 @@ public final class ExternalWriter {
                 membership.memberRole);
 
         return ((savedToMemberDirectory) && (savedToGroupDirectory));
+    }
+
+    /**
+     * Saves a Person's Residence within a Place.
+     * @param context The Context calling this method.
+     * @param residence The Residence data that will be saved to file.
+     * @return True if the Residence data was saved successfully to both the Person's and the
+     * Place's directories; false if an I/O error occurs.
+     */
+    public static boolean saveResidence(Context context, Residence residence) {
+        File fileInPersonDirectory = FileRetriever.getResidenceFile(context, residence.worldName,
+                residence.residentName, residence.placeName);
+        File fileInPlaceDirectory = FileRetriever.getResidentFile(context, residence.worldName,
+                residence.placeName, residence.residentName);
+        boolean savedToPersonDirectory;
+        boolean savedToPlaceDirectory;
+
+        try {
+            savedToPersonDirectory = fileInPersonDirectory.createNewFile();
+        } catch (IOException error) {
+            savedToPersonDirectory = false;
+        }
+
+        try {
+            savedToPlaceDirectory = fileInPlaceDirectory.createNewFile();
+        } catch (IOException error) {
+            savedToPlaceDirectory = false;
+        }
+
+        return ((savedToPersonDirectory) && (savedToPlaceDirectory));
     }
 
 }
