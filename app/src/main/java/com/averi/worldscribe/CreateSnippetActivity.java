@@ -3,6 +3,7 @@ package com.averi.worldscribe;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.averi.worldscribe.utilities.IntentFields;
@@ -25,6 +26,19 @@ public class CreateSnippetActivity extends AppCompatActivity {
         worldName = startupIntent.getStringExtra(IntentFields.WORLD_NAME);
         articleCategory = (Category) startupIntent.getSerializableExtra(IntentFields.CATEGORY);
         articleName = startupIntent.getStringExtra(IntentFields.ARTICLE_NAME);
+
+        setAppBar();
+    }
+
+    /**
+     * Sets up this Activity's app bar.
+     */
+    private void setAppBar() {
+        Toolbar appBar = (Toolbar) findViewById(R.id.my_toolbar);
+        if (appBar != null) {
+            appBar.setTitle(R.string.createSnippetTitle);
+            setSupportActionBar(appBar);
+        }
     }
 
     public void clickCreate(View view) {
