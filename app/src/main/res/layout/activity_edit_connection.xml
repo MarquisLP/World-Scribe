@@ -72,20 +72,6 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/headerSpacing" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textOtherArticleName"
-            android:gravity="center"
-            android:text="Other Article"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/verticalSpacing" />
-
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -95,6 +81,20 @@
             android:hint="@string/relationHintBottomText"
             android:textColorHint="?attr/colorPrimaryDark"
             android:textSize="@dimen/standardTextSize" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/verticalSpacing" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textOtherArticleName"
+            android:gravity="center"
+            android:text="Other Article"
+            android:textSize="@dimen/headerTextSize"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
