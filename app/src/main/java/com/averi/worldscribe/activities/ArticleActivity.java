@@ -95,6 +95,10 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * Contains cards for all of the Article's Snippets.
      */
     private RecyclerView snippetsList;
+    /**
+     * Clicking this begins Snippet creation.
+     */
+    private Button addSnippetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
         connectionsList = getConnectionsRecycler();
         addConnectionButton = getAddConnectionButton();
         snippetsList = getSnippetsRecycler();
+        addSnippetButton = getAddSnippetButton();
         textFields = getTextFields();
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +179,11 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * @return An ArrayList containing all text fields for this Article.
      */
     protected abstract ArrayList<ArticleTextField> getTextFields();
+
+    /**
+     * @return The Button used for creating new Snippets owned by this Article.
+     */
+    protected abstract Button getAddSnippetButton();
 
     /**
      * Load data pertaining to the selected Article, and use it in set-up processes that are common

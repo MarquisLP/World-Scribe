@@ -121,6 +121,11 @@ public class PersonActivity extends ArticleActivity {
     }
 
     @Override
+    protected Button getAddSnippetButton() {
+        return (Button) findViewById(R.id.buttonAddSnippet);
+    }
+
+    @Override
     protected ArrayList<ArticleTextField> getTextFields() {
         Resources resources = getResources();
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
