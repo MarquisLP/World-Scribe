@@ -45,7 +45,7 @@
             android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name=".activities.SelectArticleActivity" />
         <activity android:name=".activities.EditMembershipActivity" />
-        <activity android:name=".CreateSnippetActivity"></activity>
+        <activity android:name=".activities.CreateSnippetActivity"></activity>
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.nsd.NsdManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
-import com.averi.worldscribe.CreateSnippetActivity;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
@@ -29,7 +27,6 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.views.BottomBar;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 

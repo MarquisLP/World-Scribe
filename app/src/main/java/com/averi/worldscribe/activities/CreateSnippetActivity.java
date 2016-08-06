@@ -1,4 +1,4 @@
-package com.averi.worldscribe;
+package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.averi.worldscribe.Category;
+import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
