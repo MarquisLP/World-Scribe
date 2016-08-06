@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.CreateSnippetActivity;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
@@ -127,6 +128,12 @@ public abstract class ArticleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createNewConnection();
+            }
+        });
+        addSnippetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewSnippet();
             }
         });
     }
@@ -336,6 +343,17 @@ public abstract class ArticleActivity extends AppCompatActivity {
         selectConnectedArticleIntent.putExtra(IntentFields.EXISTING_LINKS,
                 connectionsAdapter.getLinkedArticleList());
         startActivityForResult(selectConnectedArticleIntent, RESULT_NEW_CONNECTION);
+    }
+
+    /**
+     * Open CreateSnippetActivity to create a new Snippet belonging to this Article.
+     */
+    private void createNewSnippet() {
+        Intent createSnippetIntent = new Intent(this, CreateSnippetActivity.class);
+        createSnippetIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        createSnippetIntent.putExtra(IntentFields.CATEGORY, category);
+        createSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
+        startActivity(createSnippetIntent);
     }
 
 }
