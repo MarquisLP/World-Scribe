@@ -15,6 +15,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
 /**
@@ -107,7 +108,9 @@ public class CreateSnippetActivity extends AppCompatActivity {
      */
     public void clickCreate(View view) {
         if (snippetNameIsAvailable()) {
-            // Create the Snippet file and open it in SnippetActivity.
+            ExternalWriter.writeSnippetContents(this, worldName, articleCategory, articleName,
+                    nameField.getText().toString(), "");
+            editNewSnippet();
         }
     }
 
@@ -131,6 +134,19 @@ public class CreateSnippetActivity extends AppCompatActivity {
         }
 
         return nameIsAvailable;
+    }
+
+    /**
+     * Open the newly-created Snippet in SnippetActivity for editing.
+     */
+    private void editNewSnippet() {
+        Intent editSnippetIntent = new Intent(this, SnippetActivity.class);
+        editSnippetIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        editSnippetIntent.putExtra(IntentFields.CATEGORY, articleCategory);
+        editSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
+        editSnippetIntent.putExtra(IntentFields.SNIPPET_NAME, nameField.getText().toString());
+        startActivity(editSnippetIntent);
+        finish();
     }
 
 }
