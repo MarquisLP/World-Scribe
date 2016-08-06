@@ -99,6 +99,8 @@
     <string name="saveConnectionError">An error occurred while saving the Connection.</string>
     <string name="emptyRelationError">Relations for both Articles must be filled in.</string>
     <string name="saveMembershipError">An error occurred while saving the Membership.</string>
+    <string name="snippetExistsError">A Snippet named %1$s already exists for %2$s.\nPlease choose a different name.</string>
+
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>
 </resources>

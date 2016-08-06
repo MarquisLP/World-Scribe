@@ -1,6 +1,7 @@
 package com.averi.worldscribe;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.averi.worldscribe.utilities.ErrorMessager;
+import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
 /**
@@ -21,6 +24,7 @@ public class CreateSnippetActivity extends AppCompatActivity {
     private Category articleCategory;
     private String articleName;
 
+    private CoordinatorLayout coordinatorLayout;
     private EditText nameField;
     private Button createButton;
 
@@ -34,6 +38,7 @@ public class CreateSnippetActivity extends AppCompatActivity {
         articleCategory = (Category) startupIntent.getSerializableExtra(IntentFields.CATEGORY);
         articleName = startupIntent.getStringExtra(IntentFields.ARTICLE_NAME);
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         nameField = (EditText) findViewById(R.id.nameField);
         createButton = (Button) findViewById(R.id.create);
 
@@ -94,8 +99,36 @@ public class CreateSnippetActivity extends AppCompatActivity {
         return (nameField.getText().toString().isEmpty());
     }
 
+    /**
+     * Respond to the user confirming creation.
+     * @param view The View that was clicked for confirmation.
+     */
     public void clickCreate(View view) {
+        if (snippetNameIsAvailable()) {
+            // Create the Snippet file and open it in SnippetActivity.
+        }
+    }
 
+    /**
+     * Checks if the name entered into the text field is available i.e. none of the Article's
+     * existing Snippets use the same name.
+     * If the name is unavailable, an error message is displayed.
+     * @return True if the Snippet name is available; false otherwise.
+     */
+    private boolean snippetNameIsAvailable() {
+        String snippetName = nameField.getText().toString();
+        Boolean nameIsAvailable;
+
+        if (ExternalReader.snippetExists(this, worldName, articleCategory, articleName,
+                snippetName)) {
+            nameIsAvailable = false;
+            ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
+                    getString(R.string.snippetExistsError, snippetName, articleName));
+        } else {
+            nameIsAvailable = true;
+        }
+
+        return nameIsAvailable;
     }
 
 }

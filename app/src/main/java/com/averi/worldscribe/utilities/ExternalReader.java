@@ -320,6 +320,23 @@ public class ExternalReader {
     }
 
     /**
+     * Checks if a certain Snippet already exists.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World that the Article belongs to.
+     * @param category The {@link Category} that the Article belongs to.
+     * @param articleName The name of the Article that the Snippet belongs to.
+     * @param snippetName The name of the Snippet to check.
+     * @return True if the Snippet exists within its respective Article's directory; false
+     * otherwise.
+     */
+    public static boolean snippetExists(Context context, String worldName, Category category,
+                                        String articleName, String snippetName) {
+        File snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                snippetName);
+        return ((snippetFile.exists()) && (snippetFile.isFile()));
+    }
+
+    /**
      * Retrieves all {@link com.averi.worldscribe.Residence Residences} for a specified Person.
      * @param context The Context calling this method.
      * @param worldName The name of the current World.
