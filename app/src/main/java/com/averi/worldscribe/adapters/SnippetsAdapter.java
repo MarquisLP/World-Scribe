@@ -42,19 +42,22 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
         private final Category category;
         private final String articleName;
         private String snippetName;
+        private SnippetsAdapter adapter;
 
         /**
          * Instantiates a new SnippetHolder.
+         * @param adapter The SnippetsAdapter this ViewHolder belongs to.
          * @param context The Context calling this method.
          * @param worldName The name of the current World.
          * @param category The {@link Category} of the current Article.
          * @param articleName The name of the current Article.
          * @param itemView The Snippet Card that this ViewHolder will handle.
          */
-        public SnippetHolder(Context context, String worldName, Category category,
-                             String articleName, View itemView) {
+        public SnippetHolder(SnippetsAdapter adapter, Context context, String worldName,
+                             Category category, String articleName, View itemView) {
             super(itemView);
 
+            this.adapter = adapter;
             this.context = context;
             snippetCard = (CardView) itemView;
             snippetNameText = (TextView) snippetCard.findViewById(R.id.itemName);
@@ -109,6 +112,8 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                                 Toast.makeText(context,
                                         context.getString(R.string.deleteSnippetError, snippetName),
                                         Toast.LENGTH_SHORT).show();
+                            } else {
+                                adapter.removeSnippet(getAdapterPosition());
                             }
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
@@ -155,7 +160,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     public SnippetHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.erasable_item_card, parent, false);
-        return new SnippetHolder(context, worldName, category, articleName, view);
+        return new SnippetHolder(this, context, worldName, category, articleName, view);
     }
 
     @Override
@@ -167,4 +172,14 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     public int getItemCount() {
         return snippets.size();
     }
+
+    /**
+     * Remove a Snippet from the list.
+     * @param snippetPosition The list index of the Snippet to remove.
+     */
+    public void removeSnippet(int snippetPosition) {
+        snippets.remove(snippetPosition);
+        notifyItemRemoved(snippetPosition);
+    }
+
 }
