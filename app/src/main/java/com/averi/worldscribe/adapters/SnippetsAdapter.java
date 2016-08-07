@@ -1,7 +1,9 @@
 package com.averi.worldscribe.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.SnippetActivity;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
@@ -60,6 +64,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
             this.articleName = articleName;
 
             snippetCard.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
         }
 
         /**
@@ -80,7 +85,27 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
 
         @Override
         public void onClick(View view) {
-            goToSnippet();
+            if (view.getId() == deleteButton.getId()) {
+                deleteSnippet();
+            } else {
+                goToSnippet();
+            }
+        }
+
+        /**
+         * Deletes the Snippet referenced by this ViewHolder upon user confirmation.
+         * If an error occurs during deletion, an error message is displayed.
+         */
+        public void deleteSnippet() {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.confirmSnippetDeletionTitle, snippetName))
+                    .setMessage(context.getString(R.string.confirmSnippetDeletion, snippetName))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Delete the Snippet.
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         /**
