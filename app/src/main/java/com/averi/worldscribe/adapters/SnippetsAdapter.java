@@ -103,7 +103,13 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            // Delete the Snippet.
+                            boolean snippetWasDeleted = ExternalDeleter.deleteSnippet(context,
+                                    worldName, category, articleName, snippetName);
+                            if (!(snippetWasDeleted)) {
+                                Toast.makeText(context,
+                                        context.getString(R.string.deleteSnippetError, snippetName),
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
         }

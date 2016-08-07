@@ -1,5 +1,9 @@
 package com.averi.worldscribe.utilities;
 
+import android.content.Context;
+
+import com.averi.worldscribe.Category;
+
 import java.io.File;
 
 /**
@@ -32,5 +36,20 @@ public class ExternalDeleter {
         }
 
         return fileOrDirectory.delete();
+    }
+
+    /**
+     * Deletes a Snippet belonging to the specified Article.
+     * @param context The Context calling this method.
+     * @param worldName The name of the World the Article belongs to.
+     * @param category The Category of the Article.
+     * @param articleName The name of the Article the Snippet belongs to.
+     * @param snippetName The name of the Snippet to delete.
+     * @return True if the Snippet was deleted successfully; false otherwise.
+     */
+    public static boolean deleteSnippet(Context context, String worldName, Category category,
+                                        String articleName, String snippetName) {
+        return FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                snippetName).delete();
     }
 }
