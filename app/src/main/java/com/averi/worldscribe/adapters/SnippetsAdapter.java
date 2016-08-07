@@ -99,7 +99,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
          * Deletes the Snippet referenced by this ViewHolder upon user confirmation.
          * If an error occurs during deletion, an error message is displayed.
          */
-        public void deleteSnippet() {
+        private void deleteSnippet() {
             new AlertDialog.Builder(context)
                     .setTitle(context.getString(R.string.confirmSnippetDeletionTitle, snippetName))
                     .setMessage(context.getString(R.string.confirmSnippetDeletion, snippetName))
