@@ -112,7 +112,7 @@ implements ArticleLinkAdapter {
                         boolean connectionWasDeleted = ExternalDeleter.deleteConnection(context,
                                 connection);
                         if ((connectionWasDeleted)) {
-                            // Update the ConnectionsAdapter.
+                            removeConnection(getAdapterPosition());
                         } else {
                             Toast.makeText(context,
                                     context.getString(R.string.deleteConnectionError,
@@ -192,4 +192,14 @@ implements ArticleLinkAdapter {
 
         return linkedArticleList;
     }
+
+    /**
+     * Removes a Connection from the Connections list.
+     * @param connectionPosition The list index of the Connection to remove.
+     */
+    public void removeConnection(int connectionPosition) {
+        connections.remove(connectionPosition);
+        notifyItemRemoved(connectionPosition);
+    }
+
 }
