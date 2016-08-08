@@ -111,9 +111,24 @@ implements ArticleLinkAdapter {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            // Delete the Membership.
+                            deleteMembership();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
+        }
+
+        /**
+         * Deletes the Membership represented by this ViewHolder.
+         * If an error occurs during deletion, an error message is displayed.
+         */
+        public void deleteMembership() {
+            boolean membershipWasDeleted = ExternalDeleter.deleteMembership(context, membership);
+            if (membershipWasDeleted) {
+                // Update MembershipsAdapter.
+            } else {
+                Toast.makeText(context, context.getString(R.string.deleteMembershipError,
+                               membership.groupName),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         /**

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
+import com.averi.worldscribe.Membership;
 
 import java.io.File;
 
@@ -71,4 +72,14 @@ public class ExternalDeleter {
         return ((fileInMainArticleDirectory.delete()) &&
                 (fileInConnectedArticleDirectory.delete()));
     }
+
+    public static boolean deleteMembership(Context context, Membership membership) {
+        File fileInPersonDirectory = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, membership.groupName);
+        File fileInGroupDirectory = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, membership.memberName);
+        return ((fileInPersonDirectory.delete()) &&
+                (fileInGroupDirectory.delete()));
+    }
+
 }
