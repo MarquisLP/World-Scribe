@@ -1,7 +1,9 @@
 package com.averi.worldscribe.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
@@ -23,6 +26,7 @@ import com.averi.worldscribe.R;
 
 import java.util.ArrayList;
 
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
@@ -57,6 +61,7 @@ implements ArticleLinkAdapter {
 
             connectionCard.setOnClickListener(this);
             editButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
         }
 
         public void bindConnection(Connection connection) {
@@ -75,7 +80,7 @@ implements ArticleLinkAdapter {
             if (view.getId() == editButton.getId()) {
                 goToConnectionEditor();
             } else if (view.getId() == deleteButton.getId()) {
-                // Delete the Connection.
+                deleteConnection();
             } else {
                 goToConnectedArticle();
             }
@@ -89,6 +94,24 @@ implements ArticleLinkAdapter {
             Intent editConnectionIntent = new Intent(context, EditConnectionActivity.class);
             editConnectionIntent.putExtra(IntentFields.CONNECTION, connection);
             context.startActivity(editConnectionIntent);
+        }
+
+        /**
+         * Deletes the Connection represented in this ViewHolder.
+         * If an error occurs during deletion, an error message is displayed.
+         */
+        private void deleteConnection() {
+            new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.confirmConnectionDeletionTitle,
+                        connection.connectedArticleName))
+                .setMessage(context.getString(R.string.confirmConnectionDeletion,
+                        connection.connectedArticleName))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Delete the Connection.
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
         }
 
         private void goToConnectedArticle() {
