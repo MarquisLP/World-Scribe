@@ -109,7 +109,16 @@ implements ArticleLinkAdapter {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Delete the Connection.
+                        boolean connectionWasDeleted = ExternalDeleter.deleteConnection(context,
+                                connection);
+                        if ((connectionWasDeleted)) {
+                            // Update the ConnectionsAdapter.
+                        } else {
+                            Toast.makeText(context,
+                                    context.getString(R.string.deleteConnectionError,
+                                            connection.connectedArticleName),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
         }

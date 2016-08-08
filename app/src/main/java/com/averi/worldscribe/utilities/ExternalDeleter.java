@@ -3,6 +3,7 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Connection;
 
 import java.io.File;
 
@@ -51,5 +52,23 @@ public class ExternalDeleter {
                                         String articleName, String snippetName) {
         return FileRetriever.getSnippetFile(context, worldName, category, articleName,
                 snippetName).delete();
+    }
+
+    /**
+     * Deletes a {@link Connection} between two Articles.
+     * @param context
+     * @param connection
+     * @return
+     */
+    public static boolean deleteConnection(Context context, Connection connection) {
+        File fileInMainArticleDirectory = FileRetriever.getConnectionRelationFile(context,
+                connection.worldName, connection.articleCategory, connection.articleName,
+                connection.connectedArticleCategory, connection.connectedArticleName);
+        File fileInConnectedArticleDirectory = FileRetriever.getConnectionRelationFile(context,
+                connection.worldName, connection.connectedArticleCategory,
+                connection.connectedArticleName, connection.articleCategory,
+                connection.articleName);
+        return ((fileInMainArticleDirectory.delete()) &&
+                (fileInConnectedArticleDirectory.delete()));
     }
 }

@@ -105,6 +105,7 @@
     <string name="saveMembershipError">An error occurred while saving the Membership.</string>
     <string name="snippetExistsError">A Snippet named %1$s already exists for %2$s.\nPlease choose a different name.</string>
     <string name="deleteSnippetError">An error occurred while deleting %1$s.</string>
+    <string name="deleteConnectionError">An error occurred while deleting the Connection to %1$s.</string>
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>
