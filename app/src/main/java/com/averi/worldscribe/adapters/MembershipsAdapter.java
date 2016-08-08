@@ -1,7 +1,9 @@
 package com.averi.worldscribe.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
@@ -16,6 +19,7 @@ import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.GroupActivity;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
@@ -57,6 +61,7 @@ implements ArticleLinkAdapter {
 
             this.membershipCard.setOnClickListener(this);
             editButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
         }
 
         /**
@@ -88,10 +93,27 @@ implements ArticleLinkAdapter {
             if (view.getId() == editButton.getId()) {
                 editMembership();
             } else if (view.getId() == deleteButton.getId()) {
-                // Delete Membership.
+                confirmMembershipDeletion();
             } else {
                 goToGroup();
             }
+        }
+
+        /**
+         * Deletes the Membership represented by this ViewHolder upon user confirmation.
+         */
+        private void confirmMembershipDeletion() {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.confirmMembershipDeletionTitle,
+                            membership.groupName))
+                    .setMessage(context.getString(R.string.confirmMembershipDeletion,
+                            membership.groupName))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Delete the Membership.
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         /**
