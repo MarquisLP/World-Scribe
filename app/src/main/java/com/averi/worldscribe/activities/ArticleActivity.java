@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -146,6 +148,26 @@ public abstract class ArticleActivity extends AppCompatActivity {
         super.onPause();
 
         saveTextFieldsData();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.renameArticleItem:
+                // Rename the Article.
+                return true;
+            case R.id.deleteArticleItem:
+                // Delete the Article.
+                return true;
+            case R.id.createWorldItem:
+            case R.id.loadWorldItem:
+            case R.id.deleteWorldItem:
+            case R.id.settingsItem:
+                ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
