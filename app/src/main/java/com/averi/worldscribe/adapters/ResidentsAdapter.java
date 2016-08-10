@@ -110,7 +110,7 @@ implements ArticleLinkAdapter {
         public void deleteResidence() {
             boolean membershipWasDeleted = ExternalDeleter.deleteResidence(context, residence);
             if (membershipWasDeleted) {
-                // Update the Adapter.
+                removeResident(getAdapterPosition());
             } else {
                 Toast.makeText(context, context.getString(R.string.deleteResidenceError,
                         residence.placeName),
@@ -177,4 +177,14 @@ implements ArticleLinkAdapter {
 
         return  linkedArticleList;
     }
+
+    /**
+     * Removes a Resident from the Residents list.
+     * @param residencePosition The list index of the Resident to delete.
+     */
+    public void removeResident(int residencePosition) {
+        residentData.remove(residencePosition);
+        notifyItemRemoved(residencePosition);
+    }
+
 }
