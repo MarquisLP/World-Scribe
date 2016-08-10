@@ -121,6 +121,7 @@
     <string name="deleteMembershipError">An error occurred while deleting the Membership to %1$s.</string>
     <string name="deleteMemberError">An error occurred while removing %1$s from this Group.</string>
     <string name="deleteResidenceError">An error occurred while deleting the Residence at %1$s.</string>
+    <string name="deleteArticleError">An error occurred while deleting this Article.</string>
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>

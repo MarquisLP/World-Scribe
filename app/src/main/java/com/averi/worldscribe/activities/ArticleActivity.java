@@ -26,6 +26,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -387,10 +388,83 @@ public abstract class ArticleActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Delete the Article.
+                        deleteArticle();
                         }
                     })
                 .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    /**
+     * <p>
+     * Deletes the Article and all links to it within other Articles.
+     * </p>
+     * <p>
+     * If the Article couldn't be deleted, an error message is displayed.
+     * </p>
+     * <p>
+     * Subclasses for Articles of Categories that have additional subdirectories must override
+     * this method and empty out those subdirectories before calling super. Otherwise, the deletion
+     * will fail.
+     * </p>
+     */
+    protected void deleteArticle() {
+        Toast errorToast =  Toast.makeText(this, getString(R.string.deleteArticleError),
+                Toast.LENGTH_SHORT);
+
+        // TODO: Override this method in Person, Group, and Place, then remove the first conditional.
+        if (((category == Category.Item) || (category == Category.Concept)) &&
+                (deleteAllConnections()) && (deleteAllSnippets())) {
+             if (ExternalDeleter.deleteArticleDirectory(this, worldName, category, articleName)) {
+                 finish();
+             } else {
+                 errorToast.show();
+             }
+        } else {
+            errorToast.show();
+        }
+    }
+
+    /**
+     * Deletes all of the Connections linked to this Article.
+     * @return True if all Connections were deleted successfully; false otherwise.
+     */
+    private boolean deleteAllConnections() {
+        boolean connectionsWereDeleted = true;
+
+        ArrayList<Connection> allConnections = (
+                (ConnectionsAdapter) connectionsList.getAdapter()).getConnections();
+
+        Connection connection;
+        int index = 0;
+        while ((index < allConnections.size()) && (connectionsWereDeleted)) {
+            connection = allConnections.get(index);
+            connectionsWereDeleted = ExternalDeleter.deleteConnection(this, connection);
+            index++;
+        }
+
+        return connectionsWereDeleted;
+    }
+
+    /**
+     * Deletes all of the Snippets possessed by this Article.
+     * @return True if all Snippets were deleted successfully; false otherwise.
+     */
+    private boolean deleteAllSnippets() {
+        boolean snippetsWereDeleted = true;
+
+        ArrayList<String> allSnippets = (
+                (SnippetsAdapter) snippetsList.getAdapter()).getSnippetNames();
+
+        String snippetName;
+        int index = 0;
+        while ((index < allSnippets.size()) && (snippetsWereDeleted)) {
+            snippetName = allSnippets.get(index);
+            snippetsWereDeleted = ExternalDeleter.deleteSnippet(this, worldName, category,
+                    articleName, snippetName);
+            index++;
+        }
+
+        return snippetsWereDeleted;
     }
 
 }

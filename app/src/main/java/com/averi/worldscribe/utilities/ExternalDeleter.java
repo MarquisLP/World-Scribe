@@ -104,4 +104,19 @@ public class ExternalDeleter {
                 (fileInPlaceDirectory.delete()));
     }
 
+    /**
+     * Deletes the directory of the specified Article.
+     * @param context The The Context calling this method.
+     * @param worldName The name of the World the Article belongs to.
+     * @param category The Article's category.
+     * @param articleName The Article's name.
+     * @return True if the Article's directory was deleted successfully; false otherwise.
+     */
+    public static boolean deleteArticleDirectory(Context context, String worldName,
+                                                 Category category, String articleName) {
+        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName);
+        return deleteRecursive(articleDirectory);
+    }
+
 }
