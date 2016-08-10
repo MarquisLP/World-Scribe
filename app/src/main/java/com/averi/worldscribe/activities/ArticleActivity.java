@@ -1,10 +1,12 @@
 package com.averi.worldscribe.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -157,7 +159,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
                 // Rename the Article.
                 return true;
             case R.id.deleteArticleItem:
-                // Delete the Article.
+                confirmArticleDeletion();
                 return true;
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
@@ -373,6 +375,22 @@ public abstract class ArticleActivity extends AppCompatActivity {
         createSnippetIntent.putExtra(IntentFields.CATEGORY, category);
         createSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
         startActivity(createSnippetIntent);
+    }
+
+    /**
+     * Deletes the Article upon user confirmation.
+     */
+    private void confirmArticleDeletion() {
+        new AlertDialog.Builder(this)
+                .setTitle(this.getString(R.string.confirmArticleDeletionTitle, articleName))
+                .setMessage(this.getString(R.string.confirmArticleDeletion, articleName))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Delete the Article.
+                        }
+                    })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
 }

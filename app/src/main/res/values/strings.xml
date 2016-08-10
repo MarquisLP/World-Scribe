@@ -104,6 +104,8 @@
     <string name="confirmResidenceRemoval">Are you sure you wish to delete this Residence at %1$s?</string>
     <string name="confirmResidentRemovalTitle">Remove %1$s as a Resident</string>
     <string name="confirmResidentRemoval">Are you sure you wish to remove %1$s as a Resident?</string>
+    <string name="confirmArticleDeletionTitle">Delete %1$s</string>
+    <string name="confirmArticleDeletion">Are you sure you wish to delete %1$s?\nOnce an Article is deleted, it cannot be recovered.</string>
 
     <string name="cropImageError">An error occurred while cropping the selected image.</string>
     <string name="saveImageError">An error occurred while saving the selected image.</string>
