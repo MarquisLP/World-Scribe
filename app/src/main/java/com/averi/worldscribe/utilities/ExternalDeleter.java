@@ -57,9 +57,9 @@ public class ExternalDeleter {
 
     /**
      * Deletes a {@link Connection} between two Articles.
-     * @param context
-     * @param connection
-     * @return
+     * @param context The Context calling this method.
+     * @param connection The Connection that will be deleted.
+     * @return True if the Connection was deleted successfully; false otherwise.
      */
     public static boolean deleteConnection(Context context, Connection connection) {
         File fileInMainArticleDirectory = FileRetriever.getConnectionRelationFile(context,
@@ -73,6 +73,12 @@ public class ExternalDeleter {
                 (fileInConnectedArticleDirectory.delete()));
     }
 
+    /**
+     * Deletes a Person's {@link Membership} within a Group.
+     * @param context The Context calling this method.
+     * @param membership The Membership that will be deleted.
+     * @return True if the Membership was deleted successfully; false otherwise.
+     */
     public static boolean deleteMembership(Context context, Membership membership) {
         File fileInPersonDirectory = FileRetriever.getMembershipFile(context,
                 membership.worldName, membership.memberName, membership.groupName);
