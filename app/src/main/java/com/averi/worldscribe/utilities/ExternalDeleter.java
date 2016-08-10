@@ -5,6 +5,7 @@ import android.content.Context;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
+import com.averi.worldscribe.Residence;
 
 import java.io.File;
 
@@ -86,6 +87,21 @@ public class ExternalDeleter {
                 membership.worldName, membership.groupName, membership.memberName);
         return ((fileInPersonDirectory.delete()) &&
                 (fileInGroupDirectory.delete()));
+    }
+
+    /**
+     * Deletes a Person's {@link Residence} at a Place.
+     * @param context The Context calling this method.
+     * @param residence The Residence that will be deleted.
+     * @return True if the Residence was deleted successfully; false otherwise.
+     */
+    public static boolean deleteResidence(Context context, Residence residence) {
+        File fileInPersonDirectory = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, residence.placeName);
+        File fileInPlaceDirectory = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, residence.residentName);
+        return ((fileInPersonDirectory.delete()) &&
+                (fileInPlaceDirectory.delete()));
     }
 
 }
