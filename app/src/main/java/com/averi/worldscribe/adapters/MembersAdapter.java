@@ -123,7 +123,7 @@ implements ArticleLinkAdapter {
         public void deleteMember() {
             boolean membershipWasDeleted = ExternalDeleter.deleteMembership(context, membership);
             if (membershipWasDeleted) {
-                // Update the Adapter.
+                removeMember(getAdapterPosition());
             } else {
                 Toast.makeText(context, context.getString(R.string.deleteMemberError,
                         membership.memberName),
@@ -197,4 +197,14 @@ implements ArticleLinkAdapter {
 
         return  linkedArticleList;
     }
+
+    /**
+     * Removes a Member from the Member list.
+     * @param memberPosition The list index of the Member to remove.
+     */
+    public void removeMember(int memberPosition) {
+        memberships.remove(memberPosition);
+        notifyItemRemoved(memberPosition);
+    }
+
 }
