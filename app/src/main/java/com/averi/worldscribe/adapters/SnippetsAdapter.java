@@ -182,4 +182,11 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
         notifyItemRemoved(snippetPosition);
     }
 
+    /**
+     * @return The names of all Snippets loaded into this Adapter.
+     */
+    public ArrayList<String> getSnippetNames() {
+        return snippets;
+    }
+
 }

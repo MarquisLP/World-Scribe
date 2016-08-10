@@ -207,4 +207,11 @@ implements ArticleLinkAdapter {
         notifyItemRemoved(membershipPosition);
     }
 
+    /**
+     * @return All Memberships loaded into this Adapter.
+     */
+    public ArrayList<Membership> getMemberships() {
+        return memberships;
+    }
+
 }

@@ -202,4 +202,11 @@ implements ArticleLinkAdapter {
         notifyItemRemoved(connectionPosition);
     }
 
+    /**
+     * @return All Connections loaded into this Adapter.
+     */
+    public ArrayList<Connection> getConnections() {
+        return connections;
+    }
+
 }

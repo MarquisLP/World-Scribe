@@ -183,4 +183,11 @@ implements ArticleLinkAdapter {
         notifyItemRemoved(residencePosition);
     }
 
+    /**
+     * @return All Residences loaded into this Adapter.
+     */
+    public ArrayList<Residence> getResidences() {
+        return residences;
+    }
+
 }
