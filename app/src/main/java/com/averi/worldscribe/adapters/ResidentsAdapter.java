@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.activities.PersonActivity;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
@@ -96,9 +98,24 @@ implements ArticleLinkAdapter {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            // Remove the Resident.
+                            deleteResidence();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
+        }
+
+        /**
+         * Deletes the Residence of the Person represented by this ViewHolder.
+         * If an error occurs during deletion, an error message is displayed.
+         */
+        public void deleteResidence() {
+            boolean membershipWasDeleted = ExternalDeleter.deleteResidence(context, residence);
+            if (membershipWasDeleted) {
+                // Update the Adapter.
+            } else {
+                Toast.makeText(context, context.getString(R.string.deleteResidenceError,
+                        residence.placeName),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         /**
