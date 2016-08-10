@@ -111,6 +111,7 @@
     <string name="deleteSnippetError">An error occurred while deleting %1$s.</string>
     <string name="deleteConnectionError">An error occurred while deleting the Connection to %1$s.</string>
     <string name="deleteMembershipError">An error occurred while deleting the Membership to %1$s.</string>
+    <string name="deleteMemberError">An error occurred while removing %1$s from this Group.</string>
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>

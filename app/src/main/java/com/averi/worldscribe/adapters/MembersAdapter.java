@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
@@ -18,6 +19,7 @@ import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.PersonActivity;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
@@ -109,9 +111,24 @@ implements ArticleLinkAdapter {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            // Delete associated Membership.
+                            deleteMember();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
+        }
+
+        /**
+         * Removes the Member represented by this ViewHolder from the Group.
+         * If an error occurs during removal, an error message is displayed.
+         */
+        public void deleteMember() {
+            boolean membershipWasDeleted = ExternalDeleter.deleteMembership(context, membership);
+            if (membershipWasDeleted) {
+                // Update the Adapter.
+            } else {
+                Toast.makeText(context, context.getString(R.string.deleteMemberError,
+                        membership.memberName),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         /**
