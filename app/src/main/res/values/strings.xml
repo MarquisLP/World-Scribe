@@ -96,6 +96,8 @@
     <string name="confirmConnectionDeletion">Are you sure you wish to delete this Connection to %1$s?</string>
     <string name="confirmMembershipDeletionTitle">Delete Membership to %1$s</string>
     <string name="confirmMembershipDeletion">Are you sure you wish to delete this Membership to %1$s?</string>
+    <string name="confirmMemberRemovalTitle">Remove %1$s</string>
+    <string name="confirmMemberRemoval">Are you sure you wish to remove %1$s as a Member?</string>
 
     <string name="cropImageError">An error occurred while cropping the selected image.</string>
     <string name="saveImageError">An error occurred while saving the selected image.</string>

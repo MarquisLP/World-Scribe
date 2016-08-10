@@ -1,7 +1,9 @@
 package com.averi.worldscribe.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,6 +59,7 @@ implements ArticleLinkAdapter {
 
             this.memberCard.setOnClickListener(this);
             editButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
         }
 
         /**
@@ -88,10 +91,27 @@ implements ArticleLinkAdapter {
             if (view.getId() == editButton.getId()) {
                 editMembership();
             } else if (view.getId() == deleteButton.getId()) {
-                // Delete Membership.
+                confirmMemberRemoval();
             } else {
                 goToMember();
             }
+        }
+
+        /**
+         * Removes the Member represented by this ViewHolder from the Group upon user confirmation.
+         */
+        private void confirmMemberRemoval() {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.confirmMemberRemovalTitle,
+                            membership.memberName))
+                    .setMessage(context.getString(R.string.confirmMemberRemoval,
+                            membership.memberName))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Delete associated Membership.
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         /**
