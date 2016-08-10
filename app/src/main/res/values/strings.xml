@@ -28,6 +28,8 @@
     <string name="loadWorldItemText">Open World</string>
     <string name="deleteWorldItem">Delete World</string>
     <string name="settingsItemText">Settings</string>
+    <string name="renameArticleItemText">Rename Article</string>
+    <string name="deleteArticleItemText">Delete Article</string>
 
     <string name="imageFileName">Image</string>
 
