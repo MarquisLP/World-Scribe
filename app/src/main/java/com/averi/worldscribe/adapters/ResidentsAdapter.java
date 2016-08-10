@@ -1,7 +1,9 @@
 package com.averi.worldscribe.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,6 +55,7 @@ implements ArticleLinkAdapter {
             deleteButton = (ImageButton) residentCard.findViewById(R.id.delete);
 
             residentCard.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
         }
 
         /**
@@ -74,7 +77,28 @@ implements ArticleLinkAdapter {
 
         @Override
         public void onClick(View view) {
-            goToResident();
+            if (view.getId() == deleteButton.getId()) {
+                confirmResidentDeletion();
+            } else {
+                goToResident();
+            }
+        }
+
+        /**
+         * Removes the Resident represented by this ViewHolder upon user confirmation.
+         */
+        private void confirmResidentDeletion() {
+            new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.confirmResidentRemovalTitle,
+                            residence.residentName))
+                    .setMessage(context.getString(R.string.confirmResidentRemoval,
+                            residence.residentName))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Remove the Resident.
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         /**
