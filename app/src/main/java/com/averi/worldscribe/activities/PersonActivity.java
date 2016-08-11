@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
@@ -18,6 +19,7 @@ import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -261,6 +263,57 @@ public class PersonActivity extends ArticleActivity {
         selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
                 residencesAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_RESIDENCE);
+    }
+
+    @Override
+    protected void deleteArticle() {
+        if ((deleteAllMemberships()) && (deleteAllResidences())) {
+            super.deleteArticle();
+        } else {
+            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Deletes all of this Person's Memberships to different Groups.
+     * @return True if all Memberships were deleted successfully; false otherwise.
+     */
+    private boolean deleteAllMemberships() {
+        boolean membershipsWereDeleted = true;
+
+        ArrayList<Membership> allMemberships = (
+                (MembershipsAdapter) membershipsList.getAdapter()).getMemberships();
+
+        Membership membership;
+        int index = 0;
+        while ((index < allMemberships.size()) && (membershipsWereDeleted)) {
+            membership = allMemberships.get(index);
+            membershipsWereDeleted = ExternalDeleter.deleteMembership(this, membership);
+            index++;
+        }
+
+        return membershipsWereDeleted;
+    }
+
+    /**
+     * Deletes all of this Person's Residences at different Places.
+     * @return True if all Residences were deleted successfully; false otherwise.
+     */
+    private boolean deleteAllResidences() {
+        boolean residencesWereDeleted = true;
+
+        ArrayList<Residence> allResidences = (
+                (ResidencesAdapter) residencesList.getAdapter()).getResidences();
+
+        Residence residence;
+        int index = 0;
+        while ((index < allResidences.size()) && (residencesWereDeleted)) {
+            residence = allResidences.get(index);
+            residencesWereDeleted = ExternalDeleter.deleteResidence(this, residence);
+            index++;
+        }
+
+        return residencesWereDeleted;
     }
 
 }
