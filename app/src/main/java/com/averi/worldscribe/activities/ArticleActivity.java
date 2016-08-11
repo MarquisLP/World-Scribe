@@ -411,8 +411,8 @@ public abstract class ArticleActivity extends AppCompatActivity {
         Toast errorToast =  Toast.makeText(this, getString(R.string.deleteArticleError),
                 Toast.LENGTH_SHORT);
 
-        // TODO: Override this method in Group and Place, then remove the first conditional.
-        if (((category == Category.Person) || (category == Category.Item) || (category == Category.Concept)) &&
+        // TODO: Override this method in Place, then remove the first conditional.
+        if ((category != Category.Place) &&
                 (deleteAllConnections()) && (deleteAllSnippets())) {
              if (ExternalDeleter.deleteArticleDirectory(this, worldName, category, articleName)) {
                  finish();

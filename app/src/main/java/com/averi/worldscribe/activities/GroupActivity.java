@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.MembersAdapter;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -132,6 +134,36 @@ public class GroupActivity extends ArticleActivity {
         selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
                 membersAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_MEMBER);
+    }
+
+    @Override
+    protected void deleteArticle() {
+        if (removeAllMembers()) {
+            super.deleteArticle();
+        } else {
+            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Deletes all Memberships to this Group.
+     * @return True if all Memberships were deleted successfully; false otherwise.
+     */
+    private boolean removeAllMembers() {
+        boolean membersWereRemoved = true;
+
+        ArrayList<Membership> allMemberships = (
+                (MembersAdapter) membersList.getAdapter()).getMemberships();
+
+        Membership membership;
+        int index = 0;
+        while ((index < allMemberships.size()) && (membersWereRemoved)) {
+            membership = allMemberships.get(index);
+            membersWereRemoved = ExternalDeleter.deleteMembership(this, membership);
+            index++;
+        }
+
+        return membersWereRemoved;
     }
 
 }
