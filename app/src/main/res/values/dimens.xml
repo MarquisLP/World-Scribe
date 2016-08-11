@@ -35,4 +35,7 @@
     <dimen name="cardMainTextSize">30sp</dimen>
     <dimen name="spinnerTextSize">30sp</dimen>
     <dimen name="spinnerItemPadding">5dp</dimen>
+    <dimen name="dialogTitleSize">30sp</dimen>
+    <dimen name="dialogPaddingAboveButtons">10dp</dimen>
+    <dimen name="dialogTextboxHorizontalMargin">5dp</dimen>
 </resources>

@@ -125,4 +125,5 @@
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>
+    <string name="rename_snippet_title">Rename Snippet</string>
 </resources>
