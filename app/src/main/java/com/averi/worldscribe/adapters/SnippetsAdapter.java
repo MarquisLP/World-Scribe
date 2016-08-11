@@ -1,6 +1,7 @@
 package com.averi.worldscribe.adapters;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -110,17 +111,64 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
             LayoutInflater inflater = activity.getLayoutInflater();
             View content = inflater.inflate(R.layout.rename_snippet_dialog, null);
 
-            EditText nameField = (EditText) content.findViewById(R.id.snippetName);
+            final EditText nameField = (EditText) content.findViewById(R.id.snippetName);
             nameField.setText(snippetName);
 
-            builder.setView(content)
+            final AlertDialog dialog = builder.setView(content)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            // Rename the Snippet using the name entered into the dialog.
-                        }
+                        public void onClick(DialogInterface dialog, int id) { }
                     })
-                    .setNegativeButton(android.R.string.cancel, null).show();
+                    .setNegativeButton(android.R.string.cancel, null).create();
+            dialog.show();
+
+            // Handle onClick here to prevent the dialog from closing if the user enters
+            // an invalid name.
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                    new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Boolean renameWasSuccessful = renameSnippet(nameField.getText().toString());
+                    if (renameWasSuccessful) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+        }
+
+        /**
+         * <p>
+         *     Renames the Snippet associated with this ViewHolder, only if the new name is
+         *     non-empty and is not already in use by an existing Snippet.
+         * </p>
+         * <p>
+         *     If either of these conditions are untrue, an error message is displayed.
+         * </p>
+         * @param newName The new name to give the Snippet.
+         */
+        private boolean renameSnippet(String newName) {
+            boolean renameWasSuccessful;
+
+            if (newName.isEmpty()) {
+                Toast.makeText(activity, R.string.emptySnippetNameError, Toast.LENGTH_SHORT).show();
+                renameWasSuccessful = false;
+            } else if (newName.equals(snippetName)) {   // Name was not changed.
+                renameWasSuccessful = true;
+            }
+            else if (ExternalReader.snippetExists(activity, worldName, category, articleName,
+                    newName)) {
+                Toast.makeText(activity,
+                activity.getString(R.string.snippetExistsError, newName, articleName),
+                Toast.LENGTH_SHORT).show();
+                renameWasSuccessful = false;
+            } else {
+                // Rename the Snippet.
+                renameWasSuccessful = true;
+            }
+
+            return renameWasSuccessful;
         }
 
         /**
