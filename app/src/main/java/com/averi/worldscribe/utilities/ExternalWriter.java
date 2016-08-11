@@ -235,6 +235,25 @@ public final class ExternalWriter {
     }
 
     /**
+     * Renames an Article's Snippet.
+     * @param context The Context calling this method.
+     * @param worldName The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article who possesses the specified Snippet.
+     * @param oldSnippetName The name of the Snippet that will be renamed.
+     * @param newSnippetName The new name for the Snippet.
+     * @return True if the Snippet was renamed successfully; false if an I/O error occurs.
+     */
+    public static boolean renameSnippet(Context context, String worldName, Category category,
+                                               String articleName, String oldSnippetName,
+                                               String newSnippetName) {
+        File renamedFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                newSnippetName);
+        return FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                oldSnippetName).renameTo(renamedFile);
+    }
+
+    /**
      * Saves a Membership between a Person and a Group.
      * @param context The Context calling this method.
      * @param membership Contains data on the Membership that will be saved.

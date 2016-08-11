@@ -123,6 +123,7 @@
     <string name="deleteResidenceError">An error occurred while deleting the Residence at %1$s.</string>
     <string name="deleteArticleError">An error occurred while deleting this Article.</string>
     <string name="emptySnippetNameError">Snippet name cannot be empty.</string>
+    <string name="renameSnippetError">An error occurred while renaming %1$s.</string>
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>

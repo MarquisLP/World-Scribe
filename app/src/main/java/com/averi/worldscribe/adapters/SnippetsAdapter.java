@@ -20,6 +20,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.SnippetActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
@@ -130,9 +131,13 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                 @Override
                 public void onClick(View v)
                 {
-                    Boolean renameWasSuccessful = renameSnippet(nameField.getText().toString());
+                    String newName = nameField.getText().toString();
+
+                    Boolean renameWasSuccessful = renameSnippet(newName);
                     if (renameWasSuccessful) {
                         dialog.dismiss();
+                        snippetName = newName;
+                        setSnippetName();
                     }
                 }
             });
@@ -156,16 +161,22 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                 renameWasSuccessful = false;
             } else if (newName.equals(snippetName)) {   // Name was not changed.
                 renameWasSuccessful = true;
-            }
-            else if (ExternalReader.snippetExists(activity, worldName, category, articleName,
+            } else if (ExternalReader.snippetExists(activity, worldName, category, articleName,
                     newName)) {
                 Toast.makeText(activity,
-                activity.getString(R.string.snippetExistsError, newName, articleName),
-                Toast.LENGTH_SHORT).show();
+                    activity.getString(R.string.snippetExistsError, newName, articleName),
+                    Toast.LENGTH_SHORT).show();
                 renameWasSuccessful = false;
             } else {
-                // Rename the Snippet.
-                renameWasSuccessful = true;
+                if (ExternalWriter.renameSnippet(activity, worldName, category, articleName,
+                        snippetName, newName)) {
+                    renameWasSuccessful = true;
+                } else {
+                    renameWasSuccessful = false;
+                    Toast.makeText(activity,
+                            activity.getString(R.string.renameSnippetError, snippetName),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
 
             return renameWasSuccessful;
