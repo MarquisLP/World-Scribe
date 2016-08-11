@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
@@ -19,6 +20,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
 import com.averi.worldscribe.adapters.ResidentsAdapter;
+import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -145,6 +147,36 @@ public class PlaceActivity extends ArticleActivity {
         selectGroupIntent.putExtra(IntentFields.EXISTING_LINKS,
                 residentsAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_RESIDENT);
+    }
+
+    @Override
+    protected void deleteArticle() {
+        if (removeAllResidents()) {
+            super.deleteArticle();
+        } else {
+            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Deletes all Residences at this Place.
+     * @return True if all Residences were deleted successfully; false otherwise.
+     */
+    private boolean removeAllResidents() {
+        boolean residencesWereDeleted = true;
+
+        ArrayList<Residence> allResidences = (
+                (ResidentsAdapter) residentsList.getAdapter()).getResidences();
+
+        Residence residence;
+        int index = 0;
+        while ((index < allResidences.size()) && (residencesWereDeleted)) {
+            residence = allResidences.get(index);
+            residencesWereDeleted = ExternalDeleter.deleteResidence(this, residence);
+            index++;
+        }
+
+        return residencesWereDeleted;
     }
 
 }
