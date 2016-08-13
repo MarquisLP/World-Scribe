@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -157,7 +159,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.renameArticleItem:
-                // Rename the Article.
+                showRenameArticleDialog();
                 return true;
             case R.id.deleteArticleItem:
                 confirmArticleDeletion();
@@ -463,6 +465,38 @@ public abstract class ArticleActivity extends AppCompatActivity {
         }
 
         return snippetsWereDeleted;
+    }
+
+    /**
+     * Displays a dialog where the user can rename this Article.
+     */
+    private void showRenameArticleDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content = inflater.inflate(R.layout.rename_article_dialog, null);
+
+        final EditText nameField = (EditText) content.findViewById(R.id.nameField);
+        nameField.setText(articleName);
+
+        final AlertDialog dialog = builder.setView(content)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) { }
+                })
+                .setNegativeButton(android.R.string.cancel, null).create();
+        dialog.show();
+
+        // Handle onClick here to prevent the dialog from closing if the user enters
+        // an invalid name.
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        // Rename the Article.
+                    }
+                });
     }
 
 }
