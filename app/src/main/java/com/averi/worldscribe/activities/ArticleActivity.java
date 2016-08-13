@@ -494,9 +494,45 @@ public abstract class ArticleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        // Rename the Article.
+                        String newName = nameField.getText().toString();
+
+                        if (newArticleNameIsValid(newName)) {
+                            // Rename the Article.
+                            dialog.dismiss();
+                        }
                     }
                 });
+    }
+
+    /**
+     * <p>
+     *     Checks whether a new name for this Article is valid, i.e. non-empty and not in use by
+     *     other Articles of the same Category.
+     * </p>
+     * <p>
+     *     If the name is invalid, an error message is displayed.
+     * </p>
+     * @param newName The new name requested for this Article.
+     * @return True if the new name is valid; false otherwise.
+     */
+    private boolean newArticleNameIsValid(String newName) {
+        boolean newNameIsValid;
+
+        if (newName.isEmpty()) {
+            Toast.makeText(this, R.string.emptyArticleNameError, Toast.LENGTH_SHORT).show();
+            newNameIsValid = false;
+        } else if (newName.equals(articleName)) {   // Name was not changed.
+            newNameIsValid = true;
+        } else if (ExternalReader.articleExists(this, worldName, category, newName)) {
+            Toast.makeText(this,
+                    getString(R.string.renameArticleToExistingError, category.name(), newName),
+                    Toast.LENGTH_SHORT).show();
+            newNameIsValid = false;
+        } else {
+            newNameIsValid = true;
+        }
+
+        return newNameIsValid;
     }
 
 }
