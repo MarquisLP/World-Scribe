@@ -316,4 +316,81 @@ public class PersonActivity extends ArticleActivity {
         return residencesWereDeleted;
     }
 
+    @Override
+    protected boolean renameArticle(String newName) {
+        boolean renameWasSuccessful = false;
+
+        if ((renamePersonInMemberships(newName)) && (renamePersonInResidences(newName))) {
+            renameWasSuccessful = super.renameArticle(newName);
+        } else {
+            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
+        }
+
+        return renameWasSuccessful;
+    }
+
+    /**
+     * <p>
+     *     Updates all of this Person's Memberships to reflect a new name for this Person.
+     * </p>
+     * <p>
+     *     If one or more Memberships failed to be updated, an error message is displayed.
+     * </p>
+     * @param newName The new name for this Person.
+     * @return True if all Memberships updated successfully; false otherwise.
+     */
+    private boolean renamePersonInMemberships(String newName) {
+        boolean membershipsWereUpdated = true;
+        MembershipsAdapter adapter = (MembershipsAdapter) membershipsList.getAdapter();
+        ArrayList<Membership> memberships = adapter.getMemberships();
+
+        int index = 0;
+        Membership membership;
+        while ((index < memberships.size()) && (membershipsWereUpdated)) {
+            membership = memberships.get(index);
+
+            if (ExternalWriter.renameMemberInMembership(this, membership, newName)) {
+                membership.memberName = newName;
+            } else {
+                membershipsWereUpdated = false;
+            }
+
+            index++;
+        }
+
+        return membershipsWereUpdated;
+    }
+
+    /**
+     * <p>
+     *     Updates all of this Person's Residences to reflect a new name for this Person.
+     * </p>
+     * <p>
+     *     If one or more Residences failed to be updated, an error message is displayed.
+     * </p>
+     * @param newName The new name for this Person.
+     * @return True if all Residences updated successfully; false otherwise.
+     */
+    private boolean renamePersonInResidences(String newName) {
+        boolean residencesWereUpdated = true;
+        ResidencesAdapter adapter = (ResidencesAdapter) residencesList.getAdapter();
+        ArrayList<Residence> residences = adapter.getResidences();
+
+        int index = 0;
+        Residence residence;
+        while ((index < residences.size()) && (residencesWereUpdated)) {
+            residence = residences.get(index);
+
+            if (ExternalWriter.renameResidentInResidence(this, residence, newName)) {
+                residence.residentName = newName;
+            } else {
+                residencesWereUpdated = false;
+            }
+
+            index++;
+        }
+
+        return residencesWereUpdated;
+    }
+
 }

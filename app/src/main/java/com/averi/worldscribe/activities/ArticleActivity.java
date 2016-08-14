@@ -557,8 +557,8 @@ public abstract class ArticleActivity extends AppCompatActivity {
         boolean renameWasSuccessful = false;
         Toast errorToast = Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT);
 
-        // TODO: Override this method in Person, Group, and Place, then remove the Category conditional.
-        if (((category == Category.Item) || (category == Category.Concept)) &&
+        // TODO: Override this method in Group and Place, then remove the Category conditionals.
+        if ((category != Category.Group) && (category != Category.Place) &&
                 (renameArticleInConnections(newName))) {
             if (ExternalWriter.renameArticleDirectory(this, worldName, category,
                     articleName, newName)) {

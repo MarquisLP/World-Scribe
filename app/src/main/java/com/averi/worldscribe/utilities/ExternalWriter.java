@@ -326,6 +326,38 @@ public final class ExternalWriter {
     }
 
     /**
+     * Updates Membership files to reflect a rename for the member in a Membership.
+     * @param context The The Context calling this method.
+     * @param membership The Membership that will be updated.
+     * @param newMemberName The new name for the member in the Membership.
+     * @return True if the Membership was updated successfully; false otherwise.
+     */
+    public static boolean renameMemberInMembership(Context context, Membership membership,
+                                                   String newMemberName) {
+        File memberFile = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, membership.memberName);
+        File renamedFile = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, newMemberName);
+        return memberFile.renameTo(renamedFile);
+    }
+
+    /**
+     * Updates Residence files to reflect a rename for the resident of a Residence.
+     * @param context The The Context calling this method.
+     * @param residence The Residence that will be updated.
+     * @param newResidentName The new name for the resident in the Residence.
+     * @return True if the Residence was updated successfully; false otherwise.
+     */
+    public static boolean renameResidentInResidence(Context context, Residence residence,
+                                                    String newResidentName) {
+        File residentFile = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, residence.residentName);
+        File renamedFile = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, newResidentName);
+        return residentFile.renameTo(renamedFile);
+    }
+
+    /**
      * Renames the directory for a specific Article.
      * @param context The The Context calling this method.
      * @param worldName The name of The name of the world the Article belongs to.
