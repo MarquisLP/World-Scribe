@@ -7,4 +7,6 @@
     <color name="averiBlueHighlight">#7fc9ff</color>
     <color name="sunsetOrange">#ff9800</color>
     <color name="sunsetOrangeHighlight">#ffc400</color>
+    <color name="ubePurple">#9124f0</color>
+    <color name="ubePurpleHighlight">#af81f9</color>
 </resources>

@@ -33,4 +33,13 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <style name="UbePurple" parent="AppTheme" >
+        <item name="android:name">Ube Purple</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/ubePurple</item>
+        <item name="colorPrimaryDark">@color/ubePurpleHighlight</item>
+        <item name="colorAccent">@color/ubePurple</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
 </resources>
