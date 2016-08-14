@@ -42,4 +42,13 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <style name="LovelyRed" parent="AppTheme" >
+        <item name="android:name">Lovely Red</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/lovelyRed</item>
+        <item name="colorPrimaryDark">@color/lovelyRedHighlight</item>
+        <item name="colorAccent">@color/lovelyRed</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
 </resources>

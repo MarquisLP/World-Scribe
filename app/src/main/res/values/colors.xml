@@ -9,4 +9,6 @@
     <color name="sunsetOrangeHighlight">#ffc400</color>
     <color name="ubePurple">#9124f0</color>
     <color name="ubePurpleHighlight">#af81f9</color>
+    <color name="lovelyRed">#ef0a1a</color>
+    <color name="lovelyRedHighlight">#fc7668</color>
 </resources>
