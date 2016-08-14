@@ -374,6 +374,22 @@ public final class ExternalWriter {
     }
 
     /**
+     * Updates Residence files to reflect a rename for the Place of a Residence.
+     * @param context The The Context calling this method.
+     * @param residence The Residence that will be updated.
+     * @param newResidentName The new name for the Place of Residence.
+     * @return True if the Residence was updated successfully; false otherwise.
+     */
+    public static boolean renamePlaceInResidence(Context context, Residence residence,
+                                                    String newResidentName) {
+        File residenceFile = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, residence.placeName);
+        File renamedFile = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, newResidentName);
+        return residenceFile.renameTo(renamedFile);
+    }
+
+    /**
      * Renames the directory for a specific Article.
      * @param context The The Context calling this method.
      * @param worldName The name of The name of the world the Article belongs to.

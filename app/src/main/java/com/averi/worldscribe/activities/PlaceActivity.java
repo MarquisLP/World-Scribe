@@ -179,4 +179,49 @@ public class PlaceActivity extends ArticleActivity {
         return residencesWereDeleted;
     }
 
+    @Override
+    protected boolean renameArticle(String newName) {
+        boolean renameWasSuccessful = false;
+
+        if (renamePlaceInResidences(newName)) {
+            renameWasSuccessful = super.renameArticle(newName);
+        } else {
+            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
+        }
+
+        return renameWasSuccessful;
+    }
+
+    /**
+     * <p>
+     *     Updates all Residences at this Place to reflect a new name for this Place.
+     * </p>
+     * <p>
+     *     If one or more Residences failed to be updated, an error message is displayed.
+     * </p>
+     * @param newName The new name for this Place.
+     * @return True if all Residences updated successfully; false otherwise.
+     */
+    private boolean renamePlaceInResidences(String newName) {
+        boolean residencesWereUpdated = true;
+        ResidentsAdapter adapter = (ResidentsAdapter) residentsList.getAdapter();
+        ArrayList<Residence> residences = adapter.getResidences();
+
+        int index = 0;
+        Residence residence;
+        while ((index < residences.size()) && (residencesWereUpdated)) {
+            residence = residences.get(index);
+
+            if (ExternalWriter.renamePlaceInResidence(this, residence, newName)) {
+                residence.placeName = newName;
+            } else {
+                residencesWereUpdated = false;
+            }
+
+            index++;
+        }
+
+        return residencesWereUpdated;
+    }
+
 }
