@@ -566,6 +566,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
                 renameWasSuccessful = true;
                 articleName = newName;
                 setAppBar();
+                populateSnippets();
             } else {
                 errorToast.show();
             }
