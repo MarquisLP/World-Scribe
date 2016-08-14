@@ -17,6 +17,7 @@ import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.MembersAdapter;
 import com.averi.worldscribe.utilities.ExternalDeleter;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -164,6 +165,51 @@ public class GroupActivity extends ArticleActivity {
         }
 
         return membersWereRemoved;
+    }
+
+    @Override
+    protected boolean renameArticle(String newName) {
+        boolean renameWasSuccessful = false;
+
+        if (renameGroupInMemberships(newName)) {
+            renameWasSuccessful = super.renameArticle(newName);
+        } else {
+            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
+        }
+
+        return renameWasSuccessful;
+    }
+
+    /**
+     * <p>
+     *     Updates all Memberships to this Group to reflect a new Group name.
+     * </p>
+     * <p>
+     *     If one or more Memberships failed to be updated, an error message is displayed.
+     * </p>
+     * @param newName The new name for this Group.
+     * @return True if all Memberships updated successfully; false otherwise.
+     */
+    private boolean renameGroupInMemberships(String newName) {
+        boolean membershipsWereUpdated = true;
+        MembersAdapter adapter = (MembersAdapter) membersList.getAdapter();
+        ArrayList<Membership> memberships = adapter.getMemberships();
+
+        int index = 0;
+        Membership membership;
+        while ((index < memberships.size()) && (membershipsWereUpdated)) {
+            membership = memberships.get(index);
+
+            if (ExternalWriter.renameGroupInMembership(this, membership, newName)) {
+                membership.groupName = newName;
+            } else {
+                membershipsWereUpdated = false;
+            }
+
+            index++;
+        }
+
+        return membershipsWereUpdated;
     }
 
 }

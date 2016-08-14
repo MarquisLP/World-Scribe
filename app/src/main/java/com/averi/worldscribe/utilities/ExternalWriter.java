@@ -342,6 +342,22 @@ public final class ExternalWriter {
     }
 
     /**
+     * Updates Membership files to reflect a rename for the Group in a Membership.
+     * @param context The The Context calling this method.
+     * @param membership The Membership that will be updated.
+     * @param newGroupName The new name for the Group in the Membership.
+     * @return True if the Membership was updated successfully; false otherwise.
+     */
+    public static boolean renameGroupInMembership(Context context, Membership membership,
+                                                  String newGroupName) {
+        File membershipFile = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, membership.groupName);
+        File renamedFile = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, newGroupName);
+        return membershipFile.renameTo(renamedFile);
+    }
+
+    /**
      * Updates Residence files to reflect a rename for the resident of a Residence.
      * @param context The The Context calling this method.
      * @param residence The Residence that will be updated.
