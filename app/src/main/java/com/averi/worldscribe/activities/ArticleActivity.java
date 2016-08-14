@@ -553,7 +553,7 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * @param newName The new name for the Article.
      * @return True if the Article was renamed successfully; false otherwise.
      */
-    private boolean renameArticle(String newName) {
+    protected boolean renameArticle(String newName) {
         boolean renameWasSuccessful = false;
         Toast errorToast = Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT);
 
