@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
@@ -302,6 +303,45 @@ public final class ExternalWriter {
         }
 
         return ((savedToPersonDirectory) && (savedToPlaceDirectory));
+    }
+
+    /**
+     * Updates Connection files to reflect a rename for the "main" Article in a Connection.
+     * @param context The The Context calling this method.
+     * @param connection The Connection that will be updated.
+     * @param newMainArticleName The new name for the main Article in the Connection.
+     * @return True if the Connection was updated successfully; false otherwise.
+     */
+    public static boolean renameArticleInConnection(Context context, Connection connection,
+                                                    String newMainArticleName) {
+        File connectionRelationFile = FileRetriever.getConnectionRelationFile(context,
+                connection.worldName, connection.connectedArticleCategory,
+                connection.connectedArticleName, connection.articleCategory,
+                connection.articleName);
+        File renamedFile = FileRetriever.getConnectionRelationFile(context,
+                connection.worldName, connection.connectedArticleCategory,
+                connection.connectedArticleName, connection.articleCategory,
+                newMainArticleName);
+        return connectionRelationFile.renameTo(renamedFile);
+    }
+
+    /**
+     * Renames the directory for a specific Article.
+     * @param context The The Context calling this method.
+     * @param worldName The name of The name of the world the Article belongs to.
+     * @param category The name of the Category the Article belongs to.
+     * @param articleName The name of the Article that will be renamed.
+     * @param newArticleName The Article's new name.
+     * @return True if the directory was renamed successfully; false otherwise.
+     */
+    public static boolean renameArticleDirectory(Context context, String worldName,
+                                                 Category category, String articleName,
+                                                 String newArticleName) {
+        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName);
+        File renamedDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                newArticleName);
+        return articleDirectory.renameTo(renamedDirectory);
     }
 
 }

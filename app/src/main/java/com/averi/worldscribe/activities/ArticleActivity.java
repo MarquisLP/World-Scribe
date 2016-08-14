@@ -234,9 +234,9 @@ public abstract class ArticleActivity extends AppCompatActivity {
      */
     private void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        assert myToolbar != null;
+        myToolbar.setTitle(articleName);
         setSupportActionBar(myToolbar);
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(articleName);
     }
 
     /**
@@ -497,7 +497,9 @@ public abstract class ArticleActivity extends AppCompatActivity {
                         String newName = nameField.getText().toString();
 
                         if (newArticleNameIsValid(newName)) {
-                            // Rename the Article.
+                            if (!(newName.equals(articleName))) {
+                                renameArticle(newName);
+                            }
                             dialog.dismiss();
                         }
                     }
@@ -533,6 +535,76 @@ public abstract class ArticleActivity extends AppCompatActivity {
         }
 
         return newNameIsValid;
+    }
+
+    /**
+     * <p>
+     *     Renames the Article; all references to it from other Articles are also updated to reflect
+     *     the new name.
+     * </p>
+     * <p>
+     *     If the Article couldn't be renamed, an error message is displayed.
+     * </p>
+     * <p>
+     *     Subclasses for Articles of Categories that have additional types of references (e.g.
+     *     Residences) must override this method and update the Article's name within those
+     *     references as well. Otherwise, those references on other Articles' pages will break.
+     * </p>
+     * @param newName The new name for the Article.
+     * @return True if the Article was renamed successfully; false otherwise.
+     */
+    private boolean renameArticle(String newName) {
+        boolean renameWasSuccessful = false;
+        Toast errorToast = Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT);
+
+        // TODO: Override this method in Person, Group, and Place, then remove the Category conditional.
+        if (((category == Category.Item) || (category == Category.Concept)) &&
+                (renameArticleInConnections(newName))) {
+            if (ExternalWriter.renameArticleDirectory(this, worldName, category,
+                    articleName, newName)) {
+                renameWasSuccessful = true;
+                articleName = newName;
+                setAppBar();
+            } else {
+                errorToast.show();
+            }
+        } else {
+            errorToast.show();
+        }
+
+        return renameWasSuccessful;
+    }
+
+    /**
+     * <p>
+     *     Updates all of this Article's Connections to reflect a new Article name.
+     * </p>
+     * <p>
+     *     If one or more Connections failed to be updated, an error message is displayed.
+     * </p>
+     * @param newName The new name for this Article.
+     * @return True if all Connections updated successfully; false otherwise.
+     */
+    private boolean renameArticleInConnections(String newName) {
+        boolean connectionsWereUpdated = true;
+        ConnectionsAdapter adapter = (ConnectionsAdapter) connectionsList.getAdapter();
+        ArrayList<Connection> connections = adapter.getConnections();
+
+        int index = 0;
+        Connection currentConnection;
+        while ((index < connections.size()) && (connectionsWereUpdated)) {
+            currentConnection = connections.get(index);
+
+            if (ExternalWriter.renameArticleInConnection(this, currentConnection, newName)) {
+                currentConnection.articleName = newName;
+            } else {
+                connectionsWereUpdated = false;
+            }
+
+            index++;
+        }
+
+        return connectionsWereUpdated;
     }
 
 }
