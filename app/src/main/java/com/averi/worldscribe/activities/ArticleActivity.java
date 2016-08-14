@@ -140,6 +140,9 @@ public abstract class ArticleActivity extends AppCompatActivity {
                 createNewSnippet();
             }
         });
+
+        connectionsList.setLayoutManager(new LinearLayoutManager(this));
+        snippetsList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -244,7 +247,6 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * {@link com.averi.worldscribe.Connection Connection}s.
      */
     private void populateConnections() {
-        connectionsList.setLayoutManager(new LinearLayoutManager(this));
         connectionsList.setAdapter(new ConnectionsAdapter(this, worldName, category, articleName));
     }
 
@@ -252,7 +254,6 @@ public abstract class ArticleActivity extends AppCompatActivity {
      * Populate the Snippets RecyclerView with cards for this Article's Snippets.
      */
     private void populateSnippets() {
-        snippetsList.setLayoutManager(new LinearLayoutManager(this));
         snippetsList.setAdapter(new SnippetsAdapter(this, worldName, category, articleName));
     }
 
