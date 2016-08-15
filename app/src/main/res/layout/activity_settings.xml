@@ -38,6 +38,13 @@
             android:textSize="@dimen/headerTextSize"
             android:textColor="?attr/colorPrimary"
             android:layout_gravity="center_horizontal" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/themeSelector"
+            android:background="@drawable/border"
+            android:layout_marginTop="@dimen/verticalSpacing" />
     </LinearLayout>
 
 </LinearLayout>
