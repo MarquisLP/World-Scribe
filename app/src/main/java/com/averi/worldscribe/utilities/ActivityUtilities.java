@@ -15,6 +15,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.activities.CreateOrLoadWorldActivity;
 import com.averi.worldscribe.activities.CreateWorldActivity;
 import com.averi.worldscribe.activities.LoadWorldActivity;
+import com.averi.worldscribe.activities.SettingsActivity;
 
 /**
  * Created by mark on 23/06/16.
@@ -52,7 +53,8 @@ public class ActivityUtilities {
                 deleteWorld(context, worldName);
                 break;
             case R.id.settingsItem:
-                // Go to the Settings Activity.
+                Intent openSettingsIntent = new Intent(context, SettingsActivity.class);
+                context.startActivity(openSettingsIntent);
         }
     }
 
