@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.averi.worldscribe.R;
 
-public class BeginActivity extends AppCompatActivity {
+public class BeginActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

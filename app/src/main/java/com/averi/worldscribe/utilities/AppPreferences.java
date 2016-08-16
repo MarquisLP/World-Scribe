@@ -10,6 +10,7 @@ public class AppPreferences {
     public static final String PREFERENCES_FILE_NAME = "com.averi.worldscribe";
     public static final String LAST_OPENED_WORLD = "lastOpenedWorld";
     public static final String WRITE_PERMISSION_PROMPT_IS_ENABLED = "permissionPromptIsEnabled";
+    public static final String APP_THEME = "appTheme";
 
     /**
      * Save the name of the World that was last opened, so that it can automatically be loaded the

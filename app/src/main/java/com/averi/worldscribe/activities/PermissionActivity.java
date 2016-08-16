@@ -21,7 +21,7 @@ import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
-public class PermissionActivity extends AppCompatActivity {
+public class PermissionActivity extends ThemedActivity {
 
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 

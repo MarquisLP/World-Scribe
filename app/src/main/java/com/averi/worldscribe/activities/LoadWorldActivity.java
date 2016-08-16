@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 
-public class LoadWorldActivity extends AppCompatActivity implements StringListContext {
+public class LoadWorldActivity extends ThemedActivity implements StringListContext {
 
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;

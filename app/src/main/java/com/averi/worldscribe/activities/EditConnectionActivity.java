@@ -18,7 +18,7 @@ import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class EditConnectionActivity extends AppCompatActivity {
+public class EditConnectionActivity extends ThemedActivity {
 
     private Connection connection;
 

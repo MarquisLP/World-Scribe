@@ -17,7 +17,7 @@ import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 
-public class CreateWorldActivity extends AppCompatActivity {
+public class CreateWorldActivity extends ThemedActivity {
 
     private SharedPreferences preferences = null;
     private Toolbar appBar;

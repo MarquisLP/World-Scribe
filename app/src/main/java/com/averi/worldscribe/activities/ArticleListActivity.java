@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 
-public class ArticleListActivity extends AppCompatActivity implements StringListContext {
+public class ArticleListActivity extends ThemedActivity implements StringListContext {
 
     private RecyclerView recyclerView;
     private String worldName;

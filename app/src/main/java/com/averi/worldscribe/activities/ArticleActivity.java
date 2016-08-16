@@ -46,7 +46,7 @@ import java.util.ArrayList;
  * corresponding to their respective Categories, as well as the other abstract methods for
  * obtaining specific Views.
  */
-public abstract class ArticleActivity extends AppCompatActivity {
+public abstract class ArticleActivity extends ThemedActivity {
 
     /**
      * The request code for selecting a new Article image.

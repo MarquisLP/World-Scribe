@@ -21,7 +21,7 @@ import com.averi.worldscribe.utilities.IntentFields;
 /**
  * The Activity where the user names the new Snippet during Snippet creation.
  */
-public class CreateSnippetActivity extends AppCompatActivity {
+public class CreateSnippetActivity extends ThemedActivity {
 
     private String worldName;
     private Category articleCategory;

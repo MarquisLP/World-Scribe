@@ -15,7 +15,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class SnippetActivity extends AppCompatActivity {
+public class SnippetActivity extends ThemedActivity {
 
     /**
      * The text field for editing the Snippet's content.

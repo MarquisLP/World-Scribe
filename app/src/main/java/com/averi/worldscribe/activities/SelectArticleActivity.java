@@ -46,7 +46,7 @@ import java.util.HashSet;
  * "articleName".
  * </p>
  */
-public class SelectArticleActivity extends AppCompatActivity implements StringListContext {
+public class SelectArticleActivity extends ThemedActivity implements StringListContext {
 
     /**
      * The initial Category of Articles to show if any Category can be chosen from.

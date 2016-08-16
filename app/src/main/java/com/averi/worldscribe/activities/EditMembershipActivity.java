@@ -16,7 +16,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class EditMembershipActivity extends AppCompatActivity {
+public class EditMembershipActivity extends ThemedActivity {
 
     private Membership membership;
 

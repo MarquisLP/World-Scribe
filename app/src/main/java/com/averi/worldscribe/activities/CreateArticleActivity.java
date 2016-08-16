@@ -19,7 +19,7 @@ import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 
-public class CreateArticleActivity extends AppCompatActivity {
+public class CreateArticleActivity extends ThemedActivity {
 
     public static final int PERSON_ITEM_POSITION = 0;
     public static final int GROUP_ITEM_POSITION = 1;

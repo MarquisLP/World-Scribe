@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.averi.worldscribe.R;
 
-public class CreateOrLoadWorldActivity extends AppCompatActivity {
+public class CreateOrLoadWorldActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
