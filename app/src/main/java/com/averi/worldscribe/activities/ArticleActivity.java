@@ -564,6 +564,7 @@ public abstract class ArticleActivity extends ThemedActivity {
                 renameWasSuccessful = true;
                 articleName = newName;
                 setAppBar();
+                renameArticleInTextFields(newName);
                 populateSnippets();
             } else {
                 errorToast.show();
@@ -605,6 +606,16 @@ public abstract class ArticleActivity extends ThemedActivity {
         }
 
         return connectionsWereUpdated;
+    }
+
+    /**
+     * Updates the Article name within all of this Article's text fields.
+     * @param newName The new name for this Article.
+     */
+    private void renameArticleInTextFields(String newName) {
+        for (ArticleTextField textField : textFields) {
+            textField.changeArticleName(newName);
+        }
     }
 
 }

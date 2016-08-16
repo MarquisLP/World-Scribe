@@ -106,4 +106,17 @@ public class ArticleTextField {
 
         editedSinceLastSave = false;
     }
+
+    /**
+     * <p>
+     *     Updates the name of the Article this text field refers to.
+     * </p>
+     * <p>
+     *     Call this method when the name of the Article changes.
+     * </p>
+     * @param newName The new name of the Article.
+     */
+    public void changeArticleName(String newName) {
+        articleName = newName;
+    }
 }
