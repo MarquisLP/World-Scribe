@@ -49,4 +49,15 @@ public class AttributeGetter {
         return styleName;
     }
 
+    /**
+     * Gets the style name of a Theme.
+     * @param theme A Theme object.
+     * @return The Theme's style name.
+     */
+    public static String getStyleName(Resources.Theme theme) {
+        TypedValue attributeValue = new TypedValue();
+        theme.resolveAttribute(android.R.attr.name, attributeValue, true);
+        return (String) attributeValue.string;
+    }
+
 }

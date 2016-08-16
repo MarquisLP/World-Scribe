@@ -2,6 +2,7 @@ package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,9 @@ import android.widget.Spinner;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.AppThemeArrayAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.AttributeGetter;
+
+import org.w3c.dom.Attr;
 
 public class SettingsActivity extends ThemedActivity {
 
@@ -32,6 +36,7 @@ public class SettingsActivity extends ThemedActivity {
 
         setAppBar();
         populateAppThemeSpinner();
+        selectCurrentAppTheme();
     }
 
     @Override
@@ -70,6 +75,28 @@ public class SettingsActivity extends ThemedActivity {
             R.style.UbePurple, R.style.LovelyRed};
         AppThemeArrayAdapter adapter = new AppThemeArrayAdapter(this, allThemes);
         appThemeSpinner.setAdapter(adapter);
+    }
+
+    /**
+     * Sets the selected item in the app theme spinner to be the theme that is currently applied.
+     */
+    private void selectCurrentAppTheme() {
+        String currentThemeName = AttributeGetter.getStyleName(getTheme());
+
+        if (currentThemeName.equals(AttributeGetter.getStyleName(this, R.style.AppTheme))) {
+            appThemeSpinner.setSelection(SKY_BLUE);
+        } else if (currentThemeName.equals(AttributeGetter.getStyleName(
+                this, R.style.SunsetOrange))) {
+            appThemeSpinner.setSelection(SUNSET_ORANGE);
+        } else if (currentThemeName.equals(AttributeGetter.getStyleName(
+                this, R.style.EnchantedGreen))) {
+            appThemeSpinner.setSelection(ENCHANTED_GREEN);
+        } else if (currentThemeName.equals(AttributeGetter.getStyleName(
+                this, R.style.UbePurple))) {
+            appThemeSpinner.setSelection(UBE_PURPLE);
+        } else {
+            appThemeSpinner.setSelection(LOVELY_RED);
+        }
     }
 
     /**
