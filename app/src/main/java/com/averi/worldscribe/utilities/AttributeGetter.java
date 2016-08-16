@@ -2,6 +2,9 @@ package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.renderscript.Type;
 import android.util.TypedValue;
 
 /**
@@ -14,6 +17,20 @@ public class AttributeGetter {
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(colorID, typedValue, true);
         return typedValue.data;
+    }
+
+    /**
+     * Get a color attribute from a specific style.
+     * @param context The Context calling this method.
+     * @param styleID The ID of the style resource to retrieve the color from.
+     * @param colorID The ID of the color attribute.
+     * @return The resource ID of the color attribute as specified by the style.
+     */
+    public static int getColorAttribute(Context context, int styleID, int colorID) {
+        TypedArray typedArray = context.obtainStyledAttributes(styleID, new int[]{colorID});
+        int colorResource = typedArray.getColor(0, Color.BLACK);
+        typedArray.recycle();
+        return colorResource;
     }
 
 }
