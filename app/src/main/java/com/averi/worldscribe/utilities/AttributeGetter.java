@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.renderscript.Type;
 import android.util.TypedValue;
 
+import com.averi.worldscribe.R;
+
 /**
  * Created by mark on 24/06/16.
  */
@@ -31,6 +33,20 @@ public class AttributeGetter {
         int colorResource = typedArray.getColor(0, Color.BLACK);
         typedArray.recycle();
         return colorResource;
+    }
+
+    /**
+     * Get the name of a style.
+     * @param context The Context calling this method.
+     * @param styleID The ID of the style resource to retrieve the name from.
+     * @return The name of the specified style.
+     */
+    public static String getStyleName(Context context, int styleID) {
+        TypedArray typedArray = context.obtainStyledAttributes(styleID,
+                new int[]{android.R.attr.name});
+        String styleName = typedArray.getString(0);
+        typedArray.recycle();
+        return styleName;
     }
 
 }
