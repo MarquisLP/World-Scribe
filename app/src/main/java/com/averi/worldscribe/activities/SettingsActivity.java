@@ -25,6 +25,8 @@ public class SettingsActivity extends ThemedActivity {
     public static final int UBE_PURPLE = 3;
     public static final int LOVELY_RED = 4;
 
+    private int currentThemeIndex;
+
     private Spinner appThemeSpinner;
 
     @Override
@@ -37,6 +39,7 @@ public class SettingsActivity extends ThemedActivity {
         setAppBar();
         populateAppThemeSpinner();
         selectCurrentAppTheme();
+        currentThemeIndex = appThemeSpinner.getSelectedItemPosition();
     }
 
     @Override
@@ -106,6 +109,10 @@ public class SettingsActivity extends ThemedActivity {
         SharedPreferences preferences = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
                 MODE_PRIVATE);
         preferences.edit().putInt(AppPreferences.APP_THEME, getSelectedAppTheme()).apply();
+
+        if (appThemeWasChanged()) {
+            relaunchApp();
+        }
     }
 
     /**
@@ -133,6 +140,24 @@ public class SettingsActivity extends ThemedActivity {
         }
 
         return themeID;
+    }
+
+    /**
+     * @return True if the Theme selected in the app Theme spinner differs from the
+     * currently-applied Theme; false otherwise.
+     */
+    private boolean appThemeWasChanged() {
+        return (appThemeSpinner.getSelectedItemPosition() != currentThemeIndex);
+    }
+
+    /**
+     * Exits and reopens the entire application.
+     */
+    private void relaunchApp() {
+        Intent restartIntent = getBaseContext().getPackageManager().getLaunchIntentForPackage(
+                getBaseContext().getPackageName());
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(restartIntent);
     }
 
 }
