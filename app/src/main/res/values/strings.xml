@@ -134,4 +134,5 @@
     <string name="renameArticleTitle">Rename Article</string>
     <string name="selectThemeTitle">App Theme</string>
     <string name="settingsTitle">Settings</string>
+    <string name="restartNoticeText">To apply the new theme, the app will be restarted when you press \"SAVE\"</string>
 </resources>

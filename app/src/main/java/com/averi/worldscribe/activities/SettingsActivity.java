@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.AppThemeArrayAdapter;
@@ -28,6 +31,7 @@ public class SettingsActivity extends ThemedActivity {
     private int currentThemeIndex;
 
     private Spinner appThemeSpinner;
+    private TextView restartNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +39,28 @@ public class SettingsActivity extends ThemedActivity {
         setContentView(R.layout.activity_settings);
 
         appThemeSpinner = (Spinner) findViewById(R.id.themeSelector);
+        restartNotice = (TextView) findViewById(R.id.restartNotice);
 
         setAppBar();
         populateAppThemeSpinner();
         selectCurrentAppTheme();
         currentThemeIndex = appThemeSpinner.getSelectedItemPosition();
+
+        appThemeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (appThemeWasChanged()) {
+                    restartNotice.setVisibility(View.VISIBLE);
+                } else {
+                    restartNotice.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
