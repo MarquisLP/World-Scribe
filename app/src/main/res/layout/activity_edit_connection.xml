@@ -23,79 +23,84 @@
             style="@style/AppTheme" />
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.EditConnectionActivity"
-        android:id="@+id/linearScreen"
-        android:padding="@dimen/pagePadding"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textCurrentArticleName"
-            android:gravity="center"
-            android:text="Current Article"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/verticalSpacing" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editCurrentArticleRelation"
-            android:textColor="?attr/colorPrimary"
-            android:gravity="center"
-            android:hint="@string/relationHintTopText"
-            android:textColorHint="?attr/colorPrimaryDark"
-            android:textSize="@dimen/standardTextSize" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/headerSpacing" />
-
-        <ImageView
+        android:layout_marginTop="@dimen/editLinkActivityTopMargin" >
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageConnectionArrows"
-            android:scaleType="centerInside"
-            android:src="@drawable/connection_arrows"
-            android:contentDescription="@string/connectionArrowsDescription" />
+            tools:context=".activities.EditConnectionActivity"
+            android:id="@+id/linearScreen"
+            android:padding="@dimen/pagePadding"
+            android:gravity="center">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/headerSpacing" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textCurrentArticleName"
+                android:gravity="center"
+                android:text="Current Article"
+                android:textSize="@dimen/headerTextSize"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editOtherArticleRelation"
-            android:textColor="?attr/colorPrimary"
-            android:gravity="center"
-            android:hint="@string/relationHintBottomText"
-            android:textColorHint="?attr/colorPrimaryDark"
-            android:textSize="@dimen/standardTextSize" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/verticalSpacing" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editCurrentArticleRelation"
+                android:textColor="?attr/colorPrimary"
+                android:gravity="center"
+                android:hint="@string/relationHintTopText"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:textSize="@dimen/standardTextSize" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textOtherArticleName"
-            android:gravity="center"
-            android:text="Other Article"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/headerSpacing" />
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageConnectionArrows"
+                android:scaleType="centerInside"
+                android:src="@drawable/connection_arrows"
+                android:contentDescription="@string/connectionArrowsDescription" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/headerSpacing" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editOtherArticleRelation"
+                android:textColor="?attr/colorPrimary"
+                android:gravity="center"
+                android:hint="@string/relationHintBottomText"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:textSize="@dimen/standardTextSize" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textOtherArticleName"
+                android:gravity="center"
+                android:text="Other Article"
+                android:textSize="@dimen/headerTextSize"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

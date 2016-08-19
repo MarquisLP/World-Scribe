@@ -23,65 +23,71 @@
             style="@style/AppTheme" />
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.EditConnectionActivity"
-        android:id="@+id/linearScreen"
-        android:padding="@dimen/pagePadding"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/groupName"
-            android:gravity="center"
-            android:text="Group Name"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/headerSpacing" />
-
-        <ImageView
+        android:layout_marginTop="@dimen/editLinkActivityTopMargin" >
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/membershipArrow"
-            android:scaleType="centerInside"
-            android:src="@drawable/membership_arrow"
-            android:contentDescription="@string/connectionArrowsDescription" />
+            android:layout_height="match_parent"
+            tools:context=".activities.EditConnectionActivity"
+            android:id="@+id/linearScreen"
+            android:padding="@dimen/pagePadding"
+            android:gravity="center">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/headerSpacing" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/groupName"
+                android:gravity="center"
+                android:text="Group Name"
+                android:textSize="@dimen/headerTextSize"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/memberName"
-            android:gravity="center"
-            android:text="Member Name"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/headerSpacing" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/verticalSpacing" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/membershipArrow"
+                android:scaleType="centerInside"
+                android:src="@drawable/membership_arrow"
+                android:contentDescription="@string/connectionArrowsDescription" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/memberRoleField"
-            android:textColor="?attr/colorPrimary"
-            android:gravity="center"
-            android:hint="@string/memberRoleHint"
-            android:textColorHint="?attr/colorPrimaryDark"
-            android:textSize="@dimen/standardTextSize" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/headerSpacing" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberName"
+                android:gravity="center"
+                android:text="Member Name"
+                android:textSize="@dimen/headerTextSize"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberRoleField"
+                android:textColor="?attr/colorPrimary"
+                android:gravity="center"
+                android:hint="@string/memberRoleHint"
+                android:textColorHint="?attr/colorPrimaryDark"
+                android:textSize="@dimen/standardTextSize" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -40,4 +40,5 @@
     <dimen name="dialogTextboxHorizontalMargin">5dp</dimen>
     <dimen name="textboxGradientHeight">10dp</dimen>
     <dimen name="snippetBottomPadding">3dp</dimen>
+    <dimen name="editLinkActivityTopMargin">70dp</dimen>
 </resources>
