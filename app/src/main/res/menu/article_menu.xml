@@ -11,8 +11,9 @@
 
     <item
         android:id="@+id/deleteArticleItem"
+        android:icon="@drawable/delete_article"
         android:title="@string/deleteArticleItemText"
-        app:showAsAction="never"
+        app:showAsAction="always"
         />
 
     <item
