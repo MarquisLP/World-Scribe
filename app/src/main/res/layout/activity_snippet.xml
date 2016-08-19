@@ -40,7 +40,8 @@
             android:hint="@string/snippetHint"
             android:textSize="@dimen/standardTextSize"
             android:gravity="top"
-            android:maxLength="9999999" />
+            android:maxLength="9999999"
+            android:scrollbars="vertical" />
         
         <View
             android:layout_alignParentBottom="true"
