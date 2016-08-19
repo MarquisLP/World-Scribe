@@ -38,4 +38,6 @@
     <dimen name="dialogTitleSize">30sp</dimen>
     <dimen name="dialogPaddingAboveButtons">10dp</dimen>
     <dimen name="dialogTextboxHorizontalMargin">5dp</dimen>
+    <dimen name="textboxGradientHeight">10dp</dimen>
+    <dimen name="snippetBottomPadding">3dp</dimen>
 </resources>
