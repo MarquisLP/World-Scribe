@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -44,9 +45,20 @@ public class CreateArticleActivity extends ThemedActivity {
         createButton = (Button) findViewById(R.id.create);
         worldName = getIntent().getStringExtra(IntentFields.WORLD_NAME);
 
+        setAppBar();
         populateCategorySpinner();
         selectInitialCategory();
         addTextListener();
+    }
+
+    /**
+     * Sets up this Activity's app bar.
+     */
+    private void setAppBar() {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setTitle(R.string.createArticleTitle);
     }
 
     private void populateCategorySpinner() {
