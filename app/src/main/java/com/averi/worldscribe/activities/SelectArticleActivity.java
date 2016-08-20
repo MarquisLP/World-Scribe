@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -101,6 +102,9 @@ public class SelectArticleActivity extends ThemedActivity implements StringListC
 
         if (canChooseOneCategoryOnly) {
             bottomBarLayout.setVisibility(View.GONE);
+            ViewGroup.MarginLayoutParams params = (
+                    ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+            params.bottomMargin = 0;
             appBar.setTitle(getString(R.string.selectArticleTitle, category.name()));
         } else {
             appBar.setTitle(getString(R.string.selectArticleTitle, getString(R.string.article)));
