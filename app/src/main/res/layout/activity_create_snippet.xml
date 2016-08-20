@@ -51,7 +51,7 @@
             android:id="@+id/create"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/buttonColorSelector"
             android:textSize="@dimen/headerTextSize"
             android:padding="@dimen/buttonPadding"
             android:enabled="false"
