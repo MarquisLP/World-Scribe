@@ -22,6 +22,7 @@
             android:id="@+id/detailsArea"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="?attr/articleLinkColorSelector"
             android:layout_weight="1"
             android:padding="@dimen/pagePadding"
             android:gravity="center">

@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="AppTheme">
         <attr name="buttonColorSelector" format="reference" />
+        <attr name="articleLinkColorSelector" format="reference" />
     </declare-styleable>
 </resources>

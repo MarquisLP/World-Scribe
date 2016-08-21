@@ -5,6 +5,6 @@
     android:textSize="@dimen/stringListItemTextSize"
     android:textColor="?attr/colorPrimary"
     android:padding="@dimen/buttonPadding"
-    android:background="@drawable/border_bottom">
+    android:background="?attr/articleLinkColorSelector">
 
 </TextView>

@@ -14,6 +14,7 @@
         <item name="colorAccent">@color/averiBlue</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_blue</item>
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_blue</item>
     </style>
 
     <style name="SunsetOrange" parent="Theme.AppCompat.Light.NoActionBar">
@@ -24,6 +25,8 @@
         <item name="colorAccent">@color/sunsetOrange</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_orange</item>
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_orange</item>
+
 
     </style>
 
@@ -35,6 +38,8 @@
         <item name="colorAccent">@color/enchantedGreen</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_green</item>
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_green</item>
+
 
     </style>
 
@@ -46,6 +51,8 @@
         <item name="colorAccent">@color/ubePurple</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_purple</item>
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_purple</item>
+
     </style>
 
     <style name="LovelyRed" parent="AppTheme" >
@@ -56,7 +63,7 @@
         <item name="colorAccent">@color/lovelyRed</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_red</item>
-
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_red</item>
     </style>
 
 </resources>
