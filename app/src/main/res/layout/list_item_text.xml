@@ -4,7 +4,10 @@
     android:text="Test"
     android:textSize="@dimen/stringListItemTextSize"
     android:textColor="?attr/colorPrimary"
-    android:padding="@dimen/buttonPadding"
-    android:background="?attr/articleLinkColorSelector">
+    android:background="?attr/articleLinkColorSelector"
+    android:paddingTop="@dimen/buttonPadding"
+    android:paddingBottom="@dimen/buttonPadding"
+    android:paddingRight="@dimen/listItemHorizontalPadding"
+    android:paddingLeft="@dimen/listItemHorizontalPadding">
 
 </TextView>

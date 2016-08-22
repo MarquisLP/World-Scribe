@@ -41,4 +41,5 @@
     <dimen name="textboxGradientHeight">10dp</dimen>
     <dimen name="snippetBottomPadding">3dp</dimen>
     <dimen name="editLinkActivityTopMargin">70dp</dimen>
+    <dimen name="listItemHorizontalPadding">13dp</dimen>
 </resources>
