@@ -23,8 +23,10 @@ import java.util.ArrayList;
 
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.views.BottomBarActivity;
 
-public class ArticleListActivity extends ThemedActivity implements StringListContext {
+public class ArticleListActivity extends ThemedActivity
+        implements StringListContext, BottomBarActivity {
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -157,4 +159,12 @@ public class ArticleListActivity extends ThemedActivity implements StringListCon
 
         startActivity(goToArticleIntent);
     }
+
+    public void respondToBottomBarButton(Category category) {
+        this.category = category;
+        setAppBar(worldName, category);
+        bottomBar.highlightCategoryButton(this, category);
+        populateList(worldName, category);
+    }
+
 }
