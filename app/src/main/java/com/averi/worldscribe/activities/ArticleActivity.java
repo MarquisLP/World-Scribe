@@ -33,6 +33,7 @@ import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.views.BottomBar;
+import com.averi.worldscribe.views.BottomBarActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ import java.util.ArrayList;
  * corresponding to their respective Categories, as well as the other abstract methods for
  * obtaining specific Views.
  */
-public abstract class ArticleActivity extends ThemedActivity {
+public abstract class ArticleActivity extends ThemedActivity implements BottomBarActivity {
 
     /**
      * The request code for selecting a new Article image.
@@ -616,6 +617,23 @@ public abstract class ArticleActivity extends ThemedActivity {
         for (ArticleTextField textField : textFields) {
             textField.changeArticleName(newName);
         }
+    }
+
+    public void respondToBottomBarButton(Category category) {
+        goToArticleList(category);
+    }
+
+    /**
+     * Opens the list of the Articles for a certain Category.
+     * @param listCategory The Category whose Articles will be displayed.
+     */
+    private void goToArticleList(Category listCategory) {
+        Intent intent = new Intent(this, ArticleListActivity.class);
+        intent.putExtra(IntentFields.WORLD_NAME, worldName);
+        intent.putExtra("category", listCategory);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 }
