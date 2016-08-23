@@ -19,13 +19,13 @@ import com.averi.worldscribe.utilities.AttributeGetter;
 public class BottomBar extends RelativeLayout {
 
     private LayoutInflater inflater;
-    private Context context;
+    private BottomBarActivity activity;
 
     public BottomBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        this.activity = (BottomBarActivity) context;
 
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.activity_bottom_bar, this, true);
 
         this.findViewById(R.id.peopleButton).setOnClickListener(peopleOnClickListener);
@@ -37,47 +37,38 @@ public class BottomBar extends RelativeLayout {
 
     private OnClickListener peopleOnClickListener = new OnClickListener() {
         public void onClick(View view) {
-            goToCategoryList(Category.Person);
+            activity.respondToBottomBarButton(Category.Person);
         }
     };
 
     private OnClickListener groupsOnClickListener = new OnClickListener() {
         public void onClick(View view) {
-            goToCategoryList(Category.Group);
+            activity.respondToBottomBarButton(Category.Group);
         }
     };
 
     private OnClickListener placesOnClickListener = new OnClickListener() {
         public void onClick(View view) {
-            goToCategoryList(Category.Place);
+            activity.respondToBottomBarButton(Category.Place);
         }
     };
 
     private OnClickListener itemsOnClickListener = new OnClickListener() {
         public void onClick(View view) {
-            goToCategoryList(Category.Item);
+            activity.respondToBottomBarButton(Category.Item);
         }
     };
 
     private OnClickListener conceptsOnClickListener = new OnClickListener() {
         public void onClick(View view) {
-            goToCategoryList(Category.Concept);
+            activity.respondToBottomBarButton(Category.Concept);
         }
     };
 
-    private void goToCategoryList(Category category) {
-        Intent intent = new Intent(context, ArticleListActivity.class);
-        intent.putExtra(IntentFields.WORLD_NAME,
-                ((Activity) context).getIntent().getStringExtra(IntentFields.WORLD_NAME));
-        intent.putExtra("category", category);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        ((Activity) context).overridePendingTransition(android.R.anim.fade_in,
-                android.R.anim.fade_out);
-    }
-
     public void highlightCategoryButton(Context context, Category category) {
         ImageButton categoryButton;
+
+        unhighlightAllButtons(context);
 
         switch (category) {
             case Person:
@@ -92,12 +83,26 @@ public class BottomBar extends RelativeLayout {
             case Item:
                 categoryButton = (ImageButton) findViewById(R.id.itemsButton);
                 break;
-            default: //Concept
+            case Concept:
+            default:
                 categoryButton = (ImageButton) findViewById(R.id.conceptsButton);
         }
 
         int selectedButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark);
         categoryButton.setBackgroundColor(selectedButtonColor);
+    }
+
+    /**
+     * Changes the background color of all buttons to their normal, unhighlighted color.
+     * @param context The Context containing this BottomBar.
+     */
+    private void unhighlightAllButtons(Context context) {
+        int normalButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimary);
+        (findViewById(R.id.peopleButton)).setBackgroundColor(normalButtonColor);
+        (findViewById(R.id.groupsButton)).setBackgroundColor(normalButtonColor);
+        (findViewById(R.id.placesButton)).setBackgroundColor(normalButtonColor);
+        (findViewById(R.id.itemsButton)).setBackgroundColor(normalButtonColor);
+        (findViewById(R.id.conceptsButton)).setBackgroundColor(normalButtonColor);
     }
 
 }
