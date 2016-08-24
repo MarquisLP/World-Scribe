@@ -32,6 +32,14 @@ public final class ExternalWriter {
         return (Environment.MEDIA_MOUNTED.equals(state));
     }
 
+    /**
+     * Creates the app's directory on the phone's external storage.
+     * @return True if the directory was created successfully; false otherwise.
+     */
+    public static boolean createAppDirectory() {
+        return FileRetriever.getAppDirectory().mkdirs();
+    }
+
     public static boolean createWorldDirectory(Context context, String worldName) {
         boolean directoryWasCreated = true;
 

@@ -9,17 +9,15 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
-import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 
 public class PermissionActivity extends ThemedActivity {
 
@@ -32,6 +30,11 @@ public class PermissionActivity extends ThemedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission);
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
+
+        if (preferences.getBoolean(AppPreferences.IS_FIRST_TIME_RUNNING_APP, true)) {
+            ExternalWriter.createAppDirectory();
+            preferences.edit().putBoolean(AppPreferences.IS_FIRST_TIME_RUNNING_APP, false).apply();
+        }
 
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
             goToNextActivity();
