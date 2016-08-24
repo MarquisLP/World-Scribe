@@ -25,11 +25,12 @@
             style="@style/AppTheme" />
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/scrollView"
+        android:scrollbars="vertical"
         android:paddingBottom="@dimen/scrollBottomPadding"
         android:fillViewport="false"
         android:layout_marginTop="@dimen/marginBelowToolbar">
@@ -237,7 +238,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <com.averi.worldscribe.views.BottomBar
         android:layout_height="wrap_content"
