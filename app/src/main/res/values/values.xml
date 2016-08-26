@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="enchantedGreen">#0acc0b</color>
-    <color name="enchantedGreenHighlight">#00eb10</color>
+    <color name="enchantedGreen">#06a507</color>
+    <color name="enchantedGreenHighlight">#66ca6d</color>
 </resources>
