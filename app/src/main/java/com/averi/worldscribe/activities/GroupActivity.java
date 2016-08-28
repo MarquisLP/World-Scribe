@@ -22,6 +22,7 @@ import com.averi.worldscribe.adapters.MembersAdapter;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 
 import java.util.ArrayList;
@@ -147,6 +148,16 @@ public class GroupActivity extends ArticleActivity {
                     startActivity(editMembershipIntent);
                 }
         }
+    }
+
+    @Override
+    protected void addSectionCollapsers() {
+        TextView membersHeader = (TextView) findViewById(R.id.textMembers);
+
+        membersHeader.setOnClickListener(new ArticleSectionCollapser(this, membersHeader,
+                (LinearLayout) findViewById(R.id.linearMembers)));
+
+        super.addSectionCollapsers();
     }
 
     private void populateMembers() {
