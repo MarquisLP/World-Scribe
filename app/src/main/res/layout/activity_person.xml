@@ -67,104 +67,111 @@
                 android:textSize="@dimen/headerTextSize"
                 android:layout_gravity="center_horizontal" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearGeneralInfo">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editAliases"
-                android:hint="@string/aliasesHint"
-                android:textColor="?attr/colorPrimary"
-                android:textColorHint="?attr/colorPrimaryDark"
-                android:maxLines="1"
-                android:textSize="@dimen/standardTextSize" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editAge"
-                android:hint="@string/ageHint"
-                android:textColor="?attr/colorPrimary"
-                android:textColorHint="?attr/colorPrimaryDark"
-                android:maxLines="1"
-                android:textSize="@dimen/standardTextSize"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/radioGroupGender"
-                android:layout_weight="1">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/maleText"
-                    android:id="@+id/radioButtonMale"
-                    android:layout_gravity="end"
+                    android:id="@+id/editAliases"
+                    android:hint="@string/aliasesHint"
                     android:textColor="?attr/colorPrimary"
-                    android:checked="true"
+                    android:textColorHint="?attr/colorPrimaryDark"
+                    android:maxLines="1"
+                    android:textSize="@dimen/standardTextSize" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editAge"
+                    android:hint="@string/ageHint"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimaryDark"
+                    android:maxLines="1"
                     android:textSize="@dimen/standardTextSize"
                     android:layout_weight="1" />
 
                 <Space
-                    android:layout_width="@dimen/radioButtonSpacing"
-                    android:layout_height="0dp" />
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
 
-                <RadioButton
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/femaleText"
-                    android:id="@+id/radioButtonFemale"
-                    android:layout_gravity="end"
-                    android:textColor="?attr/colorPrimary"
-                    android:checked="false"
-                    android:textSize="@dimen/standardTextSize"
-                    android:layout_weight="1" />
+                    android:orientation="horizontal"
+                    android:id="@+id/radioGroupGender"
+                    android:layout_weight="1">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/maleText"
+                        android:id="@+id/radioButtonMale"
+                        android:layout_gravity="end"
+                        android:textColor="?attr/colorPrimary"
+                        android:checked="true"
+                        android:textSize="@dimen/standardTextSize"
+                        android:layout_weight="1" />
+
+                    <Space
+                        android:layout_width="@dimen/radioButtonSpacing"
+                        android:layout_height="0dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/femaleText"
+                        android:id="@+id/radioButtonFemale"
+                        android:layout_gravity="end"
+                        android:textColor="?attr/colorPrimary"
+                        android:checked="false"
+                        android:textSize="@dimen/standardTextSize"
+                        android:layout_weight="1" />
+
+                    <Space
+                        android:layout_width="@dimen/radioButtonSpacing"
+                        android:layout_height="0dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/otherGenderText"
+                        android:id="@+id/radioButtonOtherGender"
+                        android:layout_gravity="end"
+                        android:textColor="?attr/colorPrimary"
+                        android:checked="false"
+                        android:textSize="@dimen/standardTextSize"
+                        android:layout_weight="1" />
+                </RadioGroup>
 
                 <Space
-                    android:layout_width="@dimen/radioButtonSpacing"
-                    android:layout_height="0dp" />
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/otherGenderText"
-                    android:id="@+id/radioButtonOtherGender"
-                    android:layout_gravity="end"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editBio"
+                    android:hint="@string/bioHint"
+                    android:textColorHint="?attr/colorPrimaryDark"
                     android:textColor="?attr/colorPrimary"
-                    android:checked="false"
-                    android:textSize="@dimen/standardTextSize"
-                    android:layout_weight="1" />
-            </RadioGroup>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/verticalSpacing" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editBio"
-                android:hint="@string/bioHint"
-                android:textColorHint="?attr/colorPrimaryDark"
-                android:textColor="?attr/colorPrimary"
-                android:background="@drawable/border"
-                android:padding="@dimen/borderedTextPadding"
-                android:scrollbars="vertical" />
+                    android:background="@drawable/border"
+                    android:padding="@dimen/borderedTextPadding"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="0dp"
