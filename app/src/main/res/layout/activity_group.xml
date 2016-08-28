@@ -111,7 +111,7 @@
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="@dimen/headerSpacing" />
+                android:layout_height="@dimen/verticalSpacing" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="@dimen/headerSpacing" />
+                android:layout_height="@dimen/verticalSpacing" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="@dimen/headerSpacing" />
+                android:layout_height="@dimen/verticalSpacing" />
 
             <TextView
                 android:layout_width="wrap_content"
