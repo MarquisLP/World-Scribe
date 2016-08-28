@@ -65,7 +65,7 @@
                 android:id="@+id/textGeneralInfo"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/headerTextSize"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -184,7 +184,7 @@
                 android:id="@+id/textMemberships"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/headerTextSize"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start" />
 
             <Space
                 android:layout_width="0dp"
@@ -232,7 +232,7 @@
                 android:id="@+id/textResidences"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/headerTextSize"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start" />
 
             <Space
                 android:layout_width="0dp"
@@ -280,7 +280,7 @@
                 android:id="@+id/textConnections"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/headerTextSize"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start" />
 
             <Space
                 android:layout_width="0dp"
@@ -329,7 +329,7 @@
                 android:id="@+id/textSnippets"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/headerTextSize"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start" />
 
             <Space
                 android:layout_width="0dp"
