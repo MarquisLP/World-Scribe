@@ -136,4 +136,5 @@
     <string name="selectThemeTitle">App Theme</string>
     <string name="settingsTitle">Settings</string>
     <string name="restartNoticeText">To apply the new theme, the app will be restarted when you press \"SAVE\"</string>
+    <string name="generalInfoHeader">General Info</string>
 </resources>
