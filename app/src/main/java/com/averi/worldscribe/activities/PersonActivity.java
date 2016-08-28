@@ -26,6 +26,7 @@ import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.R;
 
@@ -238,6 +239,19 @@ public class PersonActivity extends ArticleActivity {
     private void populateResidences() {
         residencesList.setLayoutManager(new LinearLayoutManager(this));
         residencesList.setAdapter(new ResidencesAdapter(this, getWorldName(), getArticleName()));
+    }
+
+    @Override
+    protected void addSectionCollapsers() {
+        TextView membershipsHeader = (TextView) findViewById(R.id.textMemberships);
+        TextView residencesHeader = (TextView) findViewById(R.id.textResidences);
+
+        membershipsHeader.setOnClickListener(new ArticleSectionCollapser(this, membershipsHeader,
+                (LinearLayout) findViewById(R.id.linearMemberships)));
+        residencesHeader.setOnClickListener(new ArticleSectionCollapser(this, residencesHeader,
+                (LinearLayout) findViewById(R.id.linearResidences)));
+
+        super.addSectionCollapsers();
     }
 
     /**
