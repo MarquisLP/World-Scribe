@@ -15,9 +15,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
@@ -218,6 +220,36 @@ public abstract class ArticleActivity extends ThemedActivity implements BottomBa
      * @return The Button used for creating new Snippets owned by this Article.
      */
     protected abstract Button getAddSnippetButton();
+
+    /**
+     * @return The header for the 'General Info' section of this Article.
+     */
+    protected abstract TextView getGeneralInfoHeader();
+
+    /**
+     * @return The Layout containing the content of the General Info section.
+     */
+    protected abstract ViewGroup getGeneralInfoLayout();
+
+    /**
+     * @return The header for the 'Connections' section of this Article.
+     */
+    protected abstract TextView getConnectionsHeader();
+
+    /**
+     * @return The Layout containing the content of the Connections section.
+     */
+    protected abstract ViewGroup getConnectionsLayout();
+
+    /**
+     * @return The header for the 'Snippets' section of this Article.
+     */
+    protected abstract TextView getSnippetsHeader();
+
+    /**
+     * @return The Layout containing the content of the General Info section.
+     */
+    protected abstract ViewGroup getSnippetsLayout();
 
     /**
      * Load data pertaining to the selected Article, and use it in set-up processes that are common

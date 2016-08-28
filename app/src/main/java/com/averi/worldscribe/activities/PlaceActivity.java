@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.ArticleTextField;
@@ -99,6 +102,36 @@ public class PlaceActivity extends ArticleActivity {
                 this, getWorldName(), Category.Place, getArticleName()));
 
         return textFields;
+    }
+
+    @Override
+    protected TextView getGeneralInfoHeader() {
+        return (TextView) findViewById(R.id.textGeneralInfo);
+    }
+
+    @Override
+    protected ViewGroup getGeneralInfoLayout() {
+        return (LinearLayout) findViewById(R.id.linearGeneralInfo);
+    }
+
+    @Override
+    protected TextView getConnectionsHeader() {
+        return (TextView) findViewById(R.id.textConnections);
+    }
+
+    @Override
+    protected ViewGroup getConnectionsLayout() {
+        return (LinearLayout) findViewById(R.id.linearConnections);
+    }
+
+    @Override
+    protected TextView getSnippetsHeader() {
+        return (TextView) findViewById(R.id.textSnippets);
+    }
+
+    @Override
+    protected ViewGroup getSnippetsLayout() {
+        return (LinearLayout) findViewById(R.id.linearSnippets);
     }
 
     @Override
