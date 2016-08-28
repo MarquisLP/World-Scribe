@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -145,6 +147,8 @@ public abstract class ArticleActivity extends ThemedActivity implements BottomBa
 
         connectionsList.setLayoutManager(new LinearLayoutManager(this));
         snippetsList.setLayoutManager(new LinearLayoutManager(this));
+
+        addSectionCollapsers();
     }
 
     @Override
@@ -250,6 +254,24 @@ public abstract class ArticleActivity extends ThemedActivity implements BottomBa
      * @return The Layout containing the content of the General Info section.
      */
     protected abstract ViewGroup getSnippetsLayout();
+
+    /**
+     * Adds ArticleSectionCollapsers to all sections for this Article.
+     * Subclasses should override this method and add collapsers for their own unique collections,
+     * and then call super.
+     */
+    protected void addSectionCollapsers() {
+        TextView generalInfoHeader = getGeneralInfoHeader();
+        TextView connectionsHeader = getConnectionsHeader();
+        TextView snippetsHeader = getSnippetsHeader();
+
+        generalInfoHeader.setOnClickListener(new ArticleSectionCollapser(this, generalInfoHeader,
+                getGeneralInfoLayout()));
+        connectionsHeader.setOnClickListener(new ArticleSectionCollapser(this, connectionsHeader,
+                getConnectionsLayout()));
+        snippetsHeader.setOnClickListener(new ArticleSectionCollapser(this, snippetsHeader,
+                getSnippetsLayout()));
+    }
 
     /**
      * Load data pertaining to the selected Article, and use it in set-up processes that are common
