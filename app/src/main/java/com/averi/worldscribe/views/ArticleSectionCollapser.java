@@ -10,7 +10,7 @@ import com.averi.worldscribe.R;
 /**
  * Created by mark on 28/08/16.
  *
- * A wrapper for Article section TextViews, allowing them to collapse and expand their
+ * An onClickListener for Article section TextViews, allowing them to collapse and expand their
  * respective sections when clicked.
  */
 public class ArticleSectionCollapser implements View.OnClickListener {
@@ -32,8 +32,6 @@ public class ArticleSectionCollapser implements View.OnClickListener {
         this.sectionName = sectionHeader.getText().toString();
         this.sectionHeader = sectionHeader;
         this.sectionLayout = sectionLayout;
-
-        sectionHeader.setOnClickListener(this);
 
         updateCollapseIcon();
     }
