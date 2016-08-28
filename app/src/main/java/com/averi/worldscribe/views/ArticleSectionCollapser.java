@@ -15,6 +15,8 @@ import com.averi.worldscribe.R;
  */
 public class ArticleSectionCollapser implements View.OnClickListener {
 
+    public static final int DEFAULT_SECTION_VISIBILITY = View.GONE;
+
     private Context context;
     private String sectionName;
     private TextView sectionHeader;
@@ -33,6 +35,7 @@ public class ArticleSectionCollapser implements View.OnClickListener {
         this.sectionHeader = sectionHeader;
         this.sectionLayout = sectionLayout;
 
+        sectionLayout.setVisibility(DEFAULT_SECTION_VISIBILITY);
         updateCollapseIcon();
     }
 
