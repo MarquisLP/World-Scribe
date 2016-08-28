@@ -27,6 +27,7 @@ import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 
 import java.util.ArrayList;
@@ -155,6 +156,16 @@ public class PlaceActivity extends ArticleActivity {
                     ExternalWriter.saveResidence(this, newResidence);
                 }
         }
+    }
+
+    @Override
+    protected void addSectionCollapsers() {
+        TextView residentsHeader = (TextView) findViewById(R.id.textResidents);
+
+        residentsHeader.setOnClickListener(new ArticleSectionCollapser(this, residentsHeader,
+                (LinearLayout) findViewById(R.id.linearResidents)));
+
+        super.addSectionCollapsers();
     }
 
     /**
