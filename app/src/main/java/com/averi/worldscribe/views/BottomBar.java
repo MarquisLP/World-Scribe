@@ -23,16 +23,18 @@ public class BottomBar extends RelativeLayout {
 
     public BottomBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.activity = (BottomBarActivity) context;
+        if (!(isInEditMode())) {
+            this.activity = (BottomBarActivity) context;
 
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.activity_bottom_bar, this, true);
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater.inflate(R.layout.activity_bottom_bar, this, true);
 
-        this.findViewById(R.id.peopleButton).setOnClickListener(peopleOnClickListener);
-        this.findViewById(R.id.groupsButton).setOnClickListener(groupsOnClickListener);
-        this.findViewById(R.id.placesButton).setOnClickListener(placesOnClickListener);
-        this.findViewById(R.id.itemsButton).setOnClickListener(itemsOnClickListener);
-        this.findViewById(R.id.conceptsButton).setOnClickListener(conceptsOnClickListener);
+            this.findViewById(R.id.peopleButton).setOnClickListener(peopleOnClickListener);
+            this.findViewById(R.id.groupsButton).setOnClickListener(groupsOnClickListener);
+            this.findViewById(R.id.placesButton).setOnClickListener(placesOnClickListener);
+            this.findViewById(R.id.itemsButton).setOnClickListener(itemsOnClickListener);
+            this.findViewById(R.id.conceptsButton).setOnClickListener(conceptsOnClickListener);
+        }
     }
 
     private OnClickListener peopleOnClickListener = new OnClickListener() {
