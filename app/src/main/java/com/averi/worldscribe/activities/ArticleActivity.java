@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -191,6 +192,11 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
      * @return The Android Resource ID of this Activity's layout resource file.
      */
     protected abstract int getLayoutResourceID();
+
+    /**
+     * @return The NestedScrollView containing this Article's content.
+     */
+    protected abstract NestedScrollView getNestedScrollView();
 
     /**
      * @return The Article ImageView for this Activity.

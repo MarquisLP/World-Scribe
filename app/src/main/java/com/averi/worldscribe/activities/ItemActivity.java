@@ -3,6 +3,7 @@ package com.averi.worldscribe.activities;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -31,6 +32,11 @@ public class ItemActivity extends ArticleActivity {
     @Override
     protected int getLayoutResourceID() {
         return R.layout.activity_item;
+    }
+
+    @Override
+    protected NestedScrollView getNestedScrollView() {
+        return (NestedScrollView) findViewById(R.id.scrollView);
     }
 
     @Override
