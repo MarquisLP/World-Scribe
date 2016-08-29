@@ -16,7 +16,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class EditMembershipActivity extends ThemedActivity {
+public class EditMembershipActivity extends BackButtonActivity {
 
     private Membership membership;
 
@@ -70,15 +70,15 @@ public class EditMembershipActivity extends ThemedActivity {
         }
     }
 
-    /**
-     * Set up this Activity's app bar.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar appBar = (Toolbar) findViewById(R.id.my_toolbar);
         if (appBar != null) {
             appBar.setTitle(R.string.editMembershipTitle);
             setSupportActionBar(appBar);
         }
+
+        super.setAppBar();
     }
 
     /**

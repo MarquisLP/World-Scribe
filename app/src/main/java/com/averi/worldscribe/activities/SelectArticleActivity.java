@@ -47,7 +47,7 @@ import java.util.HashSet;
  * "articleName".
  * </p>
  */
-public class SelectArticleActivity extends ThemedActivity implements StringListContext {
+public class SelectArticleActivity extends BackButtonActivity implements StringListContext {
 
     /**
      * The initial Category of Articles to show if any Category can be chosen from.
@@ -105,11 +105,22 @@ public class SelectArticleActivity extends ThemedActivity implements StringListC
             ViewGroup.MarginLayoutParams params = (
                     ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
             params.bottomMargin = 0;
+        }
+
+        setAppBar();
+    }
+
+    @Override
+    protected void setAppBar() {
+        if (canChooseOneCategoryOnly) {
             appBar.setTitle(getString(R.string.selectArticleTitle, category.name()));
         } else {
             appBar.setTitle(getString(R.string.selectArticleTitle, getString(R.string.article)));
         }
+
         setSupportActionBar(appBar);
+
+        super.setAppBar();
     }
 
     /**

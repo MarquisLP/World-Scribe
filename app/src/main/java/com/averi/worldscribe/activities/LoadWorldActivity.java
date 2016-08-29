@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 
-public class LoadWorldActivity extends ThemedActivity implements StringListContext {
+public class LoadWorldActivity extends BackButtonActivity implements StringListContext {
 
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
@@ -42,12 +42,15 @@ public class LoadWorldActivity extends ThemedActivity implements StringListConte
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         String title = this.getResources().getString(R.string.loadWorldTitle);
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(title);
+
+        super.setAppBar();
     }
 
     private void populateList() {

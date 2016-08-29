@@ -20,7 +20,7 @@ import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 
-public class CreateArticleActivity extends ThemedActivity {
+public class CreateArticleActivity extends BackButtonActivity {
 
     public static final int PERSON_ITEM_POSITION = 0;
     public static final int GROUP_ITEM_POSITION = 1;
@@ -51,14 +51,14 @@ public class CreateArticleActivity extends ThemedActivity {
         addTextListener();
     }
 
-    /**
-     * Sets up this Activity's app bar.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(R.string.createArticleTitle);
+
+        super.setAppBar();
     }
 
     private void populateCategorySpinner() {

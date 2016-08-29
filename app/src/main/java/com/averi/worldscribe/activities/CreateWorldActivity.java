@@ -17,7 +17,7 @@ import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 
-public class CreateWorldActivity extends ThemedActivity {
+public class CreateWorldActivity extends BackButtonActivity {
 
     private SharedPreferences preferences = null;
     private Toolbar appBar;
@@ -40,8 +40,16 @@ public class CreateWorldActivity extends ThemedActivity {
         worldAlreadyExistsMessage = this.getResources().getString(R.string.worldAlreadyExistsText);
         worldCreationErrorMessage = this.getResources().getString(R.string.worldCreationErrorText);
 
-        appBar.setTitle(R.string.createWorldTitle);
+        setAppBar();
         addTextListener();
+    }
+
+    @Override
+    protected void setAppBar() {
+        appBar.setTitle(R.string.createWorldTitle);
+        setSupportActionBar(appBar);
+
+        super.setAppBar();
     }
 
     @Override

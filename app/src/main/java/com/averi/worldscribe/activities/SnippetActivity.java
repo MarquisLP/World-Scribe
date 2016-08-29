@@ -1,7 +1,6 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,9 +12,8 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
-import com.averi.worldscribe.utilities.IntentFields;
 
-public class SnippetActivity extends ThemedActivity {
+public class SnippetActivity extends BackButtonActivity {
 
     /**
      * The text field for editing the Snippet's content.
@@ -60,7 +58,7 @@ public class SnippetActivity extends ThemedActivity {
         articleName = intent.getStringExtra(IntentFields.ARTICLE_NAME);
         snippetName = intent.getStringExtra(IntentFields.SNIPPET_NAME);
 
-        setAppBarTitle(snippetName);
+        setAppBar();
         loadSnippetContent(intent.getStringExtra(IntentFields.WORLD_NAME),
                 (Category) intent.getSerializableExtra(IntentFields.CATEGORY),
                 intent.getStringExtra(IntentFields.ARTICLE_NAME),
@@ -85,15 +83,14 @@ public class SnippetActivity extends ThemedActivity {
         saveSnippetContentIfEdited();
     }
 
-    /**
-     * Setup the app bar and set its title to be the Snippet's name.
-     * @param snippetName The name of the Snippet displayed in this Activity.
-     */
-    private void setAppBarTitle(String snippetName) {
+    @Override
+    protected void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(snippetName);
+
+        super.setAppBar();
     }
 
     /**

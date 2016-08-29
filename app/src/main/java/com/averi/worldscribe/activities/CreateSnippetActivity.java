@@ -21,7 +21,7 @@ import com.averi.worldscribe.utilities.IntentFields;
 /**
  * The Activity where the user names the new Snippet during Snippet creation.
  */
-public class CreateSnippetActivity extends ThemedActivity {
+public class CreateSnippetActivity extends BackButtonActivity {
 
     private String worldName;
     private Category articleCategory;
@@ -49,15 +49,15 @@ public class CreateSnippetActivity extends ThemedActivity {
         setNameFieldWatcher();
     }
 
-    /**
-     * Sets up this Activity's app bar.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar appBar = (Toolbar) findViewById(R.id.my_toolbar);
         if (appBar != null) {
             appBar.setTitle(R.string.createSnippetTitle);
             setSupportActionBar(appBar);
         }
+
+        super.setAppBar();
     }
 
     /**

@@ -20,7 +20,7 @@ import com.averi.worldscribe.utilities.AttributeGetter;
 
 import org.w3c.dom.Attr;
 
-public class SettingsActivity extends ThemedActivity {
+public class SettingsActivity extends BackButtonActivity {
 
     public static final int SKY_BLUE = 0;
     public static final int SUNSET_ORANGE = 1;
@@ -81,14 +81,14 @@ public class SettingsActivity extends ThemedActivity {
         }
     }
 
-    /**
-     * Setup this Activity's app bar.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         assert myToolbar != null;
         myToolbar.setTitle(R.string.settingsTitle);
         setSupportActionBar(myToolbar);
+
+        super.setAppBar();
     }
 
     /**

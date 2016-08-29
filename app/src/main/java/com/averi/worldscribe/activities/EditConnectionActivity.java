@@ -18,7 +18,7 @@ import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class EditConnectionActivity extends ThemedActivity {
+public class EditConnectionActivity extends BackButtonActivity {
 
     private Connection connection;
 
@@ -91,15 +91,15 @@ public class EditConnectionActivity extends ThemedActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    /**
-     * Set up this Activity's app bar.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar appBar = (Toolbar) findViewById(R.id.my_toolbar);
         if (appBar != null) {
             appBar.setTitle(R.string.editConnectionTitle);
             setSupportActionBar(appBar);
         }
+
+        super.setAppBar();
     }
 
     @Override

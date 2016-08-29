@@ -4,8 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +53,7 @@ import java.util.ArrayList;
  * corresponding to their respective Categories, as well as the other abstract methods for
  * obtaining specific Views.
  */
-public abstract class ArticleActivity extends ThemedActivity implements BottomBarActivity {
+public abstract class ArticleActivity extends BackButtonActivity implements BottomBarActivity {
 
     /**
      * The request code for selecting a new Article image.
@@ -286,14 +289,13 @@ public abstract class ArticleActivity extends ThemedActivity implements BottomBa
         populateSnippets();
     }
 
-    /**
-     * Set this Activity's toolbar and set the title to be the Article's name.
-     */
-    private void setAppBar() {
+    @Override
+    protected void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         assert myToolbar != null;
         myToolbar.setTitle(articleName);
         setSupportActionBar(myToolbar);
+        super.setAppBar();
     }
 
     /**
