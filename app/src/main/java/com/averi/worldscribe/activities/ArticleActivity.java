@@ -34,6 +34,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.ConnectionsAdapter;
 import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
@@ -357,6 +358,10 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
 
         if (articleImage == null) {
             articleImage = ExternalReader.getUnsetImageBitmap(this, category);
+            imageView.setColorFilter(AttributeGetter.getColorAttribute(this, R.attr.colorPrimary),
+                    PorterDuff.Mode.SRC_ATOP);
+        } else {
+            imageView.setColorFilter(null);
         }
 
         imageView.setImageBitmap(articleImage);
