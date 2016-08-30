@@ -1,6 +1,7 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
@@ -38,6 +41,7 @@ public class EditMembershipActivity extends BackButtonActivity {
 
         setAppBar();
         setTextFields();
+        matchArrowColorToTheme();
     }
 
     @Override
@@ -79,6 +83,16 @@ public class EditMembershipActivity extends BackButtonActivity {
         }
 
         super.setAppBar();
+    }
+
+    /**
+     * Recolors the Membership arrow to the primary color of the current theme.
+     */
+    private void matchArrowColorToTheme() {
+        ImageView arrowsView = (ImageView) findViewById(R.id.membershipArrow);
+        assert arrowsView != null;
+        arrowsView.setColorFilter(AttributeGetter.getColorAttribute(this, R.attr.colorPrimary),
+                PorterDuff.Mode.SRC_ATOP);
     }
 
     /**

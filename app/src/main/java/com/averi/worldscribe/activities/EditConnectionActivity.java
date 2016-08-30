@@ -1,5 +1,6 @@
 package com.averi.worldscribe.activities;
 
+import android.graphics.PorterDuff;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -83,6 +86,7 @@ public class EditConnectionActivity extends BackButtonActivity {
         });
 
         setAppBar();
+        matchArrowsColorToTheme();
     }
 
     @Override
@@ -114,6 +118,16 @@ public class EditConnectionActivity extends BackButtonActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Recolors the Connection arrows to the primary color of the current theme.
+     */
+    private void matchArrowsColorToTheme() {
+        ImageView arrowsView = (ImageView) findViewById(R.id.imageConnectionArrows);
+        assert arrowsView != null;
+        arrowsView.setColorFilter(AttributeGetter.getColorAttribute(this, R.attr.colorPrimary),
+                PorterDuff.Mode.SRC_ATOP);
     }
 
     /**
