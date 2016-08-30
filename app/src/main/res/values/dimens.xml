@@ -24,6 +24,7 @@
     <dimen name="articleListItemMargin">5dp</dimen>
     <dimen name="cardCornerRadius">15dp</dimen>
     <dimen name="recyclerPadding">3dp</dimen>
+    <dimen name="articleSectionSeparatorLineHeight">2dp</dimen>
 
     <dimen name="articleImageHeight">192dp</dimen>
     <dimen name="articleImageWidth">192dp</dimen>

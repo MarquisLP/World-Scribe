@@ -113,6 +113,16 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/verticalSpacing" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/articleSectionSeparatorLineHeight"
+                android:background="?attr/colorPrimary"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,7 +141,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearResidents"
-                android:background="@drawable/dashed_border"
                 android:padding="@dimen/recyclerPadding" >
 
                 <android.support.v7.widget.RecyclerView
@@ -161,6 +170,16 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/verticalSpacing" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/articleSectionSeparatorLineHeight"
+                android:background="?attr/colorPrimary"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,7 +198,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearConnections"
-                android:background="@drawable/dashed_border"
                 android:padding="@dimen/recyclerPadding">
 
                 <android.support.v7.widget.RecyclerView
@@ -210,6 +228,16 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/verticalSpacing" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/articleSectionSeparatorLineHeight"
+                android:background="?attr/colorPrimary"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/verticalSpacing" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,7 +256,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearSnippets"
-                android:background="@drawable/dashed_border"
                 android:padding="@dimen/recyclerPadding" >
 
                 <android.support.v7.widget.RecyclerView
