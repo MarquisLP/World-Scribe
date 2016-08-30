@@ -66,6 +66,11 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     public static final int RESULT_NEW_CONNECTION = 200;
 
     /**
+     * The amount of pixels that must be scrolled up/down for the BottomBar to slide in/out.
+     */
+    public static final int BOTTOM_BAR_SCROLL_THRESHOLD = 10;
+
+    /**
      * The display for the Article's image.
      */
     private ImageView imageView;
@@ -153,6 +158,13 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
         snippetsList.setLayoutManager(new LinearLayoutManager(this));
 
         addSectionCollapsers();
+
+        getNestedScrollView().setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                moveBottomBarOnScroll(scrollY - oldScrollY);
+            }
+        });
     }
 
     @Override
@@ -280,6 +292,23 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
                 getConnectionsLayout()));
         snippetsHeader.setOnClickListener(new ArticleSectionCollapser(this, snippetsHeader,
                 getSnippetsLayout()));
+    }
+
+    /**
+     * Slides the Bottom Bar in or out of the screen, based on whether the user scrolled up or down
+     * a significant amount.
+     * @param dy The amount scrolled, in pixels.
+     */
+    private void moveBottomBarOnScroll(int dy) {
+        if ((dy > BOTTOM_BAR_SCROLL_THRESHOLD) && (bottomBar.getVisibility() == View.VISIBLE)) {
+            bottomBar.slideOut();
+            getNestedScrollView().setPadding(0, 0, 0, 0);
+        } else if ((dy < -BOTTOM_BAR_SCROLL_THRESHOLD) &&
+                (bottomBar.getVisibility() == View.GONE)) {
+            bottomBar.slideIn();
+            getNestedScrollView().setPadding(0, 0, 0,
+                    (int) getResources().getDimension(R.dimen.scrollBottomPadding));
+        }
     }
 
     /**
