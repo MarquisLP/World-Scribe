@@ -302,12 +302,9 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     private void moveBottomBarOnScroll(int dy) {
         if ((dy > BOTTOM_BAR_SCROLL_THRESHOLD) && (bottomBar.getVisibility() == View.VISIBLE)) {
             bottomBar.slideOut();
-            getNestedScrollView().setPadding(0, 0, 0, 0);
         } else if ((dy < -BOTTOM_BAR_SCROLL_THRESHOLD) &&
                 (bottomBar.getVisibility() == View.GONE)) {
             bottomBar.slideIn();
-            getNestedScrollView().setPadding(0, 0, 0,
-                    (int) getResources().getDimension(R.dimen.scrollBottomPadding));
         }
     }
 
