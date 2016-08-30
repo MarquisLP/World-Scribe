@@ -103,9 +103,26 @@ public class ExternalReader {
         // If the Article's image doesn't exist or can't be decoded, then return a default image
         // based on the Article's Category.
         if (articleBitmap == null) {
-            // TODO: Create and set default images for all Categories.
-            articleBitmap = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.blank_person);
+            int unsetImageID;
+            switch (category) {
+                case Person:
+                    unsetImageID = R.drawable.blank_person;
+                    break;
+                case Group:
+                    unsetImageID = R.drawable.unset_image_group;
+                    break;
+                case Place:
+                    unsetImageID = R.drawable.unset_image_place;
+                    break;
+                case Item:
+                    unsetImageID = R.drawable.unset_image_item;
+                    break;
+                case Concept:
+                default:
+                    unsetImageID = R.drawable.unset_image_concept;
+            }
+
+            articleBitmap = BitmapFactory.decodeResource(context.getResources(), unsetImageID);
         }
 
         return articleBitmap;
