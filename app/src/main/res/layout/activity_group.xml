@@ -142,6 +142,19 @@
                 android:layout_height="match_parent"
                 android:id="@+id/linearMembers"
                 android:padding="@dimen/recyclerPadding">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddMember"
+                    android:background="?attr/buttonColorSelector"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
@@ -152,18 +165,6 @@
                     android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addConnectionSnippetText"
-                    android:id="@+id/buttonAddMember"
-                    android:layout_gravity="end"
-                    android:background="?attr/buttonColorSelector"
-                    android:padding="@dimen/buttonPadding"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/addConnectionSnippetTextSize"
-                    android:layout_margin="@dimen/pagePadding" />
             </LinearLayout>
 
             <Space
@@ -200,6 +201,20 @@
                 android:id="@+id/linearConnections"
                 android:padding="@dimen/recyclerPadding">
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddConnection"
+                    android:background="?attr/buttonColorSelector"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,19 +224,6 @@
                     android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addConnectionSnippetText"
-                    android:id="@+id/buttonAddConnection"
-                    android:layout_gravity="end"
-                    android:background="?attr/buttonColorSelector"
-                    android:padding="@dimen/buttonPadding"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/addConnectionSnippetTextSize"
-                    android:layout_margin="@dimen/pagePadding"/>
             </LinearLayout>
 
             <Space
@@ -258,6 +260,20 @@
                 android:id="@+id/linearSnippets"
                 android:padding="@dimen/recyclerPadding" >
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addConnectionSnippetText"
+                    android:id="@+id/buttonAddSnippet"
+                    android:background="?attr/buttonColorSelector"
+                    android:padding="@dimen/buttonPadding"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/verticalSpacing" />
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -267,18 +283,6 @@
                     android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addConnectionSnippetText"
-                    android:id="@+id/buttonAddSnippet"
-                    android:layout_gravity="end"
-                    android:background="?attr/buttonColorSelector"
-                    android:padding="@dimen/buttonPadding"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/addConnectionSnippetTextSize"
-                    android:layout_margin="@dimen/pagePadding" />
             </LinearLayout>
 
         </LinearLayout>
