@@ -347,12 +347,18 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
 
     /**
      * Load and scale this Article's image, then display it.
+     * If the image is unset or could not be loaded, a default "unset" image is displayed.
      */
     private void setArticleImage() {
         Resources resources = getResources();
         Bitmap articleImage = ExternalReader.getArticleImage(this, worldName, category, articleName,
                 (int) resources.getDimension(R.dimen.articleImageWidth),
                 (int) resources.getDimension(R.dimen.articleImageHeight));
+
+        if (articleImage == null) {
+            articleImage = ExternalReader.getUnsetImageBitmap(this, category);
+        }
+
         imageView.setImageBitmap(articleImage);
     }
 

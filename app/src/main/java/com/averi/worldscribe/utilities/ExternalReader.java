@@ -92,40 +92,44 @@ public class ExternalReader {
      * @param articleName The name of the current Article.
      * @param viewWidth The width of the view that will display the Bitmap.
      * @param viewHeight The height of the view that will display the Bitmap.
-     * @return The Article's image, scaled to fit the View as best as possible.
+     * @return The Article's image, scaled to fit the View as best as possible; null if the image
+     * doesn't exist or couldn't be loaded.
      */
     public static Bitmap getArticleImage(Context context, String worldName, Category category,
                                          String articleName, int viewWidth, int viewHeight) {
         File imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
                 context.getResources().getString(R.string.imageFileName) + IMAGE_FILE_EXTENSION);
         Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(imageFile, viewWidth, viewHeight);
+        return articleBitmap;
+    }
 
-        // If the Article's image doesn't exist or can't be decoded, then return a default image
-        // based on the Article's Category.
-        if (articleBitmap == null) {
-            int unsetImageID;
-            switch (category) {
-                case Person:
-                    unsetImageID = R.drawable.blank_person;
-                    break;
-                case Group:
-                    unsetImageID = R.drawable.unset_image_group;
-                    break;
-                case Place:
-                    unsetImageID = R.drawable.unset_image_place;
-                    break;
-                case Item:
-                    unsetImageID = R.drawable.unset_image_item;
-                    break;
-                case Concept:
-                default:
-                    unsetImageID = R.drawable.unset_image_concept;
-            }
-
-            articleBitmap = BitmapFactory.decodeResource(context.getResources(), unsetImageID);
+    /**
+     * Gets the Bitmap for an unset Article image, based on the Article's Category.
+     * @param context The Context calling this method.
+     * @param category The Article's Category.
+     * @return
+     */
+    public static Bitmap getUnsetImageBitmap(Context context, Category category) {
+        int unsetImageID;
+        switch (category) {
+            case Person:
+                unsetImageID = R.drawable.blank_person;
+                break;
+            case Group:
+                unsetImageID = R.drawable.unset_image_group;
+                break;
+            case Place:
+                unsetImageID = R.drawable.unset_image_place;
+                break;
+            case Item:
+                unsetImageID = R.drawable.unset_image_item;
+                break;
+            case Concept:
+            default:
+                unsetImageID = R.drawable.unset_image_concept;
         }
 
-        return articleBitmap;
+        return BitmapFactory.decodeResource(context.getResources(), unsetImageID);
     }
 
     /**
