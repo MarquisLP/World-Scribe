@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
+import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.ConceptActivity;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.activities.EditConnectionActivity;
@@ -37,7 +38,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 implements ArticleLinkAdapter {
 
     public class ConnectionHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final Context context;
+        private final ArticleActivity activity;
         private final CardView connectionCard;
         private final TextView articleRoleText;
         private final TextView connectedArticleNameText;
@@ -47,10 +48,11 @@ implements ArticleLinkAdapter {
         private final String articleName;
         private Connection connection;
 
-        public ConnectionHolder(Context context, String worldName, String articleName, View itemView) {
+        public ConnectionHolder(ArticleActivity activity, String worldName, String articleName,
+                                View itemView) {
             super(itemView);
 
-            this.context = context;
+            this.activity = activity;
             connectionCard = (CardView) itemView;
             articleRoleText = (TextView) connectionCard.findViewById(R.id.mainArticleRole);
             connectedArticleNameText = (TextView) connectionCard.findViewById(R.id.otherArticleName);
@@ -91,9 +93,9 @@ implements ArticleLinkAdapter {
          * this ConnectionHolder.
          */
         private void goToConnectionEditor() {
-            Intent editConnectionIntent = new Intent(context, EditConnectionActivity.class);
+            Intent editConnectionIntent = new Intent(activity, EditConnectionActivity.class);
             editConnectionIntent.putExtra(IntentFields.CONNECTION, connection);
-            context.startActivity(editConnectionIntent);
+            activity.startActivity(editConnectionIntent);
         }
 
         /**
@@ -101,21 +103,21 @@ implements ArticleLinkAdapter {
          * If an error occurs during deletion, an error message is displayed.
          */
         private void deleteConnection() {
-            new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.confirmConnectionDeletionTitle,
+            new AlertDialog.Builder(activity)
+                .setTitle(activity.getString(R.string.confirmConnectionDeletionTitle,
                         connection.connectedArticleName))
-                .setMessage(context.getString(R.string.confirmConnectionDeletion,
+                .setMessage(activity.getString(R.string.confirmConnectionDeletion,
                         connection.connectedArticleName))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        boolean connectionWasDeleted = ExternalDeleter.deleteConnection(context,
+                        boolean connectionWasDeleted = ExternalDeleter.deleteConnection(activity,
                                 connection);
                         if ((connectionWasDeleted)) {
                             removeConnection(getAdapterPosition());
                         } else {
-                            Toast.makeText(context,
-                                    context.getString(R.string.deleteConnectionError,
+                            Toast.makeText(activity,
+                                    activity.getString(R.string.deleteConnectionError,
                                             connection.connectedArticleName),
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -128,48 +130,48 @@ implements ArticleLinkAdapter {
 
             switch (connection.connectedArticleCategory) {
                 case Person:
-                    goToArticleIntent = new Intent(context, PersonActivity.class);
+                    goToArticleIntent = new Intent(activity, PersonActivity.class);
                     break;
                 case Group:
-                    goToArticleIntent = new Intent(context, GroupActivity.class);
+                    goToArticleIntent = new Intent(activity, GroupActivity.class);
                     break;
                 case Place:
-                    goToArticleIntent = new Intent(context, PlaceActivity.class);
+                    goToArticleIntent = new Intent(activity, PlaceActivity.class);
                     break;
                 case Item:
-                    goToArticleIntent = new Intent(context, ItemActivity.class);
+                    goToArticleIntent = new Intent(activity, ItemActivity.class);
                     break;
                 case Concept:
                 default:
-                    goToArticleIntent = new Intent(context, ConceptActivity.class);
+                    goToArticleIntent = new Intent(activity, ConceptActivity.class);
             }
 
             goToArticleIntent.putExtra(IntentFields.WORLD_NAME, worldName);
             goToArticleIntent.putExtra(IntentFields.CATEGORY, connection.connectedArticleCategory);
             goToArticleIntent.putExtra(IntentFields.ARTICLE_NAME, connection.connectedArticleName);
 
-            context.startActivity(goToArticleIntent);
+            activity.startActivity(goToArticleIntent);
         }
     }
 
     private final ArrayList<Connection> connections;
-    private final Context context;
+    private final ArticleActivity activity;
     private final String worldName;
     private final String articleName;
 
-    public ConnectionsAdapter(Context context, String worldName, Category category, String articleName) {
-        this.context = context;
+    public ConnectionsAdapter(ArticleActivity activity, String worldName, Category category, String articleName) {
+        this.activity = activity;
         this.worldName = worldName;
         this.articleName = articleName;
 
-        connections = ExternalReader.getConnections(context, worldName, category, articleName);
+        connections = ExternalReader.getConnections(activity, worldName, category, articleName);
     }
 
     @Override
     public ConnectionHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.connection_card, parent, false);
-        return new ConnectionHolder(context, worldName, articleName, view);
+        return new ConnectionHolder(activity, worldName, articleName, view);
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.GroupActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
@@ -33,7 +34,7 @@ public class MembershipsAdapter extends RecyclerView.Adapter<MembershipsAdapter.
 implements ArticleLinkAdapter {
 
     public class MembershipHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final Context context;
+        private final ArticleActivity activity;
         private final CardView membershipCard;
         private final TextView groupNameText;
         private final TextView memberRoleText;
@@ -44,14 +45,14 @@ implements ArticleLinkAdapter {
 
         /**
          * Instantiate a new MembershipHolder.
-         * @param context The Context possessing this MembershipHolder.
+         * @param activity The Context possessing this MembershipHolder.
          * @param worldName The name of the current World.
          * @param membershipCard The Membership Card layout this object will hold.
          */
-        public MembershipHolder(Context context, String worldName, View membershipCard) {
+        public MembershipHolder(ArticleActivity activity, String worldName, View membershipCard) {
             super(membershipCard);
 
-            this.context = context;
+            this.activity = activity;
             this.membershipCard = (CardView) membershipCard;
             groupNameText = (TextView) this.membershipCard.findViewById(R.id.linkedArticleName);
             memberRoleText = (TextView) this.membershipCard.findViewById(R.id.memberRole);
@@ -83,7 +84,7 @@ implements ArticleLinkAdapter {
             if (membership.memberRole.isEmpty()) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
-                memberRoleText.setText(context.getString(R.string.memberRoleText,
+                memberRoleText.setText(activity.getString(R.string.memberRoleText,
                         membership.memberRole));
             }
         }
@@ -103,10 +104,10 @@ implements ArticleLinkAdapter {
          * Deletes the Membership represented by this ViewHolder upon user confirmation.
          */
         private void confirmMembershipDeletion() {
-            new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.confirmMembershipDeletionTitle,
+            new AlertDialog.Builder(activity)
+                    .setTitle(activity.getString(R.string.confirmMembershipDeletionTitle,
                             membership.groupName))
-                    .setMessage(context.getString(R.string.confirmMembershipDeletion,
+                    .setMessage(activity.getString(R.string.confirmMembershipDeletion,
                             membership.groupName))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -121,11 +122,11 @@ implements ArticleLinkAdapter {
          * If an error occurs during deletion, an error message is displayed.
          */
         public void deleteMembership() {
-            boolean membershipWasDeleted = ExternalDeleter.deleteMembership(context, membership);
+            boolean membershipWasDeleted = ExternalDeleter.deleteMembership(activity, membership);
             if (membershipWasDeleted) {
                 removeMembership(getAdapterPosition());
             } else {
-                Toast.makeText(context, context.getString(R.string.deleteMembershipError,
+                Toast.makeText(activity, activity.getString(R.string.deleteMembershipError,
                                membership.groupName),
                         Toast.LENGTH_SHORT).show();
             }
@@ -135,22 +136,22 @@ implements ArticleLinkAdapter {
          * Open the contained Membership in EditMembershipActivity for editing.
          */
         private void editMembership() {
-            Intent editMembershipIntent = new Intent(context, EditMembershipActivity.class);
+            Intent editMembershipIntent = new Intent(activity, EditMembershipActivity.class);
             editMembershipIntent.putExtra(IntentFields.MEMBERSHIP, membership);
-            context.startActivity(editMembershipIntent);
+            activity.startActivity(editMembershipIntent);
         }
 
         /**
          * Open the connected Group in a new GroupActivity.
          */
         private void goToGroup() {
-            Intent goToGroupIntent = new Intent(context, GroupActivity.class);
+            Intent goToGroupIntent = new Intent(activity, GroupActivity.class);
 
             goToGroupIntent.putExtra(IntentFields.WORLD_NAME, worldName);
             goToGroupIntent.putExtra(IntentFields.CATEGORY, Category.Group);
             goToGroupIntent.putExtra(IntentFields.ARTICLE_NAME, membership.groupName);
 
-            context.startActivity(goToGroupIntent);
+            activity.startActivity(goToGroupIntent);
         }
     }
 
@@ -160,22 +161,22 @@ implements ArticleLinkAdapter {
 
     /**
      * Instantiate a new MembershipsAdapter.
-     * @param context The Context possessing this MembershipsAdapter.
+     * @param activity The Context possessing this MembershipsAdapter.
      * @param worldName The name of the current World.
      * @param personName The name of the Person whose Memberships are contained in this Adapter.
      */
-    public MembershipsAdapter(Context context, String worldName, String personName) {
-        this.context = context;
+    public MembershipsAdapter(ArticleActivity activity, String worldName, String personName) {
+        this.context = activity;
         this.worldName = worldName;
 
-        memberships = ExternalReader.getMembershipsForPerson(context, worldName, personName);
+        memberships = ExternalReader.getMembershipsForPerson(activity, worldName, personName);
     }
 
     @Override
     public MembershipHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.membership_card, parent, false);
-        return new MembershipHolder(context, worldName, view);
+        return new MembershipHolder((ArticleActivity) context, worldName, view);
     }
 
     @Override

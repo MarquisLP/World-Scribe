@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.SnippetActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -38,7 +39,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
      * Button for deleting the selected Snippet.
      */
     public class SnippetHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final Activity activity;
+        private final ArticleActivity activity;
         private final CardView snippetCard;
         private final TextView snippetNameText;
         private final ImageButton renameButton;
@@ -58,7 +59,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
          * @param articleName The name of the current Article.
          * @param itemView The Snippet Card that this ViewHolder will handle.
          */
-        public SnippetHolder(SnippetsAdapter adapter, Activity activity, String worldName,
+        public SnippetHolder(SnippetsAdapter adapter, ArticleActivity activity, String worldName,
                              Category category, String articleName, View itemView) {
             super(itemView);
 
@@ -234,7 +235,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
      * @param category The {@link Category} of the current Article.
      * @param articleName The name of the current Article.
      */
-    public SnippetsAdapter(Activity activity, String worldName, Category category, String articleName) {
+    public SnippetsAdapter(ArticleActivity activity, String worldName, Category category, String articleName) {
         this.activity = activity;
         this.worldName = worldName;
         this.category = category;
@@ -247,7 +248,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     public SnippetHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.snippet_card, parent, false);
-        return new SnippetHolder(this, activity, worldName, category, articleName, view);
+        return new SnippetHolder(this, (ArticleActivity) activity, worldName, category, articleName, view);
     }
 
     @Override

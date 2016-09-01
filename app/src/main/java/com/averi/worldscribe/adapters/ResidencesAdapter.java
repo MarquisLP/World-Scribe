@@ -17,6 +17,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
+import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.PlaceActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -37,7 +38,7 @@ implements ArticleLinkAdapter {
      * Button for deleting the selected Residence link (but not the Place itself).
      */
     public class ResidenceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final Context context;
+        private final ArticleActivity activity;
         private final CardView residenceCard;
         private final TextView residenceNameText;
         private final ImageButton deleteButton;
@@ -45,13 +46,13 @@ implements ArticleLinkAdapter {
 
         /**
          * Instantiates a new ResidenceHolder.
-         * @param context The Context calling this method.
+         * @param activity The Context calling this method.
          * @param itemView The Residences Card that this ViewHolder will handle.
          */
-        public ResidenceHolder(Context context, View itemView) {
+        public ResidenceHolder(ArticleActivity activity, View itemView) {
             super(itemView);
 
-            this.context = context;
+            this.activity = activity;
             residenceCard = (CardView) itemView;
             residenceNameText = (TextView) residenceCard.findViewById(R.id.itemName);
             deleteButton = (ImageButton) residenceCard.findViewById(R.id.delete);
@@ -89,10 +90,10 @@ implements ArticleLinkAdapter {
          * Deletes the Residence represented by this ViewHolder upon user confirmation.
          */
         private void confirmResidenceDeletion() {
-            new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.confirmResidenceRemovalTitle,
+            new AlertDialog.Builder(activity)
+                    .setTitle(activity.getString(R.string.confirmResidenceRemovalTitle,
                             residence.placeName))
-                    .setMessage(context.getString(R.string.confirmResidenceRemoval,
+                    .setMessage(activity.getString(R.string.confirmResidenceRemoval,
                             residence.placeName))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -107,11 +108,11 @@ implements ArticleLinkAdapter {
          * If an error occurs during deletion, an error message is displayed.
          */
         public void deleteResidence() {
-            boolean membershipWasDeleted = ExternalDeleter.deleteResidence(context, residence);
+            boolean membershipWasDeleted = ExternalDeleter.deleteResidence(activity, residence);
             if (membershipWasDeleted) {
                 removeResidence(getAdapterPosition());
             } else {
-                Toast.makeText(context, context.getString(R.string.deleteResidenceError,
+                Toast.makeText(activity, activity.getString(R.string.deleteResidenceError,
                         residence.placeName),
                         Toast.LENGTH_SHORT).show();
             }
@@ -121,37 +122,37 @@ implements ArticleLinkAdapter {
          * Residence.
          */
         private void goToResidence() {
-            Intent goToResidenceIntent = new Intent(context, PlaceActivity.class);
+            Intent goToResidenceIntent = new Intent(activity, PlaceActivity.class);
 
             goToResidenceIntent.putExtra(IntentFields.WORLD_NAME, residence.worldName);
             goToResidenceIntent.putExtra(IntentFields.CATEGORY, Category.Place);
             goToResidenceIntent.putExtra(IntentFields.ARTICLE_NAME, residence.placeName);
 
-            context.startActivity(goToResidenceIntent);
+            activity.startActivity(goToResidenceIntent);
         }
 
     }
 
     private final ArrayList<Residence> residences;
-    private final Context context;
+    private final ArticleActivity activity;
 
     /**
      * Instantiates a new ResidencesAdapter.
-     * @param context The Context calling this method.
+     * @param activity The Context calling this method.
      * @param worldName The name of the current World.
      * @param personName The name of the Person this Adapter is attached to.
      */
-    public ResidencesAdapter(Context context, String worldName, String personName) {
-        this.context = context;
+    public ResidencesAdapter(ArticleActivity activity, String worldName, String personName) {
+        this.activity = activity;
 
-        residences = ExternalReader.getResidences(context, worldName, personName);
+        residences = ExternalReader.getResidences(activity, worldName, personName);
     }
 
     @Override
     public ResidenceHolder onCreateViewHolder(ViewGroup parent, int pos) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.erasable_item_card, parent, false);
-        return new ResidenceHolder(context, view);
+        return new ResidenceHolder(activity, view);
     }
 
     @Override
