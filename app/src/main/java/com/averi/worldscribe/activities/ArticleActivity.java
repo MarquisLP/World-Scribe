@@ -72,6 +72,10 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     public static final int BOTTOM_BAR_SCROLL_THRESHOLD = 10;
 
     /**
+     * The root layout of this Activity.
+     */
+    private LinearLayout rootLayout;
+    /**
      * The display for the Article's image.
      */
     private ImageView imageView;
@@ -124,6 +128,7 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceID());
 
+        rootLayout = getRootLayout();
         imageView = getImageView();
         bottomBar = getBottomBar();
         Intent intent = getIntent();
@@ -205,6 +210,11 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
      * @return The Android Resource ID of this Activity's layout resource file.
      */
     protected abstract int getLayoutResourceID();
+
+    /**
+     * @return The ID of the root element for this Activity.
+     */
+    protected abstract LinearLayout getRootLayout();
 
     /**
      * @return The NestedScrollView containing this Article's content.

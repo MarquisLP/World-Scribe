@@ -105,6 +105,11 @@ public class PersonActivity extends ArticleActivity {
     }
 
     @Override
+    protected LinearLayout getRootLayout() {
+        return (LinearLayout) findViewById(R.id.linearScreen);
+    }
+
+    @Override
     protected NestedScrollView getNestedScrollView() {
         return (NestedScrollView) findViewById(R.id.scrollView);
     }
