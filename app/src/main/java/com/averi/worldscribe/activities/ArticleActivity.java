@@ -744,4 +744,14 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
         overridePendingTransition(R.anim.slide_in_left, R.anim.no_anim);
     }
 
+    /**
+     * Removes focus from all Views in this Activity.
+     */
+    public void removeFocus() {
+        View current = getCurrentFocus();
+        if (current != null) {
+            current.clearFocus();
+        }
+    }
+
 }
