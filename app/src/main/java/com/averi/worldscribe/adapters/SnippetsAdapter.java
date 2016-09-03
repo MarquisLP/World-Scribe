@@ -218,6 +218,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
             goToSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
             goToSnippetIntent.putExtra(IntentFields.SNIPPET_NAME, snippetName);
 
+            activity.removeFocus();
             activity.startActivity(goToSnippetIntent);
         }
     }

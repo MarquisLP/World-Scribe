@@ -129,6 +129,7 @@ implements ArticleLinkAdapter {
             goToResidentIntent.putExtra(IntentFields.CATEGORY, Category.Person);
             goToResidentIntent.putExtra(IntentFields.ARTICLE_NAME, residence.residentName);
 
+            activity.removeFocus();
             activity.startActivity(goToResidentIntent);
         }
     }

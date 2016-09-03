@@ -151,6 +151,7 @@ implements ArticleLinkAdapter {
             goToGroupIntent.putExtra(IntentFields.CATEGORY, Category.Group);
             goToGroupIntent.putExtra(IntentFields.ARTICLE_NAME, membership.groupName);
 
+            activity.removeFocus();
             activity.startActivity(goToGroupIntent);
         }
     }

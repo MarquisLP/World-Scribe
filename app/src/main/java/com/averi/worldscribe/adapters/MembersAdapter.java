@@ -150,6 +150,7 @@ implements ArticleLinkAdapter {
             goToMemberIntent.putExtra(IntentFields.CATEGORY, Category.Person);
             goToMemberIntent.putExtra(IntentFields.ARTICLE_NAME, membership.memberName);
 
+            activity.removeFocus();
             activity.startActivity(goToMemberIntent);
         }
     }
