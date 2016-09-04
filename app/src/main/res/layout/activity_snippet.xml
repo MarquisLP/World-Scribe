@@ -42,7 +42,7 @@
             android:hint="@string/snippetHint"
             android:textSize="@dimen/standardTextSize"
             android:gravity="top"
-            android:maxLength="9999999"
+            android:maxLength="@integer/editTextUnlimitedCharactersNumber"
             android:scrollbars="vertical" />
         
         <View

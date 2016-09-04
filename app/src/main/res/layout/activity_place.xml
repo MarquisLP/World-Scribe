@@ -89,7 +89,8 @@
                 android:textColor="?attr/colorPrimary"
                 android:background="@drawable/border"
                 android:padding="@dimen/borderedTextPadding"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:maxLines="@integer/editTextUnlimitedCharactersNumber" />
 
             <Space
                 android:layout_width="0dp"
@@ -106,7 +107,8 @@
                 android:textColor="?attr/colorPrimary"
                 android:background="@drawable/border"
                 android:padding="@dimen/borderedTextPadding"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:maxLines="@integer/editTextUnlimitedCharactersNumber" />
         </LinearLayout>
 
             <Space
