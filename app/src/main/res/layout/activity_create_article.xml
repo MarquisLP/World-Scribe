@@ -36,7 +36,8 @@
             android:orientation="vertical"
             tools:context=".activities.CreateArticleActivity"
             android:id="@+id/root"
-            android:gravity="center">
+            android:gravity="center"
+            android:focusableInTouchMode="true" >
 
             <EditText
                 android:layout_width="match_parent"
