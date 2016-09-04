@@ -52,7 +52,7 @@
     <string name="genderText">Gender</string>
     <string name="personImageDescription">Character\'s Profile Image</string>
     <string name="addConnectionSnippetText">+</string>
-    <string name="mandateHint">Mandate / Purpose</string>
+    <string name="mandateHint">Mandate / Description</string>
     <string name="mandateText">Mandate</string>
     <string name="membersText">Members</string>
     <string name="descriptionHint">Description</string>
@@ -66,7 +66,7 @@
     <string name="relationHintTopText">Relation to the article below</string>
     <string name="relationHintBottomText">Relation to the article above</string>
     <string name="connectionArrowsDescription">Arrows representing a Connection</string>
-    <string name="propertiesHint">Properties</string>
+    <string name="propertiesHint">Properties / Description</string>
     <string name="propertiesField">Properties</string>
     <string name="historyHint">History</string>
     <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
