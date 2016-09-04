@@ -73,7 +73,7 @@ public class ItemActivity extends ArticleActivity {
         Resources resources = getResources();
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
-        textFields.add(new ArticleTextField(resources.getString(R.string.propertiesHint),
+        textFields.add(new ArticleTextField(resources.getString(R.string.propertiesField),
                 (EditText) findViewById(R.id.editProperties),
                 this, getWorldName(), Category.Item, getArticleName()));
         textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),

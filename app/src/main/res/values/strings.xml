@@ -67,6 +67,7 @@
     <string name="relationHintBottomText">Relation to the article above</string>
     <string name="connectionArrowsDescription">Arrows representing a Connection</string>
     <string name="propertiesHint">Properties</string>
+    <string name="propertiesField">Properties</string>
     <string name="historyHint">History</string>
     <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
     <string name="permissionButtonText">Continue</string>
