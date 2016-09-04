@@ -1,4 +1,4 @@
-package com.averi.worldscribe.model;
+package com.averi.worldscribe;
 
 /**
  * Created by mark on 02/06/16.
