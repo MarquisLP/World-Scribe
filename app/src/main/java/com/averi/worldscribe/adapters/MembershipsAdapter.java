@@ -104,7 +104,7 @@ implements ArticleLinkAdapter {
          * Deletes the Membership represented by this ViewHolder upon user confirmation.
          */
         private void confirmMembershipDeletion() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                     .setTitle(activity.getString(R.string.confirmMembershipDeletionTitle,
                             membership.groupName))
                     .setMessage(activity.getString(R.string.confirmMembershipDeletion,
@@ -114,7 +114,8 @@ implements ArticleLinkAdapter {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             deleteMembership();
                         }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         /**

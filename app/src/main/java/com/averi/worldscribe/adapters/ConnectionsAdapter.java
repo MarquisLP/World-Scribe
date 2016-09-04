@@ -101,7 +101,7 @@ implements ArticleLinkAdapter {
          * If an error occurs during deletion, an error message is displayed.
          */
         private void deleteConnection() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setTitle(activity.getString(R.string.confirmConnectionDeletionTitle,
                         connection.connectedArticleName))
                 .setMessage(activity.getString(R.string.confirmConnectionDeletion,
@@ -120,7 +120,8 @@ implements ArticleLinkAdapter {
                                     Toast.LENGTH_SHORT).show();
                         }
                     }})
-                .setNegativeButton(android.R.string.no, null).show();
+                .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         private void goToConnectedArticle() {

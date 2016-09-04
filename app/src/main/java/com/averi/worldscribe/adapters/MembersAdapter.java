@@ -103,7 +103,7 @@ implements ArticleLinkAdapter {
          * Removes the Member represented by this ViewHolder from the Group upon user confirmation.
          */
         private void confirmMemberRemoval() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                     .setTitle(activity.getString(R.string.confirmMemberRemovalTitle,
                             membership.memberName))
                     .setMessage(activity.getString(R.string.confirmMemberRemoval,
@@ -113,7 +113,8 @@ implements ArticleLinkAdapter {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             deleteMember();
                         }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         /**

@@ -121,6 +121,8 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
      */
     private Button addSnippetButton;
 
+    private AlertDialog currentDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,6 +184,10 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
         super.onPause();
 
         saveTextFieldsData();
+        if (currentDialog != null) {
+            currentDialog.dismiss();
+            currentDialog = null;
+        }
     }
 
     @Override
@@ -750,6 +756,15 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
         if (current != null) {
             current.clearFocus();
         }
+    }
+
+    /**
+     * Displays an AlertDialog, and automatically dismisses it when the Activity is paused.
+     * @param dialog The AlertDialog to show.
+     */
+    public void showUnpausableAlertDialog(AlertDialog dialog) {
+        currentDialog = dialog;
+        currentDialog.show();
     }
 
 }

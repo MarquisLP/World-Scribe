@@ -90,7 +90,7 @@ implements ArticleLinkAdapter {
          * Removes the Resident represented by this ViewHolder upon user confirmation.
          */
         private void confirmResidentDeletion() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                     .setTitle(activity.getString(R.string.confirmResidentRemovalTitle,
                             residence.residentName))
                     .setMessage(activity.getString(R.string.confirmResidentRemoval,
@@ -100,7 +100,8 @@ implements ArticleLinkAdapter {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             deleteResidence();
                         }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         /**

@@ -120,7 +120,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                         public void onClick(DialogInterface dialog, int id) { }
                     })
                     .setNegativeButton(android.R.string.cancel, null).create();
-            dialog.show();
+            activity.showUnpausableAlertDialog(dialog);
 
             // Handle onClick here to prevent the dialog from closing if the user enters
             // an invalid name.
@@ -186,7 +186,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
          * If an error occurs during deletion, an error message is displayed.
          */
         private void deleteSnippet() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                     .setTitle(activity.getString(R.string.confirmSnippetDeletionTitle, snippetName))
                     .setMessage(activity.getString(R.string.confirmSnippetDeletion, snippetName))
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -202,7 +202,8 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                                 adapter.removeSnippet(getAdapterPosition());
                             }
                         }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         /**

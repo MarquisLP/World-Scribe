@@ -89,7 +89,7 @@ implements ArticleLinkAdapter {
          * Deletes the Residence represented by this ViewHolder upon user confirmation.
          */
         private void confirmResidenceDeletion() {
-            new AlertDialog.Builder(activity)
+            AlertDialog dialog = new AlertDialog.Builder(activity)
                     .setTitle(activity.getString(R.string.confirmResidenceRemovalTitle,
                             residence.placeName))
                     .setMessage(activity.getString(R.string.confirmResidenceRemoval,
@@ -99,7 +99,8 @@ implements ArticleLinkAdapter {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             deleteResidence();
                         }})
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).create();
+            activity.showUnpausableAlertDialog(dialog);
         }
 
         /**
