@@ -268,6 +268,8 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     public void removeSnippet(int snippetPosition) {
         snippets.remove(snippetPosition);
         notifyItemRemoved(snippetPosition);
+        notifyItemRangeChanged(snippetPosition, getItemCount());
+
     }
 
     /**

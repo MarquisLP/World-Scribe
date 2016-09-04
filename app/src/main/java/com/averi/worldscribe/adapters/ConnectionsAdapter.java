@@ -202,6 +202,7 @@ implements ArticleLinkAdapter {
     public void removeConnection(int connectionPosition) {
         connections.remove(connectionPosition);
         notifyItemRemoved(connectionPosition);
+        notifyItemRangeChanged(connectionPosition, getItemCount());
     }
 
     /**

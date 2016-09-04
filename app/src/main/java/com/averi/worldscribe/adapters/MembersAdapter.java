@@ -207,6 +207,8 @@ implements ArticleLinkAdapter {
     public void removeMember(int memberPosition) {
         memberships.remove(memberPosition);
         notifyItemRemoved(memberPosition);
+        notifyItemRangeChanged(memberPosition, getItemCount());
+
     }
 
     /**

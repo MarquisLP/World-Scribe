@@ -187,6 +187,8 @@ implements ArticleLinkAdapter {
     public void removeResident(int residencePosition) {
         residentData.remove(residencePosition);
         notifyItemRemoved(residencePosition);
+        notifyItemRangeChanged(residencePosition, getItemCount());
+
     }
 
     /**
