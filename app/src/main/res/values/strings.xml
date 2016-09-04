@@ -72,6 +72,7 @@
     <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
     <string name="permissionButtonText">Continue</string>
     <string name="emptyListText">Nothing yet!</string>
+    <string name="nothingToLinkText">Nothing to link!</string>
     <string name="loadWorldTitle">Enter a World…</string>
     <string name="worldAlreadyExistsText">A World with this name already exists.\nPlease choose a different name.</string>
     <string name="worldCreationErrorText">An error occurred during World creation.</string>
