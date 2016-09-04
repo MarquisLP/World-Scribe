@@ -14,7 +14,6 @@
         android:fastScrollEnabled="true"
         android:fastScrollAlwaysVisible="true"
         android:background="@android:color/white"
-        android:paddingTop="@dimen/listPadding"
         android:paddingBottom="@dimen/listPadding"
         android:layout_below="@id/recyclerView"
         android:layout_marginBottom="@dimen/scrollBottomPadding"
