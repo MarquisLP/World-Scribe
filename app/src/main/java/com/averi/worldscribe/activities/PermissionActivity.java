@@ -31,9 +31,8 @@ public class PermissionActivity extends ThemedActivity {
         setContentView(R.layout.activity_permission);
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
 
-        if (preferences.getBoolean(AppPreferences.IS_FIRST_TIME_RUNNING_APP, true)) {
+        if (!(ExternalReader.appDirectoryExists())) {
             ExternalWriter.createAppDirectory();
-            preferences.edit().putBoolean(AppPreferences.IS_FIRST_TIME_RUNNING_APP, false).apply();
         }
 
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {

@@ -27,6 +27,13 @@ public class ExternalReader {
     public static final int TEXT_FILE_EXTENSION_LENGTH = 4;
     public static final String IMAGE_FILE_EXTENSION = ".jpg";
 
+    /**
+     * @return True if the app's directory exists on the user's external storage.
+     */
+    public static boolean appDirectoryExists() {
+        return FileRetriever.getAppDirectory().exists();
+    }
+
     public static ArrayList<String> getWorldList() {
         ArrayList<String> worldNames = new ArrayList<>();
         File worldsFolder = FileRetriever.getAppDirectory();
