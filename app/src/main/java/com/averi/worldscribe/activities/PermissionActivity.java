@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.view.View;
 
 import com.averi.worldscribe.R;
-
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;

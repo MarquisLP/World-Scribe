@@ -1,9 +1,8 @@
 package com.averi.worldscribe.activities;
 
 import android.content.SharedPreferences;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.averi.worldscribe.R;
-
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;

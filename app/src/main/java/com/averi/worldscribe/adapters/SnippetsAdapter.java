@@ -1,8 +1,6 @@
 package com.averi.worldscribe.adapters;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -21,9 +19,9 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.SnippetActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
+import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
-import com.averi.worldscribe.utilities.ExternalReader;
 
 import java.util.ArrayList;
 

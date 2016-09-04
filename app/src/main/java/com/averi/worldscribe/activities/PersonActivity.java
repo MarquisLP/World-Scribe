@@ -19,17 +19,16 @@ import android.widget.Toast;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
+import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
-import com.averi.worldscribe.adapters.SnippetsAdapter;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
-import com.averi.worldscribe.R;
 
 import java.util.ArrayList;
 

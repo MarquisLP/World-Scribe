@@ -9,9 +9,9 @@ import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.IntentFields;
 
 public class SnippetActivity extends BackButtonActivity {
 

@@ -1,8 +1,7 @@
 package com.averi.worldscribe.activities;
 
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +11,10 @@ import android.widget.TextView;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
-
-import java.util.ArrayList;
-
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
+
+import java.util.ArrayList;
 
 public class LoadWorldActivity extends BackButtonActivity implements StringListContext {
 

@@ -1,8 +1,6 @@
 package com.averi.worldscribe.views;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +11,6 @@ import android.widget.RelativeLayout;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.activities.ArticleListActivity;
-
-import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.AttributeGetter;
 
 public class BottomBar extends RelativeLayout {

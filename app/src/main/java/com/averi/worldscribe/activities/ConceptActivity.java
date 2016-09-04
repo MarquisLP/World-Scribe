@@ -2,14 +2,11 @@ package com.averi.worldscribe.activities;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import com.averi.worldscribe.ArticleTextField;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.views.BottomBar;
 
 import java.util.ArrayList;

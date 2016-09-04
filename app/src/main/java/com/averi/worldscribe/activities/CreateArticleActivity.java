@@ -1,9 +1,8 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,10 +14,10 @@ import android.widget.Spinner;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
-import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.IntentFields;
 
 public class CreateArticleActivity extends BackButtonActivity {
 

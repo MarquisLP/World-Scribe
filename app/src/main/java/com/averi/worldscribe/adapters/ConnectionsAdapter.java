@@ -1,6 +1,5 @@
 package com.averi.worldscribe.adapters;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -14,22 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.LinkedArticleList;
+import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.ConceptActivity;
-import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.activities.EditConnectionActivity;
 import com.averi.worldscribe.activities.GroupActivity;
 import com.averi.worldscribe.activities.ItemActivity;
 import com.averi.worldscribe.activities.PersonActivity;
 import com.averi.worldscribe.activities.PlaceActivity;
-import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ExternalDeleter;
+import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
-
-import com.averi.worldscribe.utilities.ExternalDeleter;
-import com.averi.worldscribe.utilities.IntentFields;
-import com.averi.worldscribe.utilities.ExternalReader;
 
 /**
  * Created by mark on 02/07/16.

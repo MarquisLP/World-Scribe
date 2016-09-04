@@ -20,8 +20,8 @@ import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.PersonActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
-import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
 

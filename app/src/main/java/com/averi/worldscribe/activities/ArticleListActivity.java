@@ -1,7 +1,6 @@
 package com.averi.worldscribe.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,21 +8,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.averi.worldscribe.utilities.ActivityUtilities;
-import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
+import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.views.BottomBar;
+import com.averi.worldscribe.views.BottomBarActivity;
 
 import java.util.ArrayList;
-
-import com.averi.worldscribe.utilities.IntentFields;
-import com.averi.worldscribe.utilities.ExternalReader;
-import com.averi.worldscribe.views.BottomBarActivity;
 
 public class ArticleListActivity extends ThemedActivity
         implements StringListContext, BottomBarActivity {

@@ -3,15 +3,13 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleListActivity;
-import com.averi.worldscribe.Category;
 import com.averi.worldscribe.activities.CreateOrLoadWorldActivity;
 import com.averi.worldscribe.activities.CreateWorldActivity;
 import com.averi.worldscribe.activities.LoadWorldActivity;

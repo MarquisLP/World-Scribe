@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.renderscript.Type;
 import android.util.TypedValue;
-
-import com.averi.worldscribe.R;
 
 /**
  * Created by mark on 24/06/16.

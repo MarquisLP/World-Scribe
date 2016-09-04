@@ -3,7 +3,6 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;

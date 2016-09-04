@@ -2,8 +2,6 @@ package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,8 +15,6 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.AppThemeArrayAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.AttributeGetter;
-
-import org.w3c.dom.Attr;
 
 public class SettingsActivity extends BackButtonActivity {
 
