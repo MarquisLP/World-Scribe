@@ -5,7 +5,6 @@
     <dimen name="standardTextSize">20sp</dimen>
     <dimen name="pagePadding">20dp</dimen>
     <dimen name="buttonPadding">8dp</dimen>
-    <dimen name="genderTopPadding">10dp</dimen>
     <dimen name="bottomButtonPadding">5dp</dimen>
     <dimen name="borderWidth">3dp</dimen>
     <dimen name="verticalSpacing">10dp</dimen>
@@ -15,13 +14,9 @@
     <dimen name="headerTextSize">36sp</dimen>
     <dimen name="headerSpacing">40dp</dimen>
     <dimen name="addConnectionSnippetTextSize">30sp</dimen>
-    <dimen name="dashedBorderWidth">10dp</dimen>
-    <dimen name="dashedBorderGap">10dp</dimen>
     <dimen name="welcomeTextSize">50sp</dimen>
     <dimen name="marginBelowToolbar">50dp</dimen>
     <dimen name="listPadding">5dp</dimen>
-    <dimen name="articleListItemBorderRadius">5dp</dimen>
-    <dimen name="articleListItemMargin">5dp</dimen>
     <dimen name="cardCornerRadius">15dp</dimen>
     <dimen name="recyclerPadding">3dp</dimen>
     <dimen name="articleSectionSeparatorLineHeight">2dp</dimen>

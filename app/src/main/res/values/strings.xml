@@ -41,10 +41,7 @@
     <string name="connectionsText">Connections</string>
     <string name="snippetsText">Snippets</string>
 
-    <string name="people_description">People</string>
-    <string name="nameHint">Name</string>
     <string name="ageHint">Age</string>
-    <string name="changeImageText">Change Image</string>
     <string name="maleText">Male</string>
     <string name="femaleText">Female</string>
     <string name="otherGenderText">Other</string>
@@ -58,11 +55,9 @@
     <string name="descriptionHint">Description</string>
     <string name="residentsText">Residents</string>
     <string name="welcomeText">Welcome to World Scribe!</string>
-    <string name="beginText">Let\'s start by creating your first World.</string>
 
     <string name="nameWorldHint">World Name</string>
     <string name="createButtonText">Create!</string>
-    <string name="relationHintText">Relation to the other article</string>
     <string name="relationHintTopText">Relation to the article below</string>
     <string name="relationHintBottomText">Relation to the article above</string>
     <string name="connectionArrowsDescription">Arrows representing a Connection</string>
