@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -40,6 +41,7 @@ public class EditMembershipActivity extends BackButtonActivity {
         setAppBar();
         setTextFields();
         matchArrowColorToTheme();
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(memberRoleField);
     }
 
     @Override

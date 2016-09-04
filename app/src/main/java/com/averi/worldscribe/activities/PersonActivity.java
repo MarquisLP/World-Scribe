@@ -23,6 +23,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.MembershipsAdapter;
 import com.averi.worldscribe.adapters.ResidencesAdapter;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -79,6 +80,11 @@ public class PersonActivity extends ArticleActivity {
                 createResidence();
             }
         });
+
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(
+                (EditText) findViewById(R.id.editAliases));
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(
+                (EditText) findViewById(R.id.editAge));
     }
 
     @Override

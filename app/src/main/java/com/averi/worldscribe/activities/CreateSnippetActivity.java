@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -46,6 +47,8 @@ public class CreateSnippetActivity extends BackButtonActivity {
 
         setAppBar();
         setNameFieldWatcher();
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(nameField);
+
     }
 
     @Override

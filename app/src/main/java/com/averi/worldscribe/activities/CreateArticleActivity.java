@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -48,6 +49,7 @@ public class CreateArticleActivity extends BackButtonActivity {
         populateCategorySpinner();
         selectInitialCategory();
         addTextListener();
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(nameField);
     }
 
     @Override

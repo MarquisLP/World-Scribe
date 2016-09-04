@@ -40,6 +40,7 @@ public class CreateWorldActivity extends BackButtonActivity {
 
         setAppBar();
         addTextListener();
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(editName);
     }
 
     @Override

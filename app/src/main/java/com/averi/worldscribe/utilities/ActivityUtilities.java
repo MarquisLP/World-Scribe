@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
@@ -19,6 +23,8 @@ import com.averi.worldscribe.activities.SettingsActivity;
  * Created by mark on 23/06/16.
  */
 public class ActivityUtilities {
+
+    public static final int WORD_WRAP_MAX_LINES = 999;
 
     public static void goToWorld(Context context, String worldName) {
         AppPreferences.saveLastOpenedWorld(context, worldName);
@@ -104,6 +110,20 @@ public class ActivityUtilities {
 
         nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(nextActivityIntent);
+    }
+
+    /**
+     * Sets a TextView's attributes such that it will only accept a single line of text, and
+     * automatically word-wrap that text to fit in the display.
+     * @param editText The TextView to modify.
+     */
+    public static void enableWordWrapOnSingleLineEditText(EditText editText) {
+        editText.setInputType(
+                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        editText.setSingleLine(true);
+        editText.setMaxLines(WORD_WRAP_MAX_LINES);
+        editText.setHorizontallyScrolling(false);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
 
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -86,6 +87,8 @@ public class EditConnectionActivity extends BackButtonActivity {
 
         setAppBar();
         matchArrowsColorToTheme();
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(mainArticleRelationText);
+        ActivityUtilities.enableWordWrapOnSingleLineEditText(otherArticleRelationText);
     }
 
     @Override
