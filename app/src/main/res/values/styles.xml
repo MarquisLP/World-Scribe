@@ -15,6 +15,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_blue</item>
         <item name="articleLinkColorSelector">@drawable/article_link_selector_blue</item>
+        <item name="themedBorder">@drawable/border_blue</item>
     </style>
 
     <style name="SunsetOrange" parent="Theme.AppCompat.Light.NoActionBar">
@@ -26,8 +27,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_orange</item>
         <item name="articleLinkColorSelector">@drawable/article_link_selector_orange</item>
-
-
+        <item name="themedBorder">@drawable/border_orange</item>
     </style>
 
     <style name="EnchantedGreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -39,8 +39,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_green</item>
         <item name="articleLinkColorSelector">@drawable/article_link_selector_green</item>
-
-
+        <item name="themedBorder">@drawable/border_green</item>
     </style>
 
     <style name="UbePurple" parent="AppTheme" >
@@ -52,7 +51,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_purple</item>
         <item name="articleLinkColorSelector">@drawable/article_link_selector_purple</item>
-
+        <item name="themedBorder">@drawable/border_purple</item>
     </style>
 
     <style name="LovelyRed" parent="AppTheme" >
@@ -64,6 +63,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="buttonColorSelector">@drawable/button_selector_red</item>
         <item name="articleLinkColorSelector">@drawable/article_link_selector_red</item>
+        <item name="themedBorder">@drawable/border_red</item>
     </style>
 
 </resources>

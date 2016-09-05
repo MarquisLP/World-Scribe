@@ -3,5 +3,6 @@
     <declare-styleable name="AppTheme">
         <attr name="buttonColorSelector" format="reference" />
         <attr name="articleLinkColorSelector" format="reference" />
+        <attr name="themedBorder" format="reference" />
     </declare-styleable>
 </resources>

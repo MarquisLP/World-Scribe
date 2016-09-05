@@ -51,7 +51,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/personImageDescription"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/border"
+                android:background="?attr/themedBorder"
                 android:src="@drawable/blank_person"
                 android:padding="@dimen/borderWidth" />
 
@@ -169,7 +169,7 @@
                     android:hint="@string/bioHint"
                     android:textColorHint="?attr/colorPrimaryDark"
                     android:textColor="?attr/colorPrimary"
-                    android:background="@drawable/border"
+                    android:background="?attr/themedBorder"
                     android:padding="@dimen/borderedTextPadding"
                     android:scrollbars="vertical"
                     android:maxLines="@integer/editTextUnlimitedCharactersNumber" />
