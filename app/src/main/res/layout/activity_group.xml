@@ -164,7 +164,6 @@
                     android:id="@+id/recyclerMembers"
                     android:fastScrollEnabled="true"
                     android:fastScrollAlwaysVisible="true"
-                    android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             </LinearLayout>
@@ -223,7 +222,6 @@
                     android:id="@+id/recyclerConnections"
                     android:fastScrollEnabled="true"
                     android:fastScrollAlwaysVisible="true"
-                    android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             </LinearLayout>
@@ -282,7 +280,6 @@
                     android:id="@+id/recyclerSnippets"
                     android:fastScrollEnabled="true"
                     android:fastScrollAlwaysVisible="true"
-                    android:background="@android:color/white"
                     android:padding="@dimen/listPadding"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             </LinearLayout>

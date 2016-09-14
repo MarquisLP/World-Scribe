@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/editText"
-            android:background="@android:color/white"
             android:textColor="?attr/colorPrimary"
             android:textColorHint="?attr/colorPrimaryDark"
             android:paddingLeft="@dimen/pagePadding"
