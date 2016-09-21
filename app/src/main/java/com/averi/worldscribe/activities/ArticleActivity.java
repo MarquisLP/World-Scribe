@@ -72,7 +72,7 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     /**
      * The root layout of this Activity.
      */
-    private LinearLayout rootLayout;
+    private ViewGroup rootLayout;
     /**
      * The display for the Article's image.
      */
@@ -214,11 +214,6 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
      * @return The Android Resource ID of this Activity's layout resource file.
      */
     protected abstract int getLayoutResourceID();
-
-    /**
-     * @return The ID of the root element for this Activity.
-     */
-    protected abstract LinearLayout getRootLayout();
 
     /**
      * @return The NestedScrollView containing this Article's content.

@@ -110,6 +110,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
     }
 
     @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
+    }
+
+    @Override
     protected void setAppBar() {
         if (canChooseOneCategoryOnly) {
             appBar.setTitle(getString(R.string.selectArticleTitle, category.name()));

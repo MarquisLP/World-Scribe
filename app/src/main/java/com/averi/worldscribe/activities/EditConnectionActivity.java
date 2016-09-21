@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -89,6 +90,11 @@ public class EditConnectionActivity extends BackButtonActivity {
         matchArrowsColorToTheme();
         ActivityUtilities.enableWordWrapOnSingleLineEditText(mainArticleRelationText);
         ActivityUtilities.enableWordWrapOnSingleLineEditText(otherArticleRelationText);
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
     }
 
     @Override

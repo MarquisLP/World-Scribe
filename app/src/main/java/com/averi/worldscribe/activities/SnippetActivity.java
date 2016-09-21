@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
@@ -74,6 +75,11 @@ public class SnippetActivity extends BackButtonActivity {
             @Override
             public void afterTextChanged(Editable s) { editedSinceLastSave = true; }
         });
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.root);
     }
 
     @Override

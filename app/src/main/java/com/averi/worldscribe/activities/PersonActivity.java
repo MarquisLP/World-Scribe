@@ -110,8 +110,8 @@ public class PersonActivity extends ArticleActivity {
     }
 
     @Override
-    protected LinearLayout getRootLayout() {
-        return (LinearLayout) findViewById(R.id.linearScreen);
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.relativeScreen);
     }
 
     @Override

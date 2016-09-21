@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.averi.worldscribe.R;
@@ -38,6 +39,11 @@ public class LoadWorldActivity extends BackButtonActivity implements StringListC
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
     }
 
     @Override

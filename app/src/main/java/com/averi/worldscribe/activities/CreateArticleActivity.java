@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,11 @@ public class CreateArticleActivity extends BackButtonActivity {
         getSupportActionBar().setTitle(R.string.createArticleTitle);
 
         super.setAppBar();
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
     }
 
     private void populateCategorySpinner() {

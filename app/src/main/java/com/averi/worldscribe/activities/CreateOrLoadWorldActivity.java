@@ -3,6 +3,7 @@ package com.averi.worldscribe.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.averi.worldscribe.R;
 
@@ -12,6 +13,11 @@ public class CreateOrLoadWorldActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_or_load_world);
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.root);
     }
 
     public void clickCreate(View view ) {

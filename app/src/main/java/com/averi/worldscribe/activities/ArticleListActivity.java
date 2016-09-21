@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
@@ -65,6 +66,11 @@ public class ArticleListActivity extends ThemedActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(categoryGroupName + " — " + worldName);
         }
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
     }
 
     @Override

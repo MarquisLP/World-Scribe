@@ -19,7 +19,7 @@ import com.averi.worldscribe.R;
  *     Subclasses must override setAppBar.
  * </p>
  */
-public class BackButtonActivity extends ThemedActivity {
+public abstract class BackButtonActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.averi.worldscribe.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.AppPreferences;
@@ -30,5 +31,10 @@ public abstract class ThemedActivity extends AppCompatActivity {
         int themeID = preferences.getInt(AppPreferences.APP_THEME, R.style.AppTheme);
         this.setTheme(themeID);
     }
+
+    /**
+     * @return The root Layout of this Activity.
+     */
+    protected abstract ViewGroup getRootLayout();
 
 }

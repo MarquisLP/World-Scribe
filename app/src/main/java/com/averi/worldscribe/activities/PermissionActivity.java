@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
@@ -37,6 +38,11 @@ public class PermissionActivity extends ThemedActivity {
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
             goToNextActivity();
         }
+    }
+
+    @Override
+    protected ViewGroup getRootLayout() {
+        return (ViewGroup) findViewById(R.id.linearScreen);
     }
 
     private boolean deviceUsesRuntimePermissions() {
