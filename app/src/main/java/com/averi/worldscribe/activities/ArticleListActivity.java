@@ -36,7 +36,6 @@ public class ArticleListActivity extends ThemedActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article_list);
 
         Intent intent = getIntent();
         category = loadCategory(intent);
@@ -66,6 +65,11 @@ public class ArticleListActivity extends ThemedActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(categoryGroupName + " — " + worldName);
         }
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_article_list;
     }
 
     @Override

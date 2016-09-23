@@ -18,6 +18,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getLayoutResourceID());
 
         loadTheme();
     }
@@ -31,6 +32,11 @@ public abstract class ThemedActivity extends AppCompatActivity {
         int themeID = preferences.getInt(AppPreferences.APP_THEME, R.style.AppTheme);
         this.setTheme(themeID);
     }
+
+    /**
+     * @return The Android Resource ID of this Activity's layout resource file.
+     */
+    protected abstract int getLayoutResourceID();
 
     /**
      * @return The root Layout of this Activity.

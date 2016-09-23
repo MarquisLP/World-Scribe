@@ -12,7 +12,11 @@ public class CreateOrLoadWorldActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_or_load_world);
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_create_or_load_world;
     }
 
     @Override

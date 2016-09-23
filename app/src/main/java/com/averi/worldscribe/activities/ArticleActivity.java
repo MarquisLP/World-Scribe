@@ -126,7 +126,6 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResourceID());
 
         rootLayout = getRootLayout();
         imageView = getImageView();
@@ -209,11 +208,6 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    /**
-     * @return The Android Resource ID of this Activity's layout resource file.
-     */
-    protected abstract int getLayoutResourceID();
 
     /**
      * @return The NestedScrollView containing this Article's content.

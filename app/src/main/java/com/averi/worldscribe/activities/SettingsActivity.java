@@ -33,7 +33,6 @@ public class SettingsActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
 
         appThemeSpinner = (Spinner) findViewById(R.id.themeSelector);
         restartNotice = (TextView) findViewById(R.id.restartNotice);
@@ -58,6 +57,11 @@ public class SettingsActivity extends BackButtonActivity {
 
             }
         });
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_settings;
     }
 
     @Override

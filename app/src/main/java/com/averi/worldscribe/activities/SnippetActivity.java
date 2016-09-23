@@ -49,7 +49,6 @@ public class SnippetActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snippet);
 
         editText = (EditText) findViewById(R.id.editText);
 
@@ -75,6 +74,11 @@ public class SnippetActivity extends BackButtonActivity {
             @Override
             public void afterTextChanged(Editable s) { editedSinceLastSave = true; }
         });
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_snippet;
     }
 
     @Override

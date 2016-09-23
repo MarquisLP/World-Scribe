@@ -35,7 +35,6 @@ public class CreateSnippetActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_snippet);
 
         Intent startupIntent = getIntent();
         worldName = startupIntent.getStringExtra(IntentFields.WORLD_NAME);
@@ -50,6 +49,11 @@ public class CreateSnippetActivity extends BackButtonActivity {
         setNameFieldWatcher();
         ActivityUtilities.enableWordWrapOnSingleLineEditText(nameField);
 
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_create_snippet;
     }
 
     @Override

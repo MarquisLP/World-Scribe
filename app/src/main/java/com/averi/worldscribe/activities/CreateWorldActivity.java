@@ -29,7 +29,6 @@ public class CreateWorldActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_world);
 
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
         appBar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -50,6 +49,11 @@ public class CreateWorldActivity extends BackButtonActivity {
         setSupportActionBar(appBar);
 
         super.setAppBar();
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_create_world;
     }
 
     @Override

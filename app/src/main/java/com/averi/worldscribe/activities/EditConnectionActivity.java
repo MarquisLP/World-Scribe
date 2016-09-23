@@ -38,7 +38,6 @@ public class EditConnectionActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_connection);
 
         layoutRoot = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         mainArticleNameText = (TextView) findViewById(R.id.textCurrentArticleName);
@@ -90,6 +89,11 @@ public class EditConnectionActivity extends BackButtonActivity {
         matchArrowsColorToTheme();
         ActivityUtilities.enableWordWrapOnSingleLineEditText(mainArticleRelationText);
         ActivityUtilities.enableWordWrapOnSingleLineEditText(otherArticleRelationText);
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_edit_connection;
     }
 
     @Override

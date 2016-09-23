@@ -30,7 +30,6 @@ public class EditMembershipActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_membership);
 
         groupNameText = (TextView) findViewById(R.id.groupName);
         memberNameText = (TextView) findViewById(R.id.memberName);
@@ -43,6 +42,11 @@ public class EditMembershipActivity extends BackButtonActivity {
         setTextFields();
         matchArrowColorToTheme();
         ActivityUtilities.enableWordWrapOnSingleLineEditText(memberRoleField);
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_edit_membership;
     }
 
     @Override

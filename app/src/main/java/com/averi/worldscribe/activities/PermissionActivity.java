@@ -28,7 +28,7 @@ public class PermissionActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_permission);
+
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
 
         if (!(ExternalReader.appDirectoryExists())) {
@@ -38,6 +38,11 @@ public class PermissionActivity extends ThemedActivity {
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
             goToNextActivity();
         }
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_permission;
     }
 
     @Override

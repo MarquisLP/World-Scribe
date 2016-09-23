@@ -26,7 +26,6 @@ public class LoadWorldActivity extends BackButtonActivity implements StringListC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_load_world);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -39,6 +38,11 @@ public class LoadWorldActivity extends BackButtonActivity implements StringListC
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_load_world;
     }
 
     @Override

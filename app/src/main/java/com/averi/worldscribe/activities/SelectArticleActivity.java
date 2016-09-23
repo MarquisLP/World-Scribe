@@ -73,7 +73,6 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_article);
 
         appBar = (Toolbar) findViewById(R.id.my_toolbar);
         textEmpty = (TextView) findViewById(R.id.empty);
@@ -107,6 +106,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         }
 
         setAppBar();
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_select_article;
     }
 
     @Override

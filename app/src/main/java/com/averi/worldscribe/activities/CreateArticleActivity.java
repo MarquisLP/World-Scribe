@@ -38,7 +38,6 @@ public class CreateArticleActivity extends BackButtonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_article);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         nameField = (EditText) findViewById(R.id.articleName);
@@ -61,6 +60,11 @@ public class CreateArticleActivity extends BackButtonActivity {
         getSupportActionBar().setTitle(R.string.createArticleTitle);
 
         super.setAppBar();
+    }
+
+    @Override
+    protected int getLayoutResourceID() {
+        return R.layout.activity_create_article;
     }
 
     @Override
