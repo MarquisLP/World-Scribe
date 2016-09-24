@@ -9,7 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.averi.worldscribe.R;
@@ -26,9 +28,11 @@ public class SettingsActivity extends BackButtonActivity {
     public static final int LOVELY_RED = 4;
 
     private int currentThemeIndex;
+    private boolean nightModeIsCurrentlyEnabled;
 
     private Spinner appThemeSpinner;
     private TextView restartNotice;
+    private Switch nightModeSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +40,22 @@ public class SettingsActivity extends BackButtonActivity {
 
         appThemeSpinner = (Spinner) findViewById(R.id.themeSelector);
         restartNotice = (TextView) findViewById(R.id.restartNotice);
+        nightModeSwitch = (Switch) findViewById(R.id.nightModeSwitch);
 
         setAppBar();
         populateAppThemeSpinner();
         selectCurrentAppTheme();
         currentThemeIndex = appThemeSpinner.getSelectedItemPosition();
+        nightModeSwitch.setChecked(getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+                MODE_PRIVATE).getBoolean(AppPreferences.NIGHT_MODE_IS_ENABLED, false));
+        nightModeIsCurrentlyEnabled = nightModeSwitch.isChecked();
 
         appThemeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (appThemeWasChanged()) {
                     restartNotice.setVisibility(View.VISIBLE);
-                } else {
+                } else if (!(nightModeWasChanged())) {
                     restartNotice.setVisibility(View.GONE);
                 }
             }
@@ -55,6 +63,17 @@ public class SettingsActivity extends BackButtonActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (nightModeWasChanged()) {
+                    restartNotice.setVisibility(View.VISIBLE);
+                } else if (!(appThemeWasChanged())) {
+                    restartNotice.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -136,8 +155,10 @@ public class SettingsActivity extends BackButtonActivity {
         SharedPreferences preferences = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
                 MODE_PRIVATE);
         preferences.edit().putInt(AppPreferences.APP_THEME, getSelectedAppTheme()).apply();
+        preferences.edit().putBoolean(AppPreferences.NIGHT_MODE_IS_ENABLED,
+                nightModeSwitch.isChecked()).apply();
 
-        if (appThemeWasChanged()) {
+        if ((appThemeWasChanged()) || (nightModeWasChanged())) {
             relaunchApp();
         }
     }
@@ -175,6 +196,13 @@ public class SettingsActivity extends BackButtonActivity {
      */
     private boolean appThemeWasChanged() {
         return (appThemeSpinner.getSelectedItemPosition() != currentThemeIndex);
+    }
+
+    /**
+     * @return True if the Night Mode switch's value was changed.
+     */
+    private boolean nightModeWasChanged() {
+        return (nightModeSwitch.isChecked() != nightModeIsCurrentlyEnabled);
     }
 
     /**

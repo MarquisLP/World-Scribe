@@ -45,6 +45,37 @@
             android:id="@+id/themeSelector"
             android:layout_marginTop="@dimen/verticalSpacing" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/headerSpacing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nightModeTitle"
+            android:id="@+id/nightModeTitle"
+            android:textSize="@dimen/headerTextSize"
+            android:textColor="?attr/colorPrimary"
+            android:layout_gravity="center_horizontal" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/verticalSpacing" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nightModeSwitchText"
+            android:id="@+id/nightModeSwitch"
+            android:textSize="@dimen/standardTextSize"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:textColor="?attr/colorPrimary" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/verticalSpacing" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,6 +86,7 @@
             android:textSize="@dimen/standardTextSize"
             android:visibility="visible"
             android:gravity="center" />
+
     </LinearLayout>
 
 </LinearLayout>
