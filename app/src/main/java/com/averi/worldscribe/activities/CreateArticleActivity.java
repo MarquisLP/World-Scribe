@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ErrorMessager;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -73,8 +74,15 @@ public class CreateArticleActivity extends BackButtonActivity {
     }
 
     private void populateCategorySpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories_array, R.layout.spinner_item);
+        ArrayAdapter<CharSequence> adapter;
+        if (AppPreferences.nightModeIsEnabled(this)) {
+            adapter = ArrayAdapter.createFromResource(this, R.array.categories_array,
+                    R.layout.spinner_item_night_mode);
+        } else {
+            adapter = ArrayAdapter.createFromResource(this, R.array.categories_array,
+                    R.layout.spinner_item);
+        }
+
         categorySpinner.setAdapter(adapter);
     }
 
