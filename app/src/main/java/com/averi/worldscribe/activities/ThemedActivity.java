@@ -2,6 +2,7 @@ package com.averi.worldscribe.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 
@@ -18,9 +19,13 @@ public abstract class ThemedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResourceID());
 
         loadTheme();
+        setContentView(getLayoutResourceID());
+
+        if (nightModeIsEnabled()) {
+            setNightModeColor();
+        }
     }
 
     /**
@@ -42,5 +47,21 @@ public abstract class ThemedActivity extends AppCompatActivity {
      * @return The root Layout of this Activity.
      */
     protected abstract ViewGroup getRootLayout();
+
+    /**
+     * @return True if the user has enabled Night Mode in Settings.
+     */
+    private boolean nightModeIsEnabled() {
+        return getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE).getBoolean(
+                AppPreferences.NIGHT_MODE_IS_ENABLED, false);
+    }
+
+    /**
+     * Changes the base color of the Activity to its Night Mode variant.
+     */
+    private void setNightModeColor() {
+        ViewGroup rootView = getRootLayout();
+        rootView.setBackgroundColor(ContextCompat.getColor(this, R.color.duskGray));
+    }
 
 }
