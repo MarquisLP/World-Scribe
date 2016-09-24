@@ -24,4 +24,15 @@ public class AppPreferences {
                 Context.MODE_PRIVATE);
         preferences.edit().putString(AppPreferences.LAST_OPENED_WORLD, worldName).apply();
     }
+
+    /**
+     * Checks if Night Mode is enabled.
+     * @param context The The Context calling this method.
+     * @return True if Night Mode is enabled; false otherwise.
+     */
+    public static boolean nightModeIsEnabled(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        return preferences.getBoolean(NIGHT_MODE_IS_ENABLED, false);
+    }
 }

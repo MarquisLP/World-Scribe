@@ -2,14 +2,17 @@ package com.averi.worldscribe.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -64,6 +67,10 @@ public class SnippetActivity extends BackButtonActivity {
                 intent.getStringExtra(IntentFields.ARTICLE_NAME),
                 snippetName);
 
+        if (AppPreferences.nightModeIsEnabled(this)) {
+            darkenTextGradient();
+        }
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -101,6 +108,15 @@ public class SnippetActivity extends BackButtonActivity {
         getSupportActionBar().setTitle(snippetName);
 
         super.setAppBar();
+    }
+
+    /**
+     * Changes the gradient at the bottom of the text box to a darker variant.
+     */
+    private void darkenTextGradient() {
+        View textGradient = findViewById(R.id.textGradient);
+        assert textGradient != null;
+        textGradient.setBackgroundResource( R.drawable.textbox_gradient_night_mode);
     }
 
     /**

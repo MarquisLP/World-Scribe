@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <EditText
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/editText"
@@ -45,6 +46,7 @@
             android:scrollbars="vertical" />
         
         <View
+            android:id="@+id/textGradient"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/textboxGradientHeight"
