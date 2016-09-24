@@ -6,6 +6,7 @@
     android:layout_margin="@dimen/cardMargin"
     xmlns:card_view="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardBackgroundColor="@android:color/transparent"
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true"
     android:id="@+id/card">
