@@ -21,6 +21,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
 import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -239,6 +240,7 @@ public class ArticleListActivity extends ThemedActivity
         if (ExternalWriter.renameWorldDirectory(worldName, newName)) {
             renameWasSuccessful = true;
             worldName = newName;
+            AppPreferences.saveLastOpenedWorld(this, newName);
             setAppBar(newName, category);
         } else {
             Toast.makeText(this, R.string.renameWorldError, Toast.LENGTH_SHORT).show();
