@@ -202,7 +202,7 @@ public class ArticleListActivity extends ThemedActivity
         boolean newNameIsValid;
 
         if (newName.isEmpty()) {
-            Toast.makeText(this, R.string.emptyArticleNameError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.emptyWorldNameError, Toast.LENGTH_SHORT).show();
             newNameIsValid = false;
         } else if (newName.equals(worldName)) {   // Name was not changed.
             newNameIsValid = true;
