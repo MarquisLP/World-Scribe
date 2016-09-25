@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -7,6 +7,12 @@
         android:title="@string/createArticleItemText"
         android:icon="@drawable/add_article"
         app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/renameWorldItem"
+        android:title="@string/renameWorldItemText"
+        app:showAsAction="never"
         />
 
     <item

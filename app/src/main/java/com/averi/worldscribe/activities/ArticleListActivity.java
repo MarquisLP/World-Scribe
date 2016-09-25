@@ -1,15 +1,20 @@
 package com.averi.worldscribe.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
@@ -127,6 +132,9 @@ public class ArticleListActivity extends ThemedActivity
                 goToArticleCreationIntent.putExtra(IntentFields.CATEGORY, category);
                 startActivity(goToArticleCreationIntent);
                 return true;
+            case R.id.renameWorldItem:
+                showRenameWorldDialog();
+                return true;
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
             case R.id.deleteWorldItem:
@@ -137,6 +145,78 @@ public class ArticleListActivity extends ThemedActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Displays a dialog to allow the user to rename the currently-opened World.
+     */
+    private void showRenameWorldDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content = inflater.inflate(R.layout.rename_world_dialog, null);
+
+        final EditText nameField = (EditText) content.findViewById(R.id.nameField);
+        nameField.setText(worldName);
+
+        final AlertDialog dialog = builder.setView(content)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) { }
+                })
+                .setNegativeButton(android.R.string.cancel, null).create();
+        dialog.show();
+
+        // Handle onClick here to prevent the dialog from closing if the user enters
+        // an invalid name.
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        String newName = nameField.getText().toString();
+
+                        if (newWorldNameIsValid(newName)) {
+                            if (!(newName.equals(worldName))) {
+                                renameWorld(newName);
+                            }
+                            dialog.dismiss();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * <p>
+     *     Checks whether a new name for this World is valid, i.e. non-empty and not in use by
+     *     other World.
+     * </p>
+     * <p>
+     *     If the name is invalid, an error message is displayed.
+     * </p>
+     * @param newName The new name requested for this World.
+     * @return True if the new name is valid; false otherwise.
+     */
+    private boolean newWorldNameIsValid(String newName) {
+        boolean newNameIsValid;
+
+        if (newName.isEmpty()) {
+            Toast.makeText(this, R.string.emptyArticleNameError, Toast.LENGTH_SHORT).show();
+            newNameIsValid = false;
+        } else if (newName.equals(worldName)) {   // Name was not changed.
+            newNameIsValid = true;
+        } else if (ExternalReader.worldAlreadyExists(newName)) {
+            Toast.makeText(this,
+                    getString(R.string.renameWorldToExistingError, newName),
+                    Toast.LENGTH_SHORT).show();
+            newNameIsValid = false;
+        } else {
+            newNameIsValid = true;
+        }
+
+        return newNameIsValid;
+    }
+
+
 
     public void respondToListItemSelection(String itemText) {
         Intent goToArticleIntent;

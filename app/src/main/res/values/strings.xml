@@ -24,6 +24,7 @@
     <string name="conceptsText">Concepts</string>
 
     <string name="createArticleItemText">New Article</string>
+    <string name="renameWorldItemText">Rename World</string>
     <string name="createWorldItemText">Create World</string>
     <string name="loadWorldItemText">Open World</string>
     <string name="deleteWorldItem">Delete World</string>
@@ -127,11 +128,14 @@
     <string name="emptyArticleNameError">Article name cannot be empty.</string>
     <string name="renameArticleToExistingError">A %1$s named %2$s already exists.\nPlease choose a different name.</string>
     <string name="renameArticleError">An error occurred while renaming this Article.</string>
+    <string name="renameWorldToExistingError">A World named %1$s already exists. Please choose a different name.</string>
+    <string name="renameWorldError">An error occurred while renaming this World.</string>
 
     <string name="memberRoleHint">Role/Rank in group (optional)</string>
     <string name="nameSnippetHint">Snippet Name</string>
     <string name="rename_snippet_title">Rename Snippet</string>
     <string name="renameArticleTitle">Rename Article</string>
+    <string name="renameWorldTitle">Rename World</string>
     <string name="selectThemeTitle">App Theme</string>
     <string name="settingsTitle">Settings</string>
     <string name="restartNoticeText">To apply changes, the app will be restarted when you press \"SAVE\"</string>
