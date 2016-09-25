@@ -49,28 +49,16 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/headerSpacing" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nightModeTitle"
-            android:id="@+id/nightModeTitle"
-            android:textSize="@dimen/headerTextSize"
-            android:textColor="?attr/colorPrimary"
-            android:layout_gravity="center_horizontal" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="@dimen/verticalSpacing" />
-
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nightModeSwitchText"
             android:id="@+id/nightModeSwitch"
-            android:textSize="@dimen/standardTextSize"
+            android:textSize="@dimen/headerTextSize"
             android:layout_gravity="center_horizontal"
             android:checked="false"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="?attr/colorPrimary"
+            android:switchPadding="@dimen/switchToTextPadding" />
 
         <Space
             android:layout_width="0dp"

@@ -141,5 +141,5 @@
     <string name="restartNoticeText">To apply changes, the app will be restarted when you press \"SAVE\"</string>
     <string name="generalInfoHeader">General Info</string>
     <string name="nightModeTitle">Night Mode</string>
-    <string name="nightModeSwitchText">Enabled</string>
+    <string name="nightModeSwitchText">Night Mode</string>
 </resources>

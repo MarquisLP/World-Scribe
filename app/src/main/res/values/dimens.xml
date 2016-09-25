@@ -38,4 +38,5 @@
     <dimen name="snippetBottomPadding">3dp</dimen>
     <dimen name="editLinkActivityTopMargin">70dp</dimen>
     <dimen name="listItemHorizontalPadding">13dp</dimen>
+    <dimen name="switchToTextPadding">8dp</dimen>
 </resources>
