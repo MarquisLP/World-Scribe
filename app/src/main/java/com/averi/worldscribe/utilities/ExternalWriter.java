@@ -396,6 +396,18 @@ public final class ExternalWriter {
     }
 
     /**
+     * Renames the directory for a specific World.
+     * @param currentWorldName The World's current name.
+     * @param newWorldName The World's new name.
+     * @return True if the directory was renamed successfully; false otherwise.
+     */
+    public static boolean renameWorldDirectory(String currentWorldName, String newWorldName) {
+        File worldDirectory = FileRetriever.getWorldDirectory(currentWorldName);
+        File renamedDirectory = FileRetriever.getWorldDirectory(newWorldName);
+        return worldDirectory.renameTo(renamedDirectory);
+    }
+
+    /**
      * Renames the directory for a specific Article.
      * @param context The The Context calling this method.
      * @param worldName The name of The name of the world the Article belongs to.

@@ -22,6 +22,7 @@ import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
+import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
@@ -216,7 +217,35 @@ public class ArticleListActivity extends ThemedActivity
         return newNameIsValid;
     }
 
+    /**
+     * <p>
+     *     Renames the Article; all references to it from other Articles are also updated to reflect
+     *     the new name.
+     * </p>
+     * <p>
+     *     If the Article couldn't be renamed, an error message is displayed.
+     * </p>
+     * <p>
+     *     Subclasses for Articles of Categories that have additional types of references (e.g.
+     *     Residences) must override this method and update the Article's name within those
+     *     references as well. Otherwise, those references on other Articles' pages will break.
+     * </p>
+     * @param newName The new name for the Article.
+     * @return True if the Article was renamed successfully; false otherwise.
+     */
+    protected boolean renameWorld(String newName) {
+        boolean renameWasSuccessful = false;
 
+        if (ExternalWriter.renameWorldDirectory(worldName, newName)) {
+            renameWasSuccessful = true;
+            worldName = newName;
+            setAppBar(newName, category);
+        } else {
+            Toast.makeText(this, R.string.renameWorldError, Toast.LENGTH_SHORT).show();
+        }
+
+        return renameWasSuccessful;
+    }
 
     public void respondToListItemSelection(String itemText) {
         Intent goToArticleIntent;
