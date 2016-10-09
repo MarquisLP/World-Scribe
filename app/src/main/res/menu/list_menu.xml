@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/searchArticles"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@android:string/search_go"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
+
+    <item
         android:id="@+id/createArticleItem"
         android:title="@string/createArticleItemText"
         android:icon="@drawable/add_article"

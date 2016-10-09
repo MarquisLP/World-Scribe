@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -129,6 +130,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         setSupportActionBar(appBar);
 
         super.setAppBar();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.select_article_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**
