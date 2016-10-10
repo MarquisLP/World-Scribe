@@ -33,7 +33,8 @@
         <activity
             android:name=".activities.ConceptActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ArticleListActivity" />
+        <activity android:name=".activities.ArticleListActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.EditConnectionActivity" />
         <activity android:name=".activities.CreateWorldActivity" />
         <activity android:name=".activities.LoadWorldActivity" />
@@ -43,7 +44,8 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".activities.SelectArticleActivity" />
+        <activity android:name=".activities.SelectArticleActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.EditMembershipActivity" />
         <activity android:name=".activities.CreateSnippetActivity" />
         <activity android:name=".activities.SettingsActivity"></activity>
