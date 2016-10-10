@@ -3,6 +3,7 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,6 +149,9 @@ public class ActivityUtilities {
                 android.support.v7.appcompat.R.id.search_src_text);
         searchAutoComplete.setTextColor(ContextCompat.getColor(context, android.R.color.white));
         searchAutoComplete.setHintTextColor(AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark));
+
+        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        searchCloseIcon.setColorFilter(android.R.color.white, PorterDuff.Mode.SRC_ATOP);
 
         matchSearchViewCursorColorToText(context, searchView);
     }

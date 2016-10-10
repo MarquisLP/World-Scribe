@@ -30,6 +30,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextColor="@android:color/white"
+            app:collapseIcon="@drawable/back_button"
             style="@style/AppTheme" />
     </android.support.design.widget.AppBarLayout>
 
