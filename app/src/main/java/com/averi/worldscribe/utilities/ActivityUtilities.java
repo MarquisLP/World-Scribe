@@ -3,8 +3,11 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.text.InputType;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -18,6 +21,8 @@ import com.averi.worldscribe.activities.CreateOrLoadWorldActivity;
 import com.averi.worldscribe.activities.CreateWorldActivity;
 import com.averi.worldscribe.activities.LoadWorldActivity;
 import com.averi.worldscribe.activities.SettingsActivity;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by mark on 23/06/16.
@@ -124,6 +129,44 @@ public class ActivityUtilities {
         editText.setMaxLines(WORD_WRAP_MAX_LINES);
         editText.setHorizontallyScrolling(false);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+    }
+
+    /**
+     * Sets up the appearance of the SearchView within a Menu.
+     * @param context The Context calling this method.
+     * @param menu The Menu that contains the SearchView.
+     * @param hint The hint that will be displayed in the search text box.
+     */
+    public static void setUpSearchViewAppearance(Context context, Menu menu, String hint) {
+        SearchView searchView = (SearchView) menu.findItem(R.id.searchArticles).getActionView();
+
+        searchView.setQueryHint(hint);
+
+        SearchView.SearchAutoComplete searchAutoComplete = (
+                SearchView.SearchAutoComplete) searchView.findViewById(
+                android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+        searchAutoComplete.setHintTextColor(AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark));
+
+        matchSearchViewCursorColorToText(context, searchView);
+    }
+
+    /**
+     * Recolors a SearchView's cursor color to match the text color.
+     * @param context The The Context calling this method.
+     * @param searchView The SearchView whose cursor will be recolored.
+     */
+    private static void matchSearchViewCursorColorToText(Context context, SearchView searchView) {
+        final EditText searchInput = ((EditText) searchView.findViewById(
+                android.support.v7.appcompat.R.id.search_src_text));
+
+        try {
+            Field cursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            cursorDrawableRes.setAccessible(true);
+            cursorDrawableRes.set(searchInput, 0);// set textCursorDrawable to null
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

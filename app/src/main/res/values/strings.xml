@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">World Scribe</string>
 
-    <string name="searchHint">Search Articles in this Category</string>
+    <string name="searchHint">Search this Category</string>
 
     <string name="categoryText">Category</string>
     <string name="personText">Person</string>

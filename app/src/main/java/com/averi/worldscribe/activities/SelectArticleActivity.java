@@ -17,6 +17,7 @@ import com.averi.worldscribe.LinkedArticleList;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -134,6 +135,9 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.select_article_menu, menu);
+
+        ActivityUtilities.setUpSearchViewAppearance(this, menu, getString(R.string.searchHint));
+
         return super.onCreateOptionsMenu(menu);
     }
 
