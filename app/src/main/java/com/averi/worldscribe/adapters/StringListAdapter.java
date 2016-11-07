@@ -1,6 +1,7 @@
 package com.averi.worldscribe.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class StringListAdapter extends RecyclerView.Adapter<StringListAdapter.ViewHolder> {
 
     private ArrayList<String> strings;
+    private ArrayList<String> stringsCopy;    // For adding back items during filtering
     private StringListContext context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -36,7 +38,8 @@ public class StringListAdapter extends RecyclerView.Adapter<StringListAdapter.Vi
     }
 
     public StringListAdapter(StringListContext context, ArrayList<String> strings) {
-        this.strings = strings;
+        this.strings = new ArrayList<>(strings);
+        this.stringsCopy = new ArrayList<>(strings);
         this.context = context;
     }
 
@@ -63,7 +66,32 @@ public class StringListAdapter extends RecyclerView.Adapter<StringListAdapter.Vi
      */
     public void updateList(ArrayList<String> strings) {
         this.strings.clear();
+        stringsCopy.clear();
         this.strings.addAll(strings);
+        stringsCopy.addAll(strings);
+    }
+
+    /**
+     * Filters the items in this Adapter to include only items that contain the
+     * specified query string.
+     * @param query A string of text meant to match one or more items in this Adapter
+     */
+    public void filterQuery(String query) {
+        strings.clear();
+
+        if (query.isEmpty()) {    // Empty query means user hasn't entered anything yet.
+            Log.d("WorldScribe", String.valueOf(stringsCopy.size()));
+            strings.addAll(stringsCopy);
+        } else {
+            query = query.toLowerCase();   // Searches are case-insensitive.
+            for (String string : stringsCopy) {
+                if (string.toLowerCase().contains(query)) {
+                    strings.add(string);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }

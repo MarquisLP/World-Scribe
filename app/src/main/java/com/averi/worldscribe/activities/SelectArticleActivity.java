@@ -137,6 +137,8 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         getMenuInflater().inflate(R.menu.select_article_menu, menu);
 
         ActivityUtilities.setUpSearchViewAppearance(this, menu, getString(R.string.searchHint));
+        ActivityUtilities.setSearchViewFiltering(menu,
+                (StringListAdapter) this.recyclerView.getAdapter());
 
         return super.onCreateOptionsMenu(menu);
     }

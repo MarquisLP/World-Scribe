@@ -23,6 +23,7 @@ import com.averi.worldscribe.activities.CreateOrLoadWorldActivity;
 import com.averi.worldscribe.activities.CreateWorldActivity;
 import com.averi.worldscribe.activities.LoadWorldActivity;
 import com.averi.worldscribe.activities.SettingsActivity;
+import com.averi.worldscribe.adapters.StringListAdapter;
 
 import java.lang.reflect.Field;
 
@@ -172,6 +173,30 @@ public class ActivityUtilities {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Allows a SearchView within a given Menu to filter out the items in the specified StringListAdapter.
+     * @param menu The Menu containing the SearchView
+     * @param adapter The StringListAdapter whose items will be filtered
+     */
+    public static void setSearchViewFiltering(Menu menu, StringListAdapter adapter) {
+        SearchView searchView = (SearchView) menu.findItem(R.id.searchArticles).getActionView();
+        final StringListAdapter stringListAdapter = adapter;
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                stringListAdapter.filterQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                stringListAdapter.filterQuery(newText);
+                return true;
+            }
+        });
     }
 
 }

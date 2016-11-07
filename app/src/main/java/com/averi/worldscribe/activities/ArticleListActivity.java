@@ -97,6 +97,8 @@ public class ArticleListActivity extends ThemedActivity
         getMenuInflater().inflate(R.menu.list_menu, menu);
 
         ActivityUtilities.setUpSearchViewAppearance(this, menu, getString(R.string.searchHint));
+        ActivityUtilities.setSearchViewFiltering(menu,
+                (StringListAdapter) this.recyclerView.getAdapter());
 
         return super.onCreateOptionsMenu(menu);
     }
