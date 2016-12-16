@@ -23,7 +23,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 
 /**
  * <p>
@@ -69,7 +69,7 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
     private ImageButton conceptsButton;
     private TextView textEmpty;
     private LinkedArticleList existingLinks;
-    private HashSet<String> articleNames = new HashSet<>();
+    private List<String> articleNames = new ArrayList<>();
     private boolean canChooseOneCategoryOnly;
 
     @Override
@@ -253,13 +253,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
      * those already linked to the main Article.
      * @param listCategory  The Category of the Articles that will be retrieved.
      */
-    private HashSet<String> getLinkableArticleNames(Category listCategory) {
-        HashSet<String> allArticleNames = new HashSet<>(ExternalReader.getArticleNamesInCategory(
-                this, worldName, listCategory));
+    private List<String> getLinkableArticleNames(Category listCategory) {
+        List<String> linkableNames = ExternalReader.getArticleNamesInCategory(
+                this, worldName, listCategory);
 
-        HashSet<String> linkableNames = new HashSet<>(
-                com.google.common.collect.Sets.symmetricDifference(allArticleNames,
-                existingLinks.getAllLinksInCategory(listCategory)));
+        linkableNames.removeAll(existingLinks.getAllLinksInCategory(listCategory));
 
         if (category == mainArticleCategory) {
             linkableNames.remove(mainArticleName);
