@@ -208,19 +208,23 @@ public class ExternalReader {
         File connectionCategoryFolder = FileRetriever.getConnectionCategoryDirectory(context,
                 worldName, category, articleName, connectionCategory);
 
-        for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
-            String mainArticleRelationFilename = mainArticleRelationFile.getName();
-            String connectedArticleName = mainArticleRelationFilename.substring(0,
-                    mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
-            File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
-                    worldName, connectionCategory, connectedArticleName, category, articleName);
+        // Some devices may not have created the Category folder if it has no content.
+        // In other words, the folder would only be created when a file is to be written there.
+        if (connectionCategoryFolder.exists()) {
+            for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
+                String mainArticleRelationFilename = mainArticleRelationFile.getName();
+                String connectedArticleName = mainArticleRelationFilename.substring(0,
+                        mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+                File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
+                        worldName, connectionCategory, connectedArticleName, category, articleName);
 
-            Connection connection = makeConnectionFromFile(worldName, category, articleName,
-                    mainArticleRelationFile, connectionCategory, connectedArticleName,
-                    connectedArticleRelationFile);
+                Connection connection = makeConnectionFromFile(worldName, category, articleName,
+                        mainArticleRelationFile, connectionCategory, connectedArticleName,
+                        connectedArticleRelationFile);
 
-            if (connection != null) {
-                connections.add(connection);
+                if (connection != null) {
+                    connections.add(connection);
+                }
             }
         }
 
