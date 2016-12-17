@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -319,7 +318,7 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     private void setUpArticleCore() {
         setAppBar();
         setArticleImage();
-        bottomBar.highlightCategoryButton(this, category);
+        bottomBar.focusCategoryButton(this, category);
         loadTextFieldsData();
         populateConnections();
         populateSnippets();

@@ -111,12 +111,27 @@ public class BottomBar extends RelativeLayout {
         }
     };
 
-    public void highlightCategoryButton(Context context, Category category) {
-        View categoryButton = getCategoryButton(category);
-
+    /**
+     * Puts focus on the given Category by highlighting the corresponding button, showing its
+     * name text, and unhighlighting and hiding the name text for all other buttons.
+     * @param context The Context this BottomBar belongs to
+     * @param category The Category whose button will be highlighted
+     */
+    public void focusCategoryButton(Context context, Category category) {
         unhighlightAllButtons(context);
+        highlightCategoryButton(context, category);
+    }
 
-        int selectedButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark);
+    /**
+     * Changes the background color of the button for the given Category so that it is
+     * highlighted.
+     * @param context The Context this BottomBar belongs to
+     * @param category The Category whose button will be highlighted
+     */
+    private void highlightCategoryButton(Context context, Category category) {
+        View categoryButton = getCategoryButton(category);
+        int selectedButtonColor = AttributeGetter.getColorAttribute(context,
+                R.attr.colorPrimaryDark);
         categoryButton.setBackgroundColor(selectedButtonColor);
     }
 

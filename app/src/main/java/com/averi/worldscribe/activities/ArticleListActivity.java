@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,7 +52,7 @@ public class ArticleListActivity extends ThemedActivity
 
         setupRecyclerView();
         setAppBar(worldName, category);
-        bottomBar.highlightCategoryButton(this, category);
+        bottomBar.focusCategoryButton(this, category);
     }
 
     private void setupRecyclerView() {
@@ -287,7 +286,7 @@ public class ArticleListActivity extends ThemedActivity
     public void respondToBottomBarButton(Category category) {
         this.category = category;
         setAppBar(worldName, category);
-        bottomBar.highlightCategoryButton(this, category);
+        bottomBar.focusCategoryButton(this, category);
         populateList(worldName, category);
     }
 
