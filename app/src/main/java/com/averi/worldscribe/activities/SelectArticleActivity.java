@@ -62,11 +62,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
     private String mainArticleName;
     private Category category;
     private LinearLayout bottomBarLayout;
-    private ImageButton peopleButton;
-    private ImageButton groupsButton;
-    private ImageButton placesButton;
-    private ImageButton itemsButton;
-    private ImageButton conceptsButton;
+    private LinearLayout peopleButton;
+    private LinearLayout groupsButton;
+    private LinearLayout placesButton;
+    private LinearLayout itemsButton;
+    private LinearLayout conceptsButton;
     private TextView textEmpty;
     private LinkedArticleList existingLinks;
     private List<String> articleNames = new ArrayList<>();
@@ -80,11 +80,11 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         textEmpty = (TextView) findViewById(R.id.empty);
         bottomBarLayout = (LinearLayout) findViewById(R.id.bottomBar);
         if (bottomBarLayout != null) {
-            peopleButton = (ImageButton) bottomBarLayout.findViewById(R.id.peopleButton);
-            groupsButton = (ImageButton) bottomBarLayout.findViewById(R.id.groupsButton);
-            placesButton = (ImageButton) bottomBarLayout.findViewById(R.id.placesButton);
-            itemsButton = (ImageButton) bottomBarLayout.findViewById(R.id.itemsButton);
-            conceptsButton = (ImageButton) bottomBarLayout.findViewById(R.id.conceptsButton);
+            peopleButton = (LinearLayout) bottomBarLayout.findViewById(R.id.peopleButton);
+            groupsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.groupsButton);
+            placesButton = (LinearLayout) bottomBarLayout.findViewById(R.id.placesButton);
+            itemsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.itemsButton);
+            conceptsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.conceptsButton);
             setBottomBarListeners();
         }
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -198,7 +198,7 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
      * @param highlightedCategory The Article Category that will have its button highlighted.
      */
     private void highlightBottomBarButton(Category highlightedCategory) {
-        ImageButton categoryButton;
+        LinearLayout categoryButton;
 
         switch (highlightedCategory) {
             case Person:

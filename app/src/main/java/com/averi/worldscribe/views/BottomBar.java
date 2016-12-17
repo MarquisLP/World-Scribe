@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.averi.worldscribe.Category;
@@ -71,26 +72,26 @@ public class BottomBar extends RelativeLayout {
     };
 
     public void highlightCategoryButton(Context context, Category category) {
-        ImageButton categoryButton;
+        LinearLayout categoryButton;
 
         unhighlightAllButtons(context);
 
         switch (category) {
             case Person:
-                categoryButton = (ImageButton) findViewById(R.id.peopleButton);
+                categoryButton = (LinearLayout) findViewById(R.id.peopleButton);
                 break;
             case Group:
-                categoryButton = (ImageButton) findViewById(R.id.groupsButton);
+                categoryButton = (LinearLayout) findViewById(R.id.groupsButton);
                 break;
             case Place:
-                categoryButton = (ImageButton) findViewById(R.id.placesButton);
+                categoryButton = (LinearLayout) findViewById(R.id.placesButton);
                 break;
             case Item:
-                categoryButton = (ImageButton) findViewById(R.id.itemsButton);
+                categoryButton = (LinearLayout) findViewById(R.id.itemsButton);
                 break;
             case Concept:
             default:
-                categoryButton = (ImageButton) findViewById(R.id.conceptsButton);
+                categoryButton = (LinearLayout) findViewById(R.id.conceptsButton);
         }
 
         int selectedButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark);

@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="standardTextSize">20sp</dimen>
+    <dimen name="bottomBarTextSize">16sp</dimen>
     <dimen name="pagePadding">20dp</dimen>
     <dimen name="buttonPadding">8dp</dimen>
     <dimen name="bottomButtonPadding">5dp</dimen>
