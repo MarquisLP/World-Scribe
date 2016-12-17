@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.averi.worldscribe.Category;
@@ -120,6 +118,9 @@ public class BottomBar extends RelativeLayout {
     public void focusCategoryButton(Context context, Category category) {
         unhighlightAllButtons(context);
         highlightCategoryButton(context, category);
+
+        hideAllCategoryButtonText();
+        showCategoryButtonText(category);
     }
 
     /**
@@ -146,6 +147,25 @@ public class BottomBar extends RelativeLayout {
             View categoryButton = getCategoryButton(category);
             categoryButton.setBackgroundColor(normalButtonColor);
         }
+    }
+
+    /**
+     * Hides the name text for all Category buttons.
+     */
+    private void hideAllCategoryButtonText() {
+        for (Category category : Category.values()) {
+            View categoryButton = getCategoryButton(category);
+            (categoryButton.findViewById(R.id.buttonText)).setVisibility(GONE);
+        }
+    }
+
+    /**
+     * Displays the name of a Category on its corresponding button.
+     * @param category The Category whose name will be displayed
+     */
+    private void showCategoryButtonText(Category category) {
+        View categoryButton = getCategoryButton(category);
+        (categoryButton.findViewById(R.id.buttonText)).setVisibility(VISIBLE);
     }
 
     /**
