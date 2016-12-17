@@ -51,7 +51,7 @@ public class ArticleListActivity extends ThemedActivity
         textEmpty = (TextView) findViewById(R.id.empty);
 
         setupRecyclerView();
-        setAppBar(worldName, category);
+        setAppBar(worldName);
         bottomBar.focusCategoryButton(this, category);
     }
 
@@ -64,13 +64,12 @@ public class ArticleListActivity extends ThemedActivity
         recyclerView.setAdapter(adapter);
     }
 
-    private void setAppBar(String worldName, Category category) {
+    private void setAppBar(String worldName) {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        String categoryGroupName = category.pluralName(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(categoryGroupName + " — " + worldName);
+            getSupportActionBar().setTitle(worldName);
         }
     }
 
@@ -246,7 +245,7 @@ public class ArticleListActivity extends ThemedActivity
             renameWasSuccessful = true;
             worldName = newName;
             AppPreferences.saveLastOpenedWorld(this, newName);
-            setAppBar(newName, category);
+            setAppBar(newName);
         } else {
             Toast.makeText(this, R.string.renameWorldError, Toast.LENGTH_SHORT).show();
         }
@@ -285,7 +284,6 @@ public class ArticleListActivity extends ThemedActivity
 
     public void respondToBottomBarButton(Category category) {
         this.category = category;
-        setAppBar(worldName, category);
         bottomBar.focusCategoryButton(this, category);
         populateList(worldName, category);
     }
