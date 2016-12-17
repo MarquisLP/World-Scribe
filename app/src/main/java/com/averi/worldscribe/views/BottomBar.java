@@ -21,6 +21,11 @@ public class BottomBar extends RelativeLayout {
 
     private LayoutInflater inflater;
     private BottomBarActivity activity;
+    private View peopleButton;
+    private View groupsButton;
+    private View placesButton;
+    private View itemsButton;
+    private View conceptsButton;
 
     public BottomBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,12 +38,47 @@ public class BottomBar extends RelativeLayout {
             slideOutAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom);
             slideInAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_in_from_bottom);
 
+            peopleButton = findViewById(R.id.peopleButton);
+            groupsButton = findViewById(R.id.groupsButton);
+            placesButton = findViewById(R.id.placesButton);
+            itemsButton = findViewById(R.id.itemsButton);
+            conceptsButton = findViewById(R.id.conceptsButton);
+
             this.findViewById(R.id.peopleButton).setOnClickListener(peopleOnClickListener);
             this.findViewById(R.id.groupsButton).setOnClickListener(groupsOnClickListener);
             this.findViewById(R.id.placesButton).setOnClickListener(placesOnClickListener);
             this.findViewById(R.id.itemsButton).setOnClickListener(itemsOnClickListener);
             this.findViewById(R.id.conceptsButton).setOnClickListener(conceptsOnClickListener);
         }
+    }
+
+    /**
+     * Gets the View acting as the button for a specific Category.
+     * @param category The Category whose button will be retrieved
+     * @return The button View corresponding to the given Category
+     */
+    private View getCategoryButton(Category category) {
+        View categoryButton;
+
+        switch (category) {
+            case Person:
+                categoryButton = peopleButton;
+                break;
+            case Group:
+                categoryButton = groupsButton;
+                break;
+            case Place:
+                categoryButton = placesButton;
+                break;
+            case Item:
+                categoryButton = itemsButton;
+                break;
+            case Concept:
+            default:
+                categoryButton = conceptsButton;
+        }
+
+        return categoryButton;
     }
 
     private OnClickListener peopleOnClickListener = new OnClickListener() {
@@ -72,27 +112,9 @@ public class BottomBar extends RelativeLayout {
     };
 
     public void highlightCategoryButton(Context context, Category category) {
-        LinearLayout categoryButton;
+        View categoryButton = getCategoryButton(category);
 
         unhighlightAllButtons(context);
-
-        switch (category) {
-            case Person:
-                categoryButton = (LinearLayout) findViewById(R.id.peopleButton);
-                break;
-            case Group:
-                categoryButton = (LinearLayout) findViewById(R.id.groupsButton);
-                break;
-            case Place:
-                categoryButton = (LinearLayout) findViewById(R.id.placesButton);
-                break;
-            case Item:
-                categoryButton = (LinearLayout) findViewById(R.id.itemsButton);
-                break;
-            case Concept:
-            default:
-                categoryButton = (LinearLayout) findViewById(R.id.conceptsButton);
-        }
 
         int selectedButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark);
         categoryButton.setBackgroundColor(selectedButtonColor);
@@ -104,11 +126,11 @@ public class BottomBar extends RelativeLayout {
      */
     private void unhighlightAllButtons(Context context) {
         int normalButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimary);
-        (findViewById(R.id.peopleButton)).setBackgroundColor(normalButtonColor);
-        (findViewById(R.id.groupsButton)).setBackgroundColor(normalButtonColor);
-        (findViewById(R.id.placesButton)).setBackgroundColor(normalButtonColor);
-        (findViewById(R.id.itemsButton)).setBackgroundColor(normalButtonColor);
-        (findViewById(R.id.conceptsButton)).setBackgroundColor(normalButtonColor);
+
+        for (Category category : Category.values()) {
+            View categoryButton = getCategoryButton(category);
+            categoryButton.setBackgroundColor(normalButtonColor);
+        }
     }
 
     /**
