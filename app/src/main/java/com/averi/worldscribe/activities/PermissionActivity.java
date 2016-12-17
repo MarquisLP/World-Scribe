@@ -115,6 +115,10 @@ public class PermissionActivity extends ThemedActivity {
         } else {
             setLastOpenedWorldToNothing();
 
+            if (!(ExternalReader.appDirectoryExists())) {
+                ExternalWriter.createAppDirectory();
+            }
+
             if (ExternalReader.worldListIsEmpty()) {
                 goToWorldCreation();
             } else {

@@ -36,6 +36,7 @@ public class ExternalReader {
     public static ArrayList<String> getWorldList() {
         ArrayList<String> worldNames = new ArrayList<>();
         File worldsFolder = FileRetriever.getAppDirectory();
+        worldsFolder.mkdirs();
         File[] listOfFiles = worldsFolder.listFiles();
 
         for (File file : listOfFiles) {
@@ -63,6 +64,7 @@ public class ExternalReader {
                                                               Category category) {
         ArrayList<String> articleNames = new ArrayList<String>();
         File categoryFolder = FileRetriever.getCategoryDirectory(context, worldName, category);
+        categoryFolder.mkdirs();
         File[] listOfArticles = categoryFolder.listFiles();
 
         for (File articleFolder : listOfArticles) {
@@ -207,24 +209,21 @@ public class ExternalReader {
         ArrayList<Connection> connections = new ArrayList<>();
         File connectionCategoryFolder = FileRetriever.getConnectionCategoryDirectory(context,
                 worldName, category, articleName, connectionCategory);
+        connectionCategoryFolder.mkdirs();
 
-        // Some devices may not have created the Category folder if it has no content.
-        // In other words, the folder would only be created when a file is to be written there.
-        if (connectionCategoryFolder.exists()) {
-            for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
-                String mainArticleRelationFilename = mainArticleRelationFile.getName();
-                String connectedArticleName = mainArticleRelationFilename.substring(0,
-                        mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
-                File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
-                        worldName, connectionCategory, connectedArticleName, category, articleName);
+        for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
+            String mainArticleRelationFilename = mainArticleRelationFile.getName();
+            String connectedArticleName = mainArticleRelationFilename.substring(0,
+                    mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
+            File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
+                    worldName, connectionCategory, connectedArticleName, category, articleName);
 
-                Connection connection = makeConnectionFromFile(worldName, category, articleName,
-                        mainArticleRelationFile, connectionCategory, connectedArticleName,
-                        connectedArticleRelationFile);
+            Connection connection = makeConnectionFromFile(worldName, category, articleName,
+                    mainArticleRelationFile, connectionCategory, connectedArticleName,
+                    connectedArticleRelationFile);
 
-                if (connection != null) {
-                    connections.add(connection);
-                }
+            if (connection != null) {
+                connections.add(connection);
             }
         }
 
@@ -287,6 +286,8 @@ public class ExternalReader {
                                                     Category category, String articleName) {
         File snippetsDirectory = FileRetriever.getSnippetsDirectory(context, worldName, category,
                 articleName);
+        snippetsDirectory.mkdirs();
+
         return getSortedFileNames(snippetsDirectory);
     }
 
@@ -378,6 +379,7 @@ public class ExternalReader {
                                                      String personName) {
         File residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
                 personName);
+        residencesDirectory.mkdirs();
         ArrayList<Residence> residences = new ArrayList<>();
 
         for (File residenceFile : residencesDirectory.listFiles()) {
@@ -408,6 +410,7 @@ public class ExternalReader {
                                                   String placeName) {
         File residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
                 placeName);
+        residentsDirectory.mkdirs();
         ArrayList<Residence> residences = new ArrayList<>();
 
         for (File residentFile : residentsDirectory.listFiles()) {
@@ -439,6 +442,7 @@ public class ExternalReader {
         ArrayList<Membership> memberships = new ArrayList<>();
         File membershipsDirectory = FileRetriever.getMembershipsDirectory(context, worldName,
                 personName);
+        membershipsDirectory.mkdirs();
 
         for (File membershipFile : membershipsDirectory.listFiles()) {
             if (membershipFile.isFile()) {
@@ -501,6 +505,7 @@ public class ExternalReader {
         ArrayList<Membership> memberships = new ArrayList<>();
         File membersDirectory = FileRetriever.getMembersDirectory(context, worldName,
                 groupName);
+        membersDirectory.mkdirs();
 
         for (File membershipFile : membersDirectory.listFiles()) {
             if (membershipFile.isFile()) {
