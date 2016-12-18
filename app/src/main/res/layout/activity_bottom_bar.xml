@@ -18,8 +18,8 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/bottomButtonPadding"
-            android:paddingTop="@dimen/bottomButtonPadding"
+            android:paddingTop="@dimen/bottomBarTopPadding"
+            android:paddingBottom="@dimen/bottomBarBottomPadding"
             >
             <ImageView
                 android:layout_width="wrap_content"
@@ -52,8 +52,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/bottomButtonPadding"
-                android:paddingTop="@dimen/bottomButtonPadding"
+                android:paddingTop="@dimen/bottomBarTopPadding"
+                android:paddingBottom="@dimen/bottomBarBottomPadding"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -81,8 +81,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/bottomButtonPadding"
-                android:paddingTop="@dimen/bottomButtonPadding"
+                android:paddingTop="@dimen/bottomBarTopPadding"
+                android:paddingBottom="@dimen/bottomBarBottomPadding"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -110,8 +110,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/bottomButtonPadding"
-                android:paddingTop="@dimen/bottomButtonPadding"
+                android:paddingTop="@dimen/bottomBarTopPadding"
+                android:paddingBottom="@dimen/bottomBarBottomPadding"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -139,8 +139,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/bottomButtonPadding"
-                android:paddingTop="@dimen/bottomButtonPadding"
+                android:paddingTop="@dimen/bottomBarTopPadding"
+                android:paddingBottom="@dimen/bottomBarBottomPadding"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -168,8 +168,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/bottomButtonPadding"
-                android:paddingTop="@dimen/bottomButtonPadding"
+                android:paddingTop="@dimen/bottomBarTopPadding"
+                android:paddingBottom="@dimen/bottomBarBottomPadding"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
