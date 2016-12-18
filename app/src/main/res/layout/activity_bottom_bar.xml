@@ -58,7 +58,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/peopleButtonImage"
+                    android:id="@+id/buttonIcon"
                     android:src="@drawable/people_icon"
                     android:contentDescription="@string/peopleText"
                     />
@@ -87,7 +87,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/groupsButtonImage"
+                    android:id="@id/buttonIcon"
                     android:src="@drawable/groups_icon"
                     android:contentDescription="@string/groupsText"
                     />
@@ -116,7 +116,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/placesButtonImage"
+                    android:id="@id/buttonIcon"
                     android:src="@drawable/places_icon"
                     android:contentDescription="@string/placesText"
                     />
@@ -145,7 +145,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/itemsButtonImage"
+                    android:id="@id/buttonIcon"
                     android:src="@drawable/items_icon"
                     android:contentDescription="@string/itemsText"
                     />
@@ -174,7 +174,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/conceptsButtonImage"
+                    android:id="@id/buttonIcon"
                     android:src="@drawable/concepts_icon"
                     android:contentDescription="@string/conceptsText"
                     />

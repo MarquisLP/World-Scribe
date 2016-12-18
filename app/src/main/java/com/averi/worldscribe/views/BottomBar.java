@@ -1,11 +1,13 @@
 package com.averi.worldscribe.views;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.averi.worldscribe.Category;
@@ -124,28 +126,28 @@ public class BottomBar extends RelativeLayout {
     }
 
     /**
-     * Changes the background color of the button for the given Category so that it is
-     * highlighted.
+     * Changes the color of a Category button's icon so that it is highlighted.
      * @param context The Context this BottomBar belongs to
-     * @param category The Category whose button will be highlighted
+     * @param category The Category whose button icon will be highlighted
      */
     private void highlightCategoryButton(Context context, Category category) {
         View categoryButton = getCategoryButton(category);
-        int selectedButtonColor = AttributeGetter.getColorAttribute(context,
-                R.attr.colorPrimaryDark);
-        categoryButton.setBackgroundColor(selectedButtonColor);
+        ImageView buttonIcon = (ImageView) categoryButton.findViewById(R.id.buttonIcon);
+        buttonIcon.clearColorFilter();
     }
 
     /**
-     * Changes the background color of all buttons to their normal, unhighlighted color.
+     * Changes the icon color of all buttons to their normal, unhighlighted color.
      * @param context The Context containing this BottomBar.
      */
     private void unhighlightAllButtons(Context context) {
-        int normalButtonColor = AttributeGetter.getColorAttribute(context, R.attr.colorPrimary);
+        int notSelectedColor = AttributeGetter.getColorAttribute(context,
+                R.attr.colorPrimaryDark);
 
         for (Category category : Category.values()) {
             View categoryButton = getCategoryButton(category);
-            categoryButton.setBackgroundColor(normalButtonColor);
+            ImageView buttonIcon = (ImageView) categoryButton.findViewById(R.id.buttonIcon);
+            buttonIcon.setColorFilter(notSelectedColor, PorterDuff.Mode.SRC_ATOP);
         }
     }
 
