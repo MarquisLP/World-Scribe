@@ -186,13 +186,4 @@ public class BottomBar extends RelativeLayout {
         this.startAnimation(slideInAnimation);
     }
 
-    /**
-     * Sets whether this BottomBar is visible or not, and whether it takes up space when hidden.
-     * @param visibility One of the visibility constants in Android's View class: VISIBLE,
-     *                   INVISIBLE, or GONE.
-     */
-    public void setVisibility(int visibility) {
-        (findViewById(R.id.linearBar)).setVisibility(visibility);
-    }
-
 }
