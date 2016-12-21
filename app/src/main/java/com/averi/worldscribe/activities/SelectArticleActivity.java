@@ -1,5 +1,6 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,8 @@ import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.views.BottomBar;
+import com.averi.worldscribe.views.BottomBarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,8 @@ import java.util.List;
  * "articleName".
  * </p>
  */
-public class SelectArticleActivity extends BackButtonActivity implements StringListContext {
+public class SelectArticleActivity extends BackButtonActivity implements StringListContext,
+BottomBarActivity {
 
     /**
      * The initial Category of Articles to show if any Category can be chosen from.
@@ -61,12 +65,7 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
     private Category mainArticleCategory;
     private String mainArticleName;
     private Category category;
-    private LinearLayout bottomBarLayout;
-    private LinearLayout peopleButton;
-    private LinearLayout groupsButton;
-    private LinearLayout placesButton;
-    private LinearLayout itemsButton;
-    private LinearLayout conceptsButton;
+    private BottomBar bottomBar;
     private TextView textEmpty;
     private LinkedArticleList existingLinks;
     private List<String> articleNames = new ArrayList<>();
@@ -78,15 +77,7 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
 
         appBar = (Toolbar) findViewById(R.id.my_toolbar);
         textEmpty = (TextView) findViewById(R.id.empty);
-        bottomBarLayout = (LinearLayout) findViewById(R.id.bottomBar);
-        if (bottomBarLayout != null) {
-            peopleButton = (LinearLayout) bottomBarLayout.findViewById(R.id.peopleButton);
-            groupsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.groupsButton);
-            placesButton = (LinearLayout) bottomBarLayout.findViewById(R.id.placesButton);
-            itemsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.itemsButton);
-            conceptsButton = (LinearLayout) bottomBarLayout.findViewById(R.id.conceptsButton);
-            setBottomBarListeners();
-        }
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         setUpRecyclerView();
 
@@ -98,10 +89,13 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         mainArticleCategory=  (Category) startupIntent.getSerializableExtra(
                 IntentFields.MAIN_ARTICLE_CATEGORY);
         mainArticleName = startupIntent.getStringExtra(IntentFields.MAIN_ARTICLE_NAME);
-        setCategory(getInitialCategory(startupIntent));
+
+        category = getInitialCategory(startupIntent);
+        bottomBar.focusCategoryButton(this, category);
+        populateList(category);
 
         if (canChooseOneCategoryOnly) {
-            bottomBarLayout.setVisibility(View.GONE);
+            bottomBar.setVisibility(View.GONE);
             ViewGroup.MarginLayoutParams params = (
                     ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
             params.bottomMargin = 0;
@@ -167,59 +161,13 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         }
     }
 
-    /**
-     * Sets the Category to display in this Activty, and updates the BottomBar and RecyclerView
-     * to reflect this.
-     * @param newCategory The Category to display.
-     */
-    private void setCategory(Category newCategory) {
+    @Override
+    public void respondToBottomBarButton(Category newCategory) {
         category = newCategory;
         if (!(canChooseOneCategoryOnly)) {
-            unhighlightAllBottomBarButtons();
-            highlightBottomBarButton(newCategory);
+            bottomBar.focusCategoryButton(this, newCategory);
         }
         populateList(newCategory);
-    }
-
-    /**
-     * Changes the background color of all BottomBar buttons to their non-selected colour.
-     */
-    private void unhighlightAllBottomBarButtons() {
-        int nonSelectedButtonColor = AttributeGetter.getColorAttribute(this, R.attr.colorPrimary);
-        peopleButton.setBackgroundColor(nonSelectedButtonColor);
-        groupsButton.setBackgroundColor(nonSelectedButtonColor);
-        placesButton.setBackgroundColor(nonSelectedButtonColor);
-        itemsButton.setBackgroundColor(nonSelectedButtonColor);
-        conceptsButton.setBackgroundColor(nonSelectedButtonColor);
-    }
-
-    /**
-     * Highlights the button on the Bottom Bar representing a specific {@link Category}.
-     * @param highlightedCategory The Article Category that will have its button highlighted.
-     */
-    private void highlightBottomBarButton(Category highlightedCategory) {
-        LinearLayout categoryButton;
-
-        switch (highlightedCategory) {
-            case Person:
-                categoryButton = peopleButton;
-                break;
-            case Group:
-                categoryButton = groupsButton;
-                break;
-            case Place:
-                categoryButton = placesButton;
-                break;
-            case Item:
-                categoryButton = itemsButton;
-                break;
-            case Concept:
-            default:
-                categoryButton = conceptsButton;
-        }
-
-        int selectedButtonColor = AttributeGetter.getColorAttribute(this, R.attr.colorPrimaryDark);
-        categoryButton.setBackgroundColor(selectedButtonColor);
     }
 
     /**
@@ -264,43 +212,6 @@ public class SelectArticleActivity extends BackButtonActivity implements StringL
         }
 
         return linkableNames;
-    }
-
-    /**
-     * Sets listeners for the Bottom Bar buttons so that Activity displays the selected button's
-     * Category when clicked.
-     */
-    private void setBottomBarListeners() {
-        peopleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCategory(Category.Person);
-            }
-        });
-        groupsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCategory(Category.Group);
-            }
-        });
-        placesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCategory(Category.Place);
-            }
-        });
-        itemsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCategory(Category.Item);
-            }
-        });
-        conceptsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCategory(Category.Concept);
-            }
-        });
     }
 
     /**

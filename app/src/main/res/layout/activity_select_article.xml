@@ -45,13 +45,11 @@
         android:gravity="center"
         />
 
-    <include
-        layout="@layout/activity_bottom_bar"
+    <com.averi.worldscribe.views.BottomBar
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/bottomBar"
         android:layout_gravity="bottom"
         />
-
 
 </android.support.design.widget.CoordinatorLayout>
