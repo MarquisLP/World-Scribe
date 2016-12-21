@@ -11,7 +11,7 @@
     <dimen name="borderWidth">3dp</dimen>
     <dimen name="verticalSpacing">10dp</dimen>
     <dimen name="borderedTextPadding">8dp</dimen>
-    <dimen name="scrollBottomPadding">70dp</dimen>
+    <dimen name="scrollBottomPadding">55dp</dimen>
     <dimen name="radioButtonSpacing">15dp</dimen>
     <dimen name="headerTextSize">36sp</dimen>
     <dimen name="headerSpacing">40dp</dimen>
