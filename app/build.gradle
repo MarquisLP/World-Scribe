@@ -48,7 +48,5 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.2.+'
     compile 'com.google.guava:guava:19.0'
-    compile files('libs/json_simple-1.1.jar')
-    compile files('libs/dropbox-android-sdk-1.6.3.jar')
+    compile 'com.dropbox.core:dropbox-core-sdk:2.1.2'
 }
-
