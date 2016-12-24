@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class ArticleListActivity extends ThemedActivity
         implements StringListContext, BottomBarActivity {
 
-    public static final String APP_KEY = "5pzb74tti855m61";
+    public static final String DROPBOX_APP_KEY = "5pzb74tti855m61";
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -338,7 +338,7 @@ public class ArticleListActivity extends ThemedActivity
      */
     private void linkDropboxAccount() {
         if (!(AppPreferences.dropboxAccessTokenExists(this))) {
-            Auth.startOAuth2Authentication(getApplicationContext(), APP_KEY);
+            Auth.startOAuth2Authentication(getApplicationContext(), DROPBOX_APP_KEY);
         }
     }
 
