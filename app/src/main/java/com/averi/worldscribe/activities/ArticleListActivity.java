@@ -43,6 +43,7 @@ public class ArticleListActivity extends ThemedActivity
     private BottomBar bottomBar;
     private TextView textEmpty;
     private ArrayList<String> articleNames = new ArrayList<>();
+    private boolean syncWorldToDropboxOnResume = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,10 @@ public class ArticleListActivity extends ThemedActivity
 
         populateList(worldName, category);
         getDropboxAccessToken();
+        if (syncWorldToDropboxOnResume) {
+            syncWorldToDropbox();
+            syncWorldToDropboxOnResume = false;
+        }
     }
 
     /**
@@ -330,15 +335,14 @@ public class ArticleListActivity extends ThemedActivity
      * </p>
      */
     private void syncWorldToDropbox() {
-        linkDropboxAccount();
-    }
-
-    /**
-     * Asks the user to authenticate a Dropbox account, if one isn't already linked to this app.
-     */
-    private void linkDropboxAccount() {
         if (!(AppPreferences.dropboxAccessTokenExists(this))) {
             Auth.startOAuth2Authentication(getApplicationContext(), DROPBOX_APP_KEY);
+            // Since the Authentication Activity interrupts the flow of this method,
+            // the actual syncing should occur when the user returns to this Activity after
+            // authentication.
+            syncWorldToDropboxOnResume = true;
+        } else {
+            // TODO: Upload World files to Dropbox and display message if an error occurs.
         }
     }
 
