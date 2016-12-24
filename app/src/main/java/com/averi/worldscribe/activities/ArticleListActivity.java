@@ -167,12 +167,12 @@ public class ArticleListActivity extends ThemedActivity
             case R.id.renameWorldItem:
                 showRenameWorldDialog();
                 return true;
-            case R.id.createWorldItem:
-            case R.id.loadWorldItem:
-            case R.id.deleteWorldItem:
             case R.id.syncToDropboxItem:
                 syncWorldToDropbox();
                 return true;
+            case R.id.createWorldItem:
+            case R.id.loadWorldItem:
+            case R.id.deleteWorldItem:
             case R.id.settingsItem:
                 ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
