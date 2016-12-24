@@ -35,7 +35,7 @@ public class UploadToDropboxTask extends AsyncTask {
     private Context context;
     private boolean uploadSuccessful = true;
 
-    UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
+    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
         this.dbxClient = dbxClient;
         this.file = file;
         this.context = context;

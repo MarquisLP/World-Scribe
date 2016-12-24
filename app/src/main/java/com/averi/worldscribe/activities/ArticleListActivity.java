@@ -3,6 +3,8 @@ package com.averi.worldscribe.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,15 +23,20 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
+import com.averi.worldscribe.dropbox.UploadToDropboxTask;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
+import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
+import com.dropbox.core.v2.DbxClientV2;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ArticleListActivity extends ThemedActivity
@@ -93,7 +100,7 @@ public class ArticleListActivity extends ThemedActivity
         super.onResume();
 
         populateList(worldName, category);
-        getDropboxAccessToken();
+        storeDropboxAccessToken();
         if (syncWorldToDropboxOnResume) {
             syncWorldToDropbox();
             syncWorldToDropboxOnResume = false;
@@ -107,7 +114,7 @@ public class ArticleListActivity extends ThemedActivity
      *     Otherwise, SharedPreferences will not be modified.
      * </p>
      */
-    private void getDropboxAccessToken() {
+    private void storeDropboxAccessToken() {
         if (!(AppPreferences.dropboxAccessTokenExists(this))) {
             String accessToken = Auth.getOAuth2Token();
 
@@ -342,8 +349,46 @@ public class ArticleListActivity extends ThemedActivity
             // authentication.
             syncWorldToDropboxOnResume = true;
         } else {
-            // TODO: Upload World files to Dropbox and display message if an error occurs.
+            String accessToken = getDropboxAccessToken();
+            DbxClientV2 client = getDropboxClient(accessToken);
+            File worldDirectory = FileRetriever.getWorldDirectory(worldName);
+            new UploadToDropboxTask(client, worldDirectory, getApplicationContext()).execute();
         }
+    }
+
+    /**
+     * @return The Dropbox account access token currently stored in SharedPreferences.
+     */
+    private String getDropboxAccessToken() {
+        return getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+                MODE_PRIVATE).getString(AppPreferences.DROPBOX_ACCESS_TOKEN, "");
+    }
+
+    /**
+     * Builds and returns a Dropbox Client object for a Dropbox account given that account's
+     * access token.
+     * @param ACCESS_TOKEN The token used in accessing the user's Dropbox account
+     * @return A Dropbox Client object containing all of the given account's info
+     */
+    private DbxClientV2 getDropboxClient(final String ACCESS_TOKEN) {
+        String clientIdentifier = getString(R.string.app_name) + "/" + getVersionName();
+        DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
+        return new DbxClientV2(config, ACCESS_TOKEN);
+    }
+
+    /**
+     * @return The name of the current app version.
+     */
+    private String getVersionName() {
+        PackageInfo pInfo = null;
+
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return pInfo.versionName;
     }
 
 }
