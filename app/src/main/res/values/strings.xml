@@ -149,4 +149,6 @@
 
     <string name="dropboxUploadSuccess">World files uploaded successfully</string>
     <string name="dropboxUploadFailure">An error occurred while uploading to Dropbox</string>
+    <string name="dropboxUploadProgressTitle">Uploading to Dropbox</string>
+    <string name="dropboxUploadProgressMessage">Please wait…</string>
 </resources>

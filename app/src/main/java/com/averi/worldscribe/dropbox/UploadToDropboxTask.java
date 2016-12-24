@@ -38,11 +38,26 @@ public class UploadToDropboxTask extends AsyncTask {
     private File file;
     private Context context;
     private boolean uploadSuccessful = true;
+    private ProgressDialog progressDialog;
 
     public UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
         this.dbxClient = dbxClient;
         this.file = file;
         this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        showProgressDialog();
+    }
+
+    /**
+     * Displays a loading dialog that will stay on-screen while uploading occurs.
+     */
+    private void showProgressDialog() {
+        String title = context.getString(R.string.dropboxUploadProgressTitle);
+        String message = context.getString(R.string.dropboxUploadProgressMessage);
+        progressDialog = ProgressDialog.show(context, title, message);
     }
 
     @Override
@@ -100,6 +115,8 @@ public class UploadToDropboxTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
+
+        progressDialog.dismiss();
 
         if (uploadSuccessful) {
             Toast.makeText(context, context.getString(R.string.dropboxUploadSuccess),

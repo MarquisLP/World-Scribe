@@ -352,7 +352,7 @@ public class ArticleListActivity extends ThemedActivity
             String accessToken = getDropboxAccessToken();
             DbxClientV2 client = getDropboxClient(accessToken);
             File worldDirectory = FileRetriever.getWorldDirectory(worldName);
-            new UploadToDropboxTask(client, worldDirectory, getApplicationContext()).execute();
+            new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this).execute();
         }
     }
 
