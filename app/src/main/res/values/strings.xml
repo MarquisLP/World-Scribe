@@ -146,4 +146,7 @@
     <string name="generalInfoHeader">General Info</string>
     <string name="nightModeTitle">Night Mode</string>
     <string name="nightModeSwitchText">Night Mode</string>
+
+    <string name="dropboxUploadSuccess">World files uploaded successfully</string>
+    <string name="dropboxUploadFailure">An error occurred while uploading to Dropbox</string>
 </resources>
