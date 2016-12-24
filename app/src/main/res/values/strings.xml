@@ -33,7 +33,7 @@
     <string name="settingsItemText">Settings</string>
     <string name="renameArticleItemText">Rename Article</string>
     <string name="deleteArticleItemText">Delete Article</string>
-    <string name="syncToDropboxItemText">Sync World to Dropbox</string>
+    <string name="syncToDropboxItemText">Backup to Dropbox</string>
 
     <string name="imageFileName">Image</string>
 
@@ -149,6 +149,6 @@
 
     <string name="dropboxUploadSuccess">World files uploaded successfully</string>
     <string name="dropboxUploadFailure">An error occurred while uploading to Dropbox</string>
-    <string name="dropboxUploadProgressTitle">Uploading to Dropbox</string>
+    <string name="dropboxUploadProgressTitle">Uploading World to Dropbox</string>
     <string name="dropboxUploadProgressMessage">Please wait…</string>
 </resources>
