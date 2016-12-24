@@ -1,5 +1,6 @@
 package com.averi.worldscribe.dropbox;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -117,13 +118,24 @@ public class UploadToDropboxTask extends AsyncTask {
         super.onPostExecute(o);
 
         progressDialog.dismiss();
+        showOutcomeDialog();
+    }
+
+    /**
+     * Displays an AlertDialog telling the user whether or not the upload was successful.
+     */
+    private void showOutcomeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        String message;
 
         if (uploadSuccessful) {
-            Toast.makeText(context, context.getString(R.string.dropboxUploadSuccess),
-                    Toast.LENGTH_LONG).show();
+            message = context.getString(R.string.dropboxUploadSuccess);
         } else {
-            Toast.makeText(context, context.getString(R.string.dropboxUploadFailure),
-                    Toast.LENGTH_LONG).show();
+            message = context.getString(R.string.dropboxUploadFailure);
         }
+
+        builder.setMessage(message);
+        builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome), null);
+        builder.create().show();
     }
 }
