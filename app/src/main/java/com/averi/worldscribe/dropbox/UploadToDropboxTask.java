@@ -120,10 +120,10 @@ public class UploadToDropboxTask extends AsyncTask {
 
         if (uploadSuccessful) {
             Toast.makeText(context, context.getString(R.string.dropboxUploadSuccess),
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, context.getString(R.string.dropboxUploadFailure),
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
         }
     }
 }
