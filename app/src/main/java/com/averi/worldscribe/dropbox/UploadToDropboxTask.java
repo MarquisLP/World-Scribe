@@ -1,12 +1,16 @@
 package com.averi.worldscribe.dropbox;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.averi.worldscribe.R;
+import com.averi.worldscribe.utilities.FileRetriever;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.files.CreateFolderErrorException;
 import com.dropbox.core.v2.files.WriteMode;
 
 import java.io.File;
@@ -44,14 +48,53 @@ public class UploadToDropboxTask extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            InputStream inputStream = new FileInputStream(file);
-            dbxClient.files().uploadBuilder("/" + file.getName())
-                    .withMode(WriteMode.OVERWRITE)
-                    .uploadAndFinish(inputStream);
+            uploadRecursive(file);
         } catch (DbxException | IOException e) {
+            Log.e("WorldScribe", e.getMessage());
             uploadSuccessful = false;
         }
         return null;
+    }
+
+    /**
+     * Upload the given file to Dropbox; if it is a directory, its contents will be recursively
+     * uploaded.
+     * @param originalFile The file to upload to the client's Dropbox account
+     * @throws DbxException If an error occurs with accessing the client's Dropbox account
+     * @throws IOException If an error occurs with file uploading
+     */
+    private void uploadRecursive(File originalFile) throws DbxException, IOException  {
+        if (file.exists()) {
+            File[] files = originalFile.listFiles();
+
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                String dropboxPath = getDropboxPath(file);
+                if (file.isDirectory()) {
+                    try {
+                        dbxClient.files().createFolder(dropboxPath);
+                    } catch (CreateFolderErrorException ex) {
+                    }
+                    uploadRecursive(file);
+                } else {
+                    InputStream inputStream = new FileInputStream(file);
+                    dbxClient.files().uploadBuilder(dropboxPath)
+                            .withMode(WriteMode.OVERWRITE)
+                            .uploadAndFinish(inputStream);
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns the path of the given Android file on the client's Dropbox account.
+     * @param file The file whose Dropbox path will be retrieved
+     * @return The Dropbox file path of file
+     */
+    private String getDropboxPath(File file) {
+        String androidFilePath = file.getAbsolutePath();
+        String appFilePath = FileRetriever.getAppDirectory().getAbsolutePath();
+        return androidFilePath.replace(appFilePath, "");
     }
 
     @Override
