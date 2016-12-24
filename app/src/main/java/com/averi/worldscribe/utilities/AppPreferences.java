@@ -12,6 +12,7 @@ public class AppPreferences {
     public static final String WRITE_PERMISSION_PROMPT_IS_ENABLED = "permissionPromptIsEnabled";
     public static final String APP_THEME = "appTheme";
     public static final String NIGHT_MODE_IS_ENABLED = "nightModeIsEnabled";
+    public static final String DROPBOX_ACCESS_TOKEN = "dropboxAccessToken";
 
     /**
      * Save the name of the World that was last opened, so that it can automatically be loaded the
@@ -34,5 +35,17 @@ public class AppPreferences {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);
         return preferences.getBoolean(NIGHT_MODE_IS_ENABLED, false);
+    }
+
+    /**
+     * Checks if this app has access to the user's Dropbox account by seeing if an access token
+     * for that account exists in preferences.
+     * @param context The context calling this method
+     * @return True if a Dropbox access token exists in SharedPreferences; false otherwise
+     */
+    public static boolean dropboxAccessTokenExists(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        return preferences.contains(DROPBOX_ACCESS_TOKEN);
     }
 }
