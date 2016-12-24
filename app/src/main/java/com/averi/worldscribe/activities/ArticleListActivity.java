@@ -2,6 +2,7 @@ package com.averi.worldscribe.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,11 +28,14 @@ import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
+import com.dropbox.core.android.Auth;
 
 import java.util.ArrayList;
 
 public class ArticleListActivity extends ThemedActivity
         implements StringListContext, BottomBarActivity {
+
+    public static final String APP_KEY = "5pzb74tti855m61";
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -88,6 +92,28 @@ public class ArticleListActivity extends ThemedActivity
         super.onResume();
 
         populateList(worldName, category);
+        getDropboxAccessToken();
+    }
+
+    /**
+     * Stores a user access token generated from Dropbox's servers into SharedPreferences,
+     * if the user has authenticated their account and an access token has not already been stored.
+     * <p>
+     *     Otherwise, SharedPreferences will not be modified.
+     * </p>
+     */
+    private void getDropboxAccessToken() {
+        if (!(AppPreferences.dropboxAccessTokenExists(this))) {
+            String accessToken = Auth.getOAuth2Token();
+
+            if (accessToken != null) {
+                SharedPreferences preferences = getSharedPreferences(
+                        AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
+                preferences.edit().putString(
+                        AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
+            }
+        }
+
     }
 
     @Override
@@ -144,6 +170,9 @@ public class ArticleListActivity extends ThemedActivity
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
             case R.id.deleteWorldItem:
+            case R.id.syncToDropboxItem:
+                syncWorldToDropbox();
+                return true;
             case R.id.settingsItem:
                 ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
@@ -286,6 +315,31 @@ public class ArticleListActivity extends ThemedActivity
         this.category = category;
         bottomBar.focusCategoryButton(this, category);
         populateList(worldName, category);
+    }
+
+    /**
+     * Syncs the current World's files to the user's Dropbox account.
+     *
+     * <p>
+     *     If the user has not yet linked a Dropbox account, they will be asked to authenticate
+     *     their account.
+     * </p>
+     *
+     * <p>
+     *     If an error occurs while syncing files, a message will be displayed.
+     * </p>
+     */
+    private void syncWorldToDropbox() {
+        linkDropboxAccount();
+    }
+
+    /**
+     * Asks the user to authenticate a Dropbox account, if one isn't already linked to this app.
+     */
+    private void linkDropboxAccount() {
+        if (!(AppPreferences.dropboxAccessTokenExists(this))) {
+            Auth.startOAuth2Authentication(getApplicationContext(), APP_KEY);
+        }
     }
 
 }
