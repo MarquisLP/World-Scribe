@@ -176,8 +176,10 @@ public final class ExternalWriter {
         Boolean result = true;
 
         String sourceFilename= imageUri.getPath();
+        // The "." added at the beginning of the file name prevents this image from showing
+        // up in the Gallery app.
         String destinationFilename = FileRetriever.getArticleFile(context, worldName, category,
-                articleName, context.getString(R.string.imageFileName)).getAbsolutePath();
+                articleName, "." + context.getString(R.string.imageFileName)).getAbsolutePath();
         destinationFilename += ExternalReader.IMAGE_FILE_EXTENSION;
 
         BufferedInputStream bufferedInputStream = null;
@@ -202,6 +204,37 @@ public final class ExternalWriter {
         }
 
         return result;
+    }
+
+    /**
+     * Looks in a specific Article's directory for an image file without a "." at the beginning
+     * and, if found, prepends the "." to the beginning of the file name.
+     *
+     * <p>
+     *     This is to correct an oversight where images stored without the preceding "." would
+     *     show up in the Gallery app as individual albums, which clutters up the app considerably.
+     * </p>
+     *
+     * @return True if an image file for the given Article matching the old file name format was
+     *         found and renamed accordingly; false otherwise
+     */
+    public static boolean convertOldImageFilenameFormat(Context context, String worldName,
+                                                 Category category, String articleName) {
+        boolean imageWasRenamedSuccessfully = false;
+        String imageFileName = context.getResources().getString(R.string.imageFileName)
+                + ExternalReader.IMAGE_FILE_EXTENSION;
+        File oldImageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                imageFileName);
+
+        if (oldImageFile.exists()) {
+            String oldPathToFile = FileRetriever.getArticleDirectory(
+                    context, worldName, category, articleName).getAbsolutePath();
+            String newFilePath = oldPathToFile + "/." + imageFileName ;
+            File newImageFile = new File(newFilePath);
+            imageWasRenamedSuccessfully = oldImageFile.renameTo(newImageFile);
+        }
+
+        return imageWasRenamedSuccessfully;
     }
 
     /**

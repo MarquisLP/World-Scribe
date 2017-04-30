@@ -106,7 +106,8 @@ public class ExternalReader {
     public static Bitmap getArticleImage(Context context, String worldName, Category category,
                                          String articleName, int viewWidth, int viewHeight) {
         File imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
-                context.getResources().getString(R.string.imageFileName) + IMAGE_FILE_EXTENSION);
+                "." + context.getResources().getString(R.string.imageFileName) +
+                        IMAGE_FILE_EXTENSION);
         Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(imageFile, viewWidth, viewHeight);
         return articleBitmap;
     }
