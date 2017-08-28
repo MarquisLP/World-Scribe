@@ -349,10 +349,19 @@ public class ArticleListActivity extends ThemedActivity
             // authentication.
             syncWorldToDropboxOnResume = true;
         } else {
-            String accessToken = getDropboxAccessToken();
-            DbxClientV2 client = getDropboxClient(accessToken);
-            File worldDirectory = FileRetriever.getWorldDirectory(worldName);
-            new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this).execute();
+            new AlertDialog.Builder(this)
+                    .setTitle(this.getString(R.string.confirmBackupToDropboxTitle, worldName))
+                    .setMessage(this.getString(R.string.confirmBackupToDropbox, worldName))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        String accessToken = getDropboxAccessToken();
+                        DbxClientV2 client = getDropboxClient(accessToken);
+                        File worldDirectory = FileRetriever.getWorldDirectory(worldName);
+                        new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this).execute();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         }
     }
 
