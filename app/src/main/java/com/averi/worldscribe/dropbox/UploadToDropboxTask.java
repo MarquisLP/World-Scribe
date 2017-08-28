@@ -109,8 +109,19 @@ public class UploadToDropboxTask extends AsyncTask {
      */
     private String getDropboxPath(File file) {
         String androidFilePath = file.getAbsolutePath();
+
         String appFilePath = FileRetriever.getAppDirectory().getAbsolutePath();
-        return androidFilePath.replace(appFilePath, "");
+        String dropboxPath = androidFilePath.replace(appFilePath, "");
+
+        // Dropbox will not upload files that have a "." prefix.
+        // To get around this, we upload those files without the "." prefix.
+        String fileName = file.getName();
+        if (fileName.startsWith(".")) {
+            String fileNameWithoutDotPrefix = fileName.substring(1);
+            dropboxPath = dropboxPath.replace(fileName, fileNameWithoutDotPrefix);
+        }
+
+        return dropboxPath;
     }
 
     @Override
