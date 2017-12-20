@@ -35,6 +35,10 @@ public class PermissionActivity extends ThemedActivity {
             ExternalWriter.createAppDirectory();
         }
 
+        if (!(ExternalReader.noMediaFileExists())) {
+            ExternalWriter.createNoMediaFile();
+        }
+
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
             goToNextActivity();
         }
