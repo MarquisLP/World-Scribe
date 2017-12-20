@@ -36,7 +36,7 @@ public class ExternalReader {
     /**
      * @return True if a .nomedia file exists in the top-level folder of the app directory
      */
-    public static boolean noMediaFileExist() {
+    public static boolean noMediaFileExists() {
         return FileRetriever.getNoMediaFile().exists();
     }
 
