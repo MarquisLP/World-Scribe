@@ -112,9 +112,18 @@ public class ExternalReader {
      */
     public static Bitmap getArticleImage(Context context, String worldName, Category category,
                                          String articleName, int viewWidth, int viewHeight) {
+        String filename = context.getResources().getString(R.string.imageFileName) +
+                        IMAGE_FILE_EXTENSION;
         File imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
-                "." + context.getResources().getString(R.string.imageFileName) +
-                        IMAGE_FILE_EXTENSION);
+                filename);
+        // Some Article images might have a dot prepended to the file name.
+        // See issue #8 to see why only some image files have a dot.
+        if (!(imageFile.exists())) {
+            filename = "." + filename;
+            imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                    filename);
+        }
+
         Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(imageFile, viewWidth, viewHeight);
         return articleBitmap;
     }
