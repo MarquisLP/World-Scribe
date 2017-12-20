@@ -38,6 +38,24 @@ public final class ExternalWriter {
         return FileRetriever.getAppDirectory().mkdirs();
     }
 
+    /**
+     * Creates a .nomedia file in the top-level folder of the app's directory, in order to
+     * prevent media files (such as images) from appearing in other Android apps (such as the
+     * Gallery app).
+     * @return True if the .nomedia file was created successfully in the top-level app folder
+     */
+    public static boolean createNoMediaFile() {
+        boolean success = false;
+
+        try {
+            success = FileRetriever.getNoMediaFile().createNewFile();
+        } catch (IOException ex) {
+            success = false;
+        }
+
+        return success;
+    }
+
     public static boolean createWorldDirectory(Context context, String worldName) {
         boolean directoryWasCreated = true;
 

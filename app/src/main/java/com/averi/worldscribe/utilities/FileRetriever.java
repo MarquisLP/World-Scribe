@@ -20,6 +20,13 @@ public class FileRetriever {
         return new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY_NAME);
     }
 
+    /**
+     * @return The .nomedia file located in the top-level app folder.
+     */
+    public static File getNoMediaFile() {
+        return new File(getAppDirectory(), ".nomedia");
+    }
+
     public static File getWorldDirectory(String worldName) {
         return new File(getAppDirectory(), worldName);
     }
