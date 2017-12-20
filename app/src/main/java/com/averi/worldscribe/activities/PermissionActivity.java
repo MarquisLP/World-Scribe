@@ -31,15 +31,8 @@ public class PermissionActivity extends ThemedActivity {
 
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
 
-        if (!(ExternalReader.appDirectoryExists())) {
-            ExternalWriter.createAppDirectory();
-        }
-
-        if (!(ExternalReader.noMediaFileExists())) {
-            ExternalWriter.createNoMediaFile();
-        }
-
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
+            generateMissingAppDirectoryAndFiles();
             goToNextActivity();
         }
     }
@@ -82,6 +75,7 @@ public class PermissionActivity extends ThemedActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     enableWritePermissionPrompt();
+                    generateMissingAppDirectoryAndFiles();
                     goToNextActivity();
                 } else if (userDisabledAskingForWritePermission()) {
                     recordDisablingOfWritePermissionPrompt();
@@ -111,6 +105,20 @@ public class PermissionActivity extends ThemedActivity {
         startActivity(intent);
     }
 
+    /**
+     * Generates the app directory and any necessary configuration files if they
+     * are missing from the user's external storage.
+     */
+    private void generateMissingAppDirectoryAndFiles() {
+        if (!(ExternalReader.appDirectoryExists())) {
+            ExternalWriter.createAppDirectory();
+        }
+
+        if (!(ExternalReader.noMediaFileExists())) {
+            ExternalWriter.createNoMediaFile();
+        }
+    }
+
     private void goToNextActivity() {
         String lastOpenedWorldName = preferences.getString(AppPreferences.LAST_OPENED_WORLD, "");
         if ((!(lastOpenedWorldName.isEmpty())) && (ExternalReader.worldAlreadyExists(lastOpenedWorldName))) {
@@ -118,10 +126,6 @@ public class PermissionActivity extends ThemedActivity {
 
         } else {
             setLastOpenedWorldToNothing();
-
-            if (!(ExternalReader.appDirectoryExists())) {
-                ExternalWriter.createAppDirectory();
-            }
 
             if (ExternalReader.worldListIsEmpty()) {
                 goToWorldCreation();
