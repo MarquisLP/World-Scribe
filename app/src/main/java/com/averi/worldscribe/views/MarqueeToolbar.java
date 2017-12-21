@@ -38,7 +38,14 @@ public class MarqueeToolbar extends Toolbar {
             reflected = reflectTitle();
         }
         super.setTitle(title);
-        selectTitle();
+        // Due to postDelayed(), selectTitle() will cause an exception if it's called before
+        // the title TextView has been created. In Activities, setSupportActionBar() might
+        // call selectTitle() too early, thus causing an exception.
+        // We can prevent this by checking reflected, which can only be set
+        // to true if the title TextView exists.
+        if (reflected) {
+            selectTitle();
+        }
     }
 
     @Override
@@ -47,7 +54,14 @@ public class MarqueeToolbar extends Toolbar {
             reflected = reflectTitle();
         }
         super.setTitle(resId);
-        selectTitle();
+        // Due to postDelayed(), selectTitle() will cause an exception if it's called before
+        // the title TextView has been created. In Activities, setSupportActionBar() might
+        // call selectTitle() too early, thus causing an exception.
+        // We can prevent this by checking reflected, which can only be set
+        // to true if the title TextView exists.
+        if (reflected) {
+            selectTitle();
+        }
     }
 
     boolean reflected = false;
@@ -72,7 +86,11 @@ public class MarqueeToolbar extends Toolbar {
     }
 
     public void selectTitle() {
-        if (title != null)
-            title.setSelected(true);
+        title.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                title.setSelected(true);
+            }
+        }, 1000);
     }
 }
