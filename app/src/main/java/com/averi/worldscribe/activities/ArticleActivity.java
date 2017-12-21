@@ -328,9 +328,9 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     protected void setAppBar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         assert myToolbar != null;
-        myToolbar.setTitle(articleName);
         setSupportActionBar(myToolbar);
         super.setAppBar();
+        getSupportActionBar().setTitle(articleName);
     }
 
     /**
