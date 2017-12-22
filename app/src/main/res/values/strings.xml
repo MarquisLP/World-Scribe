@@ -157,4 +157,7 @@
     <string name="dropboxUploadProgressTitle">Uploading World to Dropbox</string>
     <string name="dropboxUploadProgressMessage">Please wait…</string>
     <string name="dismissDropboxUploadOutcome">OK</string>
+
+    <string name="readerModeEnabledMessage">Reader Mode (text input disabled)</string>
+    <string name="editorModeEnabledMessage">Editor Mode (text input enabled)</string>
 </resources>
