@@ -26,7 +26,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <android.support.v7.widget.Toolbar
+            <com.averi.worldscribe.views.MarqueeToolbar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
