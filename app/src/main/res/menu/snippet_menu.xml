@@ -4,14 +4,14 @@
     <item
         android:id="@+id/enableReaderModeItem"
         android:icon="@drawable/reader_mode"
-        android:title="@string/renameArticleItemText"
+        android:title="@string/enableReaderModeItemText"
         app:showAsAction="always"
         />
 
     <item
         android:id="@+id/enableEditorModeItem"
         android:icon="@drawable/editor_mode"
-        android:title="@string/renameArticleItemText"
+        android:title="@string/enableEditorModeItemText"
         android:visible="false"
         app:showAsAction="always"
         />
