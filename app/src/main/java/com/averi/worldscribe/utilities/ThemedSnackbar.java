@@ -11,7 +11,7 @@ import com.averi.worldscribe.R;
 /**
  * Created by mark on 20/06/16.
  */
-public class ErrorMessager {
+public class ThemedSnackbar {
     /**
      * The maximum number of lines that can be displayed by a Snackbar message.
      */

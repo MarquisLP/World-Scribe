@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
-import com.averi.worldscribe.utilities.ErrorMessager;
+import com.averi.worldscribe.utilities.ThemedSnackbar;
 
 /**
  * <p>
@@ -72,13 +72,13 @@ public abstract class ReaderModeActivity extends BackButtonActivity {
             if (readerModeIsEnabled) {
                 menu.findItem(R.id.enableReaderModeItem).setVisible(false);
                 menu.findItem(R.id.enableEditorModeItem).setVisible(true);
-                ErrorMessager.showSnackbarMessage(this, getRootLayout(),
+                ThemedSnackbar.showSnackbarMessage(this, getRootLayout(),
                         getString(R.string.readerModeEnabledMessage));
                 showCurrentModeSnackbar = false;
             } else {
                 menu.findItem(R.id.enableReaderModeItem).setVisible(true);
                 menu.findItem(R.id.enableEditorModeItem).setVisible(false);
-                ErrorMessager.showSnackbarMessage(this, getRootLayout(),
+                ThemedSnackbar.showSnackbarMessage(this, getRootLayout(),
                         getString(R.string.editorModeEnabledMessage));
                 showCurrentModeSnackbar = false;
             }

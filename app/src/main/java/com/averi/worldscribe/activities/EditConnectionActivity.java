@@ -18,7 +18,7 @@ import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
-import com.averi.worldscribe.utilities.ErrorMessager;
+import com.averi.worldscribe.utilities.ThemedSnackbar;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
@@ -152,7 +152,7 @@ public class EditConnectionActivity extends BackButtonActivity {
                 && (!(otherArticleRelationText.getText().toString().isEmpty())));
 
         if (!(bothFieldsAreFilled)) {
-            ErrorMessager.showSnackbarMessage(this, layoutRoot,
+            ThemedSnackbar.showSnackbarMessage(this, layoutRoot,
                     getString(R.string.emptyRelationError));
         }
 
