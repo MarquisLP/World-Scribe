@@ -52,7 +52,7 @@ import java.util.ArrayList;
  * corresponding to their respective Categories, as well as the other abstract methods for
  * obtaining specific Views.
  */
-public abstract class ArticleActivity extends BackButtonActivity implements BottomBarActivity {
+public abstract class ArticleActivity extends ReaderModeActivity implements BottomBarActivity {
 
     /**
      * The request code for selecting a new Article image.
@@ -456,7 +456,8 @@ public abstract class ArticleActivity extends BackButtonActivity implements Bott
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_menu, menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**

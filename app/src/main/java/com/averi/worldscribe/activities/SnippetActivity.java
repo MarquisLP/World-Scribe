@@ -19,7 +19,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class SnippetActivity extends BackButtonActivity {
+public class SnippetActivity extends ReaderModeActivity {
 
     /**
      * The text field for editing the Snippet's content.
@@ -89,7 +89,7 @@ public class SnippetActivity extends BackButtonActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.snippet_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
