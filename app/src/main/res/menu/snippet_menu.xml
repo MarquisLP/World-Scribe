@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/enableReaderModeItem"
+        android:icon="@drawable/reader_mode"
+        android:title="@string/enableReaderModeItemText"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/enableEditorModeItem"
+        android:icon="@drawable/editor_mode"
+        android:title="@string/enableEditorModeItemText"
+        android:visible="false"
+        app:showAsAction="always"
+        />
+</menu>

@@ -17,7 +17,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
-import com.averi.worldscribe.utilities.ErrorMessager;
+import com.averi.worldscribe.utilities.ThemedSnackbar;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -168,7 +168,7 @@ public class CreateArticleActivity extends BackButtonActivity {
         String articleName = getArticleName();
 
         if (ExternalReader.articleExists(this, worldName, category, articleName)) {
-            ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
+            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
                     getString(R.string.articleAlreadyExistsError));
         } else {
             boolean articleWasCreated = ExternalWriter.createArticleDirectory(
@@ -176,7 +176,7 @@ public class CreateArticleActivity extends BackButtonActivity {
             if (articleWasCreated) {
                 goToNewArticle(worldName, category, articleName);
             } else {
-                ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
+                ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
                         getString(R.string.articleCreationError));
             }
         }

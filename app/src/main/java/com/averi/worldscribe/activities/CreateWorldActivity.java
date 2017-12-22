@@ -15,6 +15,7 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.ThemedSnackbar;
 
 public class CreateWorldActivity extends BackButtonActivity {
 
@@ -125,11 +126,11 @@ public class CreateWorldActivity extends BackButtonActivity {
     }
 
     private void showWorldAlreadyExistsMessage() {
-        com.averi.worldscribe.utilities.ErrorMessager.showSnackbarMessage(this,coordinatorLayout, worldAlreadyExistsMessage);
+        ThemedSnackbar.showSnackbarMessage(this,coordinatorLayout, worldAlreadyExistsMessage);
     }
 
     private void showWorldCreationErrorMessage() {
-        com.averi.worldscribe.utilities.ErrorMessager.showSnackbarMessage(this, coordinatorLayout, worldCreationErrorMessage);
+        ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout, worldCreationErrorMessage);
     }
 
     private void saveNewWorldAsLastOpened(String worldName) {

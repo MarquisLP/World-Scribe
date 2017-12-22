@@ -10,6 +10,8 @@ import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -197,6 +199,26 @@ public class ActivityUtilities {
                 return true;
             }
         });
+    }
+
+    /**
+     * Recursively searches through all Views in a ViewGroup, and sets any EditTexts found
+     * to be either editable or non-editable.
+     *
+     * @param rootView The ViewGroup whose entire child View hierarchy will be searched
+     * @param enabled Set to true if EditTexts should be editable; false if they should be
+     *                non-editable
+     */
+    public static void toggleAllEditTexts(ViewGroup rootView, boolean enabled) {
+        for (int i = 0; i < rootView.getChildCount(); i++) {
+            final View currentView = rootView.getChildAt(i);
+            if (currentView instanceof ViewGroup) {
+                ActivityUtilities.toggleAllEditTexts((ViewGroup) currentView, enabled);
+            } else if (currentView instanceof EditText) {
+                currentView.setFocusable(enabled);
+                currentView.setFocusableInTouchMode(enabled);
+            }
+        }
     }
 
 }

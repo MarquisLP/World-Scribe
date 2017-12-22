@@ -32,7 +32,7 @@ public class ConceptActivity extends ArticleActivity {
 
     @Override
     protected ViewGroup getRootLayout() {
-        return (ViewGroup) findViewById(R.id.relativeScreen);
+        return (ViewGroup) findViewById(R.id.coordinatorLayout);
     }
 
     @Override

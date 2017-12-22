@@ -14,7 +14,7 @@ import android.widget.EditText;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
-import com.averi.worldscribe.utilities.ErrorMessager;
+import com.averi.worldscribe.utilities.ThemedSnackbar;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
@@ -139,7 +139,7 @@ public class CreateSnippetActivity extends BackButtonActivity {
         if (ExternalReader.snippetExists(this, worldName, articleCategory, articleName,
                 snippetName)) {
             nameIsAvailable = false;
-            ErrorMessager.showSnackbarMessage(this, coordinatorLayout,
+            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
                     getString(R.string.snippetExistsError, snippetName, articleName));
         } else {
             nameIsAvailable = true;

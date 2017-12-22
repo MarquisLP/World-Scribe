@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -17,7 +19,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
-public class SnippetActivity extends BackButtonActivity {
+public class SnippetActivity extends ReaderModeActivity {
 
     /**
      * The text field for editing the Snippet's content.
@@ -81,6 +83,13 @@ public class SnippetActivity extends BackButtonActivity {
             @Override
             public void afterTextChanged(Editable s) { editedSinceLastSave = true; }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.snippet_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
