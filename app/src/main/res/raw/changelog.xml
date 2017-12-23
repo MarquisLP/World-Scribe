@@ -3,7 +3,7 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
-    <changelogversion versionName="1.4.0" changeDate="Dec 24 ,2017">
+    <changelogversion versionName="1.4.0" changeDate="Dec 24, 2017">
         <changelogtext>[b]Bug fix: images used in this app will no longer appear in the Gallery app.
             [/b] Sorry for any inconvenience this bug may have caused!</changelogtext>
         <changelogtext>[b]Reader Mode has been added![/b] While browsing an Article
