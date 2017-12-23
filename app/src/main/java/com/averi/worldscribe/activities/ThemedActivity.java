@@ -51,7 +51,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
     /**
      * @return True if the user has enabled Night Mode in Settings.
      */
-    private boolean nightModeIsEnabled() {
+    protected boolean nightModeIsEnabled() {
         return getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE).getBoolean(
                 AppPreferences.NIGHT_MODE_IS_ENABLED, false);
     }

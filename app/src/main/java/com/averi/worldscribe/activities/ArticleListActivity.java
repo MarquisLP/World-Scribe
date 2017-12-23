@@ -264,7 +264,13 @@ public class ArticleListActivity extends ThemedActivity
      * </p>
      */
     private void showChangelogDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder;
+        if (nightModeIsEnabled()) {
+            builder = new AlertDialog.Builder(this, R.style.NightModeDialog);
+        } else {
+            builder = new AlertDialog.Builder(this, R.style.NormalDialog);
+        }
+
         LayoutInflater inflater = this.getLayoutInflater();
         View content = inflater.inflate(R.layout.changelog_dialog, null);
 

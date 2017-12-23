@@ -66,4 +66,12 @@
         <item name="themedBorder">@drawable/border_red</item>
     </style>
 
+    <style name="NormalDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="NightModeDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/duskGray</item>
+    </style>
+
 </resources>
