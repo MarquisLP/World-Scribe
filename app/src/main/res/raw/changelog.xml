@@ -17,4 +17,56 @@
             enthusiasts![/b]</changelogtext>
     </changelogversion>
 
+    <changelogversion versionName="1.3.3" changeDate="Aug 28, 2017">
+        <changelogtext>[b]Fixed a bug that prevented images from being uploaded to Dropbox.[/b]</changelogtext>
+        <changelogtext>[b]Added a confirmation message that appears when trying to upload a World to
+            Dropbox.[/b]</changelogtext>
+        <changelogtext>[b]Darkened the background colour in Night Mode.[/b] For all fans of "Ube
+            Purple"
+            and "Lovely Red", rejoice -- you no longer have to squint at your text in the dark!</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.2" changeDate="Jul 1, 2017">
+        <changelogtext>[b]Updated to the latest Dropbox SDK[/b] in order to avoid a
+        bug with the older SDK version.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.1" changeDate="Apr 30, 2017">
+        <changelogtext>[b]Fixed a bug that would cause Article images to clutter up the Gallery
+            app.[/b] Sorry for any inconvenience this may have caused! [i]Note:
+            this fix didn't work. The proper solution was implemented in 1.4.0.[/i]</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.0" changeDate="Dec 24, 2016">
+        <changelogtext>[b]Dropbox backup support has been added![/b] While browsing Articles,
+            choose "Backup to Dropbox" from the menu to upload the current World to your Dropbox
+            account.</changelogtext>
+        <changelogtext>[b]The bottom navigation bar has been significantly improved![/b]
+            Its smaller and sleeker appearance is easier on the eyes, and frees up screen
+            real-estate for your all-important world content.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.2.0" changeDate="Dec 16, 2016">
+        <changelogtext>[b]Fixed a significant bug that would cause the app to crash in several
+            places due to missing folders.[/b] Sincerest apologies to the (many) users who have
+            experienced this issue!</changelogtext>
+        <changelogtext>[b]Added searching for Articles by Category![/b] Just tap on the magnifying
+            glass icon while browsing through Articles, or while choosing an Article to link.</changelogtext>
+        <changelogtext>[b]When choosing an Article to link, the Articles are now sorted
+            alphabetically.[/b]</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.1.1" changeDate="Sep 30, 2016">
+        <changelogtext>[b]Fixed a bug that prevented the most recently opened world from
+            automatically opening on startup, if that world was renamed during the previous session.
+            [/b]</changelogtext>
+        <changelogtext>[b]World renaming has been added![/b] Settle for any name now, and let the
+            perfect moniker come to you later.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.0.1" changeDate="Sep 5, 2016">
+        <changelogtext>[b]Fixed a bug that would cause devices with Android API 21 or lower to crash
+            upon opening the "Create Article" screen.[/b]</changelogtext>
+    </changelogversion>
+
 </changelog>
