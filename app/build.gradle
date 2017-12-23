@@ -49,4 +49,5 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.2.+'
     compile 'com.google.guava:guava:19.0'
     compile 'com.dropbox.core:dropbox-core-sdk:3.0.3'
+    compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 }
