@@ -345,7 +345,7 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      * Populate the Snippets RecyclerView with cards for this Article's Snippets.
      */
     private void populateSnippets() {
-        snippetsList.setAdapter(new SnippetsAdapter(this, worldName, category, articleName));
+        snippetsList.setAdapter(new SnippetsAdapter(this, worldName, category, articleName, nightModeIsEnabled()));
     }
 
     /**
@@ -574,7 +574,8 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      * Displays a dialog where the user can rename this Article.
      */
     private void showRenameArticleDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = ActivityUtilities.getThemedDialogBuilder(this,
+                nightModeIsEnabled());
         LayoutInflater inflater = this.getLayoutInflater();
         View content = inflater.inflate(R.layout.rename_article_dialog, null);
 

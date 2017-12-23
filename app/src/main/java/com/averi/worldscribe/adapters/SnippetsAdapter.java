@@ -18,6 +18,7 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.SnippetActivity;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
@@ -107,7 +108,8 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
          * Shows the dialog for renaming the Snippet represented by this ViewHolder.
          */
         private void showRenameDialog() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            AlertDialog.Builder builder = ActivityUtilities.getThemedDialogBuilder(activity,
+                    nightModeIsEnabled);
             LayoutInflater inflater = activity.getLayoutInflater();
             View content = inflater.inflate(R.layout.rename_snippet_dialog, null);
 
@@ -227,6 +229,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     private final String worldName;
     private final Category category;
     private final String articleName;
+    private final boolean nightModeIsEnabled;
 
     /**
      * Instantiates a new SnippetsAdapter.
@@ -234,13 +237,15 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
      * @param worldName The name of the current World.
      * @param category The {@link Category} of the current Article.
      * @param articleName The name of the current Article.
+     * @param nightModeIsEnabled Set to true if Night Mode is currently enabled
      */
-    public SnippetsAdapter(ArticleActivity activity, String worldName, Category category, String articleName) {
+    public SnippetsAdapter(ArticleActivity activity, String worldName, Category category, String
+            articleName, boolean nightModeIsEnabled) {
         this.activity = activity;
         this.worldName = worldName;
         this.category = category;
         this.articleName = articleName;
-
+        this.nightModeIsEnabled = nightModeIsEnabled;
         snippets = ExternalReader.getSnippetNames(activity, worldName, category, articleName);
     }
 

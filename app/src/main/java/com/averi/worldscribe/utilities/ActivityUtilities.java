@@ -221,4 +221,25 @@ public class ActivityUtilities {
         }
     }
 
+    /**
+     * Returns an AlertDialog Builder that produces a dialog with the correct background color
+     * depending on whether Night Mode is enabled or not.
+     *
+     * @param context The Context in which the AlertDialog is going to be displayed
+     * @param nightModeIsEnabled Set to true if Night Mode has been enabled by the user`
+     * @return An AlertDialog Builder that produces a dialog with a dark background if Night Mode
+     *         is currently enabled, or a white background if it isn't enabled
+     */
+    public static AlertDialog.Builder getThemedDialogBuilder(Context context,
+                                                             boolean nightModeIsEnabled) {
+        AlertDialog.Builder builder;
+        if (nightModeIsEnabled) {
+            builder = new AlertDialog.Builder(context, R.style.NightModeDialog);
+        } else {
+            builder = new AlertDialog.Builder(context, R.style.NormalDialog);
+        }
+
+        return builder;
+    }
+
 }
