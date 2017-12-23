@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/root"
-    android:background="@android:color/white">
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/root"
+              android:background="@android:color/white">
 
     <TextView
         android:layout_width="match_parent"
@@ -18,9 +19,12 @@
 
     <it.gmariotti.changelibs.library.view.ChangeLogRecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:chg="http://schemas.android.com/apk/res-auto"
         android:id="@+id/changelogRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        chg:rowLayoutId="@layout/changelog_row_layout"
+        />
 
 </LinearLayout>
