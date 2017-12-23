@@ -13,6 +13,7 @@ public class AppPreferences {
     public static final String APP_THEME = "appTheme";
     public static final String NIGHT_MODE_IS_ENABLED = "nightModeIsEnabled";
     public static final String DROPBOX_ACCESS_TOKEN = "dropboxAccessToken";
+    public static final String LAST_OPENED_VERSION_CODE = "lastOpenedVersionCode";
 
     /**
      * Save the name of the World that was last opened, so that it can automatically be loaded the

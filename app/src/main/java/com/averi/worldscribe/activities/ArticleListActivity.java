@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.averi.worldscribe.BuildConfig;
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
@@ -65,6 +66,7 @@ public class ArticleListActivity extends ThemedActivity
         setupRecyclerView();
         setAppBar(worldName);
         bottomBar.focusCategoryButton(this, category);
+        showChangelogDialogIfOpeningNewVersion();
     }
 
     private void setupRecyclerView() {
@@ -233,6 +235,24 @@ public class ArticleListActivity extends ThemedActivity
                         }
                     }
                 });
+    }
+
+    /**
+     * Displays the Changelog Dialog if this is the first time the user has opened
+     * the app since updating to a new version.
+     */
+    private void showChangelogDialogIfOpeningNewVersion() {
+        SharedPreferences preferences = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+                MODE_PRIVATE);
+        int lastOpenedVersionCode = preferences.getInt(AppPreferences.LAST_OPENED_VERSION_CODE,
+                0);
+        final int currentVersionCode = BuildConfig.VERSION_CODE;
+
+        if (lastOpenedVersionCode != currentVersionCode) {
+            preferences.edit().putInt(AppPreferences.LAST_OPENED_VERSION_CODE,
+                    currentVersionCode).apply();
+            showChangelogDialog();
+        }
     }
 
     /**
