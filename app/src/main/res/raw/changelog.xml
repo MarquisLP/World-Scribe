@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog bulletedList="true">
+
+    <changelogversion versionName="1.4.0" changeDate="Dec 24 ,2017">
+        <changelogtext>[b]Bug fix: images used in this app will no longer appear in the Gallery app.
+            [/b] Sorry for any inconvenience this bug may have caused!</changelogtext>
+        <changelogtext>[b]Reader Mode has been added![/b] While browsing an Article
+            or Snippet, you can tap the glasses icon at the top of the screen to
+            disable text input, making for a smooth reading experience without
+            worrying about the keyboard coming up as you scroll. To go back to
+            editing, simply tap the keyboard icon.</changelogtext>
+        <changelogtext>[b]World/Article/Snippet names have been marquee'd![/b] If
+            a name is too long to fit onto the screen, the text will
+            automatically scroll to show you the full title. Rejoice, long name
+            enthusiasts![/b]</changelogtext>
+    </changelogversion>
+
+</changelog>
