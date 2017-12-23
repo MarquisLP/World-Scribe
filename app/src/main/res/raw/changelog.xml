@@ -15,6 +15,8 @@
             a name is too long to fit onto the screen, the text will
             automatically scroll to show you the full title. Rejoice, long name
             enthusiasts![/b]</changelogtext>
+        <changelogtext>[b]Bug fix: all 'Rename' dialogs now have the proper dark background color
+            when Night Mode is enabled[/b] (rather than white)</changelogtext>
     </changelogversion>
 
     <changelogversion versionName="1.3.3" changeDate="Aug 28, 2017">
