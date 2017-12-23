@@ -160,4 +160,6 @@
 
     <string name="readerModeEnabledMessage">Reader Mode (text input disabled)</string>
     <string name="editorModeEnabledMessage">Editor Mode (text input enabled)</string>
+
+    <string name="changelogDialogTitle">Changelog</string>
 </resources>
