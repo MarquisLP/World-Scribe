@@ -18,7 +18,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".activities.SnippetActivity"
         android:id="@+id/linear"
-        android:background="@android:color/white"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true" >
 
