@@ -233,6 +233,22 @@ public class ArticleListActivity extends ThemedActivity
     }
 
     /**
+     * Displays the Changelog dialog with full details about the current app version.
+     */
+    private void showChangelogDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content = inflater.inflate(R.layout.changelog_dialog, null);
+
+        final AlertDialog dialog = builder.setView(content)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) { }
+                }).create();
+        dialog.show();
+    }
+
+    /**
      * <p>
      *     Checks whether a new name for this World is valid, i.e. non-empty and not in use by
      *     other World.
