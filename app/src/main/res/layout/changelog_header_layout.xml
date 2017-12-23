@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
+<!--https://github.com/gabrielemariotti/changeloglib-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/chg_rowheader"
               android:layout_width="match_parent"

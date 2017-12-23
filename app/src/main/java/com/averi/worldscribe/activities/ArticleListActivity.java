@@ -237,6 +237,11 @@ public class ArticleListActivity extends ThemedActivity
 
     /**
      * Displays the Changelog dialog with full details about the current app version.
+     *
+     * <p>
+     *     Credit to Gabriele Mariotti for the
+     *     <a href="https://github.com/gabrielemariotti/changeloglib">ChangeLog Library</a>.
+     * </p>
      */
     private void showChangelogDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

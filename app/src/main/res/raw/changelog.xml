@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
+<!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
     <changelogversion versionName="1.4.0" changeDate="Dec 24 ,2017">
