@@ -182,6 +182,9 @@ public class ArticleListActivity extends ThemedActivity
             case R.id.syncToDropboxItem:
                 syncWorldToDropbox();
                 return true;
+            case R.id.viewChangelogItem:
+                showChangelogDialog();
+                return true;
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
             case R.id.deleteWorldItem:

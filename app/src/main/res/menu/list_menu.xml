@@ -48,6 +48,12 @@
         />
 
     <item
+        android:id="@+id/viewChangelogItem"
+        android:title="@string/viewChangelogItemText"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/settingsItem"
         android:title="@string/settingsItemText"
         app:showAsAction="never"
