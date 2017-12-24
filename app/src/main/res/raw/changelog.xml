@@ -5,7 +5,10 @@
 
     <changelogversion versionName="1.4.0" changeDate="Dec 24, 2017">
         <changelogtext>[b]Bug fix: images used in this app will no longer appear in the Gallery app.
-            [/b] Sorry for any inconvenience this bug may have caused!</changelogtext>
+            [/b] Sorry for any inconvenience this bug may have caused! [i]If images still appear
+            in the Gallery, try restarting your device. If the issue still persists even after
+            that, please send an email to averistudios@gmail.com containing your device model
+            and Android version.[/i]</changelogtext>
         <changelogtext>[b]Reader Mode has been added![/b] While browsing an Article
             or Snippet, you can tap the glasses icon at the top of the screen to
             disable text input, making for a smooth reading experience without
