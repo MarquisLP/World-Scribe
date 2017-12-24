@@ -1,5 +1,8 @@
 ## World Scribe
 An Android app for fictional world-building.
+
+<a href='https://play.google.com/store/apps/details?id=com.averi.worldscribe&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 ## Overview
 Ever wanted to create a fictional setting — for your next novel, comic, screenplay, or what-have-you — but find it difficult to keep everything organized?
 
