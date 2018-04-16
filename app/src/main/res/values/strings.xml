@@ -163,4 +163,5 @@
     <string name="editorModeEnabledMessage">Editor Mode (text input enabled)</string>
 
     <string name="changelogDialogTitle">Changelog</string>
+    <string name="sendErrorLogByEmail">Send error log via email</string>
 </resources>

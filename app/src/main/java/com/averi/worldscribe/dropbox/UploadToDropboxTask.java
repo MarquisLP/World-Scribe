@@ -3,10 +3,14 @@ package com.averi.worldscribe.dropbox;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.averi.worldscribe.R;
@@ -211,6 +215,11 @@ public class UploadToDropboxTask extends AsyncTask {
 
     /**
      * Displays an AlertDialog telling the user whether or not the upload was successful.
+     *
+     * <p>
+     *     If the upload was unsuccessful, the dialog will contain a checkbox asking the user to
+     *     send an error log to the email address for Averi Studios.
+     * </p>
      */
     private void showOutcomeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -218,12 +227,28 @@ public class UploadToDropboxTask extends AsyncTask {
 
         if (uploadSuccessful) {
             message = context.getString(R.string.dropboxUploadSuccess);
+            builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome), null);
         } else {
             message = context.getString(R.string.dropboxUploadFailure);
+
+            LayoutInflater inflater = LayoutInflater.from(context);
+            LinearLayout alertLayout = (LinearLayout) inflater.inflate(R.layout.layout_dropbox_error,
+                    null);
+            final CheckBox chkSendLog = (CheckBox) alertLayout.findViewById(R.id.chkSendLog);
+            builder.setView(alertLayout);
+
+            builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (chkSendLog.isChecked()) {
+                                sendLog(context);
+                            }
+                        }
+                    });
         }
 
         builder.setMessage(message);
-        builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome), null);
         builder.create().show();
     }
 }
