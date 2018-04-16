@@ -93,7 +93,7 @@ public class UploadToDropboxTask extends AsyncTask {
         //set a file
         Date datum = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        String fullName = df.format(datum) + "appLog.txt";
+        String fullName = df.format(datum) + "_appLog.txt";
         File file = new File(FileRetriever.getAppDirectory(), fullName);
 
         //clears a previous log
@@ -142,8 +142,8 @@ public class UploadToDropboxTask extends AsyncTask {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"averistudios@gmail.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Log Report");
-        intent.putExtra(Intent.EXTRA_TEXT, "Add description:");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "WorldScribe " + file.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, "");
         if (!file.exists() || !file.canRead()) {
             Toast.makeText(context, "Attachment Error", Toast.LENGTH_SHORT).show();
             return;
