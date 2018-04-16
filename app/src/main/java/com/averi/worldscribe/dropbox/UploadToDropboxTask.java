@@ -3,6 +3,8 @@ package com.averi.worldscribe.dropbox;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,10 +16,16 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.CreateFolderErrorException;
 import com.dropbox.core.v2.files.WriteMode;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by mark on 24/12/16.
@@ -70,6 +78,75 @@ public class UploadToDropboxTask extends AsyncTask {
             uploadSuccessful = false;
         }
         return null;
+    }
+
+    /**
+     * This function was written by user6038288 on
+     * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
+     * @param context The Context from which this function is being called
+     */
+    private static void sendLog(Context context) {
+        //set a file
+        Date datum = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String fullName = df.format(datum) + "appLog.txt";
+        File file = new File(FileRetriever.getAppDirectory(), fullName);
+
+        //clears a previous log
+        if (file.exists()) {
+            file.delete();
+        }
+        //write log to file
+        int pid = android.os.Process.myPid();
+        try {
+            String command = String.format("logcat -d -v threadtime *:*");
+            Process process = Runtime.getRuntime().exec(command);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            String currentLine = null;
+            while ((currentLine = reader.readLine()) != null) {
+                if (currentLine != null && currentLine.contains(String.valueOf(pid))) {
+                    result.append(currentLine);
+                    result.append("\n");
+                }
+            }
+            FileWriter out = new FileWriter(file);
+            out.write(result.toString());
+            out.close();
+            sendEmail(context, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //clear the log
+        try {
+            Runtime.getRuntime().exec("logcat -c");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * This function was written by user6038288 on
+     * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
+     * @param context The Context from which this function is being called
+     * @param file The file that will be attached to the email
+     */
+    private static void sendEmail(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"averistudios@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Log Report");
+        intent.putExtra(Intent.EXTRA_TEXT, "Add description:");
+        if (!file.exists() || !file.canRead()) {
+            Toast.makeText(context, "Attachment Error", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Uri uri = Uri.parse("file://" + file);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        context.startActivity(Intent.createChooser(intent, "Send email..."));
     }
 
     /**
