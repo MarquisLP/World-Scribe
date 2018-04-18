@@ -3,6 +3,19 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.1" changeDate="Apr 18, 2018">
+        <changelogtext>
+            [b]Error reporting has been added for Dropbox issues.[/b] We are aware that
+            certain users have been unable to backup their Worlds to Dropbox. We're looking to
+            implement a fix for this problem ASAP, but first we need your help to gather more
+            info on this bug. [b]If you've been unable to backup to Dropbox, please follow these
+            steps:[/b] open the overflow menu, select 'Backup World to Dropbox' and wait for the
+            error message to appear. Make sure 'Send error log via email' is checked, then tap 'OK'.
+            Select the email app of your choice, then send the email that appears. (No need to edit
+            anything or add a description.) Thank you for your co-operation!
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.0" changeDate="Dec 24, 2017">
         <changelogtext>[b]Bug fix: images used in this app will no longer appear in the Gallery app.
             [/b] Sorry for any inconvenience this bug may have caused! [i]If images still appear
