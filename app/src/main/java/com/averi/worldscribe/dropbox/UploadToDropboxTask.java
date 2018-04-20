@@ -111,7 +111,7 @@ public class UploadToDropboxTask extends AsyncTask {
             file.delete();
         }
         try {
-            errorLogFile.mkdirs();
+            errorLogFile.getParentFile().mkdirs();
             errorLogFile.createNewFile();
         } catch (IOException e) {
             Log.e("WorldScribe", e.getMessage());
