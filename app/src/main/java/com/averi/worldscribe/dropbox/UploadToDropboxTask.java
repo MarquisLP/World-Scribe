@@ -93,6 +93,11 @@ public class UploadToDropboxTask extends AsyncTask {
     }
 
     /**
+     * Generates an empty error log file for Dropbox error logging purposes.
+     * <p>
+     *     This new file will overwrite any existing error log files that were created on the
+     *     same day.
+     * </p>
      * @return An empty error log file whose file name is based on the current date
      */
     private File generateErrorLogFile() {
@@ -101,6 +106,9 @@ public class UploadToDropboxTask extends AsyncTask {
         String fullName = df.format(datum) + "_appLog.txt";
 
         File errorLogFile = new File(FileRetriever.getAppDirectory(), fullName);
+        if (file.exists()) {
+            file.delete();
+        }
         try {
             errorLogFile.mkdirs();
             errorLogFile.createNewFile();
