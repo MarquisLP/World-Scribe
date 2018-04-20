@@ -80,12 +80,11 @@ public class UploadToDropboxTask extends AsyncTask {
         try {
             uploadRecursive(file);
         } catch (DbxException | IOException e) {
-            File errorLogFile = generateErrorLogFile();
             try {
                 PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
                 e.printStackTrace(errorLogPrintStream);
-            } catch (FileNotFoundException e) {
-                Log.e("WorldScribe", e.getMessage());
+            } catch (FileNotFoundException fileNotFoundException) {
+                Log.e("WorldScribe", fileNotFoundException.getMessage());
             }
             uploadSuccessful = false;
         }
