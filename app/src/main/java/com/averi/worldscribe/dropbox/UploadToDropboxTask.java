@@ -85,6 +85,7 @@ public class UploadToDropboxTask extends AsyncTask {
             try {
                 PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
                 e.printStackTrace(errorLogPrintStream);
+                errorLogPrintStream.close();
             } catch (FileNotFoundException fileNotFoundException) {
                 Log.e("WorldScribe", fileNotFoundException.getMessage());
             }
