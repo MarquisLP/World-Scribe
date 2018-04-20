@@ -3,6 +3,12 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.2" changeDate="Apr 20, 2018">
+        <changelogtext>[b]Fixed a bug that prevented Dropbox error logging from working
+            correctly on some devices.[/b] For more info on Dropbox error logging,
+            see the notes for version 1.4.1.</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.1" changeDate="Apr 18, 2018">
         <changelogtext>
             [b]Error reporting has been added for Dropbox issues.[/b] We are aware that
