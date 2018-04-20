@@ -54,11 +54,13 @@ public class UploadToDropboxTask extends AsyncTask {
     private Context context;
     private boolean uploadSuccessful = true;
     private ProgressDialog progressDialog;
+    private File errorLogFile;
 
     public UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
         this.dbxClient = dbxClient;
         this.file = file;
         this.context = context;
+        this.errorLogFile = generateErrorLogFile();
     }
 
     @Override
@@ -276,7 +278,7 @@ public class UploadToDropboxTask extends AsyncTask {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (chkSendLog.isChecked()) {
-                                sendLog(context);
+                                sendEmail(context, errorLogFile);
                             }
                         }
                     });
