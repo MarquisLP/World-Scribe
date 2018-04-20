@@ -23,10 +23,12 @@ import com.dropbox.core.v2.files.WriteMode;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -78,7 +80,13 @@ public class UploadToDropboxTask extends AsyncTask {
         try {
             uploadRecursive(file);
         } catch (DbxException | IOException e) {
-            Log.e("WorldScribe", e.getMessage());
+            File errorLogFile = generateErrorLogFile();
+            try {
+                PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
+                e.printStackTrace(errorLogPrintStream);
+            } catch (FileNotFoundException e) {
+                Log.e("WorldScribe", e.getMessage());
+            }
             uploadSuccessful = false;
         }
         return null;
