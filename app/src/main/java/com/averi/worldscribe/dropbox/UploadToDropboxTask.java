@@ -125,54 +125,6 @@ public class UploadToDropboxTask extends AsyncTask {
      * This function was written by user6038288 on
      * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
      * @param context The Context from which this function is being called
-     */
-    private static void sendLog(Context context) {
-        //set a file
-        Date datum = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        String fullName = df.format(datum) + "_appLog.txt";
-        File file = new File(FileRetriever.getAppDirectory(), fullName);
-
-        //clears a previous log
-        if (file.exists()) {
-            file.delete();
-        }
-        //write log to file
-        int pid = android.os.Process.myPid();
-        try {
-            String command = String.format("logcat -d -v threadtime *:*");
-            Process process = Runtime.getRuntime().exec(command);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            StringBuilder result = new StringBuilder();
-            String currentLine = null;
-            while ((currentLine = reader.readLine()) != null) {
-                if (currentLine != null && currentLine.contains(String.valueOf(pid))) {
-                    result.append(currentLine);
-                    result.append("\n");
-                }
-            }
-            FileWriter out = new FileWriter(file);
-            out.write(result.toString());
-            out.close();
-            sendEmail(context, file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //clear the log
-        try {
-            Runtime.getRuntime().exec("logcat -c");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * This function was written by user6038288 on
-     * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
-     * @param context The Context from which this function is being called
      * @param file The file that will be attached to the email
      */
     private static void sendEmail(Context context, File file) {
