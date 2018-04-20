@@ -85,6 +85,25 @@ public class UploadToDropboxTask extends AsyncTask {
     }
 
     /**
+     * @return An empty error log file whose file name is based on the current date
+     */
+    private File generateErrorLogFile() {
+        Date datum = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String fullName = df.format(datum) + "_appLog.txt";
+
+        File errorLogFile = new File(FileRetriever.getAppDirectory(), fullName);
+        try {
+            errorLogFile.mkdirs();
+            errorLogFile.createNewFile();
+        } catch (IOException e) {
+            Log.e("WorldScribe", e.getMessage());
+        }
+
+        return errorLogFile;
+    }
+
+    /**
      * This function was written by user6038288 on
      * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
      * @param context The Context from which this function is being called
