@@ -142,29 +142,30 @@ public class UploadToDropboxTask extends AsyncTask {
     /**
      * Upload the given file to Dropbox; if it is a directory, its contents will be recursively
      * uploaded.
-     * @param originalFile The file to upload to the client's Dropbox account
+     * @param fileBeingUploaded The file to upload to the client's Dropbox account
      * @throws DbxException If an error occurs with accessing the client's Dropbox account
      * @throws IOException If an error occurs with file uploading
      */
-    private void uploadRecursive(File originalFile) throws DbxException, IOException  {
-        if (file.exists()) {
-            File[] files = originalFile.listFiles();
+    private void uploadRecursive(File fileBeingUploaded) throws DbxException, IOException  {
+        if (fileBeingUploaded.exists()) {
+            String dropboxPath = getDropboxPath(fileBeingUploaded);
 
-            for (int i = 0; i < files.length; ++i) {
-                File file = files[i];
-                String dropboxPath = getDropboxPath(file);
-                if (file.isDirectory()) {
-                    try {
-                        dbxClient.files().createFolder(dropboxPath);
-                    } catch (CreateFolderErrorException ex) {
-                    }
-                    uploadRecursive(file);
-                } else {
-                    InputStream inputStream = new FileInputStream(file);
-                    dbxClient.files().uploadBuilder(dropboxPath)
-                            .withMode(WriteMode.OVERWRITE)
-                            .uploadAndFinish(inputStream);
+            if (fileBeingUploaded.isDirectory()) {
+                try {
+                    dbxClient.files().createFolder(dropboxPath);
+                } catch (CreateFolderErrorException ex) {
                 }
+
+                File[] files = fileBeingUploaded.listFiles();
+                for (File childFile : files) {
+                    uploadRecursive(childFile);
+                }
+
+            } else {
+                InputStream inputStream = new FileInputStream(fileBeingUploaded);
+                dbxClient.files().uploadBuilder(dropboxPath)
+                    .withMode(WriteMode.OVERWRITE)
+                    .uploadAndFinish(inputStream);
             }
         }
     }
