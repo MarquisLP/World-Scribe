@@ -154,6 +154,12 @@ public class UploadToDropboxTask extends AsyncTask {
                 try {
                     dbxClient.files().createFolder(dropboxPath);
                 } catch (CreateFolderErrorException ex) {
+                    // Checks if the exception was thrown because the folder already exists.
+                    // That case isn't an error (as it just means we can skip over creating
+                    // that folder), so we only want to throw the exception for other cases.
+                    if (!(ex.errorValue.isPath() && ex.errorValue.getPathValue().isConflict())) {
+                        throw ex;
+                    }
                 }
 
                 File[] files = fileBeingUploaded.listFiles();
