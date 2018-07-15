@@ -3,6 +3,12 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.3" changeDate="Jul 15, 2018">
+        <changelogtext>[b]Fixed the bug that prevented some users from uploading to Dropbox.[/b]
+        Apologies for any inconvenience this bug may have caused. If problems still
+        persist, please contact us at: [i]averistudios@gmail.com[/i]</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.2" changeDate="Apr 20, 2018">
         <changelogtext>[b]Fixed a bug that prevented Dropbox error logging from working
             correctly on some devices.[/b] For more info on Dropbox error logging,
