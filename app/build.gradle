@@ -11,7 +11,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 27
     buildToolsVersion "23.0.3"
     signingConfigs {
         config {
