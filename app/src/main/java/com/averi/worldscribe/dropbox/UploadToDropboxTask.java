@@ -149,6 +149,10 @@ public class UploadToDropboxTask extends AsyncTask {
     private void uploadRecursive(File fileBeingUploaded) throws DbxException, IOException  {
         if (fileBeingUploaded.exists()) {
             String dropboxPath = getDropboxPath(fileBeingUploaded);
+            if (dropboxPath == null) {
+                throw new IOException("The Dropbox path ended up being 'null' for the following " +
+                        "file: '" + fileBeingUploaded.getAbsolutePath() + "'");
+            }
 
             if (fileBeingUploaded.isDirectory()) {
                 try {
