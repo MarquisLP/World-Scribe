@@ -3,6 +3,13 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.5" changeDate="Aug 15, 2018">
+        <changelogtext>[b]Improved error logging for Dropbox issues.[/b] If you are
+            experiencing issues with uploading to Dropbox, please try uploading again,
+            and then send the error log when prompted. The sooner we can identify
+            what is causing this issue, the sooner we can fix it.</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.4" changeDate="Jul 17, 2018">
         <changelogtext>[b]Improved security in order to comply with F-Droid policies.[/b] The app
             will soon be available on F-Droid!</changelogtext>
