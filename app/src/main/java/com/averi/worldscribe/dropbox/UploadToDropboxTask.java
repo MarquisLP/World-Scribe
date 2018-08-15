@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.averi.worldscribe.GenericFileProvider;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.dropbox.core.DbxException;
@@ -134,7 +136,8 @@ public class UploadToDropboxTask extends AsyncTask {
             Toast.makeText(context, "Attachment Error", Toast.LENGTH_SHORT).show();
             return;
         }
-        Uri uri = Uri.parse("file://" + file);
+        Uri uri = GenericFileProvider.getUriForFile(context, context.getApplicationContext()
+                .getPackageName() + ".my.package.name.provider", file);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         context.startActivity(Intent.createChooser(intent, "Send email..."));
     }
