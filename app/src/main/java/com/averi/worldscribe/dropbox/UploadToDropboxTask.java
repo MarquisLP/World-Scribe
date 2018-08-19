@@ -53,6 +53,7 @@ public class UploadToDropboxTask extends AsyncTask {
     private Context context;
     private boolean uploadSuccessful = true;
     private ProgressDialog progressDialog;
+    private File currentFileBeingUploaded;
     private File errorLogFile;
 
     public UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
@@ -83,6 +84,9 @@ public class UploadToDropboxTask extends AsyncTask {
         } catch (DbxException | IOException e) {
             try {
                 PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
+                errorLogPrintStream.print("An error occurred while trying to upload a file with " +
+                        "path '" + currentFileBeingUploaded.getAbsolutePath() + "'." +
+                        "\nStack trace:\n");
                 e.printStackTrace(errorLogPrintStream);
                 errorLogPrintStream.close();
             } catch (FileNotFoundException fileNotFoundException) {
@@ -151,6 +155,7 @@ public class UploadToDropboxTask extends AsyncTask {
      */
     private void uploadRecursive(File fileBeingUploaded) throws DbxException, IOException  {
         if (fileBeingUploaded.exists()) {
+            this.currentFileBeingUploaded = fileBeingUploaded;
             String dropboxPath = getDropboxPath(fileBeingUploaded);
             if (dropboxPath == null) {
                 throw new IOException("The Dropbox path ended up being 'null' for the following " +
