@@ -3,6 +3,14 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.5.a" changeDate="Aug 19, 2018">
+        <changelogtext>[b]Added more Dropbox error logging improvements.[/b] We will continue
+            to release logging improvements until the Dropbox upload issue has been resolved, so
+            please try to keep the app updated. Again, if you are still experiencing issues with
+            Dropbox uploading, please try to upload again, and then send the error log when
+            prompted. Thank you for your co-operation.</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.5" changeDate="Aug 15, 2018">
         <changelogtext>[b]Improved error logging for Dropbox issues.[/b] If you are
             experiencing issues with uploading to Dropbox, please try uploading again,
