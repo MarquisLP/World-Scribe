@@ -81,7 +81,7 @@ public class UploadToDropboxTask extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             uploadRecursive(file);
-        } catch (DbxException | IOException e) {
+        } catch (Exception e) {
             try {
                 PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
                 errorLogPrintStream.print("An error occurred while trying to upload a file with " +
