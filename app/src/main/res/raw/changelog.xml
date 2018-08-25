@@ -3,6 +3,26 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.6" changeDate="Aug 25, 2018">
+        <changelogtext>[b]Fixed one of the Dropbox issues![/b] This one was caused
+            by an invalid Dropbox "access token" (a small record stored on your
+            device that tells Dropbox your account info is valid). If you were one
+            of the users affected by this issue, then when you try to upload again,
+            the app will ask you to reauthenticate. If you do so, then the old
+            access token will be replaced by a new one, allowing you to upload your
+            Worlds without any further problems.</changelogtext>
+        <changelogtext>[b]Some major behind-the-scenes improvement to how
+            Dropbox uploading works.[/b] As a user, you won't see much of a
+            difference, but rest assured the new uploading method is more robust and
+            should make problems less likely and easier to troubleshoot in the
+            future.</changelogtext>
+        <changelogtext>[b]More Dropbox bug fixes to come![/b] The fix above doesn't
+            apply to all errors that users have sent in. If you are still facing
+            Dropbox issues after this update, please be patient as we work on
+            a resolution. In the meantime, you can help us out by trying to upload,
+            and then sending the error log when prompted.</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.5.a" changeDate="Aug 19, 2018">
         <changelogtext>[b]Added more Dropbox error logging improvements.[/b] We will continue
             to release logging improvements until the Dropbox upload issue has been resolved, so
