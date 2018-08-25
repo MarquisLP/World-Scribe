@@ -1,36 +1,46 @@
 package com.averi.worldscribe.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.averi.worldscribe.BuildConfig;
 import com.averi.worldscribe.Category;
+import com.averi.worldscribe.GenericFileProvider;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
+import com.averi.worldscribe.dropbox.DropboxActivity;
 import com.averi.worldscribe.dropbox.UploadToDropboxTask;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.ErrorLoggingActivity;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.LogErrorTask;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 import com.dropbox.core.DbxRequestConfig;
@@ -39,11 +49,15 @@ import com.dropbox.core.v2.DbxClientV2;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ArticleListActivity extends ThemedActivity
-        implements StringListContext, BottomBarActivity {
+        implements StringListContext, BottomBarActivity, DropboxActivity, ErrorLoggingActivity {
 
     public static final String DROPBOX_APP_KEY = "5pzb74tti855m61";
+    private static final String DROPBOX_ERROR_LOG_MESSAGE = "An error occurred while trying to " +
+            "upload a " +
+            "file/folder with path '%s'.";
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -51,7 +65,9 @@ public class ArticleListActivity extends ThemedActivity
     private BottomBar bottomBar;
     private TextView textEmpty;
     private ArrayList<String> articleNames = new ArrayList<>();
+    private UploadToDropboxTask uploadToDropboxTask;
     private boolean syncWorldToDropboxOnResume = false;
+    private ProgressDialog dropboxProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +118,9 @@ public class ArticleListActivity extends ThemedActivity
         super.onResume();
 
         populateList(worldName, category);
-        storeDropboxAccessToken();
+
         if (syncWorldToDropboxOnResume) {
+            storeDropboxAccessToken();
             syncWorldToDropbox();
             syncWorldToDropboxOnResume = false;
         }
@@ -111,23 +128,33 @@ public class ArticleListActivity extends ThemedActivity
 
     /**
      * Stores a user access token generated from Dropbox's servers into SharedPreferences,
-     * if the user has authenticated their account and an access token has not already been stored.
-     * <p>
-     *     Otherwise, SharedPreferences will not be modified.
-     * </p>
+     * if the user has authenticated their account.
      */
     private void storeDropboxAccessToken() {
-        if (!(AppPreferences.dropboxAccessTokenExists(this))) {
-            String accessToken = Auth.getOAuth2Token();
+        String accessToken = Auth.getOAuth2Token();
 
-            if (accessToken != null) {
-                SharedPreferences preferences = getSharedPreferences(
-                        AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
-                preferences.edit().putString(
-                        AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
-            }
+        if (accessToken != null) {
+            SharedPreferences preferences = getSharedPreferences(
+                    AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
+            preferences.edit().putString(
+                    AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
         }
+    }
 
+    /**
+     * Displays a loading dialog that will stay on-screen while uploading occurs.
+     */
+    private void showDropboxProgressDialog() {
+        final String title = this.getString(R.string.dropboxUploadProgressTitle);
+        final String message = this.getString(R.string.dropboxUploadProgressMessage);
+        final Context context = this;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dropboxProgressDialog = ProgressDialog.show(context, title, message);
+            }
+        });
     }
 
     @Override
@@ -447,4 +474,87 @@ public class ArticleListActivity extends ThemedActivity
         return pInfo.versionName;
     }
 
+    public void onDropboxUploadStart() {
+        showDropboxProgressDialog();
+    }
+
+    public void onDropboxNeedsAuthentication() {
+        dropboxProgressDialog.dismiss();
+
+        syncWorldToDropboxOnResume = true;
+        Auth.startOAuth2Authentication(this, DROPBOX_APP_KEY);
+    }
+
+    public void onDropboxUploadSuccess() {
+        dropboxProgressDialog.dismiss();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String message;
+
+        message = this.getString(R.string.dropboxUploadSuccess);
+        builder.setPositiveButton(this.getString(R.string.dismissDropboxUploadOutcome), null)
+                .setMessage(message)
+                .show();
+    }
+
+    public void onDropboxUploadFailure(Exception exception, String lastFileBeingUploaded) {
+        dropboxProgressDialog.dismiss();
+
+        try {
+            new LogErrorTask(this, String.format(DROPBOX_ERROR_LOG_MESSAGE,
+                    lastFileBeingUploaded), exception).execute();
+        } catch (Exception ex) {
+            Log.e("WorldScribe",  "Exception when creating log file:\n" + exception.getMessage());
+        }
+    }
+
+    public void onErrorLoggingCompletion(String errorMessage, final File errorLogFile) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final String message = this.getString(R.string.dropboxUploadFailure);
+        final String dismissButtonText = this.getString(R.string.dismissDropboxUploadOutcome);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout alertLayout = (LinearLayout) inflater.inflate(R.layout.layout_dropbox_error,
+                null);
+        final CheckBox chkSendLog = (CheckBox) alertLayout.findViewById(R.id.chkSendLog);
+        builder.setView(alertLayout);
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                builder.setPositiveButton(dismissButtonText,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (chkSendLog.isChecked()) {
+                                sendEmail(errorLogFile);
+                            }
+                        }
+                    })
+                    .setMessage(message)
+                    .show();
+            }
+        });
+    }
+
+    /**
+     * This function was written by user6038288 on
+     * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
+     * @param file The file that will be attached to the email
+     */
+    private void sendEmail(File file) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"averistudios@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "WorldScribe " + file.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, "");
+        if (!file.exists() || !file.canRead()) {
+            Toast.makeText(this, "Attachment Error", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Uri uri = GenericFileProvider.getUriForFile(this, this.getApplicationContext()
+                .getPackageName() + ".my.package.name.provider", file);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        this.startActivity(Intent.createChooser(intent, "Send email..."));
+    }
 }

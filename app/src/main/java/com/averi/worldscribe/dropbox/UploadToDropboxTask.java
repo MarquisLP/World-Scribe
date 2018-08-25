@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.averi.worldscribe.GenericFileProvider;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.FileRetriever;
+import com.averi.worldscribe.utilities.LogErrorTask;
 import com.dropbox.core.DbxException;
+import com.dropbox.core.InvalidAccessTokenException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.CreateFolderErrorException;
 import com.dropbox.core.v2.files.WriteMode;
@@ -47,103 +49,41 @@ import java.util.Locale;
  * </p>
  */
 
-public class UploadToDropboxTask extends AsyncTask {
+public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     private DbxClientV2 dbxClient;
     private File file;
-    private Context context;
-    private boolean uploadSuccessful = true;
-    private ProgressDialog progressDialog;
+    private DropboxActivity activity;
     private File currentFileBeingUploaded;
-    private File errorLogFile;
 
-    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, Context context) {
+    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, DropboxActivity activity) {
         this.dbxClient = dbxClient;
         this.file = file;
-        this.context = context;
-        this.errorLogFile = generateErrorLogFile();
+        this.activity = activity;
     }
 
     @Override
-    protected void onPreExecute() {
-        showProgressDialog();
-    }
+    protected Boolean doInBackground(Object[] params) {
+        boolean uploadSuccessful = false;
 
-    /**
-     * Displays a loading dialog that will stay on-screen while uploading occurs.
-     */
-    private void showProgressDialog() {
-        String title = context.getString(R.string.dropboxUploadProgressTitle);
-        String message = context.getString(R.string.dropboxUploadProgressMessage);
-        progressDialog = ProgressDialog.show(context, title, message);
-    }
-
-    @Override
-    protected Object doInBackground(Object[] params) {
         try {
+            activity.onDropboxUploadStart();
             uploadRecursive(file);
-        } catch (Exception e) {
-            try {
-                PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
-                errorLogPrintStream.print("An error occurred while trying to upload a file with " +
-                        "path '" + currentFileBeingUploaded.getAbsolutePath() + "'." +
-                        "\nStack trace:\n");
-                e.printStackTrace(errorLogPrintStream);
-                errorLogPrintStream.close();
-            } catch (FileNotFoundException fileNotFoundException) {
-                Log.e("WorldScribe", fileNotFoundException.getMessage());
-            }
-            uploadSuccessful = false;
+            uploadSuccessful = true;
+        } catch (InvalidAccessTokenException invalidAccessTokenException) {
+            activity.onDropboxNeedsAuthentication();
+        } catch (Exception exception) {
+            Log.e("WorldScribe", exception.getMessage());
+            activity.onDropboxUploadFailure(exception, currentFileBeingUploaded.getAbsolutePath());
         }
-        return null;
+
+        return uploadSuccessful;
     }
 
-    /**
-     * Generates an empty error log file for Dropbox error logging purposes.
-     * <p>
-     *     This new file will overwrite any existing error log files that were created on the
-     *     same day.
-     * </p>
-     * @return An empty error log file whose file name is based on the current date
-     */
-    private File generateErrorLogFile() {
-        Date datum = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        String fullName = df.format(datum) + "_appLog.txt";
-
-        File errorLogFile = new File(FileRetriever.getAppDirectory(), fullName);
-        if (file.exists()) {
-            file.delete();
+    @Override
+    protected void onPostExecute(Boolean result) {
+        if (result) {
+            activity.onDropboxUploadSuccess();
         }
-        try {
-            errorLogFile.getParentFile().mkdirs();
-            errorLogFile.createNewFile();
-        } catch (IOException e) {
-            Log.e("WorldScribe", e.getMessage());
-        }
-
-        return errorLogFile;
-    }
-
-    /**
-     * This function was written by user6038288 on
-     * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
-     * @param context The Context from which this function is being called
-     * @param file The file that will be attached to the email
-     */
-    private static void sendEmail(Context context, File file) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"averistudios@gmail.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "WorldScribe " + file.getName());
-        intent.putExtra(Intent.EXTRA_TEXT, "");
-        if (!file.exists() || !file.canRead()) {
-            Toast.makeText(context, "Attachment Error", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Uri uri = GenericFileProvider.getUriForFile(context, context.getApplicationContext()
-                .getPackageName() + ".my.package.name.provider", file);
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        context.startActivity(Intent.createChooser(intent, "Send email..."));
     }
 
     /**
@@ -208,52 +148,5 @@ public class UploadToDropboxTask extends AsyncTask {
         }
 
         return dropboxPath;
-    }
-
-    @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-
-        progressDialog.dismiss();
-        showOutcomeDialog();
-    }
-
-    /**
-     * Displays an AlertDialog telling the user whether or not the upload was successful.
-     *
-     * <p>
-     *     If the upload was unsuccessful, the dialog will contain a checkbox asking the user to
-     *     send an error log to the email address for Averi Studios.
-     * </p>
-     */
-    private void showOutcomeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        String message;
-
-        if (uploadSuccessful) {
-            message = context.getString(R.string.dropboxUploadSuccess);
-            builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome), null);
-        } else {
-            message = context.getString(R.string.dropboxUploadFailure);
-
-            LayoutInflater inflater = LayoutInflater.from(context);
-            LinearLayout alertLayout = (LinearLayout) inflater.inflate(R.layout.layout_dropbox_error,
-                    null);
-            final CheckBox chkSendLog = (CheckBox) alertLayout.findViewById(R.id.chkSendLog);
-            builder.setView(alertLayout);
-
-            builder.setPositiveButton(context.getString(R.string.dismissDropboxUploadOutcome),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (chkSendLog.isChecked()) {
-                                sendEmail(context, errorLogFile);
-                            }
-                        }
-                    });
-        }
-
-        builder.setMessage(message);
-        builder.create().show();
     }
 }
