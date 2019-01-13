@@ -3,6 +3,14 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
 
+    <changelogversion versionName="1.4.7" changeDate="Jan 13, 2019">
+        <changelogtext>Want to help us make future versions of World Scribe even
+            better? [b]You can now fill out the user survey [a
+            href="https://goo.gl/forms/3VAhRuAajgBKmXyY2"]here[/a]![/b]
+            You can also access the survey by opening the overflow menu on the top-right and
+            selecting "Feedback".</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.4.6" changeDate="Aug 25, 2018">
         <changelogtext>[b]Fixed one of the Dropbox issues![/b] This one was caused
             by an invalid Dropbox "access token" (a small record stored on your
