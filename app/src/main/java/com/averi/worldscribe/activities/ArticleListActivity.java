@@ -58,6 +58,7 @@ public class ArticleListActivity extends ThemedActivity
     private static final String DROPBOX_ERROR_LOG_MESSAGE = "An error occurred while trying to " +
             "upload a " +
             "file/folder with path '%s'.";
+    private static final String FEEDBACK_SURVEY_URL = "https://goo.gl/forms/3VAhRuAajgBKmXyY2";
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -213,6 +214,9 @@ public class ArticleListActivity extends ThemedActivity
                 return true;
             case R.id.viewChangelogItem:
                 showChangelogDialog();
+                return true;
+            case R.id.feedbackItem:
+                openFeedbackSurveyInBrowser();
                 return true;
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
@@ -556,5 +560,9 @@ public class ArticleListActivity extends ThemedActivity
                 .getPackageName() + ".my.package.name.provider", file);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         this.startActivity(Intent.createChooser(intent, "Send email..."));
+    }
+
+    private void openFeedbackSurveyInBrowser() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(FEEDBACK_SURVEY_URL)));
     }
 }

@@ -54,6 +54,12 @@
         />
 
     <item
+        android:id="@+id/feedbackItem"
+        android:title="@string/feedbackItemText"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/settingsItem"
         android:title="@string/settingsItemText"
         app:showAsAction="never"

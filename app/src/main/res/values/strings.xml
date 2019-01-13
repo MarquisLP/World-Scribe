@@ -37,6 +37,7 @@
     <string name="enableReaderModeItemText">Enable Reader Mode</string>
     <string name="enableEditorModeItemText">Enable Editor Mode</string>
     <string name="viewChangelogItemText">View Changelog</string>
+    <string name="feedbackItemText">Feedback</string>
 
     <string name="imageFileName">Image</string>
 
