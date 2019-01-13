@@ -25,8 +25,8 @@ android {
         applicationId "com.averi.worldscribe"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 17
-        versionName "1.4.6"
+        versionCode 18
+        versionName "1.4.7"
         signingConfig signingConfigs.config
     }
     buildTypes {
