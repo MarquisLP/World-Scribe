@@ -30,6 +30,7 @@ public class SettingsActivity extends BackButtonActivity {
     public static final int ENCHANTED_GREEN = 2;
     public static final int UBE_PURPLE = 3;
     public static final int LOVELY_RED = 4;
+    public static final int CHROME_GRAY = 5;
 
     private int currentThemeIndex;
     private boolean nightModeIsCurrentlyEnabled;
@@ -138,7 +139,7 @@ public class SettingsActivity extends BackButtonActivity {
      */
     private void populateAppThemeSpinner() {
         Integer allThemes[] = {R.style.AppTheme, R.style.SunsetOrange, R.style.EnchantedGreen,
-            R.style.UbePurple, R.style.LovelyRed};
+            R.style.UbePurple, R.style.LovelyRed, R.style.ChromeGray};
         AppThemeArrayAdapter adapter = new AppThemeArrayAdapter(this, allThemes);
         appThemeSpinner.setAdapter(adapter);
     }
@@ -160,8 +161,11 @@ public class SettingsActivity extends BackButtonActivity {
         } else if (currentThemeName.equals(AttributeGetter.getStyleName(
                 this, R.style.UbePurple))) {
             appThemeSpinner.setSelection(UBE_PURPLE);
-        } else {
+        } else if (currentThemeName.equals(AttributeGetter.getStyleName(
+                this, R.style.LovelyRed))) {
             appThemeSpinner.setSelection(LOVELY_RED);
+        } else {
+            appThemeSpinner.setSelection(CHROME_GRAY);
         }
     }
 
@@ -202,6 +206,9 @@ public class SettingsActivity extends BackButtonActivity {
                 break;
             case LOVELY_RED:
                 themeID = R.style.LovelyRed;
+                break;
+            case CHROME_GRAY:
+                themeID = R.style.ChromeGray;
         }
 
         return themeID;

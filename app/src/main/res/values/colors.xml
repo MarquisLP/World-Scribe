@@ -8,5 +8,7 @@
     <color name="ubePurpleHighlight">#af81f9</color>
     <color name="lovelyRed">#ef0a1a</color>
     <color name="lovelyRedHighlight">#fc7668</color>
+    <color name="chromeGray">#666666</color>
+    <color name="chromeGrayHighlight">#999999</color>
     <color name="duskGray">#222222</color>
 </resources>

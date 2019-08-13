@@ -66,6 +66,18 @@
         <item name="themedBorder">@drawable/border_red</item>
     </style>
 
+    <style name="ChromeGray" parent="AppTheme" >
+        <item name="android:name">Chrome Gray</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="colorPrimary">@color/chromeGray</item>
+        <item name="colorPrimaryDark">@color/chromeGrayHighlight</item>
+        <item name="colorAccent">@color/chromeGray</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="buttonColorSelector">@drawable/button_selector_gray</item>
+        <item name="articleLinkColorSelector">@drawable/article_link_selector_gray</item>
+        <item name="themedBorder">@drawable/border_gray</item>
+    </style>
+
     <style name="NormalDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@android:color/white</item>
     </style>
