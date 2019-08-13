@@ -5,6 +5,7 @@
     <dimen name="standardTextSize">18sp</dimen>
     <dimen name="bottomBarTextSize">14sp</dimen>
     <dimen name="pagePadding">20dp</dimen>
+    <dimen name="listItemVerticalPadding">10sp</dimen>
     <dimen name="cardPadding">10dp</dimen>
     <dimen name="cardIconSize">48sp</dimen>
     <dimen name="buttonPadding">3sp</dimen>

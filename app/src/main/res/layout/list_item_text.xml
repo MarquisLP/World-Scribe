@@ -5,8 +5,8 @@
     android:textSize="@dimen/stringListItemTextSize"
     android:textColor="?attr/colorPrimary"
     android:background="?attr/articleLinkColorSelector"
-    android:paddingTop="@dimen/buttonPadding"
-    android:paddingBottom="@dimen/buttonPadding"
+    android:paddingTop="@dimen/listItemVerticalPadding"
+    android:paddingBottom="@dimen/listItemVerticalPadding"
     android:paddingRight="@dimen/listItemHorizontalPadding"
     android:paddingLeft="@dimen/listItemHorizontalPadding">
 
