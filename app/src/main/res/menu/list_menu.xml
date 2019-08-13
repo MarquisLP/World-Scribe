@@ -36,12 +36,6 @@
         />
 
     <item
-        android:id="@+id/deleteWorldItem"
-        android:title="@string/deleteWorldItem"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/syncToDropboxItem"
         android:title="@string/syncToDropboxItemText"
         app:showAsAction="never"
