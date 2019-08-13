@@ -160,7 +160,7 @@
                         android:text="@string/addConnectionSnippetText"
                         android:id="@+id/buttonAddMember"
                         android:background="?attr/buttonColorSelector"
-                        android:padding="@dimen/buttonPadding"
+                        android:minHeight="22sp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
 
@@ -218,7 +218,7 @@
                         android:text="@string/addConnectionSnippetText"
                         android:id="@+id/buttonAddConnection"
                         android:background="?attr/buttonColorSelector"
-                        android:padding="@dimen/buttonPadding"
+                        android:minHeight="22sp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
 
@@ -276,7 +276,7 @@
                         android:text="@string/addConnectionSnippetText"
                         android:id="@+id/buttonAddSnippet"
                         android:background="?attr/buttonColorSelector"
-                        android:padding="@dimen/buttonPadding"
+                        android:minHeight="22sp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
 
