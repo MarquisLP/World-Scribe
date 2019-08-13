@@ -1,5 +1,6 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -18,6 +20,8 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.AppThemeArrayAdapter;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.AttributeGetter;
+import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.WorldUtilities;
 
 public class SettingsActivity extends BackButtonActivity {
 
@@ -33,6 +37,8 @@ public class SettingsActivity extends BackButtonActivity {
     private Spinner appThemeSpinner;
     private TextView restartNotice;
     private Switch nightModeSwitch;
+    private String worldName;
+    private Button deleteWorldButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,17 @@ public class SettingsActivity extends BackButtonActivity {
                 } else if (!(appThemeWasChanged())) {
                     restartNotice.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        Intent intent = getIntent();
+        worldName = intent.getStringExtra(IntentFields.WORLD_NAME);
+        deleteWorldButton = (Button) findViewById(R.id.deleteWorldButton);
+        final Context context = this;
+        deleteWorldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WorldUtilities.deleteWorld(context, worldName);
             }
         });
     }

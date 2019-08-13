@@ -61,7 +61,24 @@
             android:switchPadding="@dimen/switchToTextPadding" />
 
         <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerSpacing" />
+
+        <Space
             android:layout_width="0dp"
+            android:layout_height="@dimen/verticalSpacing" />
+
+        <Button
+            android:id="@+id/deleteWorldButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/deleteWorldItem"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
             android:layout_height="@dimen/verticalSpacing" />
 
         <TextView

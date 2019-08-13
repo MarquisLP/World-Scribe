@@ -66,6 +66,7 @@ public class ActivityUtilities {
                 break;
             case R.id.settingsItem:
                 Intent openSettingsIntent = new Intent(context, SettingsActivity.class);
+                openSettingsIntent.putExtra(IntentFields.WORLD_NAME, worldName);
                 context.startActivity(openSettingsIntent);
         }
     }
