@@ -2,6 +2,18 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.5.0" changeDate="Aug 13, 2019">
+        <changelogtext>[b]A new theme has been added: Chrome Gray![/b] Try combining it with
+            Night Mode for a slick visual experience.</changelogtext>
+        <changelogtext>[b]Menus have been reorganized![/b] By popular demand, [b]the 'Delete World'
+        option has been moved to the Settings page[/b], so now you won't have to worry about
+        accidentally deleting your creations. World-related options have also been removed from
+        Article pages in order to reduce clutter.</changelogtext>
+        <changelogtext>[b]Text and icons have been shrunken down to better scale with your device's
+        font settings.[/b] Look at all the extra space you have to work with now! If you preferred
+        the larger text size from previous versions, you can change it back via the font settings
+        in your device's system settings.</changelogtext>
+    </changelogversion>
 
     <changelogversion versionName="1.4.7" changeDate="Jan 13, 2019">
         <changelogtext>Want to help us make future versions of World Scribe even
