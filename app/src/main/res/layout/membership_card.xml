@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:background="?attr/articleLinkColorSelector"
             android:layout_weight="1"
-            android:padding="@dimen/pagePadding"
+            android:padding="@dimen/cardPadding"
             android:gravity="center">
 
             <TextView
@@ -57,21 +57,23 @@
 
             <ImageButton
                 android:id="@+id/edit"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/cardIconSize"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:src="@drawable/edit_icon"
                 android:background="?attr/buttonColorSelector"
-                android:padding="@dimen/buttonPadding" />
+                android:scaleType="fitCenter"
+                android:padding="@dimen/cardButtonPadding" />
 
             <ImageButton
                 android:id="@+id/delete"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/cardIconSize"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:src="@drawable/erase_icon"
                 android:background="?attr/buttonColorSelector"
-                android:padding="@dimen/buttonPadding" />
+                android:scaleType="fitCenter"
+                android:padding="@dimen/cardButtonPadding" />
 
         </LinearLayout>
 
