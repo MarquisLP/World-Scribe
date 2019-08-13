@@ -6,57 +6,48 @@
         android:id="@+id/searchArticles"
         android:icon="@drawable/search_articles"
         android:title="@android:string/search_go"
-        app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        />
-
+        app:showAsAction="always|collapseActionView" />
     <item
         android:id="@+id/createArticleItem"
-        android:title="@string/createArticleItemText"
         android:icon="@drawable/add_article"
-        app:showAsAction="ifRoom"
-        />
+        android:title="@string/createArticleItemText"
+        app:showAsAction="ifRoom" />
+    <group android:id="@+id/overflow_world_items" >
+        <item
+            android:id="@+id/renameWorldItem"
+            android:title="@string/renameWorldItemText"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/createWorldItem"
+            android:title="@string/createWorldItemText"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/loadWorldItem"
+            android:title="@string/loadWorldItemText"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/syncToDropboxItem"
+            android:title="@string/syncToDropboxItemText"
+            app:showAsAction="never" />
+    </group>
 
     <item
-        android:id="@+id/renameWorldItem"
-        android:title="@string/renameWorldItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/createWorldItem"
-        android:title="@string/createWorldItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/loadWorldItem"
-        android:title="@string/loadWorldItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/syncToDropboxItem"
-        android:title="@string/syncToDropboxItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/viewChangelogItem"
-        android:title="@string/viewChangelogItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/feedbackItem"
-        android:title="@string/feedbackItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/settingsItem"
-        android:title="@string/settingsItemText"
-        app:showAsAction="never"
-        />
+        android:enabled="false"
+        android:title="-------------------------------" />
+    <group android:id="@+id/overflow_general_items">
+        <item
+            android:id="@+id/viewChangelogItem"
+            android:title="@string/viewChangelogItemText"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/feedbackItem"
+            android:title="@string/feedbackItemText"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/settingsItem"
+            android:title="@string/settingsItemText"
+            app:showAsAction="never" />
+    </group>
 
 </menu>
