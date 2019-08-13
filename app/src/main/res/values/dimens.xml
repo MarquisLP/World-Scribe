@@ -6,7 +6,7 @@
     <dimen name="bottomBarTextSize">14sp</dimen>
     <dimen name="pagePadding">20dp</dimen>
     <dimen name="cardPadding">10dp</dimen>
-    <dimen name="cardIconSize">48dp</dimen>
+    <dimen name="cardIconSize">48sp</dimen>
     <dimen name="buttonPadding">8dp</dimen>
     <dimen name="cardButtonPadding">3dp</dimen>
     <dimen name="bottomBarTopPadding">8dp</dimen>
