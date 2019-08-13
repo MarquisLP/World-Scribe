@@ -11,8 +11,11 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 28
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     signingConfigs {
         config {
             keyAlias keystoreProperties['keyAlias']
@@ -24,9 +27,9 @@ android {
     defaultConfig {
         applicationId "com.averi.worldscribe"
         minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 18
-        versionName "1.4.7"
+        targetSdkVersion 28
+        versionCode 19
+        versionName "1.5.0"
         signingConfig signingConfigs.config
     }
     buildTypes {
@@ -40,14 +43,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.2.+'
-    compile 'com.google.guava:guava:19.0'
-    compile 'com.dropbox.core:dropbox-core-sdk:3.0.3'
-    compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    api 'com.google.guava:guava:28.0-jre'
+    api 'com.dropbox.core:dropbox-core-sdk:3.0.3'
+    api 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 }

@@ -3,7 +3,7 @@ package com.averi.worldscribe.utilities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.widget.Toast;
 
 import com.averi.worldscribe.R;

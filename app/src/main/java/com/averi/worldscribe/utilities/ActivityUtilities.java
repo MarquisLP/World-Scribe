@@ -1,12 +1,11 @@
 package com.averi.worldscribe.utilities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SearchView;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +15,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.activities.ArticleListActivity;
-import com.averi.worldscribe.activities.CreateOrLoadWorldActivity;
 import com.averi.worldscribe.activities.CreateWorldActivity;
 import com.averi.worldscribe.activities.LoadWorldActivity;
 import com.averi.worldscribe.activities.SettingsActivity;
@@ -98,11 +95,11 @@ public class ActivityUtilities {
 
         SearchView.SearchAutoComplete searchAutoComplete = (
                 SearchView.SearchAutoComplete) searchView.findViewById(
-                android.support.v7.appcompat.R.id.search_src_text);
+                R.id.search_src_text);
         searchAutoComplete.setTextColor(ContextCompat.getColor(context, android.R.color.white));
         searchAutoComplete.setHintTextColor(AttributeGetter.getColorAttribute(context, R.attr.colorPrimaryDark));
 
-        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchCloseIcon = (ImageView)searchView.findViewById(R.id.search_close_btn);
         searchCloseIcon.setColorFilter(android.R.color.white, PorterDuff.Mode.SRC_ATOP);
 
         matchSearchViewCursorColorToText(context, searchView);
@@ -115,7 +112,7 @@ public class ActivityUtilities {
      */
     private static void matchSearchViewCursorColorToText(Context context, SearchView searchView) {
         final EditText searchInput = ((EditText) searchView.findViewById(
-                android.support.v7.appcompat.R.id.search_src_text));
+                R.id.search_src_text));
 
         try {
             Field cursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");

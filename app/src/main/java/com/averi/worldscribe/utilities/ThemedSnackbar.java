@@ -2,7 +2,7 @@ package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +22,7 @@ public class ThemedSnackbar {
                 .make(parentView, message, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(AttributeGetter.getColorAttribute(context, R.attr.colorPrimary));
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) snackbarView.findViewById(R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         textView.setMaxLines(SNACKBAR_MAX_LINES);
         snackbar.show();

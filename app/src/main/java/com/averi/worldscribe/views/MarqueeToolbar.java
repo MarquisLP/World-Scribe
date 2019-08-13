@@ -1,7 +1,7 @@
 package com.averi.worldscribe.views;
 
 import android.content.Context;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;

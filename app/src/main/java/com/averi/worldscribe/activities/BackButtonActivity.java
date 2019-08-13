@@ -3,7 +3,7 @@ package com.averi.worldscribe.activities;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.MenuItem;
 
 import com.averi.worldscribe.R;
@@ -47,7 +47,7 @@ public abstract class BackButtonActivity extends ThemedActivity {
      */
     protected void setAppBar() {
         final Drawable upArrow = ContextCompat.getDrawable(this,
-                R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+                R.drawable.back_button);
         upArrow.setColorFilter(ContextCompat.getColor(this, android.R.color.white),
                 PorterDuff.Mode.SRC_ATOP);
 

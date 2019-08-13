@@ -2,8 +2,8 @@ package com.averi.worldscribe.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.ViewGroup;
 
 import com.averi.worldscribe.R;

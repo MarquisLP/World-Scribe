@@ -1,7 +1,7 @@
 package com.averi.worldscribe.utilities;
 
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
