@@ -64,9 +64,6 @@ public class ActivityUtilities {
                 Intent goToLoadWorldIntent = new Intent(context, LoadWorldActivity.class);
                 context.startActivity(goToLoadWorldIntent);
                 break;
-            case R.id.deleteWorldItem:
-                deleteWorld(context, worldName);
-                break;
             case R.id.settingsItem:
                 Intent openSettingsIntent = new Intent(context, SettingsActivity.class);
                 context.startActivity(openSettingsIntent);

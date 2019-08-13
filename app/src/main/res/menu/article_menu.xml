@@ -44,12 +44,6 @@
         />
 
     <item
-        android:id="@+id/deleteWorldItem"
-        android:title="@string/deleteWorldItem"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/settingsItem"
         android:title="@string/settingsItemText"
         app:showAsAction="never"
