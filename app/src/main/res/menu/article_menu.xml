@@ -32,18 +32,6 @@
         />
 
     <item
-        android:id="@+id/createWorldItem"
-        android:title="@string/createWorldItemText"
-        app:showAsAction="never"
-        />
-
-    <item
-        android:id="@+id/loadWorldItem"
-        android:title="@string/loadWorldItemText"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/settingsItem"
         android:title="@string/settingsItemText"
         app:showAsAction="never"

@@ -197,8 +197,6 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
             case R.id.deleteArticleItem:
                 confirmArticleDeletion();
                 return true;
-            case R.id.createWorldItem:
-            case R.id.loadWorldItem:
             case R.id.settingsItem:
                 ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
