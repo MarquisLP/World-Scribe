@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">World Scribe</string>
+
+    <string name="searchHint">Kategorie durchsuchen</string>
+
+    <string name="categoryText">Kategorie</string>
+    <string name="personText">Person</string>
+    <string name="groupText">Gruppe</string>
+    <string name="placeText">Ort</string>
+    <string name="itemText">Gegenstand</string>
+    <string name="conceptText">Konzept</string>
+
+    <string name="article">Beitrag</string>
+    <string-array name="categories_array">
+        <item name="person">Person</item>
+        <item name="group">Gruppe</item>
+        <item name="place">Ort</item>
+        <item name="item">Gegenstand</item>
+        <item name="concept">Konzept</item>
+    </string-array>
+
+    <string name="peopleText">Personen</string>
+    <string name="groupsText">Gruppen</string>
+    <string name="placesText">Orte</string>
+    <string name="itemsText">Gegenstände</string>
+    <string name="conceptsText">Konzepte</string>
+
+    <string name="createArticleItemText">Neuer Beitrag</string>
+    <string name="renameWorldItemText">Welt umbennen</string>
+    <string name="createWorldItemText">Welt erstellen</string>
+    <string name="loadWorldItemText">Welt öffnen</string>
+    <string name="deleteWorldItem">Welt löschen</string>
+    <string name="settingsItemText">Einstellungen</string>
+    <string name="renameArticleItemText">Beitrag umbennen</string>
+    <string name="deleteArticleItemText">Beitrag löschen</string>
+    <string name="syncToDropboxItemText">Sichern nach Dropbox</string>
+    <string name="enableReaderModeItemText">Lesemodus</string>
+    <string name="enableEditorModeItemText">Editiermodus</string>
+    <string name="viewChangelogItemText">Changelog öffnen</string>
+    <string name="feedbackItemText">Feedback</string>
+
+    <string name="imageFileName">Bild</string>
+
+    <!-- Text Field Names -->
+    <string name="aliasesField">Aliase</string>
+    <string name="ageField">Alter</string>
+    <string name="biographyField">Biografie</string>
+
+    <string name="connectionsText">Beziehungen</string>
+    <string name="snippetsText">Ausschnitte</string>
+
+    <string name="ageHint">Alter</string>
+    <string name="maleText">Männlich</string>
+    <string name="femaleText">Weiblich</string>
+    <string name="otherGenderText">Diverses</string>
+    <string name="bioHint">Biografie / Beschreibung</string>
+    <string name="genderText">Geschlecht</string>
+    <string name="personImageDescription">Profilbild</string>
+    <string name="addConnectionSnippetText">+</string>
+    <string name="mandateHint">Mandat / Beschreibung</string>
+    <string name="mandateText">Mandat</string>
+    <string name="membersText">Mitglieder</string>
+    <string name="descriptionHint">Beschreibung</string>
+    <string name="residentsText">Einwohner</string>
+    <string name="welcomeText">Wilkommen bei World Scribe!</string>
+
+    <string name="nameWorldHint">Welt Name</string>
+    <string name="createButtonText">Erstellen!</string>
+    <string name="relationHintTopText">Beziehung zum unteren Beitrag</string>
+    <string name="relationHintBottomText">Beziehung zum oberen Beitrag</string>
+    <string name="connectionArrowsDescription">Pfeile stellen eine Beziehung da</string>
+    <string name="propertiesHint">Eigenschaften / Beschreibung</string>
+    <string name="propertiesField">Eigenschaften</string>
+    <string name="historyHint">Geschichte</string>
+    <string name="permissionExplanation">Die Dateien für die Welten werden auf dem externen Speicher deines Gerätes gespeichert. Um diese App verwenden zu können, müssen Sie den Schreibzugriff auf den externen Speicher zulassen.</string>
+    <string name="permissionButtonText">Fortfahren</string>
+    <string name="emptyListText">Noch keine Einträge!</string>
+    <string name="nothingToLinkText">Nichts zum Verbinden!</string>
+    <string name="loadWorldTitle">Welt betreten…</string>
+    <string name="worldAlreadyExistsText">Es existiert bereits eine Welt mit diesem Namen. \nBitte geben Sie einen anderen Namen ein.</string>
+    <string name="worldCreationErrorText">Es ist ein Fehler, während der Welt Erstellung, aufgetreten.</string>
+    <string name="loadWorldText">Lade Welt</string>
+    <string name="createWorldText">Erstelle Welt</string>
+    <string name="articleNameHint">Beitragsname</string>
+    <string name="aliasesHint">Spitznamen / Aliase</string>
+    <string name="snippetHint">Ausschnittstext hier eingeben</string>
+    <string name="membershipsText">Gruppen</string>
+    <string name="residencesText">Aufenthaltsort</string>
+    <string name="memberRoleText">(%1$s)</string>
+    <string name="selectArticleTitle">Wähle %1$s zum verbinden</string>
+    <string name="saveEditText">SPEICHERN</string>
+    <string name="collapsedSectionHeader">▲ %1$s</string>
+    <string name="expandedSectionHeader">▼ %1$s</string>
+
+    <string name="createWorldTitle">Eine neue Welt wird geboren</string>
+    <string name="editConnectionTitle">Beziehungen editieren</string>
+    <string name="editMembershipTitle">Gruppe editieren</string>
+    <string name="createSnippetTitle">Neuer Ausschnitt</string>
+    <string name="createArticleTitle">Neuer Beitrag zur Weltgeschichte</string>
+
+    <string name="confirmBackupToDropboxTitle">%1$s sichern?</string>
+    <string name="confirmBackupToDropbox">Sind Sie sich sicher %1$s nach
+        Dropbox hochzuladen?\nDieser Prozess kann mehrere Minuten in Anspruch nehmen.</string>
+    <string name="confirmWorldDeletionTitle">%1$s löschen?</string>
+    <string name="confirmWorldDeletion">Sind Sie sich sicher %1$s zu löschen?\nSobald eine Welt gelöscht ist, kann diese nicht wieder hergestellt werden.</string>
+    <string name="confirmSnippetDeletionTitle">%1$s löschen?</string>
+    <string name="confirmSnippetDeletion">Sind Sie sich sicher %1$s zu löschen?\nSobald ein Ausschnitt gelöscht ist, kann dieser nicht wieder hergestellt werden.</string>
+    <string name="confirmConnectionDeletionTitle">Beziehung zu %1$s löschen?</string>
+    <string name="confirmConnectionDeletion">Sind Sie sich sicher die Beziehung mit %1$s aufzulösen?</string>
+    <string name="confirmMembershipDeletionTitle">Mitgliedschaft zu %1$s auflösen?</string>
+    <string name="confirmMembershipDeletion">Sind Sie sich sicher diese Mitgliedschaft, zu %1$s, aufzulösen?</string>
+    <string name="confirmMemberRemovalTitle">Entferne %1$s</string>
+    <string name="confirmMemberRemoval">Sind Sie sich sicher %1$s als Mitglied zu entfernen?</string>
+    <string name="confirmResidenceRemovalTitle">%1$s entfernen?</string>
+    <string name="confirmResidenceRemoval">Sind Sie sich sicher den Aufenthaltsort %1$s zu entfernen?</string>
+    <string name="confirmResidentRemovalTitle">%1$s als Einwohner entfernen?</string>
+    <string name="confirmResidentRemoval">Sind Sie sich sicher %1$s als Einwohner zu entfernen?</string>
+    <string name="confirmArticleDeletionTitle">%1$s löschen?</string>
+    <string name="confirmArticleDeletion">Sind Sie sich sicher %1$s zu löschen?\nSobald ein Beitrag gelöscht ist, kann dieser nicht wieder hergestellt werden.</string>
+
+    <string name="cropImageError">Ein Fehler beim zuschneiden des Bildes ist aufgetreten.</string>
+    <string name="saveImageError">Ein Fehler ist beim speichern des Bildes aufgetreten.</string>
+    <string name="articleAlreadyExistsError">Ein Beitrag mit dieser Kategorie und Namen existiert bereits.</string>
+    <string name="articleCreationError">Ein Fehler ist beim erstellen des Beitrag aufgetreten.</string>
+    <string name="deleteWorldError">Fehler beim löschen der Welt.</string>
+    <string name="saveConnectionError">Fehler beim speichern der Beziehung.</string>
+    <string name="emptyRelationError">Beziehung für beide Beitrag muss eingetragen sein.</string>
+    <string name="saveMembershipError">Fehler beim speichern der Gruppe.</string>
+    <string name="snippetExistsError">Ein Ausschnitt mit dem Namen %1$s existiert bereits für %2$s.\nBitte wähle einen anderen Namen.</string>
+    <string name="deleteSnippetError">Fehler beim löschen von %1$s.</string>
+    <string name="deleteConnectionError">Fehler beim löschen der Beziehung zu %1$s.</string>
+    <string name="deleteMembershipError">Fehler beim löschen der Gruppenzugehörigkeit von %1$s.</string>
+    <string name="deleteMemberError">Fehler beim entfernen von %1$s aus dieser Gruppe.</string>
+    <string name="deleteResidenceError">Fehler beim löschen des Aufenthaltsortes von %1$s.</string>
+    <string name="deleteArticleError">Fehler beim löschen dieses Beitrags.</string>
+    <string name="emptySnippetNameError">Ausschnitt darf nicht leer sein.</string>
+    <string name="renameSnippetError">Fehler beim umbennen von %1$s.</string>
+    <string name="emptyArticleNameError">Beitragname darf nicht leer sein.</string>
+    <string name="renameArticleToExistingError">Ein %1$s mit dem Namen %2$s existiert bereits.\nBitte wähle einen anderen Name.</string>
+    <string name="renameArticleError">Fehler beim umbennen von diesem Beitrag.</string>
+    <string name="emptyWorldNameError">Der Welt Name darf nicht leer sein..</string>
+    <string name="renameWorldToExistingError">Die Welt mit dem Namen %1$s existiert bereits. Bitte wähle einen anderen Name.</string>
+    <string name="renameWorldError">Fehler beim umbennen der Welt.</string>
+
+    <string name="memberRoleHint">Rolle/Rang in der Gruppe (Optional)</string>
+    <string name="nameSnippetHint">Name des Ausschnitts</string>
+    <string name="rename_snippet_title">Ausschnitt umbennen</string>
+    <string name="renameArticleTitle">Beitrag umbennen</string>
+    <string name="renameWorldTitle">Welt umbennen</string>
+    <string name="selectThemeTitle">App Theme</string>
+    <string name="settingsTitle">Einstellungen</string>
+    <string name="restartNoticeText">Um die Änderungen anzuwenden, wird die App neugestarten, wenn Sie \"SPEICHERN\" drücken.</string>
+    <string name="generalInfoHeader">Allgemeine Infos</string>
+    <string name="nightModeTitle">Nachtmodus</string>
+    <string name="nightModeSwitchText">Nachtmodus</string>
+
+    <string name="dropboxUploadSuccess">Die Welt wurde erfolgreich hochgeladen</string>
+    <string name="dropboxUploadFailure">Es ist ein Fehler aufgetreten, während die Welt nach Dropbox hochgeladen wurde.</string>
+    <string name="dropboxUploadProgressTitle">Welt wird nach Dropbox hochgeladen</string>
+    <string name="dropboxUploadProgressMessage">Bitte warten…</string>
+    <string name="dismissDropboxUploadOutcome">OK</string>
+
+    <string name="readerModeEnabledMessage">Lesemodus (Texteingabe ist deaktiviert)</string>
+    <string name="editorModeEnabledMessage">Editiermodus (Texteingabe ist aktiviert)</string>
+
+    <string name="changelogDialogTitle">Changelog</string>
+    <string name="sendErrorLogByEmail">Sender Fehler als email</string>
+</resources>
