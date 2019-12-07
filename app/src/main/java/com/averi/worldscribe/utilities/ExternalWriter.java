@@ -195,7 +195,7 @@ public final class ExternalWriter {
 
         String sourceFilename= imageUri.getPath();
         String destinationFilename = FileRetriever.getArticleFile(context, worldName, category,
-                articleName, context.getString(R.string.imageFileName)).getAbsolutePath();
+                articleName, "Image").getAbsolutePath();
         destinationFilename += ExternalReader.IMAGE_FILE_EXTENSION;
 
         BufferedInputStream bufferedInputStream = null;

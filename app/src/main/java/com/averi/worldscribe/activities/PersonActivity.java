@@ -152,13 +152,13 @@ public class PersonActivity extends ArticleActivity {
         Resources resources = getResources();
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
-        textFields.add(new ArticleTextField(resources.getString(R.string.aliasesField),
+        textFields.add(new ArticleTextField("Aliases",
                 (EditText) findViewById(R.id.editAliases),
                 this, getWorldName(), Category.Person, getArticleName()));
-        textFields.add(new ArticleTextField(resources.getString(R.string.ageField),
+        textFields.add(new ArticleTextField("Age",
                 (EditText) findViewById(R.id.editAge),
                 this, getWorldName(), Category.Person, getArticleName()));
-        textFields.add(new ArticleTextField(resources.getString(R.string.biographyField),
+        textFields.add(new ArticleTextField("Biography",
                 (EditText) findViewById(R.id.editBio),
                 this, getWorldName(), Category.Person, getArticleName()));
 
@@ -230,11 +230,11 @@ public class PersonActivity extends ArticleActivity {
     private void loadGender(Resources resources) {
         String genderString = ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
                 super.getCategory(), super.getArticleName(),
-                resources.getString(R.string.genderText));
+                "Gender");
 
-        if (genderString.equals(resources.getString(R.string.maleText))) {
+        if (genderString.equals("Male")) {
             genderGroup.check(R.id.radioButtonMale);
-        } else if (genderString.equals(resources.getString(R.string.femaleText))) {
+        } else if (genderString.equals("Female")) {
             genderGroup.check(R.id.radioButtonFemale);
         } else {
             genderGroup.check(R.id.radioButtonOtherGender);
@@ -276,18 +276,18 @@ public class PersonActivity extends ArticleActivity {
     private void saveGenderIfEdited() {
         if (genderWasEditedSinceLastSave) {
             Resources resources = getResources();
-            String genderFilename = resources.getString(R.string.genderText);
+            String genderFilename = "Gender";
 
             if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonMale) {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
-                        getArticleName(), genderFilename, resources.getString(R.string.maleText));
+                        getArticleName(), genderFilename, "Male");
             } else if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonFemale) {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
-                        getArticleName(), genderFilename, resources.getString(R.string.femaleText));
+                        getArticleName(), genderFilename, "Female");
             } else {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
                         getArticleName(), genderFilename,
-                        resources.getString(R.string.otherGenderText));
+                        "Other");
             }
 
             genderWasEditedSinceLastSave = false;
