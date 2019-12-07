@@ -50,6 +50,7 @@ public class PersonActivity extends ArticleActivity {
     private Button addMembershipButton;
     private Button addResidenceButton;
     private Boolean genderWasEditedSinceLastSave = false;
+    private RadioGroup.OnCheckedChangeListener genderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,13 @@ public class PersonActivity extends ArticleActivity {
         addMembershipButton = (Button) findViewById(R.id.buttonAddMembership);
         addResidenceButton = (Button) findViewById(R.id.buttonAddResidence);
 
-        genderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        genderListener = new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 genderWasEditedSinceLastSave = true;
             }
-        });
+        };
+        genderGroup.setOnCheckedChangeListener(genderListener);
 
         addMembershipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +230,9 @@ public class PersonActivity extends ArticleActivity {
      * @param resources A Resources instance containing this app's resource files and values.
      */
     private void loadGender(Resources resources) {
+        // Prevent the 'save Gender to file' function from triggering.
+        genderGroup.setOnCheckedChangeListener(null);
+
         String genderString = ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
                 super.getCategory(), super.getArticleName(),
                 "Gender");
@@ -239,6 +244,8 @@ public class PersonActivity extends ArticleActivity {
         } else {
             genderGroup.check(R.id.radioButtonOtherGender);
         }
+
+        genderGroup.setOnCheckedChangeListener(genderListener);
     }
 
     /**
