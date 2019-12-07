@@ -166,6 +166,10 @@ public final class ExternalWriter {
      * @return True if the String was saved successfully; false if an I/O error occurs.
      */
     private static boolean writeStringToFile(File textFile, String contents) {
+        // Recreate parent directories if they don't exist, in case they accidentally got deleted.
+        File parentDirectory = textFile.getParentFile();
+        parentDirectory.mkdirs();
+
         Boolean result = true;
 
         try {
@@ -315,12 +319,14 @@ public final class ExternalWriter {
         boolean savedToPlaceDirectory;
 
         try {
+            fileInPersonDirectory.getParentFile().mkdirs();
             savedToPersonDirectory = fileInPersonDirectory.createNewFile();
         } catch (IOException error) {
             savedToPersonDirectory = false;
         }
 
         try {
+            fileInPlaceDirectory.getParentFile().mkdirs();
             savedToPlaceDirectory = fileInPlaceDirectory.createNewFile();
         } catch (IOException error) {
             savedToPlaceDirectory = false;

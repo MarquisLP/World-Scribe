@@ -144,7 +144,7 @@ public class FileRetriever {
     public static File getResidentsDirectory(Context context, String worldName,
                                               String placeName) {
         return new File(getArticleDirectory(context, worldName, Category.Place, placeName),
-                "Residences");
+                "Residents");
     }
 
     /**
