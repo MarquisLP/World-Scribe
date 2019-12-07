@@ -319,12 +319,14 @@ public final class ExternalWriter {
         boolean savedToPlaceDirectory;
 
         try {
+            fileInPersonDirectory.getParentFile().mkdirs();
             savedToPersonDirectory = fileInPersonDirectory.createNewFile();
         } catch (IOException error) {
             savedToPersonDirectory = false;
         }
 
         try {
+            fileInPlaceDirectory.getParentFile().mkdirs();
             savedToPlaceDirectory = fileInPlaceDirectory.createNewFile();
         } catch (IOException error) {
             savedToPlaceDirectory = false;
