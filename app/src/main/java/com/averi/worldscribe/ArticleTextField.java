@@ -80,7 +80,12 @@ public class ArticleTextField {
 
             @Override
             public void afterTextChanged(Editable s) {
-                editedSinceLastSave = true;
+                // Only check changes that were made by the user.
+                // This will allow us to set the text programmmatically
+                // without accidentally triggering this function.
+                if (editText.hasFocus()) {
+                    editedSinceLastSave = true;
+                }
             }
         });
     }

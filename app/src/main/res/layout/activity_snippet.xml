@@ -10,12 +10,10 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".activities.SnippetActivity"
         android:id="@+id/linear"
         android:descendantFocusability="beforeDescendants"
@@ -39,21 +37,30 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <EditText
-                android:background="@android:color/transparent"
+
+            <ScrollView
+                android:id="@+id/textScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editText"
-                android:textColor="?attr/colorPrimary"
-                android:textColorHint="?attr/colorPrimaryDark"
-                android:paddingLeft="@dimen/pagePadding"
-                android:paddingRight="@dimen/pagePadding"
-                android:paddingBottom="@dimen/snippetBottomPadding"
-                android:hint="@string/snippetHint"
-                android:textSize="@dimen/standardTextSize"
-                android:gravity="top"
-                android:maxLength="@integer/editTextUnlimitedCharactersNumber"
-                android:scrollbars="vertical" />
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/snippetHint"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:maxLength="@integer/editTextUnlimitedCharactersNumber"
+                    android:paddingLeft="@dimen/pagePadding"
+                    android:paddingRight="@dimen/pagePadding"
+                    android:paddingBottom="@dimen/snippetBottomPadding"
+                    android:scrollbars="vertical"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimaryDark"
+                    android:textSize="@dimen/standardTextSize" />
+            </ScrollView>
 
             <View
                 android:id="@+id/textGradient"

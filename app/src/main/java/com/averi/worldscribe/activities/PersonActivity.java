@@ -50,6 +50,7 @@ public class PersonActivity extends ArticleActivity {
     private Button addMembershipButton;
     private Button addResidenceButton;
     private Boolean genderWasEditedSinceLastSave = false;
+    private RadioGroup.OnCheckedChangeListener genderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,13 @@ public class PersonActivity extends ArticleActivity {
         addMembershipButton = (Button) findViewById(R.id.buttonAddMembership);
         addResidenceButton = (Button) findViewById(R.id.buttonAddResidence);
 
-        genderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        genderListener = new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 genderWasEditedSinceLastSave = true;
             }
-        });
+        };
+        genderGroup.setOnCheckedChangeListener(genderListener);
 
         addMembershipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,13 +154,13 @@ public class PersonActivity extends ArticleActivity {
         Resources resources = getResources();
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
-        textFields.add(new ArticleTextField(resources.getString(R.string.aliasesField),
+        textFields.add(new ArticleTextField("Aliases",
                 (EditText) findViewById(R.id.editAliases),
                 this, getWorldName(), Category.Person, getArticleName()));
-        textFields.add(new ArticleTextField(resources.getString(R.string.ageField),
+        textFields.add(new ArticleTextField("Age",
                 (EditText) findViewById(R.id.editAge),
                 this, getWorldName(), Category.Person, getArticleName()));
-        textFields.add(new ArticleTextField(resources.getString(R.string.biographyField),
+        textFields.add(new ArticleTextField("Biography",
                 (EditText) findViewById(R.id.editBio),
                 this, getWorldName(), Category.Person, getArticleName()));
 
@@ -228,17 +230,22 @@ public class PersonActivity extends ArticleActivity {
      * @param resources A Resources instance containing this app's resource files and values.
      */
     private void loadGender(Resources resources) {
+        // Prevent the 'save Gender to file' function from triggering.
+        genderGroup.setOnCheckedChangeListener(null);
+
         String genderString = ExternalReader.getArticleTextFieldData(this, super.getWorldName(),
                 super.getCategory(), super.getArticleName(),
-                resources.getString(R.string.genderText));
+                "Gender");
 
-        if (genderString.equals(resources.getString(R.string.maleText))) {
+        if (genderString.equals("Male")) {
             genderGroup.check(R.id.radioButtonMale);
-        } else if (genderString.equals(resources.getString(R.string.femaleText))) {
+        } else if (genderString.equals("Female")) {
             genderGroup.check(R.id.radioButtonFemale);
         } else {
             genderGroup.check(R.id.radioButtonOtherGender);
         }
+
+        genderGroup.setOnCheckedChangeListener(genderListener);
     }
 
     /**
@@ -276,18 +283,18 @@ public class PersonActivity extends ArticleActivity {
     private void saveGenderIfEdited() {
         if (genderWasEditedSinceLastSave) {
             Resources resources = getResources();
-            String genderFilename = resources.getString(R.string.genderText);
+            String genderFilename = "Gender";
 
             if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonMale) {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
-                        getArticleName(), genderFilename, resources.getString(R.string.maleText));
+                        getArticleName(), genderFilename, "Male");
             } else if (genderGroup.getCheckedRadioButtonId() == R.id.radioButtonFemale) {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
-                        getArticleName(), genderFilename, resources.getString(R.string.femaleText));
+                        getArticleName(), genderFilename, "Female");
             } else {
                 ExternalWriter.writeStringToArticleFile(this, getWorldName(), Category.Person,
                         getArticleName(), genderFilename,
-                        resources.getString(R.string.otherGenderText));
+                        "Other");
             }
 
             genderWasEditedSinceLastSave = false;
