@@ -2,6 +2,20 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.5.1" changeDate="Dec 7, 2019">
+        <changelogtext>[b]German language support has been added![/b] The app's language will
+            automatically switch if you have a German locale set as your primary in your device's
+            system settings. [i]Thank you to tostc for this contribution.[/i]</changelogtext>
+        <changelogtext>[b]Faster and smoother scrolling in the Snippet page.[/b] Now you can reach
+        the bottom of a Snippet with just a flick of your thumb!</changelogtext>
+        <changelogtext>[b]Bugfix: deleted folders for Connections, Snippets, and other sub-Article
+            elements no longer cause errors.[/b] If you have a cleaning app, it may delete empty
+            folders on your device. Prior to this update, this would cause problems, as a deleted
+            Connections folder (for example) would prevent the app from making new Connections to
+            an Article. With this update, those folders will automatically be recreated, so you
+            don't have to worry about disabling or uninstalling anything in your cleaning apps.</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="1.5.0" changeDate="Aug 13, 2019">
         <changelogtext>[b]A new theme has been added: Chrome Gray![/b] Try combining it with
             Night Mode for a slick visual experience.</changelogtext>
