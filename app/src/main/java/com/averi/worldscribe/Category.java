@@ -33,6 +33,25 @@ public enum Category {
         }
     }
 
+    /* Added for the menu titles of connections, because the text was a mixed of translation and english.
+       This function is used in SelectArticleActivity@setAppBar*/
+
+    public String translatedName(Context context) {
+        switch (this) {
+            case Person:
+                return context.getResources().getString(R.string.personText);
+            case Group:
+                return context.getResources().getString(R.string.groupText);
+            case Place:
+                return context.getResources().getString(R.string.placeText);
+            case Item:
+                return context.getResources().getString(R.string.itemsText);
+            case Concept:
+            default:
+                return context.getResources().getString(R.string.conceptText);
+        }
+    }
+
     public String pluralName(Context context) {
         switch (this) {
             case Person:

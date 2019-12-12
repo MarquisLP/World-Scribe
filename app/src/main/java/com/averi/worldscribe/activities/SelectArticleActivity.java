@@ -113,7 +113,7 @@ BottomBarActivity {
     @Override
     protected void setAppBar() {
         if (canChooseOneCategoryOnly) {
-            appBar.setTitle(getString(R.string.selectArticleTitle, category.name()));
+            appBar.setTitle(getString(R.string.selectArticleTitle, category.translatedName(this)));
         } else {
             appBar.setTitle(getString(R.string.selectArticleTitle, getString(R.string.article)));
         }
