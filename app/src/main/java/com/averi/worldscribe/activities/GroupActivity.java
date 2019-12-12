@@ -96,10 +96,10 @@ public class GroupActivity extends ArticleActivity {
         Resources resources = getResources();
         ArrayList<ArticleTextField> textFields = new ArrayList<>();
 
-        textFields.add(new ArticleTextField(resources.getString(R.string.mandateText),
+        textFields.add(new ArticleTextField("Mandate",
                 (EditText) findViewById(R.id.editMandate),
                 this, getWorldName(), Category.Group, getArticleName()));
-        textFields.add(new ArticleTextField(resources.getString(R.string.historyHint),
+        textFields.add(new ArticleTextField("History",
                 (EditText) findViewById(R.id.editHistory),
                 this, getWorldName(), Category.Group, getArticleName()));
 

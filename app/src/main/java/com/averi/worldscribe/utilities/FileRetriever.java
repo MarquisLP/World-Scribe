@@ -49,7 +49,7 @@ public class FileRetriever {
     public static File getConnectionsDirectory(Context context, String worldName, Category category,
                                                String articleName) {
         return new File(getArticleDirectory(context, worldName, category, articleName),
-                context.getResources().getString(R.string.connectionsText));
+                "Connections");
     }
 
     public static File getConnectionCategoryDirectory(Context context, String worldName,
@@ -89,7 +89,7 @@ public class FileRetriever {
     public static File getSnippetsDirectory(Context context, String worldName, Category category,
                                             String articleName) {
         return new File(getArticleDirectory(context, worldName, category, articleName),
-                context.getResources().getString(R.string.snippetsText));
+                "Snippets");
     }
 
     /**
@@ -117,7 +117,7 @@ public class FileRetriever {
     public static File getResidencesDirectory(Context context, String worldName,
                                               String personName) {
         return new File(getArticleDirectory(context, worldName, Category.Person, personName),
-                context.getResources().getString(R.string.residencesText));
+                "Residences");
     }
 
     /**
@@ -144,7 +144,7 @@ public class FileRetriever {
     public static File getResidentsDirectory(Context context, String worldName,
                                               String placeName) {
         return new File(getArticleDirectory(context, worldName, Category.Place, placeName),
-                context.getResources().getString(R.string.residentsText));
+                "Residents");
     }
 
     /**
@@ -171,7 +171,7 @@ public class FileRetriever {
     public static File getMembershipsDirectory(Context context, String worldName,
                                               String personName) {
         return new File(getArticleDirectory(context, worldName, Category.Person, personName),
-                context.getResources().getString(R.string.membershipsText));
+                "Memberships");
     }
 
     /**
@@ -198,7 +198,7 @@ public class FileRetriever {
     public static File getMembersDirectory(Context context, String worldName,
                                                String groupName) {
         return new File(getArticleDirectory(context, worldName, Category.Group, groupName),
-                context.getResources().getString(R.string.membersText));
+                "Members");
     }
 
     /**

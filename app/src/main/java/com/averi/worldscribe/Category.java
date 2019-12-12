@@ -14,35 +14,38 @@ public enum Category {
     Item,
     Concept;
 
+    /* We use hard-coded, non-localized English here because these functions are used for file operations.
+       For consistency, all files and folders should have the same name on every decide. */
+
     public String name(Context context) {
         switch (this) {
             case Person:
-                return context.getResources().getString(R.string.personText);
+                return "Person";
             case Group:
-                return context.getResources().getString(R.string.groupText);
+                return "Group";
             case Place:
-                return context.getResources().getString(R.string.placeText);
+                return "Place";
             case Item:
-                return context.getResources().getString(R.string.itemText);
+                return "Item";
             case Concept:
             default:
-                return context.getResources().getString(R.string.conceptText);
+                return "Concept";
         }
     }
 
     public String pluralName(Context context) {
         switch (this) {
             case Person:
-                return context.getResources().getString(R.string.peopleText);
+                return "People";
             case Group:
-                return context.getResources().getString(R.string.groupsText);
+                return "Groups";
             case Place:
-                return context.getResources().getString(R.string.placesText);
+                return "Places";
             case Item:
-                return context.getResources().getString(R.string.itemsText);
+                return "Items";
             case Concept:
             default:
-                return context.getResources().getString(R.string.conceptsText);
+                return "Concepts";
         }
     }
 

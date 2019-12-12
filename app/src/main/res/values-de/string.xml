@@ -8,7 +8,7 @@
     <string name="personText">Person</string>
     <string name="groupText">Gruppe</string>
     <string name="placeText">Ort</string>
-    <string name="itemText">Gegenstand</string>
+    <string name="itemText">Artikel</string>
     <string name="conceptText">Konzept</string>
 
     <string name="article">Beitrag</string>
@@ -16,14 +16,14 @@
         <item name="person">Person</item>
         <item name="group">Gruppe</item>
         <item name="place">Ort</item>
-        <item name="item">Gegenstand</item>
+        <item name="item">Artikel</item>
         <item name="concept">Konzept</item>
     </string-array>
 
     <string name="peopleText">Personen</string>
     <string name="groupsText">Gruppen</string>
     <string name="placesText">Orte</string>
-    <string name="itemsText">Gegenstände</string>
+    <string name="itemsText">Artikel</string>
     <string name="conceptsText">Konzepte</string>
 
     <string name="createArticleItemText">Neuer Beitrag</string>
