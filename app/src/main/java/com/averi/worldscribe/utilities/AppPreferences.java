@@ -17,24 +17,44 @@ public class AppPreferences {
     public static final String LAST_NEXTCLOUD_SERVER = "nextcloudServer";
     public static final String LAST_NEXTCLOUD_USER = "nextcloudUser";
 
+    /**
+     * Saves the nextcloud server address.
+     * @param context The Context calling this method.
+     * @param server The nextcloud server address.
+     */
     public static void saveLastNextcloudServer(Context context, String server) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);
         preferences.edit().putString(AppPreferences.LAST_NEXTCLOUD_SERVER, server).apply();
     }
 
+    /**
+     * Saves the nextcloud username.
+     * @param context The Context calling this method.
+     * @param user The nextcloud username.
+     */
     public static void saveLastNextcloudUser(Context context, String user) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);
         preferences.edit().putString(AppPreferences.LAST_NEXTCLOUD_USER, user).apply();
     }
 
+    /**
+     * Gets the last nextcloud server address.
+     * @param context The Context calling this method.
+     * @return Ther server address.
+     */
     public static String getLastNextcloudServer(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);
         return preferences.getString(LAST_NEXTCLOUD_SERVER, "");
     }
 
+    /**
+     * Gets the last username.
+     * @param context The Context calling this method.
+     * @return Ther username.
+     */
     public static String getLastNextcloudUser(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);

@@ -1,4 +1,4 @@
-package com.averi.worldscribe.dropbox;
+package clouds.dropbox;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import clouds.CloudActivity;
 
 /**
  * Created by mark on 24/12/16.
@@ -33,10 +35,10 @@ import java.io.InputStream;
 public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     private DbxClientV2 dbxClient;
     private File file;
-    private DropboxActivity activity;
+    private CloudActivity activity;
     private File currentFileBeingUploaded;
 
-    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, DropboxActivity activity) {
+    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, CloudActivity activity) {
         this.dbxClient = dbxClient;
         this.file = file;
         this.activity = activity;
@@ -47,14 +49,14 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
         boolean uploadSuccessful = false;
 
         try {
-            activity.onDropboxUploadStart();
+            activity.onCloudUploadStart();
             uploadRecursive(file);
             uploadSuccessful = true;
         } catch (InvalidAccessTokenException invalidAccessTokenException) {
             activity.onDropboxNeedsAuthentication();
         } catch (Exception exception) {
             Log.e("WorldScribe", exception.getMessage());
-            activity.onDropboxUploadFailure(exception, currentFileBeingUploaded.getAbsolutePath());
+            activity.onCloudUploadFailure(exception, currentFileBeingUploaded.getAbsolutePath());
         }
 
         return uploadSuccessful;
@@ -63,7 +65,7 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            activity.onDropboxUploadSuccess();
+            activity.onCloudUploadSuccess();
         }
     }
 

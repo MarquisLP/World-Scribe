@@ -1,18 +1,17 @@
-package com.averi.worldscribe.nextcloud;
+package clouds.nextcloud;
 
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
 
 import com.averi.worldscribe.activities.ThemedActivity;
-import com.averi.worldscribe.dropbox.DropboxActivity;
+import clouds.CloudActivity;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.owncloud.android.lib.common.*;
 import com.owncloud.android.lib.common.operations.OnRemoteOperationListener;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.resources.files.CreateFolderRemoteOperation;
-import com.owncloud.android.lib.resources.files.FileUtils;
 import com.owncloud.android.lib.resources.files.UploadFileRemoteOperation;
 
 import java.io.File;
@@ -24,10 +23,10 @@ public class UploadToNextcloudTask extends AsyncTask<Object, Void, Boolean> impl
     private File currentFile = null;
     private Object notifier = new Object();
     private RemoteOperationResult.ResultCode resultCode;
-    private DropboxActivity activitiy;
+    private CloudActivity activitiy;
 
 
-    public UploadToNextcloudTask(OwnCloudClient client, DropboxActivity activity, File file) {
+    public UploadToNextcloudTask(OwnCloudClient client, CloudActivity activity, File file) {
         //This exception only occurs for the developer not for the user, because the user can't changed the code at runtime.
         if(!(activity instanceof ThemedActivity))
             throw new IllegalArgumentException("The activity object must derived from ThemedActivity.");
@@ -108,12 +107,12 @@ public class UploadToNextcloudTask extends AsyncTask<Object, Void, Boolean> impl
         boolean uploadSuccessful = false;
 
         try {
-            activitiy.onDropboxUploadStart();
+            activitiy.onCloudUploadStart();
             uploadRecursive(currentFile);
             uploadSuccessful = true;
         } catch (Exception exception) {
             Log.e("WorldScribe", exception.getMessage());
-            activitiy.onDropboxUploadFailure(exception, currentFile.getAbsolutePath());
+            activitiy.onCloudUploadFailure(exception, currentFile.getAbsolutePath());
         }
 
         return uploadSuccessful;
@@ -122,7 +121,7 @@ public class UploadToNextcloudTask extends AsyncTask<Object, Void, Boolean> impl
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            activitiy.onDropboxUploadSuccess();
+            activitiy.onCloudUploadSuccess();
         }
     }
 

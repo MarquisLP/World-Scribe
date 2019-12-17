@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,9 +34,9 @@ import com.averi.worldscribe.GenericFileProvider;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
-import com.averi.worldscribe.dropbox.DropboxActivity;
-import com.averi.worldscribe.dropbox.UploadToDropboxTask;
-import com.averi.worldscribe.nextcloud.UploadToNextcloudTask;
+import clouds.CloudActivity;
+import clouds.dropbox.UploadToDropboxTask;
+import clouds.nextcloud.UploadToNextcloudTask;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ErrorLoggingActivity;
@@ -59,7 +58,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ArticleListActivity extends ThemedActivity
-        implements StringListContext, BottomBarActivity, DropboxActivity, ErrorLoggingActivity {
+        implements StringListContext, BottomBarActivity, CloudActivity, ErrorLoggingActivity {
 
     public static final String DROPBOX_APP_KEY = "5pzb74tti855m61";
     private static final String DROPBOX_ERROR_LOG_MESSAGE = "An error occurred while trying to " +
@@ -488,6 +487,11 @@ public class ArticleListActivity extends ThemedActivity
                                 if (!Server.contains("http://") && !Server.contains("https://"))
                                     Server = "http://" + Server;
 
+                                //Saves the server and the username.
+                                //Why is there no password? Because it's to unsave to save the password.
+                                //But what is about the android AccountManager? Basically the AM stores the password also in cleartext, which can be
+                                //read by the root and I don't have the knowlege about a good encryption for passwords.
+                                //Why you don't use OAuth2 of nextcloud= Because the library from nextcloud, android-library, doesn't support it.
                                 AppPreferences.saveLastNextcloudServer(ArticleListActivity.this, Server);
                                 AppPreferences.saveLastNextcloudUser(ArticleListActivity.this, data.getStringExtra(NextcloudLoginActivity.USERNAME));
 
@@ -541,7 +545,7 @@ public class ArticleListActivity extends ThemedActivity
         return pInfo.versionName;
     }
 
-    public void onDropboxUploadStart() {
+    public void onCloudUploadStart() {
         showDropboxProgressDialog();
     }
 
@@ -552,7 +556,7 @@ public class ArticleListActivity extends ThemedActivity
         Auth.startOAuth2Authentication(this, DROPBOX_APP_KEY);
     }
 
-    public void onDropboxUploadSuccess() {
+    public void onCloudUploadSuccess() {
         dropboxProgressDialog.dismiss();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -564,7 +568,7 @@ public class ArticleListActivity extends ThemedActivity
                 .show();
     }
 
-    public void onDropboxUploadFailure(Exception exception, String lastFileBeingUploaded) {
+    public void onCloudUploadFailure(Exception exception, String lastFileBeingUploaded) {
         dropboxProgressDialog.dismiss();
 
         try {
