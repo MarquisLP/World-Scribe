@@ -14,6 +14,32 @@ public class AppPreferences {
     public static final String NIGHT_MODE_IS_ENABLED = "nightModeIsEnabled";
     public static final String DROPBOX_ACCESS_TOKEN = "dropboxAccessToken";
     public static final String LAST_OPENED_VERSION_CODE = "lastOpenedVersionCode";
+    public static final String LAST_NEXTCLOUD_SERVER = "nextcloudServer";
+    public static final String LAST_NEXTCLOUD_USER = "nextcloudUser";
+
+    public static void saveLastNextcloudServer(Context context, String server) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        preferences.edit().putString(AppPreferences.LAST_NEXTCLOUD_SERVER, server).apply();
+    }
+
+    public static void saveLastNextcloudUser(Context context, String user) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        preferences.edit().putString(AppPreferences.LAST_NEXTCLOUD_USER, user).apply();
+    }
+
+    public static String getLastNextcloudServer(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        return preferences.getString(LAST_NEXTCLOUD_SERVER, "");
+    }
+
+    public static String getLastNextcloudUser(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
+        return preferences.getString(LAST_NEXTCLOUD_USER, "");
+    }
 
     /**
      * Save the name of the World that was last opened, so that it can automatically be loaded the

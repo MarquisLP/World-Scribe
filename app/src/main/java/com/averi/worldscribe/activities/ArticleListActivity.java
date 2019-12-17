@@ -9,10 +9,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +37,7 @@ import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
 import com.averi.worldscribe.dropbox.DropboxActivity;
 import com.averi.worldscribe.dropbox.UploadToDropboxTask;
+import com.averi.worldscribe.nextcloud.UploadToNextcloudTask;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ErrorLoggingActivity;
@@ -46,6 +51,9 @@ import com.averi.worldscribe.views.BottomBarActivity;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.DbxClientV2;
+import com.owncloud.android.lib.common.OwnCloudClient;
+import com.owncloud.android.lib.common.OwnCloudClientFactory;
+import com.owncloud.android.lib.common.OwnCloudCredentialsFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,6 +66,7 @@ public class ArticleListActivity extends ThemedActivity
             "upload a " +
             "file/folder with path '%s'.";
     private static final String FEEDBACK_SURVEY_URL = "https://goo.gl/forms/3VAhRuAajgBKmXyY2";
+    private static final int LOGIN_REQUEST = 1;
 
     private RecyclerView recyclerView;
     private String worldName;
@@ -68,6 +77,9 @@ public class ArticleListActivity extends ThemedActivity
     private UploadToDropboxTask uploadToDropboxTask;
     private boolean syncWorldToDropboxOnResume = false;
     private ProgressDialog dropboxProgressDialog;
+
+    //Used to change the title of the messageboxes.
+    private CloudType cloudType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +157,8 @@ public class ArticleListActivity extends ThemedActivity
      * Displays a loading dialog that will stay on-screen while uploading occurs.
      */
     private void showDropboxProgressDialog() {
-        final String title = this.getString(R.string.dropboxUploadProgressTitle);
-        final String message = this.getString(R.string.dropboxUploadProgressMessage);
+        final String title = this.getString(R.string.cloudUploadProgressTitle, cloudType.name());
+        final String message = this.getString(R.string.cloudUploadProgressMessage);
         final Context context = this;
 
         this.runOnUiThread(new Runnable() {
@@ -210,6 +222,9 @@ public class ArticleListActivity extends ThemedActivity
                 return true;
             case R.id.syncToDropboxItem:
                 syncWorldToDropbox();
+                return true;
+            case R.id.syncToNextcloudItem:
+                syncWorldToNextcloud();
                 return true;
             case R.id.viewChangelogItem:
                 showChangelogDialog();
@@ -425,9 +440,11 @@ public class ArticleListActivity extends ThemedActivity
             // authentication.
             syncWorldToDropboxOnResume = true;
         } else {
+            cloudType = CloudType.Dropbox;
+
             new AlertDialog.Builder(this)
-                    .setTitle(this.getString(R.string.confirmBackupToDropboxTitle, worldName))
-                    .setMessage(this.getString(R.string.confirmBackupToDropbox, worldName))
+                    .setTitle(this.getString(R.string.confirmBackupToCloudTitle, worldName))
+                    .setMessage(this.getString(R.string.confirmBackupToCloud, worldName, cloudType.name()))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -438,6 +455,54 @@ public class ArticleListActivity extends ThemedActivity
                         new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this).execute();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
+        }
+    }
+
+    private void syncWorldToNextcloud() {
+        Intent intent = new Intent(this, NextcloudLoginActivity.class);
+        intent.putExtra(NextcloudLoginActivity.SERVER, AppPreferences.getLastNextcloudServer(this));
+        intent.putExtra(NextcloudLoginActivity.USERNAME, AppPreferences.getLastNextcloudUser(this));
+        startActivityForResult(intent, LOGIN_REQUEST);
+
+        //new UploadToNextcloudTask(Uri.parse("http://10.0.2.2/nextcloud"), this, FileRetriever.getWorldDirectory(worldName), "admin", "123").execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LOGIN_REQUEST) {
+            if(resultCode == RESULT_OK && data != null) {
+                cloudType = CloudType.Nextcloud;
+
+                new AlertDialog.Builder(this)
+                        .setTitle(this.getString(R.string.confirmBackupToCloudTitle, worldName))
+                        .setMessage(this.getString(R.string.confirmBackupToCloud, worldName, cloudType.name()))
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                String Server = data.getStringExtra(NextcloudLoginActivity.SERVER);
+
+                                if (!Server.contains("http://") && !Server.contains("https://"))
+                                    Server = "http://" + Server;
+
+                                AppPreferences.saveLastNextcloudServer(ArticleListActivity.this, Server);
+                                AppPreferences.saveLastNextcloudUser(ArticleListActivity.this, data.getStringExtra(NextcloudLoginActivity.USERNAME));
+
+                                OwnCloudClient client = OwnCloudClientFactory.createOwnCloudClient(Uri.parse(Server), ArticleListActivity.this, true);
+                                client.setCredentials(
+                                        OwnCloudCredentialsFactory.newBasicCredentials(
+                                                data.getStringExtra(NextcloudLoginActivity.USERNAME),
+                                                data.getStringExtra(NextcloudLoginActivity.PASSWORD)
+                                        ));
+
+                                File worldDirectory = FileRetriever.getWorldDirectory(worldName);
+                                new UploadToNextcloudTask(client, ArticleListActivity.this, worldDirectory).execute();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+            }
         }
     }
 
@@ -493,8 +558,8 @@ public class ArticleListActivity extends ThemedActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String message;
 
-        message = this.getString(R.string.dropboxUploadSuccess);
-        builder.setPositiveButton(this.getString(R.string.dismissDropboxUploadOutcome), null)
+        message = this.getString(R.string.cloudUploadSuccess);
+        builder.setPositiveButton(this.getString(R.string.dismissCloudUploadOutcome), null)
                 .setMessage(message)
                 .show();
     }
@@ -512,8 +577,8 @@ public class ArticleListActivity extends ThemedActivity
 
     public void onErrorLoggingCompletion(String errorMessage, final File errorLogFile) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final String message = this.getString(R.string.dropboxUploadFailure);
-        final String dismissButtonText = this.getString(R.string.dismissDropboxUploadOutcome);
+        final String message = this.getString(R.string.cloudUploadFailure, cloudType.name());
+        final String dismissButtonText = this.getString(R.string.dismissCloudUploadOutcome);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         LinearLayout alertLayout = (LinearLayout) inflater.inflate(R.layout.layout_dropbox_error,

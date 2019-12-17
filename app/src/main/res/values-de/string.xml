@@ -35,12 +35,22 @@
     <string name="renameArticleItemText">Beitrag umbennen</string>
     <string name="deleteArticleItemText">Beitrag löschen</string>
     <string name="syncToDropboxItemText">Sichern nach Dropbox</string>
+    <string name="syncToNextcloudItemText">Sichern nach Nextcloud</string>
     <string name="enableReaderModeItemText">Lesemodus</string>
     <string name="enableEditorModeItemText">Editiermodus</string>
     <string name="viewChangelogItemText">Changelog öffnen</string>
     <string name="feedbackItemText">Feedback</string>
 
     <string name="imageFileName">Bild</string>
+
+    <!-- Nextcloud -->
+    <string name="nextcloudServerTitle">Nextcloud Serveradresse</string>
+    <string name="nextcloudUsername">Benutzer</string>
+    <string name="nextcloudPassword">Passwort</string>
+    <string name="nextcloudLogin">Login</string>
+    <string name="nextcloudTitle">Nextcloud</string>
+    <string name="emptyFields">Bitte füllen Sie alle Felder aus.</string>
+
 
     <!-- Text Field Names -->
     <string name="aliasesField">Aliase</string>
@@ -99,9 +109,9 @@
     <string name="createSnippetTitle">Neuer Ausschnitt</string>
     <string name="createArticleTitle">Neuer Beitrag zur Weltgeschichte</string>
 
-    <string name="confirmBackupToDropboxTitle">%1$s sichern?</string>
-    <string name="confirmBackupToDropbox">Sind Sie sich sicher %1$s nach
-        Dropbox hochzuladen?\nDieser Prozess kann mehrere Minuten in Anspruch nehmen.</string>
+    <string name="confirmBackupToCloudTitle">%1$s sichern?</string>
+    <string name="confirmBackupToCloud">Sind Sie sich sicher %1$s nach
+        %2$s hochzuladen?\nDieser Prozess kann mehrere Minuten in Anspruch nehmen.</string>
     <string name="confirmWorldDeletionTitle">%1$s löschen?</string>
     <string name="confirmWorldDeletion">Sind Sie sich sicher %1$s zu löschen?\nSobald eine Welt gelöscht ist, kann diese nicht wieder hergestellt werden.</string>
     <string name="confirmSnippetDeletionTitle">%1$s löschen?</string>
@@ -155,11 +165,11 @@
     <string name="nightModeTitle">Nachtmodus</string>
     <string name="nightModeSwitchText">Nachtmodus</string>
 
-    <string name="dropboxUploadSuccess">Die Welt wurde erfolgreich hochgeladen</string>
-    <string name="dropboxUploadFailure">Es ist ein Fehler aufgetreten, während die Welt nach Dropbox hochgeladen wurde.</string>
-    <string name="dropboxUploadProgressTitle">Welt wird nach Dropbox hochgeladen</string>
-    <string name="dropboxUploadProgressMessage">Bitte warten…</string>
-    <string name="dismissDropboxUploadOutcome">OK</string>
+    <string name="cloudUploadSuccess">Die Welt wurde erfolgreich hochgeladen</string>
+    <string name="cloudUploadFailure">Es ist ein Fehler aufgetreten, während die Welt nach %1$s hochgeladen wurde.</string>
+    <string name="cloudUploadProgressTitle">Welt wird nach %1$s hochgeladen</string>
+    <string name="cloudUploadProgressMessage">Bitte warten…</string>
+    <string name="dismissCloudUploadOutcome">OK</string>
 
     <string name="readerModeEnabledMessage">Lesemodus (Texteingabe ist deaktiviert)</string>
     <string name="editorModeEnabledMessage">Editiermodus (Texteingabe ist aktiviert)</string>
