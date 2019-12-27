@@ -71,7 +71,7 @@ public class UploadToNextcloudTask extends AsyncTask<Object, Void, Boolean> impl
             }
 
             if (uploadObject.isDirectory()) {
-                CreateFolderRemoteOperation dir = new CreateFolderRemoteOperation(nextcloudPath, false);
+                CreateFolderRemoteOperation dir = new CreateFolderRemoteOperation(nextcloudPath, true);
                 dir.execute(client, this, this.handler);
 
                 waitForFinishUpload();
@@ -134,7 +134,9 @@ public class UploadToNextcloudTask extends AsyncTask<Object, Void, Boolean> impl
         String androidFilePath = file.getAbsolutePath();
 
         String appFilePath = FileRetriever.getAppDirectory().getAbsolutePath();
-        String nextcloudPath = androidFilePath.replace(appFilePath, "");
+
+        //Added hardcoded app name for the root folder name.
+        String nextcloudPath = "World Scribe" + androidFilePath.replace(appFilePath, "");
 
         // Nextcloud will not upload files that have a "." prefix.
         // To get around this, we upload those files without the "." prefix.
