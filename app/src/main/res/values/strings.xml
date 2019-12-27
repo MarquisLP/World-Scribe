@@ -43,7 +43,7 @@
     <string name="imageFileName">Image</string>
 
     <!-- Nextcloud -->
-    <string name="nextcloudServerTitle">Nextcloud server address</string>
+    <string name="nextcloudServerTitle">Nextcloud server address\n(e.g. "https://us.hostiso.cloud")</string>
     <string name="nextcloudUsername">Username</string>
     <string name="nextcloudPassword">Password</string>
     <string name="nextcloudLogin">Login</string>
