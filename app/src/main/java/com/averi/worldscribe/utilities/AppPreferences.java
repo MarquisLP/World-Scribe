@@ -16,6 +16,7 @@ public class AppPreferences {
     public static final String LAST_OPENED_VERSION_CODE = "lastOpenedVersionCode";
     public static final String LAST_NEXTCLOUD_SERVER = "nextcloudServer";
     public static final String LAST_NEXTCLOUD_USER = "nextcloudUser";
+    public static final String ROOT_DIRECTORY_URI = "rootDirectoryUri";
 
     /**
      * Saves the nextcloud server address.

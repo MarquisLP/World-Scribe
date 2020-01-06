@@ -4,15 +4,20 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
+import com.balda.flipper.DocumentFileCompat;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,24 +34,26 @@ public class ExternalReader {
     /**
      * @return True if the app's directory exists on the user's external storage.
      */
-    public static boolean appDirectoryExists() {
-        return FileRetriever.getAppDirectory().exists();
+    public static boolean appDirectoryExists(Context context) {
+        return FileRetriever.getAppDirectory(context, false) != null;
     }
 
     /**
      * @return True if a .nomedia file exists in the top-level folder of the app directory
      */
-    public static boolean noMediaFileExists() {
-        return FileRetriever.getNoMediaFile().exists();
+    public static boolean noMediaFileExists(Context context) {
+        return FileRetriever.getNoMediaFile(context, false) != null;
     }
 
-    public static ArrayList<String> getWorldList() {
+    public static ArrayList<String> getWorldList(Context context) {
         ArrayList<String> worldNames = new ArrayList<>();
-        File worldsFolder = FileRetriever.getAppDirectory();
-        worldsFolder.mkdirs();
-        File[] listOfFiles = worldsFolder.listFiles();
+        DocumentFile worldsFolder = FileRetriever.getAppDirectory(context, false);
+        if (worldsFolder == null) {
+            worldsFolder = ExternalWriter.createAppDirectory(context);
+        }
+        DocumentFile[] listOfFiles = worldsFolder.listFiles();
 
-        for (File file : listOfFiles) {
+        for (DocumentFile file : listOfFiles) {
             if (file.isDirectory()) {
                 worldNames.add(file.getName());
             }
@@ -57,24 +64,26 @@ public class ExternalReader {
         return worldNames;
     }
 
-    public static boolean worldListIsEmpty() {
-        ArrayList<String> worldList = getWorldList();
+    public static boolean worldListIsEmpty(Context context) {
+        ArrayList<String> worldList = getWorldList(context);
         return worldList.isEmpty();
     }
 
-    public static boolean worldAlreadyExists(String worldName) {
-        File worldsFolder = FileRetriever.getAppDirectory();
-        return (new File(worldsFolder, worldName).exists());
+    public static boolean worldAlreadyExists(Context context, String worldName) {
+        DocumentFile worldsFolder = FileRetriever.getAppDirectory(context, false);
+        return DocumentFileCompat.peekSubFolder(worldsFolder, worldName) != null;
     }
 
     public static ArrayList<String> getArticleNamesInCategory(Context context, String worldName,
                                                               Category category) {
         ArrayList<String> articleNames = new ArrayList<String>();
-        File categoryFolder = FileRetriever.getCategoryDirectory(context, worldName, category);
-        categoryFolder.mkdirs();
-        File[] listOfArticles = categoryFolder.listFiles();
+        DocumentFile categoryFolder = FileRetriever.getCategoryDirectory(context, worldName, category, false);
+        if (categoryFolder == null) {
+            return articleNames;
+        }
 
-        for (File articleFolder : listOfArticles) {
+        DocumentFile[] listOfArticles = categoryFolder.listFiles();
+        for (DocumentFile articleFolder : listOfArticles) {
             if (articleFolder.isDirectory()) {
                 articleNames.add(articleFolder.getName());
             }
@@ -95,9 +104,9 @@ public class ExternalReader {
      */
     public static boolean articleExists(Context context, String worldName, Category category,
                                         String articleName) {
-        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
-                articleName);
-        return ((articleDirectory.exists()) && (articleDirectory.isDirectory()));
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName, false);
+        return ((articleDirectory != null) && (articleDirectory.isDirectory()));
     }
 
     /**
@@ -111,20 +120,24 @@ public class ExternalReader {
      * doesn't exist or couldn't be loaded.
      */
     public static Bitmap getArticleImage(Context context, String worldName, Category category,
-                                         String articleName, int viewWidth, int viewHeight) {
+                                         String articleName, int viewWidth, int viewHeight)
+            throws FileNotFoundException {
         String filename = "Image" +
                         IMAGE_FILE_EXTENSION;
-        File imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
-                filename);
+        DocumentFile imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                filename, false, "image/jpeg");
         // Some Article images might have a dot prepended to the file name.
         // See issue #8 to see why only some image files have a dot.
-        if (!(imageFile.exists())) {
+        if (imageFile == null) {
             filename = "." + filename;
             imageFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
-                    filename);
+                    filename, false, "image/jpeg");
+            if (imageFile == null) {
+                return null;
+            }
         }
 
-        Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(imageFile, viewWidth, viewHeight);
+        Bitmap articleBitmap = ImageDecoder.decodeBitmapFromFile(context, imageFile, viewWidth, viewHeight);
         return articleBitmap;
     }
 
@@ -171,16 +184,18 @@ public class ExternalReader {
     public static String getArticleTextFieldData(Context context, String worldName,
             Category category, String articleName, String textFieldName) {
         StringBuilder textFieldData = new StringBuilder();
-        File textFieldFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
-                textFieldName + TEXT_FIELD_FILE_EXTENSION);
+        DocumentFile textFieldFile = FileRetriever.getArticleFile(context, worldName, category, articleName,
+                textFieldName + TEXT_FIELD_FILE_EXTENSION, false, "text/plain");
 
-        if (textFieldFile.exists()) {
+        if (textFieldFile != null) {
             try {
-                FileInputStream inputStream = new FileInputStream(textFieldFile);
+                InputStream inputStream = context.getContentResolver().openInputStream(textFieldFile.getUri());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-                String line;
-                textFieldData.append(reader.readLine());
+                String line = reader.readLine();
+                if (line != null) {
+                    textFieldData.append(line);
+                }
                 while ((line = reader.readLine()) != null) {
                     textFieldData.append("\n");
                     textFieldData.append(line);
@@ -224,18 +239,23 @@ public class ExternalReader {
     private static ArrayList<Connection> getConnectionsInCategory(Context context, String worldName,
             Category category, String articleName, Category connectionCategory) {
         ArrayList<Connection> connections = new ArrayList<>();
-        File connectionCategoryFolder = FileRetriever.getConnectionCategoryDirectory(context,
-                worldName, category, articleName, connectionCategory);
-        connectionCategoryFolder.mkdirs();
+        DocumentFile connectionCategoryFolder = FileRetriever.getConnectionCategoryDirectory(context,
+                worldName, category, articleName, connectionCategory, false);
+        if (connectionCategoryFolder == null) {
+            return connections;
+        }
 
-        for (File mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
+        for (DocumentFile mainArticleRelationFile : connectionCategoryFolder.listFiles()) {
             String mainArticleRelationFilename = mainArticleRelationFile.getName();
             String connectedArticleName = mainArticleRelationFilename.substring(0,
                     mainArticleRelationFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
-            File connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
-                    worldName, connectionCategory, connectedArticleName, category, articleName);
+            DocumentFile connectedArticleRelationFile = FileRetriever.getConnectionRelationFile(context,
+                    worldName, connectionCategory, connectedArticleName, category, articleName, false);
+            if (connectedArticleRelationFile == null) {
+                continue;
+            }
 
-            Connection connection = makeConnectionFromFile(worldName, category, articleName,
+            Connection connection = makeConnectionFromFile(context, worldName, category, articleName,
                     mainArticleRelationFile, connectionCategory, connectedArticleName,
                     connectedArticleRelationFile);
 
@@ -247,12 +267,12 @@ public class ExternalReader {
         return connections;
     }
 
-    private static Connection makeConnectionFromFile(String worldName, Category mainArticleCategory,
+    private static Connection makeConnectionFromFile(Context context, String worldName, Category mainArticleCategory,
                                                      String mainArticleName,
-                                                     File mainArticleRelationFile,
+                                                     DocumentFile mainArticleRelationFile,
                                                      Category connectedArticleCategory,
                                                      String connectedArticleName,
-                                                     File connectedArticleRelationFile) {
+                                                     DocumentFile connectedArticleRelationFile) {
         Connection connection = new Connection();
         connection.worldName = worldName;
         connection.articleCategory = mainArticleCategory;
@@ -261,7 +281,7 @@ public class ExternalReader {
         connection.connectedArticleName = connectedArticleName;
 
         try {
-            FileInputStream inputStream = new FileInputStream(mainArticleRelationFile);
+            InputStream inputStream = context.getContentResolver().openInputStream(mainArticleRelationFile.getUri());
             String line;
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = reader.readLine()) != null) {
@@ -275,7 +295,7 @@ public class ExternalReader {
 
         if (connection != null) {
             try {
-                FileInputStream inputStream = new FileInputStream(connectedArticleRelationFile);
+                InputStream inputStream = context.getContentResolver().openInputStream(connectedArticleRelationFile.getUri());
                 String line;
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 while ((line = reader.readLine()) != null) {
@@ -301,9 +321,11 @@ public class ExternalReader {
      */
     public static ArrayList<String> getSnippetNames(Context context, String worldName,
                                                     Category category, String articleName) {
-        File snippetsDirectory = FileRetriever.getSnippetsDirectory(context, worldName, category,
-                articleName);
-        snippetsDirectory.mkdirs();
+        DocumentFile snippetsDirectory = FileRetriever.getSnippetsDirectory(context, worldName, category,
+                articleName, false);
+        if (snippetsDirectory == null) {
+            return new ArrayList<>();
+        }
 
         return getSortedFileNames(snippetsDirectory);
     }
@@ -314,11 +336,11 @@ public class ExternalReader {
      * @return An ArrayList containing all filenames in the specified directory, sorted in
      * descending order.
      */
-    private static ArrayList<String> getSortedFileNames(File folder) {
+    private static ArrayList<String> getSortedFileNames(DocumentFile folder) {
         ArrayList<String> fileNames = new ArrayList<>();
-        File[] listOfFiles = folder.listFiles();
+        DocumentFile[] listOfFiles = folder.listFiles();
 
-        for (File snippetFile : listOfFiles) {
+        for (DocumentFile snippetFile : listOfFiles) {
             if (snippetFile.isFile()) {
                 String snippetName = snippetFile.getName();
                 fileNames.add(snippetName.substring(0,
@@ -344,16 +366,18 @@ public class ExternalReader {
     public static String getSnippetText(Context context, String worldName, Category category,
                                  String articleName, String snippetName) {
         StringBuilder snippetData = new StringBuilder();
-        File snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
-                snippetName);
+        DocumentFile snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                snippetName, false);
 
-        if (snippetFile.exists()) {
+        if (snippetFile != null) {
             try {
-                FileInputStream inputStream = new FileInputStream(snippetFile);
+                InputStream inputStream = context.getContentResolver().openInputStream(snippetFile.getUri());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-                String line;
-                snippetData.append(reader.readLine());
+                String line = reader.readLine();
+                if (line != null) {
+                    snippetData.append(line);
+                }
                 while ((line = reader.readLine()) != null) {
                     snippetData.append("\n");
                     snippetData.append(line);
@@ -380,9 +404,9 @@ public class ExternalReader {
      */
     public static boolean snippetExists(Context context, String worldName, Category category,
                                         String articleName, String snippetName) {
-        File snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
-                snippetName);
-        return ((snippetFile.exists()) && (snippetFile.isFile()));
+        DocumentFile snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                snippetName, false);
+        return ((snippetFile != null) && (snippetFile.isFile()));
     }
 
     /**
@@ -394,12 +418,14 @@ public class ExternalReader {
      */
     public static ArrayList<Residence> getResidences(Context context, String worldName,
                                                      String personName) {
-        File residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
-                personName);
-        residencesDirectory.mkdirs();
+        DocumentFile residencesDirectory = FileRetriever.getResidencesDirectory(context, worldName,
+                personName, false);
+        if (residencesDirectory == null) {
+            return new ArrayList<>();
+        }
         ArrayList<Residence> residences = new ArrayList<>();
 
-        for (File residenceFile : residencesDirectory.listFiles()) {
+        for (DocumentFile residenceFile : residencesDirectory.listFiles()) {
             if (residenceFile.isFile()) {
                 Residence newResidence = new Residence();
                 String residenceFilename = residenceFile.getName();
@@ -425,12 +451,15 @@ public class ExternalReader {
      */
     public static ArrayList<Residence> getResidents(Context context, String worldName,
                                                   String placeName) {
-        File residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
-                placeName);
-        residentsDirectory.mkdirs();
+        DocumentFile residentsDirectory = FileRetriever.getResidentsDirectory(context, worldName,
+                placeName, false);
+        if (residentsDirectory == null) {
+            return new ArrayList<>();
+        }
+
         ArrayList<Residence> residences = new ArrayList<>();
 
-        for (File residentFile : residentsDirectory.listFiles()) {
+        for (DocumentFile residentFile : residentsDirectory.listFiles()) {
             if (residentFile.isFile()) {
                 Residence newResidence = new Residence();
                 String residentFilename = residentFile.getName();
@@ -457,17 +486,19 @@ public class ExternalReader {
     public static ArrayList<Membership> getMembershipsForPerson(Context context, String worldName,
                                                                 String personName) {
         ArrayList<Membership> memberships = new ArrayList<>();
-        File membershipsDirectory = FileRetriever.getMembershipsDirectory(context, worldName,
-                personName);
-        membershipsDirectory.mkdirs();
+        DocumentFile membershipsDirectory = FileRetriever.getMembershipsDirectory(context, worldName,
+                personName, false);
+        if (membershipsDirectory == null) {
+            return new ArrayList<>();
+        }
 
-        for (File membershipFile : membershipsDirectory.listFiles()) {
+        for (DocumentFile membershipFile : membershipsDirectory.listFiles()) {
             if (membershipFile.isFile()) {
                 String membershipFilename = membershipFile.getName();
                 String groupName = membershipFilename.substring(0,
                         membershipFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
 
-                Membership membership = makeMembershipFromFile(worldName, groupName, personName,
+                Membership membership = makeMembershipFromFile(context, worldName, groupName, personName,
                         membershipFile);
                 if (membership != null) {
                     memberships.add(membership);
@@ -486,16 +517,16 @@ public class ExternalReader {
      * @param membershipFile A text file containing Membership data.
      * @return A Membership with the extracted data; null if an I/O error occurs.
      */
-    private static Membership makeMembershipFromFile(String worldName, String groupName,
+    private static Membership makeMembershipFromFile(Context context, String worldName, String groupName,
                                                      String memberName,
-                                                     File membershipFile) {
+                                                     DocumentFile membershipFile) {
         Membership membership = new Membership();
         membership.worldName = worldName;
         membership.groupName = groupName;
         membership.memberName = memberName;
 
         try {
-            FileInputStream inputStream = new FileInputStream(membershipFile);
+            InputStream inputStream = context.getContentResolver().openInputStream(membershipFile.getUri());
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             membership.memberRole = reader.readLine();
@@ -520,17 +551,19 @@ public class ExternalReader {
     public static ArrayList<Membership> getMembershipsInGroup(Context context, String worldName,
                                                           String groupName) {
         ArrayList<Membership> memberships = new ArrayList<>();
-        File membersDirectory = FileRetriever.getMembersDirectory(context, worldName,
-                groupName);
-        membersDirectory.mkdirs();
+        DocumentFile membersDirectory = FileRetriever.getMembersDirectory(context, worldName,
+                groupName, false);
+        if (membersDirectory == null) {
+            return new ArrayList<>();
+        }
 
-        for (File membershipFile : membersDirectory.listFiles()) {
+        for (DocumentFile membershipFile : membersDirectory.listFiles()) {
             if (membershipFile.isFile()) {
                 String membershipFilename = membershipFile.getName();
                 String personName = membershipFilename.substring(0,
                         membershipFilename.length() - TEXT_FILE_EXTENSION_LENGTH);
 
-                Membership membership = makeMembershipFromFile(worldName, groupName, personName,
+                Membership membership = makeMembershipFromFile(context, worldName, groupName, personName,
                         membershipFile);
                 if (membership != null) {
                     memberships.add(membership);

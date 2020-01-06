@@ -1,11 +1,16 @@
 package com.averi.worldscribe.utilities;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
+
 import android.util.Log;
 
-import java.io.File;
+import com.balda.flipper.DocumentFileCompat;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,21 +22,24 @@ public class LogErrorTask extends AsyncTask {
 
     ErrorLoggingActivity activity;
     private String openingMessage;
+    private Context context;
     private Exception exception;
 
-    public LogErrorTask(ErrorLoggingActivity activity, String openingMessage,
+    public LogErrorTask(ErrorLoggingActivity activity, String openingMessage, Context context,
                         @Nullable  Exception exception) {
         this.activity = activity;
         this.openingMessage = openingMessage;
+        this.context = context;
         this.exception = exception;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
-        File errorLogFile = generateErrorLogFile();
+        DocumentFile errorLogFile = generateErrorLogFile();
 
         try {
-            PrintWriter errorLogPrintStream = new PrintWriter(errorLogFile);
+            OutputStream outputStream = context.getContentResolver().openOutputStream(errorLogFile.getUri());
+            PrintWriter errorLogPrintStream = new PrintWriter(outputStream);
 
             errorLogPrintStream.print(openingMessage + "\n");
 
@@ -59,19 +67,19 @@ public class LogErrorTask extends AsyncTask {
      * </p>
      * @return An empty error log file whose file name is based on the current date
      */
-    private File generateErrorLogFile() {
+    private DocumentFile generateErrorLogFile() {
         Date datum = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String fullName = String.format(ERROR_LOG_FILE_NAME, df.format(datum));
 
-        File errorLogFile = new File(FileRetriever.getAppDirectory(), fullName);
-        if (errorLogFile.exists()) {
+        DocumentFile appDirectory = FileRetriever.getAppDirectory(context, false);
+        DocumentFile errorLogFile = DocumentFileCompat.peekFile(appDirectory, fullName, null);
+        if (errorLogFile != null) {
             errorLogFile.delete();
         }
         try {
-            errorLogFile.getParentFile().mkdirs();
-            errorLogFile.createNewFile();
-        } catch (IOException e) {
+            errorLogFile = appDirectory.createFile("text/plain", fullName);
+        } catch (Exception e) {
             //TODO: Handle this exception more elegantly
             Log.e("WorldScribe", e.getMessage());
         }

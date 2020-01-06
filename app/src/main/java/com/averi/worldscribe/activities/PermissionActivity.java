@@ -12,16 +12,24 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.FileRetriever;
+import com.balda.flipper.Root;
+import com.balda.flipper.StorageManagerCompat;
 
 public class PermissionActivity extends ThemedActivity {
 
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    public static final int REQUEST_WRITE_ROOT_DIRECTORY = 2;
+
+    private TextView textWelcome;
+    private TextView textExplanation;
 
     private SharedPreferences preferences = null;
 
@@ -31,9 +39,23 @@ public class PermissionActivity extends ThemedActivity {
 
         preferences = getSharedPreferences("com.averi.worldscribe", MODE_PRIVATE);
 
+        textWelcome = findViewById(R.id.textWelcome);
+        textExplanation = findViewById(R.id.textExplanation);
+
         if ((!(deviceUsesRuntimePermissions())) || (writePermissionWasGranted())) {
-            generateMissingAppDirectoryAndFiles();
-            goToNextActivity();
+            StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+            Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+            if ((root != null) && (root.isAccessGranted(this))) {
+                preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
+                        root.toRootDirectory(this).getUri().toString())
+                    .apply();
+                generateMissingAppDirectoryAndFiles();
+                goToNextActivity();
+            }
+            else {
+                textWelcome.setText(R.string.selectRootDirectoryTitle);
+                textExplanation.setText(R.string.selectRootDirectoryExplanation);
+            }
         }
     }
 
@@ -58,12 +80,20 @@ public class PermissionActivity extends ThemedActivity {
     }
 
     public void askForWritePermission(View view) {
-        if (preferences.getBoolean(AppPreferences.WRITE_PERMISSION_PROMPT_IS_ENABLED, true)) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_WRITE_EXTERNAL_STORAGE);
-        } else {
-            goToAppSettings();
+        StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+        Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+        if ((writePermissionWasGranted()) && ((root == null) || (!root.isAccessGranted(this)))) {
+            Intent getExternalFolderAccessIntent = storageManagerCompat.requireExternalAccess(this);
+            startActivityForResult(getExternalFolderAccessIntent, REQUEST_WRITE_ROOT_DIRECTORY);
+        }
+        else {
+            if (preferences.getBoolean(AppPreferences.WRITE_PERMISSION_PROMPT_IS_ENABLED, true)) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_WRITE_EXTERNAL_STORAGE);
+            } else {
+                goToAppSettings();
+            }
         }
     }
 
@@ -74,12 +104,41 @@ public class PermissionActivity extends ThemedActivity {
             case REQUEST_WRITE_EXTERNAL_STORAGE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    enableWritePermissionPrompt();
-                    generateMissingAppDirectoryAndFiles();
-                    goToNextActivity();
+                    // On Android SDK 29 and above, we need to ask for permission to
+                    // access the root of the user's external storage.
+                    StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+                    Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+                    if ((root == null) || (!root.isAccessGranted(this))) {
+                        textWelcome.setText(R.string.selectRootDirectoryTitle);
+                        textExplanation.setText(R.string.selectRootDirectoryExplanation);
+                    }
+                    else {
+                        preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
+                                root.toRootDirectory(this).getUri().toString())
+                            .apply();
+                        enableWritePermissionPrompt();
+                        generateMissingAppDirectoryAndFiles();
+                        goToNextActivity();
+                    }
                 } else if (userDisabledAskingForWritePermission()) {
                     recordDisablingOfWritePermissionPrompt();
                 }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Runs after permission is granted to read/write on root external directory on SDK 29 and above
+        if (requestCode == REQUEST_WRITE_ROOT_DIRECTORY && resultCode == RESULT_OK) {
+            StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+            storageManagerCompat.addRoot(this, StorageManagerCompat.DEF_MAIN_ROOT, data);
+            Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+            preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
+                    root.toRootDirectory(this).getUri().toString())
+                .apply();
+            enableWritePermissionPrompt();
+            generateMissingAppDirectoryAndFiles();
+            goToNextActivity();
         }
     }
 
@@ -110,24 +169,24 @@ public class PermissionActivity extends ThemedActivity {
      * are missing from the user's external storage.
      */
     private void generateMissingAppDirectoryAndFiles() {
-        if (!(ExternalReader.appDirectoryExists())) {
-            ExternalWriter.createAppDirectory();
+        if (!(ExternalReader.appDirectoryExists(this))) {
+            ExternalWriter.createAppDirectory(this);
         }
 
-        if (!(ExternalReader.noMediaFileExists())) {
-            ExternalWriter.createNoMediaFile();
+        if (!(ExternalReader.noMediaFileExists(this))) {
+            ExternalWriter.createNoMediaFile(this);
         }
     }
 
     private void goToNextActivity() {
         String lastOpenedWorldName = preferences.getString(AppPreferences.LAST_OPENED_WORLD, "");
-        if ((!(lastOpenedWorldName.isEmpty())) && (ExternalReader.worldAlreadyExists(lastOpenedWorldName))) {
+        if ((!(lastOpenedWorldName.isEmpty())) && (ExternalReader.worldAlreadyExists(this, lastOpenedWorldName))) {
             goToLastOpenedWorld(lastOpenedWorldName);
 
         } else {
             setLastOpenedWorldToNothing();
 
-            if (ExternalReader.worldListIsEmpty()) {
+            if (ExternalReader.worldListIsEmpty(this)) {
                 goToWorldCreation();
             } else {
                 goToCreateOrLoadWorld();

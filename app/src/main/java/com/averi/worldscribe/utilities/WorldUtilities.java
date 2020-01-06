@@ -32,7 +32,7 @@ public class WorldUtilities {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        boolean worldWasDeleted = ExternalDeleter.deleteWorld(listenerWorldName);
+                        boolean worldWasDeleted = ExternalDeleter.deleteWorld(context, listenerWorldName);
 
                         if (worldWasDeleted) {
                             goToNextActivityAfterWorldDeletion(listenerContext);
@@ -55,7 +55,7 @@ public class WorldUtilities {
     private static void goToNextActivityAfterWorldDeletion(Context context) {
         Intent nextActivityIntent;
 
-        if (ExternalReader.worldListIsEmpty()) {
+        if (ExternalReader.worldListIsEmpty(context)) {
             nextActivityIntent = new Intent(context, CreateWorldActivity.class);
         } else {
             nextActivityIntent = new Intent(context, CreateOrLoadWorldActivity.class);

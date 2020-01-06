@@ -4,19 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
-import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
+import com.balda.flipper.DocumentFileCompat;
+import com.balda.flipper.Root;
+import com.balda.flipper.StorageManagerCompat;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mark on 08/06/16.
@@ -32,10 +36,11 @@ public final class ExternalWriter {
 
     /**
      * Creates the app's directory on the phone's external storage.
-     * @return True if the directory was created successfully; false otherwise.
+     * @return The DocumentFile representing the app directory, or null if it couldn't be created
      */
-    public static boolean createAppDirectory() {
-        return FileRetriever.getAppDirectory().mkdirs();
+    public static DocumentFile createAppDirectory(Context context) {
+        DocumentFile rootDirectory = FileRetriever.getFileRootDirectory(context);
+        return rootDirectory.createDirectory(FileRetriever.APP_DIRECTORY_NAME);
     }
 
     /**
@@ -44,46 +49,40 @@ public final class ExternalWriter {
      * Gallery app).
      * @return True if the .nomedia file was created successfully in the top-level app folder
      */
-    public static boolean createNoMediaFile() {
-        boolean success = false;
-
-        try {
-            success = FileRetriever.getNoMediaFile().createNewFile();
-        } catch (IOException ex) {
-            success = false;
-        }
-
-        return success;
+    public static boolean createNoMediaFile(Context context) {
+        DocumentFile appDirectory = FileRetriever.getAppDirectory(context, true);
+        return (appDirectory.createFile("blank/blank", ".nomedia") == null);
     }
 
-    public static boolean createWorldDirectory(Context context, String worldName) {
-        boolean directoryWasCreated = true;
+    public static DocumentFile createWorldDirectory(Context context, String worldName) {
+        DocumentFile appDirectory = FileRetriever.getAppDirectory(context, true);
+        if (appDirectory == null) {
+            appDirectory = createAppDirectory(context);
+        }
+        DocumentFile worldDirectory = appDirectory.createDirectory(worldName);
 
-        File worldDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/" + FileRetriever.APP_DIRECTORY_NAME + "/", worldName);
-
-        directoryWasCreated = worldDirectory.mkdirs();
-
-        if (directoryWasCreated) {
-            directoryWasCreated = createArticleTypeDirectories(context, worldDirectory);
+        if (worldDirectory != null) {
+            boolean allCategoryFoldersWereCreated = createArticleTypeDirectories(context, worldDirectory);
 
             // If one or more subfolders couldn't be created, delete the World folder so that
             // subsequent attempts can start building the World folder again from scratch.
-            if (!(directoryWasCreated)) {
+            if (!(allCategoryFoldersWereCreated)) {
                 // Delete the World directory.
+                worldDirectory.delete();
+                worldDirectory = null;
             }
         }
 
-        return directoryWasCreated;
+        return worldDirectory;
     }
 
-    private static boolean createArticleTypeDirectories(Context context, File worldDirectory) {
+    private static boolean createArticleTypeDirectories(Context context, DocumentFile worldDirectory) {
         boolean directoriesWereCreated = true;
 
         for (Category category : Category.values()) {
-            File articleFolder = new File(worldDirectory.getAbsolutePath(), category.pluralName(context));
+            DocumentFile categoryFolder = worldDirectory.createDirectory(category.pluralName(context));
 
-            if (!(articleFolder.mkdirs())) {
+            if (categoryFolder == null) {
                 directoriesWereCreated = false;
             }
         }
@@ -99,46 +98,58 @@ public final class ExternalWriter {
      * @param worldName The name of the World where the Article belongs.
      * @param category The {@link Category} the Article belongs to.
      * @param articleName The name of the new Article.
-     * @return True if the directory was created successfully; false otherwise.
+     * @return The DocumentFile representing the newly-created Article directory
      */
-    public static boolean createArticleDirectory(Context context, String worldName,
+    public static DocumentFile createArticleDirectory(Context context, String worldName,
                                                   Category category, String articleName) {
-        Boolean successful = true;
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(
+                context, worldName, category, articleName, true);
+        if (articleDirectory == null) {
+            return null;
+        }
 
-        successful = (
-                (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
-                        articleName, Category.Person).mkdirs())
-                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
-                        articleName, Category.Group).mkdirs())
-                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
-                        articleName, Category.Place).mkdirs())
-                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
-                        articleName, Category.Item).mkdirs())
-                && (FileRetriever.getConnectionCategoryDirectory(context, worldName, category,
-                        articleName, Category.Concept).mkdirs())
-                && (FileRetriever.getSnippetsDirectory(context, worldName, category,
-                        articleName).mkdirs())
-                );
+        DocumentFile articleConnectionsDirectory;
+        articleConnectionsDirectory = articleDirectory.createDirectory("Connections");
+        if (articleConnectionsDirectory == null) {
+            articleDirectory.delete();
+            return null;
+        }
 
-        if (successful) {
-            if (category == Category.Person) {
-                successful = ((FileRetriever.getMembershipsDirectory(
-                                  context, worldName, articleName).mkdirs())
-                              && (FileRetriever.getResidencesDirectory(
-                                  context, worldName, articleName).mkdirs()));
-            } else if (category == Category.Group) {
-                successful = FileRetriever.getMembersDirectory(
-                        context, worldName, articleName).mkdirs();
-            } else if (category == Category.Place) {
-                successful = FileRetriever.getResidentsDirectory(
-                        context, worldName, articleName).mkdirs();
+        boolean allConnectionFoldersWereCreated = false;
+        allConnectionFoldersWereCreated = (
+                (articleConnectionsDirectory.createDirectory("People") != null)
+                && (articleConnectionsDirectory.createDirectory("Groups") != null)
+                && (articleConnectionsDirectory.createDirectory("Places") != null)
+                && (articleConnectionsDirectory.createDirectory("Items") != null)
+                && (articleConnectionsDirectory.createDirectory("Concepts") != null)
+        );
+        if (!(allConnectionFoldersWereCreated)) {
+            articleDirectory.delete();
+            return null;
+        }
+
+        if (category == Category.Person) {
+            if (articleDirectory.createDirectory("Memberships") == null) {
+                articleDirectory.delete();
+                return null;
+            }
+            if (articleDirectory.createDirectory("Residences") == null) {
+                articleDirectory.delete();
+                return null;
+            }
+        } else if (category == Category.Group) {
+            if (articleDirectory.createDirectory("Members") == null) {
+                articleDirectory.delete();
+                return null;
+            }
+        } else if (category == Category.Place) {
+            if (articleDirectory.createDirectory("Residents") == null) {
+                articleDirectory.delete();
+                return null;
             }
         }
 
-        // TODO: If any of the folders failed to be created, delete all other folders created during
-        // the process.
-
-        return successful;
+        return articleDirectory;
     }
 
     /**
@@ -155,8 +166,11 @@ public final class ExternalWriter {
     public static boolean writeStringToArticleFile(Context context, String worldName,
                                                    Category category, String articleName,
                                                    String fileName, String contents) {
-        return writeStringToFile(FileRetriever.getArticleFile(context, worldName, category,
-                articleName, fileName + ExternalReader.TEXT_FIELD_FILE_EXTENSION), contents);
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(
+                context, worldName, category, articleName, true);
+        DocumentFile articleFile = DocumentFileCompat.getFile(articleDirectory,
+                fileName + ExternalReader.TEXT_FIELD_FILE_EXTENSION, "text/plain");
+        return writeStringToFile(context, articleFile, contents);
     }
 
     /**
@@ -165,16 +179,13 @@ public final class ExternalWriter {
      * @param contents The message to save to the file.
      * @return True if the String was saved successfully; false if an I/O error occurs.
      */
-    private static boolean writeStringToFile(File textFile, String contents) {
-        // Recreate parent directories if they don't exist, in case they accidentally got deleted.
-        File parentDirectory = textFile.getParentFile();
-        parentDirectory.mkdirs();
-
+    private static boolean writeStringToFile(Context context, DocumentFile textFile, String contents) {
         Boolean result = true;
 
         try {
-            PrintWriter writer = new PrintWriter(textFile);
-            writer.println(contents);
+            OutputStream outputStream = context.getContentResolver().openOutputStream(textFile.getUri(), "rwt");
+            PrintWriter writer = new PrintWriter(outputStream);
+            writer.print(contents);
             writer.close();
         } catch (IOException error) {
             result = false;
@@ -197,29 +208,48 @@ public final class ExternalWriter {
                                            String articleName, Uri imageUri) {
         Boolean result = true;
 
-        String sourceFilename= imageUri.getPath();
-        String destinationFilename = FileRetriever.getArticleFile(context, worldName, category,
-                articleName, "Image").getAbsolutePath();
-        destinationFilename += ExternalReader.IMAGE_FILE_EXTENSION;
 
         BufferedInputStream bufferedInputStream = null;
         BufferedOutputStream bufferedOutputStream = null;
+        DocumentFile newImageFile = null;
 
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(
+                context, worldName, category, articleName, true);
+        if (articleDirectory == null) {
+            return false;
+        }
         try {
-            bufferedInputStream = new BufferedInputStream(new FileInputStream(sourceFilename));
+            newImageFile = articleDirectory.createFile("image/jpg", "New_Image" + ExternalReader.IMAGE_FILE_EXTENSION);
+            if (newImageFile == null) {
+                throw new IOException();
+            }
+
+            bufferedInputStream = new BufferedInputStream(
+                    context.getContentResolver().openInputStream(imageUri));
             bufferedOutputStream = new BufferedOutputStream(
-                    new FileOutputStream(destinationFilename, false));
+                    context.getContentResolver().openOutputStream(newImageFile.getUri()));
             byte[] buf = new byte[IMAGE_BYTE_SIZE];
             bufferedInputStream.read(buf);
             do {
                 bufferedOutputStream.write(buf);
             } while (bufferedInputStream.read(buf) != -1);
+
+            DocumentFile existingImageFile = articleDirectory.findFile("Image" + ExternalReader.IMAGE_FILE_EXTENSION);
+            if (existingImageFile != null) {
+                if (!(existingImageFile.delete())) {
+                    throw new IOException();
+                }
+            }
+            result = newImageFile.renameTo("Image" + ExternalReader.IMAGE_FILE_EXTENSION);
         } catch (IOException e) {
             result = false;
         } finally {
             try {
                 if (bufferedInputStream != null) bufferedInputStream.close();
                 if (bufferedOutputStream != null) bufferedOutputStream.close();
+                if ((!(result)) && (newImageFile != null)) {
+                    newImageFile.delete();
+                }
             } catch (IOException e) { }
         }
 
@@ -242,8 +272,13 @@ public final class ExternalWriter {
                                                  Category category, String articleName,
                                                  Category connectedArticleCategory,
                                                  String connectedArticleName, String relation) {
-        return writeStringToFile(FileRetriever.getConnectionRelationFile(context, worldName,
-                category, articleName, connectedArticleCategory, connectedArticleName), relation);
+        DocumentFile connectionFile = FileRetriever.getConnectionRelationFile(
+                context, worldName, category, articleName, connectedArticleCategory,
+                connectedArticleName, true);
+        if (connectionFile == null) {
+            return false;
+        }
+        return writeStringToFile(context, connectionFile, relation);
     }
 
     /**
@@ -259,8 +294,20 @@ public final class ExternalWriter {
     public static boolean writeSnippetContents(Context context, String worldName, Category category,
                                                String articleName, String snippetName,
                                                String contents) {
-        return writeStringToFile(FileRetriever.getSnippetFile(context, worldName, category,
-                articleName, snippetName), contents);
+        DocumentFile snippetsDirectory = FileRetriever.getSnippetsDirectory(context,
+                worldName, category, articleName, true);
+        if (snippetsDirectory == null) {
+            return false;
+        }
+
+        DocumentFile snippetFile = snippetsDirectory.findFile(snippetName + FileRetriever.SNIPPET_FILE_EXTENSION);
+        if (snippetFile == null) {
+            snippetFile = snippetsDirectory.createFile("text/plain", snippetName);
+            if (snippetFile == null) {
+                return false;
+            }
+        }
+        return writeStringToFile(context, snippetFile, contents);
     }
 
     /**
@@ -276,10 +323,9 @@ public final class ExternalWriter {
     public static boolean renameSnippet(Context context, String worldName, Category category,
                                                String articleName, String oldSnippetName,
                                                String newSnippetName) {
-        File renamedFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
-                newSnippetName);
-        return FileRetriever.getSnippetFile(context, worldName, category, articleName,
-                oldSnippetName).renameTo(renamedFile);
+        DocumentFile snippetFile = FileRetriever.getSnippetFile(context, worldName, category, articleName,
+                oldSnippetName, false);
+        return snippetFile.renameTo(newSnippetName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -290,14 +336,21 @@ public final class ExternalWriter {
      * directories; false if an I/O error occurs.
      */
     public static boolean saveMembership(Context context, Membership membership) {
-        File fileInMemberDirectory = FileRetriever.getMembershipFile(context, membership.worldName,
-                membership.memberName, membership.groupName);
-        File fileInGroupDirectory = FileRetriever.getMemberFile(context, membership.worldName,
-                membership.groupName, membership.memberName);
+        DocumentFile fileInMemberDirectory = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, membership.groupName, true);
+        if (fileInMemberDirectory == null) {
+            return false;
+        }
+        DocumentFile fileInGroupDirectory = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, membership.memberName, true);
+        if (fileInGroupDirectory == null) {
+            fileInMemberDirectory.delete();
+            return false;
+        }
 
-        boolean savedToMemberDirectory = writeStringToFile(fileInMemberDirectory,
+        boolean savedToMemberDirectory = writeStringToFile(context, fileInMemberDirectory,
                 membership.memberRole);
-        boolean savedToGroupDirectory = writeStringToFile(fileInGroupDirectory,
+        boolean savedToGroupDirectory = writeStringToFile(context, fileInGroupDirectory,
                 membership.memberRole);
 
         return ((savedToMemberDirectory) && (savedToGroupDirectory));
@@ -311,28 +364,19 @@ public final class ExternalWriter {
      * Place's directories; false if an I/O error occurs.
      */
     public static boolean saveResidence(Context context, Residence residence) {
-        File fileInPersonDirectory = FileRetriever.getResidenceFile(context, residence.worldName,
-                residence.residentName, residence.placeName);
-        File fileInPlaceDirectory = FileRetriever.getResidentFile(context, residence.worldName,
-                residence.placeName, residence.residentName);
-        boolean savedToPersonDirectory;
-        boolean savedToPlaceDirectory;
-
-        try {
-            fileInPersonDirectory.getParentFile().mkdirs();
-            savedToPersonDirectory = fileInPersonDirectory.createNewFile();
-        } catch (IOException error) {
-            savedToPersonDirectory = false;
+        DocumentFile fileInPersonDirectory = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, residence.placeName, true);
+        if (fileInPersonDirectory == null) {
+            return false;
+        }
+        DocumentFile fileInPlaceDirectory = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, residence.residentName, true);
+        if (fileInPlaceDirectory == null) {
+            fileInPersonDirectory.delete();
+            return false;
         }
 
-        try {
-            fileInPlaceDirectory.getParentFile().mkdirs();
-            savedToPlaceDirectory = fileInPlaceDirectory.createNewFile();
-        } catch (IOException error) {
-            savedToPlaceDirectory = false;
-        }
-
-        return ((savedToPersonDirectory) && (savedToPlaceDirectory));
+        return true;
     }
 
     /**
@@ -344,15 +388,14 @@ public final class ExternalWriter {
      */
     public static boolean renameArticleInConnection(Context context, Connection connection,
                                                     String newMainArticleName) {
-        File connectionRelationFile = FileRetriever.getConnectionRelationFile(context,
+        DocumentFile connectionRelationFile = FileRetriever.getConnectionRelationFile(context,
                 connection.worldName, connection.connectedArticleCategory,
                 connection.connectedArticleName, connection.articleCategory,
-                connection.articleName);
-        File renamedFile = FileRetriever.getConnectionRelationFile(context,
-                connection.worldName, connection.connectedArticleCategory,
-                connection.connectedArticleName, connection.articleCategory,
-                newMainArticleName);
-        return connectionRelationFile.renameTo(renamedFile);
+                connection.articleName, false);
+        if (connectionRelationFile == null) {
+            return false;
+        }
+        return connectionRelationFile.renameTo(newMainArticleName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -364,11 +407,12 @@ public final class ExternalWriter {
      */
     public static boolean renameMemberInMembership(Context context, Membership membership,
                                                    String newMemberName) {
-        File memberFile = FileRetriever.getMemberFile(context,
-                membership.worldName, membership.groupName, membership.memberName);
-        File renamedFile = FileRetriever.getMemberFile(context,
-                membership.worldName, membership.groupName, newMemberName);
-        return memberFile.renameTo(renamedFile);
+        DocumentFile memberFile = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, membership.memberName, false);
+        if (memberFile == null) {
+            return false;
+        }
+        return memberFile.renameTo(newMemberName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -380,11 +424,12 @@ public final class ExternalWriter {
      */
     public static boolean renameGroupInMembership(Context context, Membership membership,
                                                   String newGroupName) {
-        File membershipFile = FileRetriever.getMembershipFile(context,
-                membership.worldName, membership.memberName, membership.groupName);
-        File renamedFile = FileRetriever.getMembershipFile(context,
-                membership.worldName, membership.memberName, newGroupName);
-        return membershipFile.renameTo(renamedFile);
+        DocumentFile membershipFile = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, membership.groupName, false);
+        if (membershipFile == null) {
+            return false;
+        }
+        return membershipFile.renameTo(newGroupName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -396,11 +441,12 @@ public final class ExternalWriter {
      */
     public static boolean renameResidentInResidence(Context context, Residence residence,
                                                     String newResidentName) {
-        File residentFile = FileRetriever.getResidentFile(context,
-                residence.worldName, residence.placeName, residence.residentName);
-        File renamedFile = FileRetriever.getResidentFile(context,
-                residence.worldName, residence.placeName, newResidentName);
-        return residentFile.renameTo(renamedFile);
+        DocumentFile residentFile = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, residence.residentName, false);
+        if (residentFile == null) {
+            return false;
+        }
+        return residentFile.renameTo(newResidentName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -412,11 +458,12 @@ public final class ExternalWriter {
      */
     public static boolean renamePlaceInResidence(Context context, Residence residence,
                                                     String newResidentName) {
-        File residenceFile = FileRetriever.getResidenceFile(context,
-                residence.worldName, residence.residentName, residence.placeName);
-        File renamedFile = FileRetriever.getResidenceFile(context,
-                residence.worldName, residence.residentName, newResidentName);
-        return residenceFile.renameTo(renamedFile);
+        DocumentFile residenceFile = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, residence.placeName, false);
+        if (residenceFile == null) {
+            return false;
+        }
+        return residenceFile.renameTo(newResidentName + ExternalReader.TEXT_FIELD_FILE_EXTENSION);
     }
 
     /**
@@ -425,10 +472,12 @@ public final class ExternalWriter {
      * @param newWorldName The World's new name.
      * @return True if the directory was renamed successfully; false otherwise.
      */
-    public static boolean renameWorldDirectory(String currentWorldName, String newWorldName) {
-        File worldDirectory = FileRetriever.getWorldDirectory(currentWorldName);
-        File renamedDirectory = FileRetriever.getWorldDirectory(newWorldName);
-        return worldDirectory.renameTo(renamedDirectory);
+    public static boolean renameWorldDirectory(Context context, String currentWorldName, String newWorldName) {
+        DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, currentWorldName, false);
+        if (worldDirectory == null) {
+            return false;
+        }
+        return worldDirectory.renameTo(newWorldName);
     }
 
     /**
@@ -443,11 +492,12 @@ public final class ExternalWriter {
     public static boolean renameArticleDirectory(Context context, String worldName,
                                                  Category category, String articleName,
                                                  String newArticleName) {
-        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
-                articleName);
-        File renamedDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
-                newArticleName);
-        return articleDirectory.renameTo(renamedDirectory);
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName, false);
+        if (articleDirectory == null) {
+            return false;
+        }
+        return articleDirectory.renameTo(newArticleName);
     }
 
 }
