@@ -82,6 +82,8 @@
     <string name="propertiesField">Properties</string>
     <string name="historyHint">History</string>
     <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
+    <string name="selectRootDirectoryTitle">IMPORTANT: Data Location</string>
+    <string name="selectRootDirectoryExplanation">Please select the location to store the \"WorldScribe\" app folder.\n\nIf you are NOT a new World Scribe user, tap \"Allow access\" immediately, so that the app can find your existing World data.</string>
     <string name="permissionButtonText">Continue</string>
     <string name="emptyListText">Nothing yet!</string>
     <string name="nothingToLinkText">Nothing to link!</string>

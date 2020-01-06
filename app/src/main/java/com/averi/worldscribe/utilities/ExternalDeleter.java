@@ -2,6 +2,8 @@ package com.averi.worldscribe.utilities;
 
 import android.content.Context;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.Membership;
@@ -21,8 +23,8 @@ public class ExternalDeleter {
      * @param worldName The name of the world to delete.
      * @return True if the World was deleted successfully; false otherwise.
      */
-    public static boolean deleteWorld(String worldName) {
-        File worldDirectory = FileRetriever.getWorldDirectory(worldName);
+    public static boolean deleteWorld(Context context, String worldName) {
+        DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, worldName, false);
         return deleteRecursive(worldDirectory);
     }
 
@@ -31,9 +33,9 @@ public class ExternalDeleter {
      * @param fileOrDirectory The file or directory to be deleted.
      * @return True if the file/directory was deleted successfully; false otherwise.
      */
-    private static boolean deleteRecursive(File fileOrDirectory) {
+    private static boolean deleteRecursive(DocumentFile fileOrDirectory) {
         if (fileOrDirectory.isDirectory()) {
-            for (File child : fileOrDirectory.listFiles()) {
+            for (DocumentFile child : fileOrDirectory.listFiles()) {
                 deleteRecursive(child);
             }
         }
@@ -53,7 +55,7 @@ public class ExternalDeleter {
     public static boolean deleteSnippet(Context context, String worldName, Category category,
                                         String articleName, String snippetName) {
         return FileRetriever.getSnippetFile(context, worldName, category, articleName,
-                snippetName).delete();
+                snippetName, false).delete();
     }
 
     /**
@@ -63,13 +65,13 @@ public class ExternalDeleter {
      * @return True if the Connection was deleted successfully; false otherwise.
      */
     public static boolean deleteConnection(Context context, Connection connection) {
-        File fileInMainArticleDirectory = FileRetriever.getConnectionRelationFile(context,
+        DocumentFile fileInMainArticleDirectory = FileRetriever.getConnectionRelationFile(context,
                 connection.worldName, connection.articleCategory, connection.articleName,
-                connection.connectedArticleCategory, connection.connectedArticleName);
-        File fileInConnectedArticleDirectory = FileRetriever.getConnectionRelationFile(context,
+                connection.connectedArticleCategory, connection.connectedArticleName, false);
+        DocumentFile fileInConnectedArticleDirectory = FileRetriever.getConnectionRelationFile(context,
                 connection.worldName, connection.connectedArticleCategory,
                 connection.connectedArticleName, connection.articleCategory,
-                connection.articleName);
+                connection.articleName, false);
         return ((fileInMainArticleDirectory.delete()) &&
                 (fileInConnectedArticleDirectory.delete()));
     }
@@ -81,10 +83,10 @@ public class ExternalDeleter {
      * @return True if the Membership was deleted successfully; false otherwise.
      */
     public static boolean deleteMembership(Context context, Membership membership) {
-        File fileInPersonDirectory = FileRetriever.getMembershipFile(context,
-                membership.worldName, membership.memberName, membership.groupName);
-        File fileInGroupDirectory = FileRetriever.getMemberFile(context,
-                membership.worldName, membership.groupName, membership.memberName);
+        DocumentFile fileInPersonDirectory = FileRetriever.getMembershipFile(context,
+                membership.worldName, membership.memberName, membership.groupName, false);
+        DocumentFile fileInGroupDirectory = FileRetriever.getMemberFile(context,
+                membership.worldName, membership.groupName, membership.memberName, false);
         return ((fileInPersonDirectory.delete()) &&
                 (fileInGroupDirectory.delete()));
     }
@@ -96,10 +98,10 @@ public class ExternalDeleter {
      * @return True if the Residence was deleted successfully; false otherwise.
      */
     public static boolean deleteResidence(Context context, Residence residence) {
-        File fileInPersonDirectory = FileRetriever.getResidenceFile(context,
-                residence.worldName, residence.residentName, residence.placeName);
-        File fileInPlaceDirectory = FileRetriever.getResidentFile(context,
-                residence.worldName, residence.placeName, residence.residentName);
+        DocumentFile fileInPersonDirectory = FileRetriever.getResidenceFile(context,
+                residence.worldName, residence.residentName, residence.placeName, false);
+        DocumentFile fileInPlaceDirectory = FileRetriever.getResidentFile(context,
+                residence.worldName, residence.placeName, residence.residentName, false);
         return ((fileInPersonDirectory.delete()) &&
                 (fileInPlaceDirectory.delete()));
     }
@@ -114,9 +116,46 @@ public class ExternalDeleter {
      */
     public static boolean deleteArticleDirectory(Context context, String worldName,
                                                  Category category, String articleName) {
-        File articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
-                articleName);
+        DocumentFile articleDirectory = FileRetriever.getArticleDirectory(context, worldName, category,
+                articleName, false);
         return deleteRecursive(articleDirectory);
     }
 
+    /**
+     * Deletes all files for this app in internal storage.
+     * @return True if the deletion was successful; false otherwise
+     */
+    public static boolean clearInternalStorageDirectory(Context context) {
+        File internalStorageDirectory = context.getFilesDir();
+        boolean result = true;
+        for (File file : internalStorageDirectory.listFiles()) {
+            result = deleteLocalFileRecursive(file);
+            if (!(result)) {
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Deletes a file or folder stored in internal or external storage. Use this when
+     * dealing with normal Java File objects, rather than DocumentFiles.
+     * @param fileToDelete The file that will be deleted
+     * @return True if the file/folder was deleted successfully; false otherwise
+     */
+    public static boolean deleteLocalFileRecursive(File fileToDelete) {
+        boolean result = true;
+        if (fileToDelete.isDirectory()) {
+            for (File subFile : fileToDelete.listFiles()) {
+                result = deleteLocalFileRecursive(subFile);
+                if (!(result)) {
+                    break;
+                }
+            }
+        }
+        else {
+            result = fileToDelete.delete();
+        }
+        return result;
+    }
 }

@@ -81,7 +81,7 @@ implements ArticleLinkAdapter {
             groupNameText.setText(membership.groupName);
 
             // An empty String means that the Member has no designated role/rank.
-            if (membership.memberRole.isEmpty()) {
+            if ((membership.memberRole == null) || (membership.memberRole.isEmpty())) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
                 memberRoleText.setText(activity.getString(R.string.memberRoleText,
