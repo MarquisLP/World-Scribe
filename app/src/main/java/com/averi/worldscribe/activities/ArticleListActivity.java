@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -341,7 +342,7 @@ public class ArticleListActivity extends ThemedActivity
             newNameIsValid = false;
         } else if (newName.equals(worldName)) {   // Name was not changed.
             newNameIsValid = true;
-        } else if (ExternalReader.worldAlreadyExists(newName)) {
+        } else if (ExternalReader.worldAlreadyExists(this, newName)) {
             Toast.makeText(this,
                     getString(R.string.renameWorldToExistingError, newName),
                     Toast.LENGTH_SHORT).show();
@@ -372,7 +373,7 @@ public class ArticleListActivity extends ThemedActivity
     protected boolean renameWorld(String newName) {
         boolean renameWasSuccessful = false;
 
-        if (ExternalWriter.renameWorldDirectory(worldName, newName)) {
+        if (ExternalWriter.renameWorldDirectory(this, worldName, newName)) {
             renameWasSuccessful = true;
             worldName = newName;
             AppPreferences.saveLastOpenedWorld(this, newName);
@@ -441,6 +442,7 @@ public class ArticleListActivity extends ThemedActivity
         } else {
             cloudType = CloudType.Dropbox;
 
+            final Context context = this;
             new AlertDialog.Builder(this)
                     .setTitle(this.getString(R.string.confirmBackupToCloudTitle, worldName))
                     .setMessage(this.getString(R.string.confirmBackupToCloud, worldName, cloudType.name()))
@@ -450,8 +452,8 @@ public class ArticleListActivity extends ThemedActivity
                         public void onClick(DialogInterface dialog, int whichButton) {
                         String accessToken = getDropboxAccessToken();
                         DbxClientV2 client = getDropboxClient(accessToken);
-                        File worldDirectory = FileRetriever.getWorldDirectory(worldName);
-                        new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this).execute();
+                        DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, worldName, false);
+                        new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this, context).execute();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
         }
@@ -474,6 +476,7 @@ public class ArticleListActivity extends ThemedActivity
             if(resultCode == RESULT_OK && data != null) {
                 cloudType = CloudType.Nextcloud;
 
+                final Context context = this;
                 new AlertDialog.Builder(this)
                         .setTitle(this.getString(R.string.confirmBackupToCloudTitle, worldName))
                         .setMessage(this.getString(R.string.confirmBackupToCloud, worldName, cloudType.name()))
@@ -502,8 +505,8 @@ public class ArticleListActivity extends ThemedActivity
                                                 data.getStringExtra(NextcloudLoginActivity.PASSWORD)
                                         ));
 
-                                File worldDirectory = FileRetriever.getWorldDirectory(worldName);
-                                new UploadToNextcloudTask(client, ArticleListActivity.this, worldDirectory).execute();
+                                DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, worldName, false);
+                                new UploadToNextcloudTask(client, ArticleListActivity.this, worldDirectory, context).execute();
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
             }
@@ -573,13 +576,13 @@ public class ArticleListActivity extends ThemedActivity
 
         try {
             new LogErrorTask(this, String.format(DROPBOX_ERROR_LOG_MESSAGE,
-                    lastFileBeingUploaded), exception).execute();
+                    lastFileBeingUploaded), this, exception).execute();
         } catch (Exception ex) {
             Log.e("WorldScribe",  "Exception when creating log file:\n" + exception.getMessage());
         }
     }
 
-    public void onErrorLoggingCompletion(String errorMessage, final File errorLogFile) {
+    public void onErrorLoggingCompletion(String errorMessage, final DocumentFile errorLogFile) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final String message = this.getString(R.string.cloudUploadFailure, cloudType.name());
         final String dismissButtonText = this.getString(R.string.dismissCloudUploadOutcome);
@@ -613,7 +616,7 @@ public class ArticleListActivity extends ThemedActivity
      * <a href="https://stackoverflow.com/a/48007001">StackOverflow</a>.
      * @param file The file that will be attached to the email
      */
-    private void sendEmail(File file) {
+    private void sendEmail(DocumentFile file) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"averistudios@gmail.com"});
@@ -623,8 +626,7 @@ public class ArticleListActivity extends ThemedActivity
             Toast.makeText(this, "Attachment Error", Toast.LENGTH_SHORT).show();
             return;
         }
-        Uri uri = GenericFileProvider.getUriForFile(this, this.getApplicationContext()
-                .getPackageName() + ".my.package.name.provider", file);
+        Uri uri = file.getUri();
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         this.startActivity(Intent.createChooser(intent, "Send email..."));
     }

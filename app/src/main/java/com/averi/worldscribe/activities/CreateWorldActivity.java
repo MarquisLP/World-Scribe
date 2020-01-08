@@ -113,10 +113,10 @@ public class CreateWorldActivity extends BackButtonActivity {
     public void clickCreate(View view) {
         String worldName = getWorldName();
 
-        if (ExternalReader.worldAlreadyExists(worldName)) {
+        if (ExternalReader.worldAlreadyExists(this, worldName)) {
             showWorldAlreadyExistsMessage();
         } else {
-            if (ExternalWriter.createWorldDirectory(this, worldName)) {
+            if (ExternalWriter.createWorldDirectory(this, worldName) != null) {
                 saveNewWorldAsLastOpened(worldName);
                 ActivityUtilities.goToWorld(this, worldName);
             } else {
