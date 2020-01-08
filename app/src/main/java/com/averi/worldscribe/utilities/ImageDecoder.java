@@ -1,9 +1,13 @@
 package com.averi.worldscribe.utilities;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by mark on 06/07/16.
@@ -19,18 +23,19 @@ public class ImageDecoder {
      *                  this large.
      * @return A Bitmap for the image found in imageFile, scaled accordingly.
      */
-    public static Bitmap decodeBitmapFromFile(File imageFile, int reqWidth, int reqHeight) {
+    public static Bitmap decodeBitmapFromFile(Context context, DocumentFile imageFile, int reqWidth, int reqHeight)
+            throws FileNotFoundException {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageFile.getUri()), null, options);
 
         // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        return BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageFile.getUri()), null, options);
     }
 
     /**

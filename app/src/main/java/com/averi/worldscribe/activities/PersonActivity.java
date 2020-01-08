@@ -237,9 +237,11 @@ public class PersonActivity extends ArticleActivity {
                 super.getCategory(), super.getArticleName(),
                 "Gender");
 
-        if (genderString.equals("Male")) {
+        // NextCloud might append some weird characters at the end of the Gender.txt file,
+        // so we use startsWith (instead of equals) to account for that.
+        if (genderString.startsWith("Male")) {
             genderGroup.check(R.id.radioButtonMale);
-        } else if (genderString.equals("Female")) {
+        } else if (genderString.startsWith("Female")) {
             genderGroup.check(R.id.radioButtonFemale);
         } else {
             genderGroup.check(R.id.radioButtonOtherGender);

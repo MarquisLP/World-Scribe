@@ -80,7 +80,7 @@ implements ArticleLinkAdapter {
             memberNameText.setText(membership.memberName);
 
             // An empty string means no role or rank.
-            if (membership.memberRole.isEmpty()) {
+            if ((membership.memberRole == null) || (membership.memberRole.isEmpty())) {
                 memberRoleText.setVisibility(View.GONE);
             } else {
                 memberRoleText.setText(activity.getString(R.string.memberRoleText,

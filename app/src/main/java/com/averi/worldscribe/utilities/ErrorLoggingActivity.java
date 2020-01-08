@@ -1,7 +1,7 @@
 package com.averi.worldscribe.utilities;
 
-import java.io.File;
+import androidx.documentfile.provider.DocumentFile;
 
 public interface ErrorLoggingActivity {
-    void onErrorLoggingCompletion(String errorMessage, File errorLogFile);
+    void onErrorLoggingCompletion(String errorMessage, DocumentFile errorLogFile);
 }
