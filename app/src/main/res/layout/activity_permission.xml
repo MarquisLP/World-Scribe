@@ -10,45 +10,63 @@
     android:gravity="center"
     android:padding="@dimen/pagePadding">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/welcomeText"
-        android:id="@+id/textWelcome"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/welcomeTextSize"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center"
-        android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/verticalSpacing" />
+        <LinearLayout
+            android:id="@+id/linearContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/permissionExplanation"
-        android:id="@+id/textExplanation"
-        android:textColor="@android:color/white"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/standardTextSize"
-        android:gravity="center" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/verticalSpacing" />
+            <TextView
+                android:id="@+id/textWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/welcomeText"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/welcomeTextSize"
+                android:textStyle="bold" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/permissionButtonText"
-        android:id="@+id/buttonPermission"
-        android:textSize="@dimen/headerTextSize"
-        android:textAllCaps="false"
-        android:background="@android:color/white"
-        android:textColor="?attr/colorPrimary"
-        android:padding="@dimen/buttonPadding"
-        android:onClick="askForWritePermission" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <TextView
+                android:id="@+id/textExplanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/permissionExplanation"
+                android:textColor="@android:color/white"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/standardTextSize" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <Button
+                android:id="@+id/buttonPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:onClick="askForWritePermission"
+                android:padding="@dimen/buttonPadding"
+                android:text="@string/permissionButtonText"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/headerTextSize" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

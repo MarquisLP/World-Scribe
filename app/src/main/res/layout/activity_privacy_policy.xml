@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PrivacyPolicyActivity"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:id="@+id/linearScreen"
+    android:gravity="center"
+    android:padding="@dimen/pagePadding">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <TextView
+                android:id="@+id/textWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/privacyPolicyTitle"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/welcomeTextSize"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <TextView
+                android:id="@+id/textExplanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/privacyPolicyContent"
+                android:textColor="?attr/colorPrimary"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/privacyPolicyTextSize" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/verticalSpacing" />
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonDisagree"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimary"
+                    android:onClick="handleTapDisagreeButton"
+                    android:padding="@dimen/buttonPadding"
+                    android:text="@string/privacyPolicyDisagreeButton"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/headerTextSize" />
+
+                <Space
+                    android:layout_width="@dimen/radioButtonSpacing"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <Button
+                    android:id="@+id/buttonAgree"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:background="?attr/colorPrimary"
+                    android:onClick="handleTapAgreeButton"
+                    android:padding="@dimen/buttonPadding"
+                    android:text="@string/privacyPolicyAgreeButton"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/headerTextSize" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

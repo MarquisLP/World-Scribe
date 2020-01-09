@@ -176,4 +176,9 @@
 
     <string name="changelogDialogTitle">Changelog</string>
     <string name="sendErrorLogByEmail">Send error log via email</string>
+
+    <string name="privacyPolicyTitle">Privacy Policy</string>
+    <string name="privacyPolicyContent">World Scribe accesses the external storage on a user device during regular app operations. However, no user data is ever collected, transmitted over a network, or analyzed. All data the user inputs into the app remains entirely within the \"WorldScribe\" folder in their device\'s external storage. The only time this data is sent over a network is via usage of the optional Dropbox and NextCloud backup features, in which case the data is transmitted and stored exclusively by those services, and as such liability falls within those services\' jurisdiction to maintain data privacy. At any time, the user is free to view, edit, copy, transfer, or remove their data in the \"WorldScribe\" folder as they see fit. By using World Scribe, you agree that it may access your external storage for only the reasons outlined above, and you understand that the developers of World Scribe do not collect your data in any fashion.</string>
+    <string name="privacyPolicyAgreeButton">Agree</string>
+    <string name="privacyPolicyDisagreeButton">Disagree</string>
 </resources>
