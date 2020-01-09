@@ -14,13 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.NextcloudLoginActivity"></activity>
-        <activity android:name=".activities.PermissionActivity">
+        <activity android:name=".activities.PrivacyPolicyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.PermissionActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.PersonActivity"
             android:windowSoftInputMode="adjustPan" />
