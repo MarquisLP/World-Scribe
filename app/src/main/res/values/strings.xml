@@ -34,12 +34,21 @@
     <string name="renameArticleItemText">Rename Article</string>
     <string name="deleteArticleItemText">Delete Article</string>
     <string name="syncToDropboxItemText">Backup to Dropbox</string>
+    <string name="syncToNextcloudItemText">Backup to Nextcloud</string>
     <string name="enableReaderModeItemText">Enable Reader Mode</string>
     <string name="enableEditorModeItemText">Enable Editor Mode</string>
     <string name="viewChangelogItemText">View Changelog</string>
     <string name="feedbackItemText">Feedback</string>
 
     <string name="imageFileName">Image</string>
+
+    <!-- Nextcloud -->
+    <string name="nextcloudServerTitle">Nextcloud server address\n(e.g. "https://us.hostiso.cloud")</string>
+    <string name="nextcloudUsername">Username</string>
+    <string name="nextcloudPassword">Password</string>
+    <string name="nextcloudLogin">Login</string>
+    <string name="nextcloudTitle">Nextcloud</string>
+    <string name="emptyFields">Please fill in all fields.</string>
 
     <!-- Text Field Names -->
     <string name="aliasesField">Aliases</string>
@@ -73,6 +82,8 @@
     <string name="propertiesField">Properties</string>
     <string name="historyHint">History</string>
     <string name="permissionExplanation">World files reside in your device\'s External Storage. In order to use this app, you must allow write access to External Storage.</string>
+    <string name="selectRootDirectoryTitle">IMPORTANT: Data Location</string>
+    <string name="selectRootDirectoryExplanation">Please select the location to store the \"WorldScribe\" app folder.\n\nIf you are NOT a new World Scribe user, tap \"Allow access\" immediately, so that the app can find your existing World data.</string>
     <string name="permissionButtonText">Continue</string>
     <string name="emptyListText">Nothing yet!</string>
     <string name="nothingToLinkText">Nothing to link!</string>
@@ -98,9 +109,9 @@
     <string name="createSnippetTitle">A New Snippet of Info</string>
     <string name="createArticleTitle">A New Article in World History</string>
 
-    <string name="confirmBackupToDropboxTitle">Backup %1$s</string>
-    <string name="confirmBackupToDropbox">Are you sure you wish to upload %1$s to
-        Dropbox?\nThe uploading process may take several minutes to complete.</string>
+    <string name="confirmBackupToCloudTitle">Backup %1$s</string>
+    <string name="confirmBackupToCloud">Are you sure you wish to upload %1$s to
+        %2$s?\nThe uploading process may take several minutes to complete.</string>
     <string name="confirmWorldDeletionTitle">Delete %1$s</string>
     <string name="confirmWorldDeletion">Are you sure you wish to delete %1$s?\nOnce a World is deleted, it cannot be recovered.</string>
     <string name="confirmSnippetDeletionTitle">Delete %1$s</string>
@@ -154,11 +165,11 @@
     <string name="nightModeTitle">Night Mode</string>
     <string name="nightModeSwitchText">Night Mode</string>
 
-    <string name="dropboxUploadSuccess">World files uploaded successfully</string>
-    <string name="dropboxUploadFailure">An error occurred while uploading to Dropbox</string>
-    <string name="dropboxUploadProgressTitle">Uploading World to Dropbox</string>
-    <string name="dropboxUploadProgressMessage">Please wait…</string>
-    <string name="dismissDropboxUploadOutcome">OK</string>
+    <string name="cloudUploadSuccess">World files uploaded successfully</string>
+    <string name="cloudUploadFailure">An error occurred while uploading to %1$s</string>
+    <string name="cloudUploadProgressTitle">Uploading World to %1$s</string>
+    <string name="cloudUploadProgressMessage">Please wait…</string>
+    <string name="dismissCloudUploadOutcome">OK</string>
 
     <string name="readerModeEnabledMessage">Reader Mode (text input disabled)</string>
     <string name="editorModeEnabledMessage">Editor Mode (text input enabled)</string>

@@ -30,6 +30,10 @@
             android:id="@+id/syncToDropboxItem"
             android:title="@string/syncToDropboxItemText"
             app:showAsAction="never" />
+        <item
+            android:id="@+id/syncToNextcloudItem"
+            android:title="@string/syncToNextcloudItemText"
+            app:showAsAction="never" />
     </group>
 
     <item

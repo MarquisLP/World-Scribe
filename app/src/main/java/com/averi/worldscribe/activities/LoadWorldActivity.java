@@ -62,7 +62,7 @@ public class LoadWorldActivity extends BackButtonActivity implements StringListC
     }
 
     private void populateList() {
-        ArrayList<String> worldNames = ExternalReader.getWorldList();
+        ArrayList<String> worldNames = ExternalReader.getWorldList(this);
 
         StringListAdapter adapter = new StringListAdapter(this, worldNames);
         recyclerView.setAdapter(adapter);

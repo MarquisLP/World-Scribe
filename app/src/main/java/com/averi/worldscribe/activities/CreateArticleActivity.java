@@ -171,9 +171,7 @@ public class CreateArticleActivity extends BackButtonActivity {
             ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
                     getString(R.string.articleAlreadyExistsError));
         } else {
-            boolean articleWasCreated = ExternalWriter.createArticleDirectory(
-                    this, worldName, category, articleName);
-            if (articleWasCreated) {
+            if (ExternalWriter.createArticleDirectory(this, worldName, category, articleName) != null) {
                 goToNewArticle(worldName, category, articleName);
             } else {
                 ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,

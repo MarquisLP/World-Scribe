@@ -1,7 +1,10 @@
-package com.averi.worldscribe.dropbox;
+package clouds.dropbox;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.documentfile.provider.DocumentFile;
 
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.dropbox.core.DbxException;
@@ -14,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import clouds.CloudActivity;
 
 /**
  * Created by mark on 24/12/16.
@@ -32,14 +37,16 @@ import java.io.InputStream;
 
 public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     private DbxClientV2 dbxClient;
-    private File file;
-    private DropboxActivity activity;
-    private File currentFileBeingUploaded;
+    private DocumentFile file;
+    private CloudActivity activity;
+    private DocumentFile currentFileBeingUploaded;
+    private Context context;
 
-    public UploadToDropboxTask(DbxClientV2 dbxClient, File file, DropboxActivity activity) {
+    public UploadToDropboxTask(DbxClientV2 dbxClient, DocumentFile file, CloudActivity activity, Context context) {
         this.dbxClient = dbxClient;
         this.file = file;
         this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -47,14 +54,14 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
         boolean uploadSuccessful = false;
 
         try {
-            activity.onDropboxUploadStart();
+            activity.onCloudUploadStart();
             uploadRecursive(file);
             uploadSuccessful = true;
         } catch (InvalidAccessTokenException invalidAccessTokenException) {
             activity.onDropboxNeedsAuthentication();
         } catch (Exception exception) {
             Log.e("WorldScribe", exception.getMessage());
-            activity.onDropboxUploadFailure(exception, currentFileBeingUploaded.getAbsolutePath());
+            activity.onCloudUploadFailure(exception, currentFileBeingUploaded.getUri().getPath());
         }
 
         return uploadSuccessful;
@@ -63,7 +70,7 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            activity.onDropboxUploadSuccess();
+            activity.onCloudUploadSuccess();
         }
     }
 
@@ -74,13 +81,13 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
      * @throws DbxException If an error occurs with accessing the client's Dropbox account
      * @throws IOException If an error occurs with file uploading
      */
-    private void uploadRecursive(File fileBeingUploaded) throws DbxException, IOException  {
+    private void uploadRecursive(DocumentFile fileBeingUploaded) throws DbxException, IOException  {
         if (fileBeingUploaded.exists()) {
             this.currentFileBeingUploaded = fileBeingUploaded;
             String dropboxPath = getDropboxPath(fileBeingUploaded);
             if (dropboxPath == null) {
                 throw new IOException("The Dropbox path ended up being 'null' for the following " +
-                        "file: '" + fileBeingUploaded.getAbsolutePath() + "'");
+                        "file: '" + fileBeingUploaded.getUri().getPath() + "'");
             }
 
             if (fileBeingUploaded.isDirectory()) {
@@ -95,13 +102,13 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
                     }
                 }
 
-                File[] files = fileBeingUploaded.listFiles();
-                for (File childFile : files) {
+                DocumentFile[] files = fileBeingUploaded.listFiles();
+                for (DocumentFile childFile : files) {
                     uploadRecursive(childFile);
                 }
 
             } else {
-                InputStream inputStream = new FileInputStream(fileBeingUploaded);
+                InputStream inputStream = context.getContentResolver().openInputStream(fileBeingUploaded.getUri());
                 dbxClient.files().uploadBuilder(dropboxPath)
                     .withMode(WriteMode.OVERWRITE)
                     .uploadAndFinish(inputStream);
@@ -114,10 +121,10 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
      * @param file The file whose Dropbox path will be retrieved
      * @return The Dropbox file path of file
      */
-    private String getDropboxPath(File file) {
-        String androidFilePath = file.getAbsolutePath();
+    private String getDropboxPath(DocumentFile file) {
+        String androidFilePath = file.getUri().getPath();
 
-        String appFilePath = FileRetriever.getAppDirectory().getAbsolutePath();
+        String appFilePath = FileRetriever.getAppDirectory(context, false).getUri().getPath();
         String dropboxPath = androidFilePath.replace(appFilePath, "");
 
         // Dropbox will not upload files that have a "." prefix.

@@ -7,11 +7,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/worldscribe_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.NextcloudLoginActivity"></activity>
         <activity android:name=".activities.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +36,8 @@
         <activity
             android:name=".activities.ConceptActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ArticleListActivity"
+        <activity
+            android:name=".activities.ArticleListActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.EditConnectionActivity" />
         <activity android:name=".activities.CreateWorldActivity" />
@@ -45,11 +48,12 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".activities.SelectArticleActivity"
+        <activity
+            android:name=".activities.SelectArticleActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.EditMembershipActivity" />
         <activity android:name=".activities.CreateSnippetActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" />
         <activity
             android:name="com.dropbox.core.android.AuthActivity"
             android:configChanges="orientation|keyboard"
@@ -63,6 +67,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <provider
             android:name=".GenericFileProvider"
             android:authorities="${applicationId}.my.package.name.provider"
@@ -70,7 +75,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

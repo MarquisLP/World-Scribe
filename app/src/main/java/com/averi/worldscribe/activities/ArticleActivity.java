@@ -41,6 +41,7 @@ import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -351,9 +352,16 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      */
     private void setArticleImage() {
         Resources resources = getResources();
-        Bitmap articleImage = ExternalReader.getArticleImage(this, worldName, category, articleName,
-                (int) resources.getDimension(R.dimen.articleImageWidth),
-                (int) resources.getDimension(R.dimen.articleImageHeight));
+        Bitmap articleImage = null;
+        try {
+            articleImage = ExternalReader.getArticleImage(this, worldName, category, articleName,
+                    (int) resources.getDimension(R.dimen.articleImageWidth),
+                    (int) resources.getDimension(R.dimen.articleImageHeight));
+        }
+        catch (FileNotFoundException exception) {
+            //TODO: Display an error if file cannot be found
+            return;
+        }
 
         if (articleImage == null) {
             articleImage = ExternalReader.getUnsetImageBitmap(this, category);
