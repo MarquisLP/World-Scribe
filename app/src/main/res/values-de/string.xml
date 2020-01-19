@@ -23,7 +23,7 @@
     <string name="peopleText">Personen</string>
     <string name="groupsText">Gruppen</string>
     <string name="placesText">Orte</string>
-    <string name="itemsText">Artikel</string>
+    <string name="itemsText">Gegenstände</string>
     <string name="conceptsText">Konzepte</string>
 
     <string name="createArticleItemText">Neuer Beitrag</string>
@@ -177,7 +177,7 @@
     <string name="editorModeEnabledMessage">Editiermodus (Texteingabe ist aktiviert)</string>
 
     <string name="changelogDialogTitle">Changelog</string>
-    <string name="sendErrorLogByEmail">Sende Fehler als email</string>
+    <string name="sendErrorLogByEmail">Sende Fehler als E-Mail</string>
 
     <string name="privacyPolicyTitle">Datenschutzbestimmung</string>
     <string name="privacyPolicyContent">World Scribe greift, während die App läuft, auf den externen Speicher des Gerätes zu. Es werden keine Benutzerdaten gesammelt, über das Netzwerk versendet oder analysiert. Alle Daten die vom Benutzer eingeben werden, verbleiben innerhalb des \"WorldScribe\" Ordners, welcher sich auf dem externen Speicher des Geräts befindet. Die Daten der App werden nur über das Netwerk gesendet, wenn die optionale Dropbox und Nextcloud Backupfunktion verwendet wird. In diesem fall werden diese an den jeweiligen Anbieter gesendet und dort auch gespeichert. Dann fallen die Daten unter die Datenschutzbestimmung des jeweiligen Anbieters. Der Benutzer kann jederzeit die Daten aus dem \"WorldScribe\" Ordner einsehen, editieren, kopieren, transferieren oder löschen, so wie er es für richtig hält. Bei der Benutzung von World Scribe stimmen Sie dem zu, dass die App auf den externen Speicher ihres Gerätes zugreift, so wie es oben erläutert wurde. Zudem sollten Sie nun wissen, dass die Entwickler von World Scribe, Daten in keiner Weise sammeln.</string>
