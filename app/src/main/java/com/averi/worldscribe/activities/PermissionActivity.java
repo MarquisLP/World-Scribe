@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.documentfile.provider.DocumentFile;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -170,7 +172,11 @@ public class PermissionActivity extends ThemedActivity {
      */
     private void generateMissingAppDirectoryAndFiles() {
         if (!(ExternalReader.appDirectoryExists(this))) {
-            ExternalWriter.createAppDirectory(this);
+            DocumentFile appDirectory = ExternalWriter.createAppDirectory(this);
+            if  (appDirectory == null) {
+                String rootUriString = preferences.getString(AppPreferences.ROOT_DIRECTORY_URI, null);
+                throw new RuntimeException("Failed to create app directory. Device file root URI: " + rootUriString);
+            }
         }
 
         if (!(ExternalReader.noMediaFileExists(this))) {
