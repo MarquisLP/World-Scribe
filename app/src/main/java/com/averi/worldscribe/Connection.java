@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by mark on 02/07/16.
  */
-public class Connection implements Serializable {
+public class Connection implements Serializable, Comparable<Connection> {
     public String worldName;
     public Category articleCategory;
     public String articleName;
@@ -13,4 +13,9 @@ public class Connection implements Serializable {
     public Category connectedArticleCategory;
     public String connectedArticleName;
     public String connectedArticleRelation;
+
+    @Override
+    public int compareTo(Connection other) {
+        return this.connectedArticleName.compareTo(other.connectedArticleName);
+    }
 }
