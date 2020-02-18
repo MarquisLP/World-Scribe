@@ -49,6 +49,10 @@
             android:title="@string/feedbackItemText"
             app:showAsAction="never" />
         <item
+            android:id="@+id/viewDeveloperWebsiteItem"
+            android:title="@string/viewDeveloperWebsiteItemText"
+            app:showAsAction="never" />
+        <item
             android:id="@+id/settingsItem"
             android:title="@string/settingsItemText"
             app:showAsAction="never" />

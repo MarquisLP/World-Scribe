@@ -35,6 +35,7 @@
     <string name="deleteArticleItemText">Delete Article</string>
     <string name="syncToDropboxItemText">Backup to Dropbox</string>
     <string name="syncToNextcloudItemText">Backup to Nextcloud</string>
+    <string name="viewDeveloperWebsiteItemText">Developer Website</string>
     <string name="enableReaderModeItemText">Enable Reader Mode</string>
     <string name="enableEditorModeItemText">Enable Editor Mode</string>
     <string name="viewChangelogItemText">View Changelog</string>

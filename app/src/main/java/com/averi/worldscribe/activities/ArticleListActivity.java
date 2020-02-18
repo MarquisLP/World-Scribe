@@ -66,6 +66,7 @@ public class ArticleListActivity extends ThemedActivity
             "upload a " +
             "file/folder with path '%s'.";
     private static final String FEEDBACK_SURVEY_URL = "https://goo.gl/forms/3VAhRuAajgBKmXyY2";
+    private static final String DEVELOPER_WEBSITE_URL = "https://averistudios.com";
     private static final int LOGIN_REQUEST = 1;
 
     private RecyclerView recyclerView;
@@ -234,6 +235,9 @@ public class ArticleListActivity extends ThemedActivity
                 return true;
             case R.id.createWorldItem:
             case R.id.loadWorldItem:
+            case R.id.viewDeveloperWebsiteItem:
+                openDeveloperWebsiteInBrowser();
+                return true;
             case R.id.settingsItem:
                 ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
@@ -633,5 +637,9 @@ public class ArticleListActivity extends ThemedActivity
 
     private void openFeedbackSurveyInBrowser() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(FEEDBACK_SURVEY_URL)));
+    }
+
+    private void openDeveloperWebsiteInBrowser() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DEVELOPER_WEBSITE_URL)));
     }
 }
