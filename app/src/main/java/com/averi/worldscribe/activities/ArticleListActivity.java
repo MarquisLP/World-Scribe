@@ -233,11 +233,11 @@ public class ArticleListActivity extends ThemedActivity
             case R.id.feedbackItem:
                 openFeedbackSurveyInBrowser();
                 return true;
-            case R.id.createWorldItem:
-            case R.id.loadWorldItem:
             case R.id.viewDeveloperWebsiteItem:
                 openDeveloperWebsiteInBrowser();
                 return true;
+            case R.id.createWorldItem:
+            case R.id.loadWorldItem:
             case R.id.settingsItem:
                 ActivityUtilities.handleCommonAppBarItems(this, worldName, item);
                 return true;
