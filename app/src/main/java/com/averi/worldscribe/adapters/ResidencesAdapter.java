@@ -23,6 +23,7 @@ import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by mark on 02/07/16.
@@ -147,6 +148,7 @@ implements ArticleLinkAdapter {
         this.activity = activity;
 
         residences = ExternalReader.getResidences(activity, worldName, personName);
+        Collections.sort(residences, new Residence.ByPlaceNameComparator());
     }
 
     @Override

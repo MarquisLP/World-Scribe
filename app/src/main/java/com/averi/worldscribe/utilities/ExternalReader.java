@@ -71,6 +71,11 @@ public class ExternalReader {
 
     public static boolean worldAlreadyExists(Context context, String worldName) {
         DocumentFile worldsFolder = FileRetriever.getAppDirectory(context, false);
+        if (worldsFolder == null) {
+            String rootUriString = context.getSharedPreferences("com.averi.worldscribe", Context.MODE_PRIVATE)
+                    .getString(AppPreferences.ROOT_DIRECTORY_URI, null);
+            throw new RuntimeException("Got null when retrieving app directory. Device file root URI: " + rootUriString);
+        }
         return DocumentFileCompat.peekSubFolder(worldsFolder, worldName) != null;
     }
 
