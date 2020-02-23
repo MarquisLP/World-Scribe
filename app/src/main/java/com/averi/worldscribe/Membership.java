@@ -1,6 +1,7 @@
 package com.averi.worldscribe;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Created by mark on 14/07/16.
@@ -24,4 +25,24 @@ public class Membership implements Serializable {
      * This field is optional; empty string signifies no role or rank.
      */
     public String memberRole = "";
+
+    /**
+     * A Comparator that compares the group names between two Memberships.
+     */
+    public static class ByGroupNameComparator implements Comparator<Membership> {
+        @Override
+        public int compare(Membership membership, Membership t1) {
+            return membership.groupName.compareTo(t1.groupName);
+        }
+    }
+
+    /**
+     * A Comparator that compares the member names between two Memberships.
+     */
+    public static class ByMemberNameComparator implements Comparator<Membership> {
+        @Override
+        public int compare(Membership membership, Membership t1) {
+            return membership.memberName.compareTo(t1.memberName);
+        }
+    }
 }

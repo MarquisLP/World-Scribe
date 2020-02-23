@@ -2,6 +2,17 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.6.1" changeDate="20. Feb. 2020">
+        <changelogtext>[b]Die offizielle Entwickler Website für Averi Studios ist live![/b] Sie können
+            über die App darauf zugreifen, indem Sie das Menü oben rechts öffnen und 'Entwickler
+            Website' auswählen. Dort finden Sie wichtige Ankündigungen und unsere anderen Projekte, somit bleiben
+            Sie immer auf dem Laufenden.</changelogtext>
+        <changelogtext>[b]Die Liste der Verbindungen, Mitgliedschaften, Mitglieder, Residenzen und
+            Einwohner ist jetzt alphabetisch sortiert.[/b] Dies hält die Dinge konsistent und
+            erleichtert es Ihnen, in diesen Listen zu finden, wonach Sie suchen.</changelogtext>
+        <changelogtext>[b]Das vollständige Changelog wurde jetzt ins Deutsche übersetzt![/b] [i]Vielen Dank
+            an tostc für diesen Beitrag.[/i]</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.0" changeDate="9. Jan. 2020">
         <changelogtext>Unter der Haube wurden wichtige Änderungen vorgenommen, um den neuen
             Android-Richtlinien zu entsprechen. Das Öffnen der Seiten in der App kann länger dauern,
