@@ -36,6 +36,7 @@
     <string name="deleteArticleItemText">Beitrag löschen</string>
     <string name="syncToDropboxItemText">Sichern nach Dropbox</string>
     <string name="syncToNextcloudItemText">Sichern nach Nextcloud</string>
+    <string name="viewDeveloperWebsiteItemText">Entwickler Website</string>
     <string name="enableReaderModeItemText">Lesemodus</string>
     <string name="enableEditorModeItemText">Editiermodus</string>
     <string name="viewChangelogItemText">Changelog öffnen</string>
