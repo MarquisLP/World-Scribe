@@ -73,7 +73,7 @@
 
         <provider
             android:name=".GenericFileProvider"
-            android:authorities="${applicationId}.my.package.name.provider"
+            android:authorities="com.averistudios.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
