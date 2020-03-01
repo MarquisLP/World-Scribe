@@ -17,6 +17,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.averi.worldscribe.R;
@@ -152,8 +153,10 @@ public class PermissionActivity extends ThemedActivity {
             if (rootUriString == null) {
                 rootUriString = "NULL";
             }
+            ScrollView scrollView = new ScrollView(this);
             new AlertDialog.Builder(this)
                 .setTitle("Troubleshooting")
+                .setView(scrollView)
                 .setMessage(exception.getMessage())
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

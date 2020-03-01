@@ -46,7 +46,7 @@ public class FileRetriever {
                     contentUri = FileProvider.getUriForFile(context, "com.averistudios.fileprovider", rootFile);
                 }
                 catch (Exception exception) {
-                    throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Could not convert file URI to tree URI for file: " + rootFile.getAbsolutePath());
+                    throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Could not convert file URI to tree URI for file: " + rootFile.getAbsolutePath() + ". Exception: " + exception.getMessage());
                 }
                 return DocumentFile.fromSingleUri(context, contentUri);
             }
