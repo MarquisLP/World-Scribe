@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
+<!--https://github.com/gabrielemariotti/changeloglib-->
+<changelog bulletedList="true">
+    <changelogversion versionName="1.6.1" changeDate="29. Feb. 2020">
+        <changelogtext>[b]Die offizielle Entwickler Website für Averi Studios ist live![/b] Sie können
+            über die App darauf zugreifen, indem Sie das Menü oben rechts öffnen und 'Entwickler
+            Website' auswählen. Dort finden Sie wichtige Ankündigungen und unsere anderen Projekte, somit bleiben
+            Sie immer auf dem Laufenden.</changelogtext>
+        <changelogtext>[b]Die Liste der Verbindungen, Mitgliedschaften, Mitglieder, Residenzen und
+            Einwohner ist jetzt alphabetisch sortiert.[/b] Dies hält die Dinge konsistent und
+            erleichtert es Ihnen, in diesen Listen zu finden, wonach Sie suchen.</changelogtext>
+        <changelogtext>[b]Das vollständige Changelog wurde jetzt ins Deutsche übersetzt![/b] [i]Vielen Dank
+            an tostc für diesen Beitrag.[/i]</changelogtext>
+        <changelogtext>[b]Abstürze bei der Auswahl des Speicherortes wurden behoben![/b] Wenn Sie
+            jedoch weiterhin auf Abstürze oder andere Probleme stoßen, wenden Sie sich bitte an
+            averistudios@gmail.com.</changelogtext>
+    </changelogversion>
+    <changelogversion versionName="1.6.0" changeDate="9. Jan. 2020">
+        <changelogtext>Unter der Haube wurden wichtige Änderungen vorgenommen, um den neuen
+            Android-Richtlinien zu entsprechen. Das Öffnen der Seiten in der App kann länger dauern,
+            insbesondere wenn auf deinem Gerät Android 10 oder höher ausgeführt wird. Wir entschuldigen
+            uns für etwaige Unannehmlichkeiten, aber leider haben es die neuen Richtlinien von
+            Android so gemacht, dass unsere einzige Option ein umfangreiches Umschreiben des Codes war.
+            Die App wurde gründlich getestet, um sicherzustellen, dass sich alles genauso verhält
+            wie zuvor. Solltest du dennoch auf Fehler stoßen, sende uns bitte eine E-Mail an:
+            averistudios@gmail.com</changelogtext>
+        <changelogtext>Du kannst jetzt Welten nach NextCloud sichern! Öffne dazu das Menü oben
+            rechts und wähle "Sichern nach NextCloud". [i]Vielen Dank an tostc für diesen Beitrag.[/i]
+        </changelogtext>
+        <changelogtext>Einige Probleme in der deutschen Übersetzung wurden behoben.
+            [i]Vielen Dank an tostc für diesen Beitrag.[/i]</changelogtext>
+    </changelogversion>
+    <changelogversion versionName="1.5.1" changeDate="7. Dez 2019">
+        <changelogtext>[b]Deutsche Sprachunterstützung wurde hinzugefügt![/b] Die Sprache der App
+            wird automatisch geändert, wenn du in den Systemeinstellungen deines Geräts
+            ein deutsches Gebietsschema als primäres Gebietsschema festgelegt hast.
+            [i]Vielen Dank an tostc für diesen Beitrag.[/i]</changelogtext>
+        <changelogtext>[b]Schnelleres und flüssigeres Scrollen auf der Auschnitts-Seite.[/b] Jetzt
+            kannst du den unteren Rand eines Auschnitts mit nur einer Bewegung deines Daumens erreichen!
+        </changelogtext>
+        <changelogtext>[b]Bugfix: Gelöschte Ordner für Verbindungen, Ausschnitte und andere
+            Unterartikelelemente verursachen keine Fehler mehr.[/b] Wenn du eine Reinigungsapp
+            installiert hast, werden möglicherweise leere Ordner auf deinem Gerät gelöscht.
+            Vor diesem Update würde dies zu Problemen führen, da ein gelöschter Verbindungs-Ordner
+            (zum Beispiel) die App daran hindern würde, neue Beziehungen zu einem Artikel herzustellen.
+            Mit diesem Update werden diese Ordner automatisch neu erstellt, sodass du dich nicht
+            um das Deaktivieren oder Deinstallieren deiner Reinigungsapp kümmern musst.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.5.0" changeDate="13. Aug. 2019">
+        <changelogtext>[b]Ein neues Theme wurde hinzugefügt: Chrome Gray![/b] Versuche es mit dem
+            Nachtmodus zu kombinieren, um ein elegantes visuelles Erlebnis zu erzielen.</changelogtext>
+        <changelogtext>[b]Menüs wurden neu organisiert![/b] Auf vielfachen Wunsch wurde
+            [b] die Option "Welt löschen" auf die Seite "Einstellungen" [/ b] verschoben,
+            sodass du dir keine sorgen mehr machen musst, ausversehen deine Welt zu löschen.
+            Weltbezogene Optionen wurden ebenfalls von den Artikelseiten entfernt, um die Unordnung
+            zu verringern.</changelogtext>
+        <changelogtext>[b]Text und Symbole wurden verkleinert, um eine bessere Skalierung der
+            Schrifteinstellungen Ihres Geräts zu erreichen.[/b] Sieh dir all den zusätzlichen Platz
+            an, mit dem du jetzt arbeiten kannst! Wenn du die größere Textgröße aus früheren
+            Versionen bevorzugst, kannst du diese über die Schriftarteinstellungen in den
+            Systemeinstellungen deines Geräts wieder ändern.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.7" changeDate="13. Jan. 2019">
+        <changelogtext>Möchten du uns helfen, zukünftige Versionen von World Scribe noch besser zu
+            machen? [b][a href="https://goo.gl/forms/3VAhRuAajgBKmXyY2"]Hier[/a] kannst du jetzt
+            die Benutzerumfrage ausfüllen![/b]
+            Du kannst auf die Umfrage auch zugreifen, indem du das Menü oben rechts öffnest
+            und "Feedback" auswählst.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.6" changeDate="25. Aug. 2018">
+        <changelogtext>[b]Eines der Dropbox-Probleme behoben![/b] Dieser Fehler wurde durch ein
+            ungültiges Dropbox-Zugriffstoken verursacht
+            (ein kleiner Datensatz auf deinem Gerät, der Dropbox mitteilt, dass deine Kontoinformationen gültig sind).
+            Wenn du einer der Benutzer bist, der von diesem Problem betroffen ist, fordert die App
+            dich beim erneuten Hochladen zur erneuten Authentifizierung auf. In diesem Fall wird das
+            alte Zugriffstoken durch ein neues ersetzt, sodass du deine Welten ohne weitere Probleme
+            hochladen kannst.</changelogtext>
+        <changelogtext>[b]Einige wesentliche Verbesserungen beim Hochladen von Dropbox hinter den
+            Kulissen.[/b] Als Benutzer wirst du keinen großen Unterschied bemerken, aber sei dir
+            versichert, dass die neue Upload-Methode robuster ist und Probleme künftig weniger
+            wahrscheinlich und leichter zu beheben sein werden.</changelogtext>
+        <changelogtext>[b]Weitere Fehlerkorrekturen für Dropbox werden folgen![/b] Die oben genannte
+            Korrektur gilt nicht für alle Fehler, die Benutzer gesendet haben. Wenn du nach diesem
+            Update immer noch Dropbox-Probleme hast, habe bitte etwas Geduld, da wir an einer
+            Lösung arbeiten. In der Zwischenzeit kannst du uns helfen, indem du versuchst, das
+            Fehlerprotokoll hochzuladen und es dann zu senden, wenn du dazu aufgefordert wirst.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.5.a" changeDate="19. Aug. 2018">
+        <changelogtext>[b]Es wurden weitere Verbesserungen bei der Dropbox-Fehlerprotokollierung hinzugefügt.[/b]
+            Wir werden weiterhin Verbesserungen an der Protokollierung veröffentlichen, bis das
+            Problem beim Hochladen nach Dropbox behoben ist. Versuche daher, die App auf dem neuesten
+            Stand zu halten. Wenn beim Hochladen nach Dropbox weiterhin Probleme auftreten,
+            versuche es erneut und sende uns das Fehlerprotokoll, wenn du dazu aufgefordert wirst.
+            Danke für deine Kooperation.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.5" changeDate="15. Aug. 2018">
+        <changelogtext>[b]Verbesserte Fehlerprotokollierung bei Dropbox-Problemen.[/b] Wenn beim
+            Hochladen nach Dropbox Probleme auftreten, versuche es erneut und sende uns das Fehlerprotokoll,
+            wenn du dazu aufgefordert wirst. Je früher wir herausfinden können, was dieses Problem
+            verursacht, desto eher können wir es beheben.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.4" changeDate="17. Jul. 2018">
+        <changelogtext>[b]Verbesserte Sicherheit zur Einhaltung der F-Droid-Richtlinien.[/b]
+            Die App wird in Kürze auf F-Droid verfügbar sein!</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.3" changeDate="15. Jul. 2018">
+        <changelogtext>[b]Der Fehler, der einige Benutzer daran hinderte, auf Dropbox hochzuladen, wurde behoben.[/b]
+            Wir entschuldigen uns für etwaige Unannehmlichkeiten, die dieser Fehler verursacht hat.
+            Wenn die Probleme weiterhin bestehen, kontaktiere uns bitte unter: [i]averistudios@gmail.com[/i]</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.2" changeDate="20. Apr. 2018">
+        <changelogtext>[b]Es wurde ein Fehler behoben, der verhinderte, dass die
+            Dropbox-Fehlerprotokollierung auf einigen Geräten ordnungsgemäß funktionierte.
+            [/b] Weitere Informationen zur Dropbox-Fehlerprotokollierung findest du in den Hinweisen zu Version 1.4.1.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.1" changeDate="18. Apr. 2018">
+        <changelogtext>
+            [b]Für Dropbox-Probleme wurde eine Fehlerberichterstattung hinzugefügt.[/b] Wir wissen,
+            dass bestimmte Benutzer ihre Welten nicht nach Dropbox sichern konnten. Wir versuchen,
+            dieses Problem so schnell wie möglich zu beheben, aber zuerst benötigen wir deine Hilfe,
+            um weitere Informationen zu diesem Fehler zu erhalten. [b]Wenn du nicht nach Dropbox sichern kannst,
+            gehe folgendermaßen vor: Öffnen das Menü, wähle "Sichern nach Dropbox" und warte,
+            bis die Fehlermeldung angezeigt wird. Stelle sicher, dass "Sende Fehler als E-Mail" aktiviert ist,
+            und tippe dann auf "OK".
+            Wähle die E-Mail-App deiner Wahl aus und sende die angezeigte E-Mail.
+            (Du müsst nichts bearbeiten oder eine Beschreibung hinzufügen.) Vielen Dank für deine Mitarbeit!
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.4.0" changeDate="24. Dez. 2017">
+        <changelogtext>[b]Fehlerbehebung: In dieser App verwendete Bilder werden nicht mehr in der Galerie-App angezeigt.
+            [/b] Entschuldigt die Unannehmlichkeiten, die dieser Fehler verursacht hat! [i]Wenn in der
+            Galerie weiterhin Bilder angezeigt werden, starte das Gerät neu. Wenn das Problem auch
+            danach weiterhin besteht, sende mir eine E-Mail mit deinem Gerätemodell und der
+            Android-Version an averistudios@gmail.com.[/i]</changelogtext>
+        <changelogtext>[b]Lesemodus wurde hinzugefügt![/b] Während du einen Artikel oder ein Snippet
+            durchsuchen, kannst du auf das Brillensymbol oben auf dem Bildschirm tippen, um die Texteingabe zu deaktivieren.
+            Auf diese Weise wird ein reibungsloses Leseerlebnis erzielt, ohne dass du dir Gedanken
+            über die Tastatur machen musst, dass diese beim Blättern angezeigt wird. Um zur Bearbeitung zurückzukehren,
+            tippe einfach auf das Tastatursymbol.</changelogtext>
+        <changelogtext>[b]Welt / Artikel / Ausschnitte-Namen wurden umgebrochen![/b] Wenn ein Name zu lang ist,
+            um auf den Bildschirm zu passen, wird der Text automatisch gescrollt,
+            um dir den vollständigen Titel anzuzeigen. Freut euch, Langnamen-Enthusiasten![/b]</changelogtext>
+        <changelogtext>[b]Fehlerbehebung: Alle 'Umbenennen'-Dialoge haben jetzt die richtige dunkle
+            Hintergrundfarbe, wenn der Nachtmodus aktiviert ist[/b] (anstatt weiß)</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.3" changeDate="28. Aug. 2017">
+        <changelogtext>[b]Es wurde ein Fehler behoben, durch den Bilder nicht nach Dropbox hochgeladen werden konnten.[/b]</changelogtext>
+        <changelogtext>[b]Es wurde eine Bestätigungsmeldung hinzugefügt, die angezeigt wird,
+            wenn versucht wird, eine Welt nach Dropbox hochzuladen.[/b]</changelogtext>
+        <changelogtext>[b]Die Hintergrundfarbe wurde im Nachtmodus abgedunkelt.[/b] Alle Fans von
+            "Ube Lila" und "Rosenrot" können sich freuen
+            -- ihr Müsst euren Text nich mehr länger im Dunkeln anschauen.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.2" changeDate="1. Jul. 2017">
+        <changelogtext>[b]Auf das neueste Dropbox SDK aktualisiert[/b], um einen Fehler mit der
+            älteren SDK-Version zu vermeiden.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.1" changeDate="30. Apr. 2017">
+        <changelogtext>[b]Es wurde ein Fehler behoben, der dazu führte, dass Artikelbilder die
+            Galerie-App überfüllten.[/b] Entschuldigt eventuelle Unannehmlichkeiten! [i]Hinweis:
+            Dieses Update hat nicht funktioniert. Die richtige Lösung wurde in 1.4.0 implementiert.[/i]
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.3.0" changeDate="24. Dez. 2016">
+        <changelogtext>[b]Sichern nach Dropbox hinzugefügt![/b] Wähle beim Durchsuchen von Artikeln "Sichern nach Dropbox" aus,
+            um die aktuelle Welt in dein Dropbox-Konto hochzuladen.</changelogtext>
+        <changelogtext>[b]Die untere Navigationsleiste wurde deutlich verbessert![/b]
+            Das kleinere und elegantere Erscheinungsbild schont die Augen und gibt Platz auf
+            dem Bildschirm für alle wichtigen Inhalte der Welt.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.2.0" changeDate="16. Dez. 2016">
+        <changelogtext>[b]Es wurde ein schwerwiegender Fehler behoben, der dazu führte, dass die App
+            aufgrund fehlender Ordner an mehreren Stellen abstürzte.[/b] Ich entschuldige mich herzlich, dass
+        so (viele) Benutzer damit Erfahrung hatten.</changelogtext>
+        <changelogtext>[b]Die Suche nach Artikeln nach Kategorie wurde hinzugefügt![/b] Tippen Sie einfach
+            auf das Lupensymbol, während Sie durch Artikel blättern oder einen Artikel zum Verknüpfen auswählen.</changelogtext>
+        <changelogtext>[b]Wenn Sie einen Artikel zum Verknüpfen auswählen, werden die Artikel jetzt alphabetisch sortiert.[/b]</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.1.1" changeDate="30. Sept. 2016">
+        <changelogtext>[b]Es wurde ein Fehler behoben, der verhinderte, dass die zuletzt geöffnete Welt
+            beim Start automatisch geöffnet wurde, wenn diese Welt während der vorherigen Sitzung umbenannt wurde.
+            [/b]</changelogtext>
+        <changelogtext>[b]Umbennen der Welt wurde hinzugefügt![/b] Geben dich jetzt mit einem
+            beliebigen Namen zufrieden und lassen dich später von dem perfekten Spitznamen überzeugen.</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.0.1" changeDate="5. Sept. 2016">
+        <changelogtext>[b]Es wurde ein Fehler behoben, der dazu führte, dass Geräte mit Android API 21
+            oder niedriger beim Öffnen des Bildschirms "Artikel erstellen" abstürzten.[/b]</changelogtext>
+    </changelogversion>
+
+</changelog>

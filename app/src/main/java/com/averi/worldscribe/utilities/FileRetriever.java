@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
+import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.averi.worldscribe.Category;
@@ -29,10 +31,25 @@ public class FileRetriever {
         String rootUriString = context.getSharedPreferences("com.averi.worldscribe", Context.MODE_PRIVATE)
                 .getString(AppPreferences.ROOT_DIRECTORY_URI, null);
         Uri rootUri = Uri.parse(rootUriString);
+
         //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         if (rootUriString.startsWith("file")) {
             File rootFile = new File(rootUri.getPath());
-            return DocumentFile.fromFile(rootFile);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                return DocumentFile.fromFile(rootFile);
+            }
+            else {
+                // For Android API 24 and above, file URIs must be converted into
+                // content URIs in order to receive the proper permissions.
+                Uri contentUri;
+                try {
+                    contentUri = FileProvider.getUriForFile(context, "com.averistudios.fileprovider", rootFile);
+                }
+                catch (Exception exception) {
+                    throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Could not convert file URI to tree URI for file: " + rootFile.getAbsolutePath() + ". Exception: " + exception.getMessage());
+                }
+                return DocumentFile.fromSingleUri(context, contentUri);
+            }
         }
         else {
             return DocumentFile.fromTreeUri(context, rootUri);
