@@ -35,21 +35,7 @@ public class FileRetriever {
         //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         if (rootUriString.startsWith("file")) {
             File rootFile = new File(rootUri.getPath());
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                return DocumentFile.fromFile(rootFile);
-            }
-            else {
-                // For Android API 24 and above, file URIs must be converted into
-                // content URIs in order to receive the proper permissions.
-                Uri contentUri;
-                try {
-                    contentUri = FileProvider.getUriForFile(context, "com.averistudios.fileprovider", rootFile);
-                }
-                catch (Exception exception) {
-                    throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Could not convert file URI to tree URI for file: " + rootFile.getAbsolutePath() + ". Exception: " + exception.getMessage());
-                }
-                return DocumentFile.fromSingleUri(context, contentUri);
-            }
+            return DocumentFile.fromFile(rootFile);
         }
         else {
             return DocumentFile.fromTreeUri(context, rootUri);
