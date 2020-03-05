@@ -2,6 +2,11 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.6.1.a" changeDate="4. Mär. 2020">
+        <changelogtext>[b]We've applied a hotfix for the crash from the last update.[/b] We deeply apologize
+            for the inconvenience! As always, if you're still encountering issues, please contact us at
+            averistudios@gmail.com.</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.1" changeDate="29. Feb. 2020">
         <changelogtext>[b]Die offizielle Entwickler Website für Averi Studios ist live![/b] Sie können
             über die App darauf zugreifen, indem Sie das Menü oben rechts öffnen und 'Entwickler
