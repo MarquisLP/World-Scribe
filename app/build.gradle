@@ -28,8 +28,8 @@ android {
         applicationId "com.averi.worldscribe"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 22
-        versionName "1.6.1"
+        versionCode 23
+        versionName "1.6.1.a"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
