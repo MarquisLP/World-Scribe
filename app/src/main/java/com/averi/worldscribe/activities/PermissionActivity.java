@@ -1,6 +1,7 @@
 package com.averi.worldscribe.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -8,12 +9,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.averi.worldscribe.R;
@@ -131,16 +135,34 @@ public class PermissionActivity extends ThemedActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Runs after permission is granted to read/write on root external directory on SDK 29 and above
-        if (requestCode == REQUEST_WRITE_ROOT_DIRECTORY && resultCode == RESULT_OK) {
-            StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
-            storageManagerCompat.addRoot(this, StorageManagerCompat.DEF_MAIN_ROOT, data);
-            Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
-            preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
-                    root.toRootDirectory(this).getUri().toString())
-                .apply();
-            enableWritePermissionPrompt();
-            generateMissingAppDirectoryAndFiles();
-            goToNextActivity();
+        try {
+            if (requestCode == REQUEST_WRITE_ROOT_DIRECTORY && resultCode == RESULT_OK) {
+                StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+                storageManagerCompat.addRoot(this, StorageManagerCompat.DEF_MAIN_ROOT, data);
+                Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+                preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
+                        root.toRootDirectory(this).getUri().toString())
+                        .apply();
+                enableWritePermissionPrompt();
+                generateMissingAppDirectoryAndFiles();
+                goToNextActivity();
+            }
+        }
+        catch (Exception exception) {
+            String rootUriString = preferences.getString(AppPreferences.ROOT_DIRECTORY_URI, null);
+            if (rootUriString == null) {
+                rootUriString = "NULL";
+            }
+            ScrollView scrollView = new ScrollView(this);
+            new AlertDialog.Builder(this)
+                .setTitle("Troubleshooting")
+                .setView(scrollView)
+                .setMessage(exception.getMessage())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
         }
     }
 

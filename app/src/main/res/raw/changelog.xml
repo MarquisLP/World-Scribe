@@ -2,7 +2,12 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
-    <changelogversion versionName="1.6.1" changeDate="Feb 20, 2020">
+    <changelogversion versionName="1.6.1.a" changeDate="Mar 4, 2020">
+        <changelogtext>[b]We've applied a hotfix for the crash from the last update.[/b] We deeply apologize
+        for the inconvenience! As always, if you're still encountering issues, please contact us at
+        averistudios@gmail.com.</changelogtext>
+    </changelogversion>
+    <changelogversion versionName="1.6.1" changeDate="Feb 29, 2020">
         <changelogtext>[b]The official developer website for Averi Studios is live![/b] You can
             access it from within the app by opening the menu in the top-right and selecting 'Developer
             'Website'. Check it out to keep up with important announcements and our other projects.</changelogtext>
@@ -11,6 +16,9 @@
             for you to find what you're looking for in those lists.</changelogtext>
         <changelogtext>[b]The full changelog has now been translated into German![/b] [i]Thank you to
             tostc for this contribution.[/i]</changelogtext>
+        <changelogtext>[b]Crashes during storage location selection have been fixed![/b] However, if
+            you're still encountering crashes or other issues, please don't hesitate to reach out to
+            us at averistudios@gmail.com.</changelogtext>
     </changelogversion>
     <changelogversion versionName="1.6.0" changeDate="Jan 9, 2020">
         <changelogtext>Major changes have been made under-the-hood in order to comply with new

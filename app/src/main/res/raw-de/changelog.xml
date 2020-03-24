@@ -2,7 +2,12 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
-    <changelogversion versionName="1.6.1" changeDate="20. Feb. 2020">
+    <changelogversion versionName="1.6.1.a" changeDate="4. Mär. 2020">
+        <changelogtext>[b]We've applied a hotfix for the crash from the last update.[/b] We deeply apologize
+            for the inconvenience! As always, if you're still encountering issues, please contact us at
+            averistudios@gmail.com.</changelogtext>
+    </changelogversion>
+    <changelogversion versionName="1.6.1" changeDate="29. Feb. 2020">
         <changelogtext>[b]Die offizielle Entwickler Website für Averi Studios ist live![/b] Sie können
             über die App darauf zugreifen, indem Sie das Menü oben rechts öffnen und 'Entwickler
             Website' auswählen. Dort finden Sie wichtige Ankündigungen und unsere anderen Projekte, somit bleiben
@@ -12,6 +17,9 @@
             erleichtert es Ihnen, in diesen Listen zu finden, wonach Sie suchen.</changelogtext>
         <changelogtext>[b]Das vollständige Changelog wurde jetzt ins Deutsche übersetzt![/b] [i]Vielen Dank
             an tostc für diesen Beitrag.[/i]</changelogtext>
+        <changelogtext>[b]Abstürze bei der Auswahl des Speicherortes wurden behoben![/b] Wenn Sie
+            jedoch weiterhin auf Abstürze oder andere Probleme stoßen, wenden Sie sich bitte an
+            averistudios@gmail.com.</changelogtext>
     </changelogversion>
     <changelogversion versionName="1.6.0" changeDate="9. Jan. 2020">
         <changelogtext>Unter der Haube wurden wichtige Änderungen vorgenommen, um den neuen

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
+import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.averi.worldscribe.Category;
@@ -29,6 +31,7 @@ public class FileRetriever {
         String rootUriString = context.getSharedPreferences("com.averi.worldscribe", Context.MODE_PRIVATE)
                 .getString(AppPreferences.ROOT_DIRECTORY_URI, null);
         Uri rootUri = Uri.parse(rootUriString);
+
         //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         if (rootUriString.startsWith("file")) {
             File rootFile = new File(rootUri.getPath());
