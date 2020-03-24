@@ -3,8 +3,8 @@
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
     <changelogversion versionName="1.6.1.a" changeDate="4. Mär. 2020">
-        <changelogtext>[b]We've applied a hotfix for the crash from the last update.[/b] We deeply apologize
-            for the inconvenience! As always, if you're still encountering issues, please contact us at
+        <changelogtext>[b]Wir haben einen Hotfix für den Absturz vom letzten Update angewendet.[/b] Wir entschuldigen
+            uns zutiefst für die Unannehmlichkeiten! Wie immer, wenn Sie immer noch auf Probleme stoßen, kontaktieren Sie uns bitte unter
             averistudios@gmail.com.</changelogtext>
     </changelogversion>
     <changelogversion versionName="1.6.1" changeDate="29. Feb. 2020">
