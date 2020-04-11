@@ -82,6 +82,9 @@ public class StorageManagerCompat {
         Intent i;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             i = sm.getPrimaryStorageVolume().createOpenDocumentTreeIntent();
+            i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         } else {
             return null;
         }
