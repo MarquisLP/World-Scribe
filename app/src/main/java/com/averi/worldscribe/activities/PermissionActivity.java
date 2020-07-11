@@ -307,7 +307,7 @@ public class PermissionActivity extends ThemedActivity {
                 File fileRoot = new File(fileRootUri.getPath());
                 return FileProvider.getUriForFile(
                         this,
-                        this.getApplicationContext().getPackageName() + ".fileprovider",
+                        "com.averistudios.fileprovider",
                         fileRoot);
             }
         }
