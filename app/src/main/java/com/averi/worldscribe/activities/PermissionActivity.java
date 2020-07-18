@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -68,7 +69,7 @@ public class PermissionActivity extends ThemedActivity {
                     new AlertDialog.Builder(this)
                         .setTitle("Troubleshooting")
                         .setView(scrollView)
-                        .setMessage(exception.getMessage())
+                        .setMessage(exception.getMessage() + ". Stack trace: " + Log.getStackTraceString(exception))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -151,7 +152,7 @@ public class PermissionActivity extends ThemedActivity {
                             new AlertDialog.Builder(this)
                                 .setTitle("Troubleshooting")
                                 .setView(scrollView)
-                                .setMessage(exception.getMessage())
+                                .setMessage(exception.getMessage() + ". Stack trace: " + Log.getStackTraceString(exception))
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -194,7 +195,7 @@ public class PermissionActivity extends ThemedActivity {
             new AlertDialog.Builder(this)
                 .setTitle("Troubleshooting")
                 .setView(scrollView)
-                .setMessage(exception.getMessage())
+                .setMessage(exception.getMessage() + ". Stack trace: " + Log.getStackTraceString(exception))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
