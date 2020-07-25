@@ -306,10 +306,7 @@ public class PermissionActivity extends ThemedActivity {
                 throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Got null when retrieving file path for URI: " + fileRootUri.toString());
             } else {
                 File fileRoot = new File(fileRootUri.getPath());
-                return FileProvider.getUriForFile(
-                        this,
-                        "com.averistudios.fileprovider",
-                        fileRoot);
+                return Uri.parse("content:/" + fileRoot.getAbsolutePath());
             }
         }
     }
