@@ -168,6 +168,33 @@ public class PermissionActivity extends ThemedActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri = data.getData();
+        if (uri == null) {
+            ScrollView scrollView = new ScrollView(this);
+            new AlertDialog.Builder(this)
+                    .setTitle("Troubleshooting")
+                    .setView(scrollView)
+                    .setMessage("Error: URI from ACTION_OPEN_DOCUMENT_TREE is null")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        }
+        else {
+            ScrollView scrollView = new ScrollView(this);
+            new AlertDialog.Builder(this)
+                    .setTitle("Troubleshooting")
+                    .setView(scrollView)
+                    .setMessage("URI from ACTION_OPEN_DOCUMENT_TREE: " + uri.toString())
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        }
+
+        /*
         // Runs after permission is granted to read/write on root external directory on SDK 29 and above
         try {
             if (requestCode == REQUEST_WRITE_ROOT_DIRECTORY && resultCode == RESULT_OK) {
@@ -202,6 +229,7 @@ public class PermissionActivity extends ThemedActivity {
                 })
                 .show();
         }
+        */
     }
 
     private void enableWritePermissionPrompt() {
