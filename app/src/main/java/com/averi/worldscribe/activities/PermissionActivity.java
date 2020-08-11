@@ -57,10 +57,9 @@ public class PermissionActivity extends ThemedActivity {
             Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
             if ((root != null) && (root.isAccessGranted(this))) {
                 try {
-                    Uri convertedFileRootUri = convertFileRootUriToCorrectFormat(
-                            root.toRootDirectory(this).getUri());
+                    Uri fileRootUri = root.toRootDirectory(this).getUri();
                     preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
-                            convertedFileRootUri.toString())
+                            fileRootUri.toString())
                             .apply();
                     generateMissingAppDirectoryAndFiles();
                     goToNextActivity();
@@ -139,10 +138,9 @@ public class PermissionActivity extends ThemedActivity {
                     }
                     else {
                         try {
-                            Uri convertedFileRootUri = convertFileRootUriToCorrectFormat(
-                                    root.toRootDirectory(this).getUri());
+                            Uri fileRootUri = root.toRootDirectory(this).getUri();
                             preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
-                                    convertedFileRootUri.toString())
+                                    fileRootUri.toString())
                                     .apply();
                             enableWritePermissionPrompt();
                             generateMissingAppDirectoryAndFiles();
@@ -181,10 +179,9 @@ public class PermissionActivity extends ThemedActivity {
                 storageManagerCompat.addRoot(this, StorageManagerCompat.DEF_MAIN_ROOT, data);
                 Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
 
-                Uri convertedFileRootUri = convertFileRootUriToCorrectFormat(
-                        root.toRootDirectory(this).getUri());
+                Uri fileRootUri = root.toRootDirectory(this).getUri();
                 preferences.edit().putString(AppPreferences.ROOT_DIRECTORY_URI,
-                        convertedFileRootUri.toString())
+                        fileRootUri.toString())
                         .apply();
 
                 enableWritePermissionPrompt();
@@ -285,35 +282,5 @@ public class PermissionActivity extends ThemedActivity {
         Intent goToCreateOrLoadWorldIntent = new Intent(this, CreateOrLoadWorldActivity.class);
         startActivity(goToCreateOrLoadWorldIntent);
         finish();
-    }
-
-    /**
-     * Given a URI for a device's root external storage location, returns the URI formatted
-     * as either "file:///" or "content:///" depending on the original format and the
-     * Android version.
-     *
-     * <p>
-     *     From what we have learned in issue #43, devices running Android 9 and below
-     *     can use "file:///" URIs just fine. However, this is not the case for Android 10
-     *     and above, which requires "content:///" URIs. Some brands, such as Samsung,
-     *     still return a "file:///" URI in Android 10, so they need to be converted.
-     * </p>
-     * @param fileRootUri The original URI for the external storage root
-     * @return The converted URI for the external storage root
-     */
-    private Uri convertFileRootUriToCorrectFormat(Uri fileRootUri) {
-        if (fileRootUri.toString().startsWith("content")) {
-            return fileRootUri;
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            return fileRootUri;
-        } else { // If we have a "file:///" URI and Android version >= 10, convert to "content:///" URI.
-            String fileRootPath = fileRootUri.getPath();
-            if (fileRootPath == null) {
-                throw new RuntimeException("Something went wrong. Please take a screenshot and email it to averistudios@gmail.com. Got null when retrieving file path for URI: " + fileRootUri.toString());
-            } else {
-                File fileRoot = new File(fileRootUri.getPath());
-                return Uri.parse("content:/" + fileRoot.getAbsolutePath());
-            }
-        }
     }
 }
