@@ -172,6 +172,12 @@ public class PermissionActivity extends ThemedActivity {
         try {
             if (requestCode == REQUEST_WRITE_ROOT_DIRECTORY && resultCode == RESULT_OK) {
                 StorageManagerCompat storageManagerCompat = new StorageManagerCompat(this);
+
+                // Fix for #43.
+                // Since StorageManagerCompat stores roots in a HashSet, we need to delete DEF_MAIN_ROOT
+                // or else the addRoot() call below will think we're adding a duplicate and thus do nothing.
+                storageManagerCompat.deleteRoot(StorageManagerCompat.DEF_MAIN_ROOT);
+
                 storageManagerCompat.addRoot(this, StorageManagerCompat.DEF_MAIN_ROOT, data);
                 Root root = storageManagerCompat.getRoot(StorageManagerCompat.DEF_MAIN_ROOT);
 
