@@ -2,6 +2,11 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.6.2" changeDate="Aug 16, 2020">
+        <changelogtext>[b]We've resolved the issue preventing certain Android 10 devices from getting
+        past the 'Data Location' setup screen.[/b] Thank you to all affected users for being patient,
+        and an especially big thank you to all the users who helped out with testing!</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.1.a" changeDate="Mar 4, 2020">
         <changelogtext>[b]We've applied a hotfix for the crash from the last update.[/b] We deeply apologize
         for the inconvenience! As always, if you're still encountering issues, please contact us at

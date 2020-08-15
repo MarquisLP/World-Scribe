@@ -2,6 +2,12 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.6.2" changeDate="16. Aug. 2020">
+        <changelogtext>[b]Wir haben das Problem gelöst, das bestimmte Android 10-Geräte daran
+            hindert, über den Einstellungsbildschirm 'Datenspeicherort' hinauszukommen.[/b] Vielen
+            Dank an alle betroffenen Benutzer für ihre Geduld, und ein besonders großes Dankeschön
+            an alle Benutzer, die bei den Tests mitgeholfen haben!</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.1.a" changeDate="4. Mär. 2020">
         <changelogtext>[b]Wir haben einen Hotfix für den Absturz vom letzten Update angewendet.[/b] Wir entschuldigen
             uns zutiefst für die Unannehmlichkeiten! Wie immer, wenn Sie immer noch auf Probleme stoßen, kontaktieren Sie uns bitte unter
