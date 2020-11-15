@@ -2,6 +2,12 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.6.3" changeDate="Nov 15, 2020">
+        <changelogtext>[b]An Announcements feature has been added![/b] Check it out to stay up-to-date
+            with important news about World Scribe. You can access it by opening the menu in the
+            top-right and selecting "Announcements".
+        </changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.2" changeDate="16. Aug. 2020">
         <changelogtext>[b]Wir haben das Problem gelöst, das bestimmte Android 10-Geräte daran
             hindert, über den Einstellungsbildschirm 'Datenspeicherort' hinauszukommen.[/b] Vielen
