@@ -95,7 +95,7 @@ public class ArticleListActivity extends ThemedActivity
         setupRecyclerView();
         setAppBar(worldName);
         bottomBar.focusCategoryButton(this, category);
-        showChangelogDialogIfOpeningNewVersion();
+        showAnnouncementsAndChangelogIfOpeningNewVersion();
     }
 
     private void setupRecyclerView() {
@@ -227,6 +227,9 @@ public class ArticleListActivity extends ThemedActivity
             case R.id.syncToNextcloudItem:
                 syncWorldToNextcloud();
                 return true;
+            case R.id.viewAnnouncementsItem:
+                showAnnouncementsDialog(false);
+                return true;
             case R.id.viewChangelogItem:
                 showChangelogDialog();
                 return true;
@@ -287,10 +290,45 @@ public class ArticleListActivity extends ThemedActivity
     }
 
     /**
+     * Displays all existing announcements in a dialog.
+     *
+     * <p>
+     *     Credit to Gabriele Mariotti for the
+     *     <a href="https://github.com/gabrielemariotti/changeloglib">ChangeLog Library</a>.
+     * </p>
+     */
+    private void showAnnouncementsDialog(boolean showChangelogAfterwards) {
+        AlertDialog.Builder builder = ActivityUtilities.getThemedDialogBuilder(this,
+                nightModeIsEnabled());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content = inflater.inflate(R.layout.announcements_dialog, null);
+
+        if (showChangelogAfterwards) {
+            final AlertDialog dialog = builder.setView(content)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            showChangelogDialog();
+                        }
+                    }).create();
+            dialog.show();
+        }
+        else {
+            final AlertDialog dialog = builder.setView(content)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) { }
+                    }).create();
+            dialog.show();
+        }
+    }
+
+    /**
      * Displays the Changelog Dialog if this is the first time the user has opened
      * the app since updating to a new version.
      */
-    private void showChangelogDialogIfOpeningNewVersion() {
+    private void showAnnouncementsAndChangelogIfOpeningNewVersion() {
         SharedPreferences preferences = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
                 MODE_PRIVATE);
         int lastOpenedVersionCode = preferences.getInt(AppPreferences.LAST_OPENED_VERSION_CODE,
@@ -300,7 +338,7 @@ public class ArticleListActivity extends ThemedActivity
         if (lastOpenedVersionCode != currentVersionCode) {
             preferences.edit().putInt(AppPreferences.LAST_OPENED_VERSION_CODE,
                     currentVersionCode).apply();
-            showChangelogDialog();
+            showAnnouncementsDialog(true);
         }
     }
 

@@ -41,6 +41,10 @@
         android:title="-------------------------------" />
     <group android:id="@+id/overflow_general_items">
         <item
+            android:id="@+id/viewAnnouncementsItem"
+            android:title="@string/viewAnnouncementsItemText"
+            app:showAsAction="never" />
+        <item
             android:id="@+id/viewChangelogItem"
             android:title="@string/viewChangelogItemText"
             app:showAsAction="never" />
