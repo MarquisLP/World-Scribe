@@ -39,7 +39,7 @@
     <string name="viewDeveloperWebsiteItemText">Entwickler Website</string>
     <string name="enableReaderModeItemText">Lesemodus</string>
     <string name="enableEditorModeItemText">Editiermodus</string>
-    <string name="viewAnnouncementsItemText">Announcements</string>
+    <string name="viewAnnouncementsItemText">Ankündigungen</string>
     <string name="viewChangelogItemText">Changelog öffnen</string>
     <string name="feedbackItemText">Feedback</string>
 
@@ -179,7 +179,7 @@
     <string name="editorModeEnabledMessage">Editiermodus (Texteingabe ist aktiviert)</string>
 
     <string name="changelogDialogTitle">Changelog</string>
-    <string name="announcementsDialogTitle">Announcements</string>
+    <string name="announcementsDialogTitle">Ankündigungen</string>
     <string name="sendErrorLogByEmail">Sende Fehler als E-Mail</string>
 
     <string name="privacyPolicyTitle">Datenschutzbestimmung</string>

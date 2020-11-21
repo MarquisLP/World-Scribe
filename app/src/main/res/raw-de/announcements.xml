@@ -2,13 +2,14 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="false">
-    <changelogversion versionName="Nov 15, 2020" changeDate="">
-        <changelogtext>[b]Please be aware that if you upgrade your device to Android 10 or Android
-            11, the app may perform significantly slower.[/b] This is due to changes by Google in
-            the Android operating system that make file operations much slower. We are currently
-            working to improve this situation, but we ask that you please be patient as this will
-            require significant changes throughout the entire app. We deeply apologize to users who
-            are already impacted by these performance issues.
+    <changelogversion versionName="15. Nov. 2020" changeDate="">
+        <changelogtext>[b]Bitte beachten Sie, dass die App beim Upgrade Ihres Geräts auf Android 10
+            oder Android 11 möglicherweise erheblich langsamer ist.[/b] Dies ist auf Änderungen von
+            Google im Android-Betriebssystem zurückzuführen, die den Dateivorgang erheblich
+            verlangsamen. Wir arbeiten derzeit daran, diese Situation zu verbessern, bitten Sie
+            jedoch um etwas Geduld, da dies erhebliche Änderungen in der gesamten App erfordert.
+            Wir entschuldigen uns zutiefst bei Benutzern, die bereits von diesen Leistungsproblemen
+            betroffen sind.
         </changelogtext>
     </changelogversion>
 </changelog>
