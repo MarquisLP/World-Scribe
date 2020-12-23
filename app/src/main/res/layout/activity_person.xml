@@ -1,101 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:visibility="visible">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        android:id="@+id/relativeScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".activities.PersonActivity"
-        android:id="@+id/relativeScreen"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true" >
+        android:focusableInTouchMode="true"
+        tools:context=".activities.PersonActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.averi.worldscribe.views.MarqueeToolbar
                 android:id="@+id/my_toolbar"
+                style="@style/AppTheme"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextColor="@android:color/white"
-                style="@style/AppTheme" />
+                app:titleTextColor="@android:color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/scrollView"
-            android:scrollbars="vertical"
+            android:layout_marginTop="@dimen/marginBelowToolbar"
             android:fillViewport="false"
-            android:layout_marginTop="@dimen/marginBelowToolbar">
+            android:scrollbars="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/linearPerson"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearPerson"
-                android:paddingTop="@dimen/pagePadding"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/pagePadding"
+                android:paddingTop="@dimen/pagePadding"
                 android:paddingRight="@dimen/pagePadding"
-                android:paddingBottom="@dimen/scrollBottomPadding" >
+                android:paddingBottom="@dimen/scrollBottomPadding">
 
-                <ImageView
+                <ProgressBar
+                    android:id="@+id/articleImageProgressCircle"
+                    style="?android:attr/progressBarStyle"
                     android:layout_width="@dimen/articleImageWidth"
                     android:layout_height="@dimen/articleImageWidth"
+                    android:layout_gravity="center_horizontal" />
+
+                <ImageView
                     android:id="@+id/imagePerson"
-                    android:clickable="true"
-                    android:contentDescription="@string/personImageDescription"
+                    android:layout_width="@dimen/articleImageWidth"
+                    android:layout_height="@dimen/articleImageWidth"
                     android:layout_gravity="center_horizontal"
                     android:background="?attr/themedBorder"
-                    android:src="@drawable/blank_person"
-                    android:padding="@dimen/borderWidth" />
+                    android:clickable="true"
+                    android:contentDescription="@string/personImageDescription"
+                    android:padding="@dimen/borderWidth"
+                    android:src="@drawable/blank_person" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <TextView
+                    android:id="@+id/textGeneralInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:text="@string/generalInfoHeader"
-                    android:id="@+id/textGeneralInfo"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/headerTextSize"
-                    android:layout_gravity="start" />
+                    android:textSize="@dimen/headerTextSize" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/linearGeneralInfo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/linearGeneralInfo">
+                    android:orientation="vertical">
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <EditText
+                        android:id="@+id/editAliases"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editAliases"
                         android:hint="@string/aliasesHint"
+                        android:maxLines="1"
                         android:textColor="?attr/colorPrimary"
                         android:textColorHint="?attr/colorPrimaryDark"
-                        android:maxLines="1"
                         android:textSize="@dimen/standardTextSize" />
 
                     <Space
@@ -103,67 +109,67 @@
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <EditText
+                        android:id="@+id/editAge"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editAge"
+                        android:layout_weight="1"
                         android:hint="@string/ageHint"
+                        android:maxLines="1"
                         android:textColor="?attr/colorPrimary"
                         android:textColorHint="?attr/colorPrimaryDark"
-                        android:maxLines="1"
-                        android:textSize="@dimen/standardTextSize"
-                        android:layout_weight="1" />
+                        android:textSize="@dimen/standardTextSize" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <RadioGroup
+                        android:id="@+id/radioGroupGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/radioGroupGender"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/maleText"
                             android:id="@+id/radioButtonMale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:textColor="?attr/colorPrimary"
+                            android:layout_weight="1"
                             android:checked="true"
-                            android:textSize="@dimen/standardTextSize"
-                            android:layout_weight="1" />
+                            android:text="@string/maleText"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="@dimen/standardTextSize" />
 
                         <Space
                             android:layout_width="@dimen/radioButtonSpacing"
                             android:layout_height="0dp" />
 
                         <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/femaleText"
                             android:id="@+id/radioButtonFemale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:textColor="?attr/colorPrimary"
+                            android:layout_weight="1"
                             android:checked="false"
-                            android:textSize="@dimen/standardTextSize"
-                            android:layout_weight="1" />
+                            android:text="@string/femaleText"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="@dimen/standardTextSize" />
 
                         <Space
                             android:layout_width="@dimen/radioButtonSpacing"
                             android:layout_height="0dp" />
 
                         <RadioButton
+                            android:id="@+id/radioButtonOtherGender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/otherGenderText"
-                            android:id="@+id/radioButtonOtherGender"
                             android:layout_gravity="end"
-                            android:textColor="?attr/colorPrimary"
+                            android:layout_weight="1"
                             android:checked="false"
-                            android:textSize="@dimen/standardTextSize"
-                            android:layout_weight="1" />
+                            android:text="@string/otherGenderText"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="@dimen/standardTextSize" />
                     </RadioGroup>
 
                     <Space
@@ -171,18 +177,18 @@
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <EditText
+                        android:id="@+id/editBio"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
-                        android:ems="10"
-                        android:id="@+id/editBio"
-                        android:hint="@string/bioHint"
-                        android:textColorHint="?attr/colorPrimaryDark"
-                        android:textColor="?attr/colorPrimary"
                         android:background="?attr/themedBorder"
+                        android:ems="10"
+                        android:hint="@string/bioHint"
+                        android:inputType="textMultiLine"
+                        android:maxLines="@integer/editTextUnlimitedCharactersNumber"
                         android:padding="@dimen/borderedTextPadding"
                         android:scrollbars="vertical"
-                        android:maxLines="@integer/editTextUnlimitedCharactersNumber" />
+                        android:textColor="?attr/colorPrimary"
+                        android:textColorHint="?attr/colorPrimaryDark" />
                 </LinearLayout>
 
                 <Space
@@ -192,55 +198,60 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/articleSectionSeparatorLineHeight"
-                    android:background="?attr/colorPrimary"
-                    />
+                    android:background="?attr/colorPrimary" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/membershipsText"
                     android:id="@+id/textMemberships"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/membershipsText"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/headerTextSize"
-                    android:layout_gravity="start" />
+                    android:textSize="@dimen/headerTextSize" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/linearMemberships"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:padding="@dimen/recyclerPadding">
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/addConnectionSnippetText"
                         android:id="@+id/buttonAddMembership"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="?attr/buttonColorSelector"
                         android:minHeight="22sp"
+                        android:text="@string/addConnectionSnippetText"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                    <ProgressBar
+                        android:id="@+id/membershipsProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/recyclerMemberships"
-                        android:fastScrollEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:fastScrollAlwaysVisible="true"
+                        android:fastScrollEnabled="true"
                         android:padding="@dimen/listPadding"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 </LinearLayout>
 
@@ -251,55 +262,60 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/articleSectionSeparatorLineHeight"
-                    android:background="?attr/colorPrimary"
-                    />
+                    android:background="?attr/colorPrimary" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/residencesText"
                     android:id="@+id/textResidences"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/residencesText"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/headerTextSize"
-                    android:layout_gravity="start" />
+                    android:textSize="@dimen/headerTextSize" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/linearResidences"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:padding="@dimen/recyclerPadding">
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/addConnectionSnippetText"
                         android:id="@+id/buttonAddResidence"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="?attr/buttonColorSelector"
                         android:minHeight="22sp"
+                        android:text="@string/addConnectionSnippetText"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                    <ProgressBar
+                        android:id="@+id/residencesProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerResidences"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/recyclerResidences"
-                        android:fastScrollEnabled="true"
                         android:fastScrollAlwaysVisible="true"
+                        android:fastScrollEnabled="true"
                         android:padding="@dimen/listPadding"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 </LinearLayout>
 
@@ -310,56 +326,61 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/articleSectionSeparatorLineHeight"
-                    android:background="?attr/colorPrimary"
-                    />
+                    android:background="?attr/colorPrimary" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <TextView
+                    android:id="@+id/textConnections"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:text="@string/connectionsText"
-                    android:id="@+id/textConnections"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/headerTextSize"
-                    android:layout_gravity="start" />
+                    android:textSize="@dimen/headerTextSize" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/linearConnections"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/linearConnections"
+                    android:orientation="vertical"
                     android:padding="@dimen/recyclerPadding">
 
                     <Button
+                        android:id="@+id/buttonAddConnection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/addConnectionSnippetText"
-                        android:id="@+id/buttonAddConnection"
                         android:background="?attr/buttonColorSelector"
                         android:minHeight="22sp"
+                        android:text="@string/addConnectionSnippetText"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                    <ProgressBar
+                        android:id="@+id/connectionsProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerConnections"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/recyclerConnections"
-                        android:fastScrollEnabled="true"
                         android:fastScrollAlwaysVisible="true"
+                        android:fastScrollEnabled="true"
                         android:padding="@dimen/listPadding"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                        android:scrollIndicators="top|bottom|start|end" />
+                        android:scrollIndicators="top|bottom|start|end"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
                 </LinearLayout>
 
                 <Space
@@ -369,66 +390,70 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/articleSectionSeparatorLineHeight"
-                    android:background="?attr/colorPrimary"
-                    />
+                    android:background="?attr/colorPrimary" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <TextView
+                    android:id="@+id/textSnippets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:text="@string/snippetsText"
-                    android:id="@+id/textSnippets"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/headerTextSize"
-                    android:layout_gravity="start" />
+                    android:textSize="@dimen/headerTextSize" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="@dimen/verticalSpacing" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/linearSnippets"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/linearSnippets"
-                    android:padding="@dimen/recyclerPadding" >
+                    android:orientation="vertical"
+                    android:padding="@dimen/recyclerPadding">
 
                     <Button
+                        android:id="@+id/buttonAddSnippet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/addConnectionSnippetText"
-                        android:id="@+id/buttonAddSnippet"
                         android:background="?attr/buttonColorSelector"
                         android:minHeight="22sp"
+                        android:text="@string/addConnectionSnippetText"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                    <ProgressBar
+                        android:id="@+id/snippetsProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSnippets"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/recyclerSnippets"
-                        android:fastScrollEnabled="true"
                         android:fastScrollAlwaysVisible="true"
+                        android:fastScrollEnabled="true"
                         android:padding="@dimen/listPadding"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
                 </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
         <com.averi.worldscribe.views.BottomBar
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
             android:id="@+id/bottomBar"
-            android:layout_gravity="bottom"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
 
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

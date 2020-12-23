@@ -6,21 +6,26 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
+import com.averi.worldscribe.utilities.TaskRunner;
 import com.averi.worldscribe.utilities.ThemedSnackbar;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.tasks.CreateArticleTask;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
 
 public class CreateArticleActivity extends BackButtonActivity {
 
@@ -34,7 +39,11 @@ public class CreateArticleActivity extends BackButtonActivity {
     private EditText nameField;
     private Spinner categorySpinner;
     private Button createButton;
+    private LinearLayout mainLayout;
+    private LinearLayout loadingLayout;
     private String worldName;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,8 @@ public class CreateArticleActivity extends BackButtonActivity {
         nameField = (EditText) findViewById(R.id.articleName);
         categorySpinner = (Spinner) findViewById(R.id.categorySelection);
         createButton = (Button) findViewById(R.id.create);
+        mainLayout = (LinearLayout)  findViewById(R.id.root);
+        loadingLayout = (LinearLayout)  findViewById(R.id.loadingCreateArticleLayout);
         worldName = getIntent().getStringExtra(IntentFields.WORLD_NAME);
 
         setAppBar();
@@ -163,21 +174,34 @@ public class CreateArticleActivity extends BackButtonActivity {
      * @param view The View this method is bound to.
      */
     public void createArticle(View view) {
+        loadingLayout.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
+
         Category category = Category.getCategoryFromName(this,
                 categorySpinner.getSelectedItem().toString());
         String articleName = getArticleName();
 
-        if (ExternalReader.articleExists(this, worldName, category, articleName)) {
-            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
-                    getString(R.string.articleAlreadyExistsError));
-        } else {
-            if (ExternalWriter.createArticleDirectory(this, worldName, category, articleName) != null) {
-                goToNewArticle(worldName, category, articleName);
-            } else {
-                ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
-                        getString(R.string.articleCreationError));
-            }
-        }
+        String categoryFolderPath = worldName + "/" + category.pluralName(this);
+        taskRunner.executeAsync(new GetFilenamesInFolderTask(categoryFolderPath),
+                (existingArticleNames) -> {
+                    if (existingArticleNames.contains(articleName)) {
+                        mainLayout.setVisibility(View.VISIBLE);
+                        loadingLayout.setVisibility(View.GONE);
+                        ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
+                                getString(R.string.articleAlreadyExistsError));
+                    }
+                    else {
+                        taskRunner.executeAsync(new CreateArticleTask(worldName, category, articleName),
+                                (result) -> { goToNewArticle(worldName, category, articleName); },
+                                this::displayErrorDialog);
+                    }
+                },
+                this::displayErrorDialog);
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface -> {})).show();
     }
 
     /**

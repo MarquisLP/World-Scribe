@@ -1,10 +1,14 @@
 package com.averi.worldscribe.activities;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,16 +16,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.AppThemeArrayAdapter;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.IntentFields;
-import com.averi.worldscribe.utilities.WorldUtilities;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.DeleteWorldTask;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
 
 public class SettingsActivity extends BackButtonActivity {
 
@@ -40,6 +48,8 @@ public class SettingsActivity extends BackButtonActivity {
     private Switch nightModeSwitch;
     private String worldName;
     private Button deleteWorldButton;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +96,22 @@ public class SettingsActivity extends BackButtonActivity {
 
         Intent intent = getIntent();
         worldName = intent.getStringExtra(IntentFields.WORLD_NAME);
+
         deleteWorldButton = (Button) findViewById(R.id.deleteWorldButton);
-        final Context context = this;
+        final SettingsActivity activity = this;
         deleteWorldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WorldUtilities.deleteWorld(context, worldName);
+                new AlertDialog.Builder(activity)
+                        .setTitle(activity.getString(R.string.confirmWorldDeletionTitle, worldName))
+                        .setMessage(activity.getString(R.string.confirmWorldDeletion, worldName))
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                activity.deleteWorld();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
             }
         });
     }
@@ -237,6 +257,52 @@ public class SettingsActivity extends BackButtonActivity {
                 getBaseContext().getPackageName());
         restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(restartIntent);
+    }
+
+    private void deleteWorld() {
+        AlertDialog deletingProgressDialog = new AlertDialog.Builder(this, R.style.NormalDialog)
+                .setCancelable(false)
+                .setTitle(R.string.deletingWorldDialogTitle)
+                .setView(new ProgressBar(this))
+                .show();
+
+        taskRunner.executeAsync(new DeleteWorldTask(worldName),
+                (result) -> {
+                    goToNextActivityAfterWorldDeletion(deletingProgressDialog);
+                },
+                (exception) -> {
+                    deletingProgressDialog.dismiss();
+                    displayErrorDialog(exception);
+                });
+    }
+
+    private void goToNextActivityAfterWorldDeletion(AlertDialog progressDialog) {
+        taskRunner.executeAsync(new GetFilenamesInFolderTask("/", false),
+                (existingWorldNames) -> {
+                    Intent nextActivityIntent;
+
+                    // The second condition is needed because of a bug that causes
+                    // existingWorldNames to contain an empty string when the Worlds folder is empty.
+                    if (existingWorldNames.isEmpty() || ((existingWorldNames.size() == 1) && (existingWorldNames.get(0).isEmpty()))) {
+                        nextActivityIntent = new Intent(this, CreateWorldActivity.class);
+                    }
+                    else {
+                        nextActivityIntent = new Intent(this, CreateOrLoadWorldActivity.class);
+                    }
+
+                    nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    progressDialog.dismiss();
+                    this.startActivity(nextActivityIntent);
+                },
+                (exception) -> {
+                    progressDialog.dismiss();
+                    displayErrorDialog(exception);
+                });
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
 }

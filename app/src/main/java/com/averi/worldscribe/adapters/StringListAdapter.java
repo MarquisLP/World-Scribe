@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.averi.worldscribe.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by mark on 15/06/16.
@@ -66,9 +67,11 @@ public class StringListAdapter extends RecyclerView.Adapter<StringListAdapter.Vi
      */
     public void updateList(ArrayList<String> strings) {
         this.strings.clear();
-        stringsCopy.clear();
+        this.stringsCopy.clear();
         this.strings.addAll(strings);
-        stringsCopy.addAll(strings);
+        this.stringsCopy.addAll(strings);
+        Collections.sort(this.strings);
+        Collections.sort(this.stringsCopy);
     }
 
     /**

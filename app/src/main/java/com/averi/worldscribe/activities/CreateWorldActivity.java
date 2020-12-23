@@ -6,16 +6,19 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
-import com.averi.worldscribe.utilities.ExternalReader;
-import com.averi.worldscribe.utilities.ExternalWriter;
+import com.averi.worldscribe.utilities.TaskRunner;
 import com.averi.worldscribe.utilities.ThemedSnackbar;
+import com.averi.worldscribe.utilities.tasks.CreateWorldTask;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
 
 public class CreateWorldActivity extends BackButtonActivity {
 
@@ -23,9 +26,12 @@ public class CreateWorldActivity extends BackButtonActivity {
     private Toolbar appBar;
     private EditText editName;
     private Button createButton;
+    private ProgressBar creatingWorldProgressCircle;
     private CoordinatorLayout coordinatorLayout;
     private String worldAlreadyExistsMessage;
     private String worldCreationErrorMessage;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class CreateWorldActivity extends BackButtonActivity {
         appBar = (Toolbar) findViewById(R.id.my_toolbar);
         editName = (EditText) findViewById(R.id.editName);
         createButton = (Button) findViewById(R.id.createButton);
+        creatingWorldProgressCircle = (ProgressBar) findViewById(R.id.creatingWorldProgressCircle);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         worldAlreadyExistsMessage = this.getResources().getString(R.string.worldAlreadyExistsText);
         worldCreationErrorMessage = this.getResources().getString(R.string.worldCreationErrorText);
@@ -113,24 +120,47 @@ public class CreateWorldActivity extends BackButtonActivity {
     public void clickCreate(View view) {
         String worldName = getWorldName();
 
-        if (ExternalReader.worldAlreadyExists(this, worldName)) {
-            showWorldAlreadyExistsMessage();
-        } else {
-            if (ExternalWriter.createWorldDirectory(this, worldName) != null) {
-                saveNewWorldAsLastOpened(worldName);
-                ActivityUtilities.goToWorld(this, worldName);
-            } else {
-                showWorldCreationErrorMessage();
-            }
-        }
+        creatingWorldProgressCircle.setVisibility(View.VISIBLE);
+        editName.setVisibility(View.GONE);
+        createButton.setVisibility(View.GONE);
+
+        taskRunner.executeAsync(new GetFilenamesInFolderTask("/", false),
+                (existingWorldNames) -> {
+                    if (existingWorldNames.contains(worldName)) {
+                        editName.setVisibility(View.VISIBLE);
+                        createButton.setVisibility(View.VISIBLE);
+                        creatingWorldProgressCircle.setVisibility(View.GONE);
+                        showWorldAlreadyExistsMessage();
+                    }
+                    else {
+                        taskRunner.executeAsync(new CreateWorldTask(worldName),
+                                (result) -> {
+                                    saveNewWorldAsLastOpened(worldName);
+                                    ActivityUtilities.goToWorld(this, worldName);
+                                },
+                                (exception) -> {
+                                    editName.setVisibility(View.VISIBLE);
+                                    createButton.setVisibility(View.VISIBLE);
+                                    creatingWorldProgressCircle.setVisibility(View.GONE);
+                                    displayErrorDialog(exception);
+                                });
+                    }
+                },
+                (exception) -> {
+                    editName.setVisibility(View.VISIBLE);
+                    createButton.setVisibility(View.VISIBLE);
+                    creatingWorldProgressCircle.setVisibility(View.GONE);
+                    displayErrorDialog(exception);
+                });
     }
 
     private void showWorldAlreadyExistsMessage() {
         ThemedSnackbar.showSnackbarMessage(this,coordinatorLayout, worldAlreadyExistsMessage);
     }
 
-    private void showWorldCreationErrorMessage() {
-        ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout, worldCreationErrorMessage);
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
     private void saveNewWorldAsLastOpened(String worldName) {

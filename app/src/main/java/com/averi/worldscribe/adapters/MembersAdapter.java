@@ -20,7 +20,6 @@ import com.averi.worldscribe.activities.ArticleActivity;
 import com.averi.worldscribe.activities.EditMembershipActivity;
 import com.averi.worldscribe.activities.PersonActivity;
 import com.averi.worldscribe.utilities.ExternalDeleter;
-import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
@@ -170,9 +169,7 @@ implements ArticleLinkAdapter {
     public MembersAdapter(ArticleActivity activity, String worldName, String groupName) {
         this.activity = activity;
         this.worldName = worldName;
-
-        memberships = ExternalReader.getMembershipsInGroup(activity, worldName, groupName);
-        Collections.sort(memberships, new Membership.ByMemberNameComparator());
+        this.memberships = new ArrayList<>();
     }
 
     @Override
@@ -190,6 +187,16 @@ implements ArticleLinkAdapter {
     @Override
     public int getItemCount() {
         return memberships.size();
+    }
+
+    /**
+     * Replace the list of Members attached to this adapter.
+     * @param newMembers The new list of Members to attach to this adapter.
+     */
+    public void updateList(ArrayList<Membership> newMembers) {
+        memberships.clear();
+        memberships.addAll(newMembers);
+        Collections.sort(memberships, new Membership.ByMemberNameComparator());
     }
 
     public LinkedArticleList getLinkedArticleList() {

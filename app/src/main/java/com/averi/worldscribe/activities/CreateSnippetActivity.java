@@ -6,18 +6,23 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
+import com.averi.worldscribe.utilities.TaskRunner;
 import com.averi.worldscribe.utilities.ThemedSnackbar;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
+import com.averi.worldscribe.utilities.tasks.WriteTextToFileTask;
 
 /**
  * The Activity where the user names the new Snippet during Snippet creation.
@@ -31,6 +36,9 @@ public class CreateSnippetActivity extends BackButtonActivity {
     private CoordinatorLayout coordinatorLayout;
     private EditText nameField;
     private Button createButton;
+    private ProgressBar savingSnippetProgressCircle;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class CreateSnippetActivity extends BackButtonActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         nameField = (EditText) findViewById(R.id.nameField);
         createButton = (Button) findViewById(R.id.create);
+        savingSnippetProgressCircle = findViewById(R.id.creatingSnippetProgressCircle);
 
         setAppBar();
         setNameFieldWatcher();
@@ -119,44 +128,51 @@ public class CreateSnippetActivity extends BackButtonActivity {
      * @param view The View that was clicked for confirmation.
      */
     public void clickCreate(View view) {
-        if (snippetNameIsAvailable()) {
-            ExternalWriter.writeSnippetContents(this, worldName, articleCategory, articleName,
-                    nameField.getText().toString(), "");
-            editNewSnippet();
-        }
+        String newSnippetName = nameField.getText().toString();
+
+        savingSnippetProgressCircle.setVisibility(View.VISIBLE);
+        nameField.setVisibility(View.GONE);
+        createButton.setVisibility(View.GONE);
+
+        String snippetsFolderPath = worldName + "/" + articleCategory.pluralName(this) + "/"
+                + articleName + "/Snippets";
+        taskRunner.executeAsync(new GetFilenamesInFolderTask(snippetsFolderPath, true),
+                (existingSnippetNames) -> {
+                    if (existingSnippetNames.contains(newSnippetName)) {
+                        nameField.setVisibility(View.VISIBLE);
+                        createButton.setVisibility(View.VISIBLE);
+                        savingSnippetProgressCircle.setVisibility(View.GONE);
+                        ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
+                                getString(R.string.snippetExistsError, newSnippetName, articleName));
+                    }
+                    else {
+                        String newSnippetPath = snippetsFolderPath + "/" + newSnippetName + ".txt";
+                        taskRunner.executeAsync(new WriteTextToFileTask(newSnippetPath, ""),
+                                (result) -> { this.editNewSnippet(newSnippetName); },
+                                this::displayErrorDialog);
+                    }
+                },
+                this::displayErrorDialog
+                );
     }
 
-    /**
-     * Checks if the name entered into the text field is available i.e. none of the Article's
-     * existing Snippets use the same name.
-     * If the name is unavailable, an error message is displayed.
-     * @return True if the Snippet name is available; false otherwise.
-     */
-    private boolean snippetNameIsAvailable() {
-        String snippetName = nameField.getText().toString();
-        Boolean nameIsAvailable;
-
-        if (ExternalReader.snippetExists(this, worldName, articleCategory, articleName,
-                snippetName)) {
-            nameIsAvailable = false;
-            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
-                    getString(R.string.snippetExistsError, snippetName, articleName));
-        } else {
-            nameIsAvailable = true;
-        }
-
-        return nameIsAvailable;
+    private void displayErrorDialog(Exception exception) {
+        nameField.setVisibility(View.VISIBLE);
+        createButton.setVisibility(View.VISIBLE);
+        savingSnippetProgressCircle.setVisibility(View.GONE);
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
     /**
      * Open the newly-created Snippet in SnippetActivity for editing.
      */
-    private void editNewSnippet() {
+    private void editNewSnippet(String newSnippetName) {
         Intent editSnippetIntent = new Intent(this, SnippetActivity.class);
         editSnippetIntent.putExtra(IntentFields.WORLD_NAME, worldName);
         editSnippetIntent.putExtra(IntentFields.CATEGORY, articleCategory);
         editSnippetIntent.putExtra(IntentFields.ARTICLE_NAME, articleName);
-        editSnippetIntent.putExtra(IntentFields.SNIPPET_NAME, nameField.getText().toString());
+        editSnippetIntent.putExtra(IntentFields.SNIPPET_NAME, newSnippetName);
         startActivity(editSnippetIntent);
         finish();
     }

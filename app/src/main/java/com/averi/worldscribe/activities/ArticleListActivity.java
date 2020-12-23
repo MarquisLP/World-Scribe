@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +49,10 @@ import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.LogErrorTask;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
+import com.averi.worldscribe.utilities.tasks.RenameWorldTask;
+import com.averi.worldscribe.viewmodels.ArticleListViewModel;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 import com.dropbox.core.DbxRequestConfig;
@@ -69,6 +76,9 @@ public class ArticleListActivity extends ThemedActivity
     private static final String DEVELOPER_WEBSITE_URL = "https://averistudios.com";
     private static final int LOGIN_REQUEST = 1;
 
+    private ArticleListViewModel viewModel;
+
+    private ProgressBar progressCircle;
     private RecyclerView recyclerView;
     private String worldName;
     private Category category;
@@ -78,6 +88,8 @@ public class ArticleListActivity extends ThemedActivity
     private UploadToDropboxTask uploadToDropboxTask;
     private boolean syncWorldToDropboxOnResume = false;
     private ProgressDialog dropboxProgressDialog;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     //Used to change the title of the messageboxes.
     private CloudType cloudType;
@@ -89,13 +101,49 @@ public class ArticleListActivity extends ThemedActivity
         Intent intent = getIntent();
         category = loadCategory(intent);
         worldName = loadWorldName(intent);
+        progressCircle = (ProgressBar) findViewById(R.id.progressCircle);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         textEmpty = (TextView) findViewById(R.id.empty);
 
+        viewModel = new ViewModelProvider(this).get(ArticleListViewModel.class);
+
+        setupLoadingAnimation();
+        setupErrorDialog();
         setupRecyclerView();
         setAppBar(worldName);
         bottomBar.focusCategoryButton(this, category);
         showAnnouncementsAndChangelogIfOpeningNewVersion();
+
+    }
+
+    private void setupLoadingAnimation() {
+        viewModel.isLoading().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if (isLoading) {
+                    textEmpty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    progressCircle.setVisibility(View.VISIBLE);
+                }
+                else {
+                    progressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                     ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                        dialogInterface -> viewModel.clearErrorMessage()
+                     ).show();
+                }
+            }
+        });
     }
 
     private void setupRecyclerView() {
@@ -104,6 +152,25 @@ public class ArticleListActivity extends ThemedActivity
         recyclerView.setNestedScrollingEnabled(true);
 
         StringListAdapter adapter = new StringListAdapter(this, articleNames);
+        viewModel.getArticleNames().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> newArticleNames) {
+                adapter.updateList(newArticleNames);
+                adapter.notifyDataSetChanged();
+
+                if (newArticleNames.isEmpty()) {
+                    if (textEmpty != null) {
+                        textEmpty.setVisibility(View.VISIBLE);
+                    }
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    if (textEmpty != null) {
+                        textEmpty.setVisibility(View.GONE);
+                    }
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
@@ -130,7 +197,7 @@ public class ArticleListActivity extends ThemedActivity
     protected void onResume() {
         super.onResume();
 
-        populateList(worldName, category);
+        viewModel.loadArticleNamesFromStorage(worldName, category);
 
         if (syncWorldToDropboxOnResume) {
             storeDropboxAccessToken();
@@ -182,23 +249,7 @@ public class ArticleListActivity extends ThemedActivity
     }
 
     private void populateList(String worldName, Category category) {
-        articleNames = ExternalReader.getArticleNamesInCategory(this, worldName, category);
-        StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
-        adapter.updateList(articleNames);
-        adapter.notifyDataSetChanged();
-
-        if (articleNames.isEmpty()) {
-            if (textEmpty != null) {
-                textEmpty.setVisibility(View.VISIBLE);
-            }
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            if (textEmpty != null) {
-                textEmpty.setVisibility(View.GONE);
-            }
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-
+        viewModel.loadArticleNamesFromStorage(worldName, category);
     }
 
     private Category loadCategory(Intent intent) {
@@ -269,6 +320,8 @@ public class ArticleListActivity extends ThemedActivity
                 .setNegativeButton(android.R.string.cancel, null).create();
         dialog.show();
 
+        final ArticleListActivity activity = this;
+
         // Handle onClick here to prevent the dialog from closing if the user enters
         // an invalid name.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
@@ -279,14 +332,71 @@ public class ArticleListActivity extends ThemedActivity
                     {
                         String newName = nameField.getText().toString();
 
-                        if (newWorldNameIsValid(newName)) {
-                            if (!(newName.equals(worldName))) {
-                                renameWorld(newName);
-                            }
+                        if (newName.equals(worldName)) {
                             dialog.dismiss();
+                            return;
+                        }
+
+                        if (newName.isEmpty()) {
+                            Toast.makeText(activity, R.string.emptyWorldNameError, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+
+                            ProgressBar renamingWorldProgressCircle = dialog.findViewById(R.id.renamingWorldProgressCircle);
+
+                            dialog.setCancelable(false);
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
+                            renamingWorldProgressCircle.setVisibility(View.VISIBLE);
+                            nameField.setVisibility(View.GONE);
+
+                            taskRunner.executeAsync(new GetFilenamesInFolderTask("/", false),
+                                    (existingWorldNames) -> {
+                                        if (existingWorldNames.contains(newName)) {
+                                            dialog.setCancelable(true);
+                                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);
+                                            renamingWorldProgressCircle.setVisibility(View.GONE);
+                                            nameField.setVisibility(View.VISIBLE);
+                                            Toast.makeText(activity,
+                                                    activity.getString(R.string.renameWorldToExistingError, newName),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            taskRunner.executeAsync(new RenameWorldTask(worldName, newName),
+                                                    (result) -> {
+                                                        worldName = newName;
+                                                        AppPreferences.saveLastOpenedWorld(activity, newName);
+                                                        setAppBar(newName);
+                                                        dialog.dismiss();
+                                                    },
+                                                    (exception) -> {
+                                                        dialog.setCancelable(true);
+                                                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);
+                                                        renamingWorldProgressCircle.setVisibility(View.GONE);
+                                                        nameField.setVisibility(View.VISIBLE);
+                                                        activity.displayErrorDialog(exception);
+                                                    });
+                                        }
+                                    },
+                                    (exception) -> {
+                                        dialog.setCancelable(true);
+                                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);
+                                        renamingWorldProgressCircle.setVisibility(View.GONE);
+                                        nameField.setVisibility(View.VISIBLE);
+                                        activity.displayErrorDialog(exception);
+                                    }
+                            );
                         }
                     }
                 });
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
     /**
@@ -363,68 +473,6 @@ public class ArticleListActivity extends ThemedActivity
                     public void onClick(DialogInterface dialog, int id) { }
                 }).create();
         dialog.show();
-    }
-
-    /**
-     * <p>
-     *     Checks whether a new name for this World is valid, i.e. non-empty and not in use by
-     *     other World.
-     * </p>
-     * <p>
-     *     If the name is invalid, an error message is displayed.
-     * </p>
-     * @param newName The new name requested for this World.
-     * @return True if the new name is valid; false otherwise.
-     */
-    private boolean newWorldNameIsValid(String newName) {
-        boolean newNameIsValid;
-
-        if (newName.isEmpty()) {
-            Toast.makeText(this, R.string.emptyWorldNameError, Toast.LENGTH_SHORT).show();
-            newNameIsValid = false;
-        } else if (newName.equals(worldName)) {   // Name was not changed.
-            newNameIsValid = true;
-        } else if (ExternalReader.worldAlreadyExists(this, newName)) {
-            Toast.makeText(this,
-                    getString(R.string.renameWorldToExistingError, newName),
-                    Toast.LENGTH_SHORT).show();
-            newNameIsValid = false;
-        } else {
-            newNameIsValid = true;
-        }
-
-        return newNameIsValid;
-    }
-
-    /**
-     * <p>
-     *     Renames the Article; all references to it from other Articles are also updated to reflect
-     *     the new name.
-     * </p>
-     * <p>
-     *     If the Article couldn't be renamed, an error message is displayed.
-     * </p>
-     * <p>
-     *     Subclasses for Articles of Categories that have additional types of references (e.g.
-     *     Residences) must override this method and update the Article's name within those
-     *     references as well. Otherwise, those references on other Articles' pages will break.
-     * </p>
-     * @param newName The new name for the Article.
-     * @return True if the Article was renamed successfully; false otherwise.
-     */
-    protected boolean renameWorld(String newName) {
-        boolean renameWasSuccessful = false;
-
-        if (ExternalWriter.renameWorldDirectory(this, worldName, newName)) {
-            renameWasSuccessful = true;
-            worldName = newName;
-            AppPreferences.saveLastOpenedWorld(this, newName);
-            setAppBar(newName);
-        } else {
-            Toast.makeText(this, R.string.renameWorldError, Toast.LENGTH_SHORT).show();
-        }
-
-        return renameWasSuccessful;
     }
 
     public void respondToListItemSelection(String itemText) {

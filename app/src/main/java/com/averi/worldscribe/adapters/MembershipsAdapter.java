@@ -171,9 +171,7 @@ implements ArticleLinkAdapter {
     public MembershipsAdapter(ArticleActivity activity, String worldName, String personName) {
         this.context = activity;
         this.worldName = worldName;
-
-        memberships = ExternalReader.getMembershipsForPerson(activity, worldName, personName);
-        Collections.sort(memberships, new Membership.ByGroupNameComparator());
+        this.memberships = new ArrayList<>();
     }
 
     @Override
@@ -191,6 +189,16 @@ implements ArticleLinkAdapter {
     @Override
     public int getItemCount() {
         return memberships.size();
+    }
+
+    /**
+     * Replace the list of Memberships attached to this adapter.
+     * @param newMemberships The new list of Memberships to attach to this adapter.
+     */
+    public void updateList(ArrayList<Membership> newMemberships) {
+        memberships.clear();
+        memberships.addAll(newMemberships);
+        Collections.sort(memberships, new Membership.ByGroupNameComparator());
     }
 
     public LinkedArticleList getLinkedArticleList() {

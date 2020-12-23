@@ -1,17 +1,23 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +26,13 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.Residence;
 import com.averi.worldscribe.adapters.ResidentsAdapter;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.SaveResidenceTask;
+import com.averi.worldscribe.viewmodels.PlaceViewModel;
 import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -35,15 +45,25 @@ public class PlaceActivity extends ArticleActivity {
      */
     public static final int RESULT_NEW_RESIDENT = 300;
 
+    private PlaceViewModel viewModel;
     private RecyclerView residentsList;
     private Button addResidentButton;
+    private ProgressBar residentsProgressCircle;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
+
         residentsList = (RecyclerView) findViewById(R.id.recyclerResidents);
         addResidentButton = (Button) findViewById(R.id.buttonAddResident);
+        residentsProgressCircle = (ProgressBar)  findViewById(R.id.residentsLoadingCircle);
+
+        setupResidentsList();
+        setupErrorDialog();
 
         addResidentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +162,21 @@ public class PlaceActivity extends ArticleActivity {
     }
 
     @Override
+    protected ProgressBar getConnectionsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.connectionsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getSnippetsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.snippetsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getImageProgressCircle() {
+        return (ProgressBar) findViewById(R.id.articleImageProgressCircle);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -159,9 +194,16 @@ public class PlaceActivity extends ArticleActivity {
                     newResidence.worldName = getWorldName();
                     newResidence.placeName = getArticleName();
                     newResidence.residentName = data.getStringExtra(IntentFields.ARTICLE_NAME);
-                    ExternalWriter.saveResidence(this, newResidence);
+                    taskRunner.executeAsync(new SaveResidenceTask(newResidence),
+                            (result) -> { this.populateResidences(); },
+                            this::displayErrorDialog);
                 }
         }
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
     @Override
@@ -174,12 +216,46 @@ public class PlaceActivity extends ArticleActivity {
         super.addSectionCollapsers();
     }
 
+    private void setupResidentsList() {
+        ResidentsAdapter adapter = new ResidentsAdapter(this, getWorldName(), getArticleName());
+        viewModel.getResidents().observe(this, new Observer<ArrayList<Residence>>() {
+            @Override
+            public void onChanged(ArrayList<Residence> residences) {
+                if (residences == null) {
+                    residentsProgressCircle.setVisibility(View.VISIBLE);
+                    residentsList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(residences);
+                    adapter.notifyDataSetChanged();
+                    residentsList.setVisibility(View.VISIBLE);
+                    residentsProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        residentsList.setAdapter(adapter);
+        residentsList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                    ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                            dialogInterface -> viewModel.clearErrorMessage()
+                    ).show();
+                }
+            }
+        });
+    }
+
     /**
      * Populate the Residents RecyclerView with cards for this Place's Residents.
      */
     private void populateResidences() {
-        residentsList.setLayoutManager(new LinearLayoutManager(this));
-        residentsList.setAdapter(new ResidentsAdapter(this, getWorldName(), getArticleName()));
+        viewModel.loadResidents(getWorldName(), getArticleName());
     }
 
     /**
@@ -198,80 +274,4 @@ public class PlaceActivity extends ArticleActivity {
                 residentsAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_RESIDENT);
     }
-
-    @Override
-    protected void deleteArticle() {
-        if (removeAllResidents()) {
-            super.deleteArticle();
-        } else {
-            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Deletes all Residences at this Place.
-     * @return True if all Residences were deleted successfully; false otherwise.
-     */
-    private boolean removeAllResidents() {
-        boolean residencesWereDeleted = true;
-
-        ArrayList<Residence> allResidences = (
-                (ResidentsAdapter) residentsList.getAdapter()).getResidences();
-
-        Residence residence;
-        int index = 0;
-        while ((index < allResidences.size()) && (residencesWereDeleted)) {
-            residence = allResidences.get(index);
-            residencesWereDeleted = ExternalDeleter.deleteResidence(this, residence);
-            index++;
-        }
-
-        return residencesWereDeleted;
-    }
-
-    @Override
-    protected boolean renameArticle(String newName) {
-        boolean renameWasSuccessful = false;
-
-        if (renamePlaceInResidences(newName)) {
-            renameWasSuccessful = super.renameArticle(newName);
-        } else {
-            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
-        }
-
-        return renameWasSuccessful;
-    }
-
-    /**
-     * <p>
-     *     Updates all Residences at this Place to reflect a new name for this Place.
-     * </p>
-     * <p>
-     *     If one or more Residences failed to be updated, an error message is displayed.
-     * </p>
-     * @param newName The new name for this Place.
-     * @return True if all Residences updated successfully; false otherwise.
-     */
-    private boolean renamePlaceInResidences(String newName) {
-        boolean residencesWereUpdated = true;
-        ResidentsAdapter adapter = (ResidentsAdapter) residentsList.getAdapter();
-        ArrayList<Residence> residences = adapter.getResidences();
-
-        int index = 0;
-        Residence residence;
-        while ((index < residences.size()) && (residencesWereUpdated)) {
-            residence = residences.get(index);
-
-            if (ExternalWriter.renamePlaceInResidence(this, residence, newName)) {
-                residence.placeName = newName;
-            } else {
-                residencesWereUpdated = false;
-            }
-
-            index++;
-        }
-
-        return residencesWereUpdated;
-    }
-
 }

@@ -150,9 +150,7 @@ implements ArticleLinkAdapter {
         this.activity = activity;
         this.worldName = worldName;
         this.personName = placeActivity;
-
-        residentData = ExternalReader.getResidents(activity, worldName, placeActivity);
-        Collections.sort(residentData, new Residence.ByResidentNameComparator());
+        this.residentData = new ArrayList<>();
     }
 
     @Override
@@ -170,6 +168,16 @@ implements ArticleLinkAdapter {
     @Override
     public int getItemCount() {
         return residentData.size();
+    }
+
+    /**
+     * Replace the list of Residents attached to this adapter.
+     * @param newResidents The new list of Residents to attach to this adapter.
+     */
+    public void updateList(ArrayList<Residence> newResidents) {
+        residentData.clear();
+        residentData.addAll(newResidents);
+        Collections.sort(residentData, new Residence.ByResidentNameComparator());
     }
 
     public LinkedArticleList getLinkedArticleList() {

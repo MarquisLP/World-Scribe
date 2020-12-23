@@ -185,5 +185,11 @@
     <string name="privacyPolicyAgreeButton">Agree</string>
     <string name="privacyPolicyDisagreeButton">Disagree</string>
 
+    <string name="deletingArticleDialogTitle">Deleting Article...</string>
+    <string name="deletingWorldDialogTitle">Deleting World...</string>
+
+    <string name="exceptionDialogTitle">Troubleshooting</string>
+    <string name="exceptionDialogUserInstructions">An unexpected error occurred. Please take screenshots of this message and email them to: support@averistudios.com</string>
+
     <string name="changelog_header_version">""</string>
 </resources>

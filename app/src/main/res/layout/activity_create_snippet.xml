@@ -29,6 +29,16 @@
         android:padding="@dimen/pagePadding"
         android:id="@+id/linearScreen">
 
+        <ProgressBar
+            android:id="@+id/creatingSnippetProgressCircle"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/progressCircleSize"
+            android:maxHeight="@dimen/progressCircleSize"
+            android:minHeight="@dimen/progressCircleSize"
+            android:visibility="gone" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

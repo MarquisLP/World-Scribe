@@ -1,12 +1,14 @@
 package com.averi.worldscribe.utilities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
@@ -186,6 +189,19 @@ public class ActivityUtilities {
         }
 
         return builder;
+    }
+
+    public static AlertDialog.Builder buildExceptionDialog(Context context,
+                                                           String stackTraceString,
+                                                           DialogInterface.OnDismissListener onClose) {
+        String message = context.getResources().getString(R.string.exceptionDialogUserInstructions)
+                + "\n\n" + stackTraceString;
+        return new AlertDialog.Builder(context, R.style.NormalDialog)
+                .setTitle(R.string.exceptionDialogTitle)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> { })
+                .setOnDismissListener(onClose);
     }
 
 }

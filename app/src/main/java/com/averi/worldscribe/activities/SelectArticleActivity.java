@@ -1,13 +1,18 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.averi.worldscribe.Category;
@@ -16,8 +21,8 @@ import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
 import com.averi.worldscribe.utilities.ActivityUtilities;
-import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.viewmodels.SelectArticleViewModel;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 
@@ -55,6 +60,7 @@ BottomBarActivity {
      */
     public static final Category DEFAULT_CATEGORY = Category.Person;
 
+    private SelectArticleViewModel viewModel;
     private Toolbar appBar;
     private RecyclerView recyclerView;
     private String worldName;
@@ -62,6 +68,7 @@ BottomBarActivity {
     private String mainArticleName;
     private Category category;
     private BottomBar bottomBar;
+    private ProgressBar progressCircle;
     private TextView textEmpty;
     private LinkedArticleList existingLinks;
     private List<String> articleNames = new ArrayList<>();
@@ -72,9 +79,15 @@ BottomBarActivity {
         super.onCreate(savedInstanceState);
 
         appBar = (Toolbar) findViewById(R.id.my_toolbar);
+        progressCircle = (ProgressBar) findViewById(R.id.selectArticle_progressCircle);
         textEmpty = (TextView) findViewById(R.id.empty);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        viewModel = new ViewModelProvider(this).get(SelectArticleViewModel.class);
+
+        setupLoadingAnimation();
+        setupErrorDialog();
         setUpRecyclerView();
 
         Intent startupIntent = getIntent();
@@ -88,7 +101,7 @@ BottomBarActivity {
 
         category = getInitialCategory(startupIntent);
         bottomBar.focusCategoryButton(this, category);
-        populateList(category);
+        populateList();
 
         if (canChooseOneCategoryOnly) {
             bottomBar.setVisibility(View.GONE);
@@ -133,13 +146,63 @@ BottomBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void setupLoadingAnimation() {
+        viewModel.isLoading().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if (isLoading) {
+                    textEmpty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    progressCircle.setVisibility(View.VISIBLE);
+                } else {
+                    progressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                    ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                            dialogInterface -> viewModel.clearErrorMessage()
+                    ).show();
+                }
+            }
+        });
+    }
+
     /**
      * Set up the RecyclerView to display the list of Article names.
      */
     private void setUpRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(true);
-        recyclerView.setAdapter(new StringListAdapter(this, new ArrayList<String>()));
+
+        StringListAdapter adapter = new StringListAdapter(this, new ArrayList<>());
+        viewModel.getArticleNames().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> newArticleNames) {
+                adapter.updateList(getLinkableArticleNames(newArticleNames));
+                adapter.notifyDataSetChanged();
+
+                if (newArticleNames.isEmpty()) {
+                    if (textEmpty != null) {
+                        textEmpty.setVisibility(View.VISIBLE);
+                    }
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    if (textEmpty != null) {
+                        textEmpty.setVisibility(View.GONE);
+                    }
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -163,45 +226,25 @@ BottomBarActivity {
         if (!(canChooseOneCategoryOnly)) {
             bottomBar.focusCategoryButton(this, newCategory);
         }
-        populateList(newCategory);
+        populateList();
     }
 
     /**
-     * Updates the list to show the names of Articles from a specific Category.
+     * Updates the list to show the names of Articles from the currently-selected Category.
      * If the Category has no Articles, a text message will notify that the list is empty.
-     * @param listCategory The Category of Articles that will be displayed in the list.
      */
-    private void populateList(Category listCategory) {
-        articleNames.clear();
-        articleNames.addAll(getLinkableArticleNames(listCategory));
-
-        StringListAdapter adapter = (StringListAdapter) recyclerView.getAdapter();
-        adapter.updateList(new ArrayList<>(articleNames));
-        adapter.notifyDataSetChanged();
-
-        if (articleNames.isEmpty()) {
-            if (textEmpty != null) {
-                textEmpty.setVisibility(View.VISIBLE);
-            }
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            if (textEmpty != null) {
-                textEmpty.setVisibility(View.GONE);
-            }
-            recyclerView.setVisibility(View.VISIBLE);
-        }
+    private void populateList() {
+        viewModel.loadArticleNamesFromStorage(worldName, category);
     }
 
     /**
      * Gets the names of all Articles in the current Category, excluding the main Article and
      * those already linked to the main Article.
-     * @param listCategory  The Category of the Articles that will be retrieved.
      */
-    private List<String> getLinkableArticleNames(Category listCategory) {
-        List<String> linkableNames = ExternalReader.getArticleNamesInCategory(
-                this, worldName, listCategory);
+    private ArrayList<String> getLinkableArticleNames(ArrayList<String> unfilteredArticleNames) {
+        ArrayList<String> linkableNames = unfilteredArticleNames;
 
-        linkableNames.removeAll(existingLinks.getAllLinksInCategory(listCategory));
+        linkableNames.removeAll(existingLinks.getAllLinksInCategory(category));
 
         if (category == mainArticleCategory) {
             linkableNames.remove(mainArticleName);

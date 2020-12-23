@@ -33,7 +33,7 @@ public class ExternalDeleter {
      * @param fileOrDirectory The file or directory to be deleted.
      * @return True if the file/directory was deleted successfully; false otherwise.
      */
-    private static boolean deleteRecursive(DocumentFile fileOrDirectory) {
+    public static boolean deleteRecursive(DocumentFile fileOrDirectory) {
         if (fileOrDirectory.isDirectory()) {
             for (DocumentFile child : fileOrDirectory.listFiles()) {
                 deleteRecursive(child);

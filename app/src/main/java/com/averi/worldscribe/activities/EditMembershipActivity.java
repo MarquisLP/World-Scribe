@@ -1,14 +1,19 @@
 package com.averi.worldscribe.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,8 @@ import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.SaveMembershipTask;
 
 public class EditMembershipActivity extends BackButtonActivity {
 
@@ -26,6 +33,10 @@ public class EditMembershipActivity extends BackButtonActivity {
     private TextView groupNameText;
     private TextView memberNameText;
     private EditText memberRoleField;
+    private LinearLayout mainLayout;
+    private LinearLayout loadingLayout;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +45,8 @@ public class EditMembershipActivity extends BackButtonActivity {
         groupNameText = (TextView) findViewById(R.id.groupName);
         memberNameText = (TextView) findViewById(R.id.memberName);
         memberRoleField = (EditText) findViewById(R.id.memberRoleField);
+        mainLayout = (LinearLayout) findViewById(R.id.linearScreen);
+        loadingLayout = (LinearLayout) findViewById(R.id.linearLoadingEditMembership);
 
         Intent startupIntent = getIntent();
         membership = (Membership) startupIntent.getSerializableExtra(IntentFields.MEMBERSHIP);
@@ -112,11 +125,20 @@ public class EditMembershipActivity extends BackButtonActivity {
     private void saveMembership() {
         membership.memberRole = memberRoleField.getText().toString();
 
-        boolean saveWasSuccessful = ExternalWriter.saveMembership(this, membership);
-        if (!(saveWasSuccessful)) {
-            Toast.makeText(this, getString(R.string.saveMembershipError),
-                    Toast.LENGTH_SHORT).show();
-        }
+        loadingLayout.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
+
+        final Activity activity = this;
+        taskRunner.executeAsync(new SaveMembershipTask(membership),
+                (result) -> { activity.finish(); },
+                this::displayErrorDialog);
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface -> {})).show();
     }
 
 }

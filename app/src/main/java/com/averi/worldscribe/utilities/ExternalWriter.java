@@ -179,7 +179,7 @@ public final class ExternalWriter {
      * @param contents The message to save to the file.
      * @return True if the String was saved successfully; false if an I/O error occurs.
      */
-    private static boolean writeStringToFile(Context context, DocumentFile textFile, String contents) {
+    public static boolean writeStringToFile(Context context, DocumentFile textFile, String contents) {
         Boolean result = true;
 
         try {
