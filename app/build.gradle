@@ -60,6 +60,6 @@ dependencies {
     api 'com.github.nextcloud:android-library:-SNAPSHOT'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     api 'com.google.guava:guava:28.0-jre'
-    api 'com.dropbox.core:dropbox-core-sdk:3.0.3'
+    api 'com.dropbox.core:dropbox-core-sdk:3.1.5'
     api 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 }

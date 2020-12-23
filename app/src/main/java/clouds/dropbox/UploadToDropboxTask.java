@@ -1,14 +1,18 @@
 package clouds.dropbox;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
 
+import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.InvalidAccessTokenException;
+import com.dropbox.core.oauth.DbxOAuthException;
+import com.dropbox.core.oauth.DbxRefreshResult;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.CreateFolderErrorException;
 import com.dropbox.core.v2.files.WriteMode;
@@ -53,6 +57,23 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
     protected Boolean doInBackground(Object[] params) {
         boolean uploadSuccessful = false;
 
+        // Refresh the Dropbox access token.
+        // This will allow us to see if the refresh token has expired.
+        // If it has expired, then we prompt the user to re-authenticate.
+        try {
+            DbxRefreshResult refreshResult = dbxClient.refreshAccessToken();
+            SharedPreferences preferences = context.getSharedPreferences(
+                    AppPreferences.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+            preferences.edit().putString(
+                    AppPreferences.DROPBOX_ACCESS_TOKEN, refreshResult.getAccessToken()).apply();
+            preferences.edit().putLong(
+                    AppPreferences.DROPBOX_EXPIRES_AT, refreshResult.getExpiresAt()).apply();
+        } catch (DbxOAuthException exception) {
+            activity.onDropboxNeedsAuthentication();
+        } catch (DbxException exception) {
+            activity.onCloudUploadFailure(exception, currentFileBeingUploaded.getUri().getPath());
+        }
+
         try {
             activity.onCloudUploadStart();
             uploadRecursive(file);
@@ -92,7 +113,7 @@ public class UploadToDropboxTask extends AsyncTask<Object, Void, Boolean> {
 
             if (fileBeingUploaded.isDirectory()) {
                 try {
-                    dbxClient.files().createFolder(dropboxPath);
+                    dbxClient.files().createFolderV2(dropboxPath);
                 } catch (CreateFolderErrorException ex) {
                     // Checks if the exception was thrown because the folder already exists.
                     // That case isn't an error (as it just means we can skip over creating

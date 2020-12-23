@@ -34,7 +34,6 @@ import android.widget.Toast;
 
 import com.averi.worldscribe.BuildConfig;
 import com.averi.worldscribe.Category;
-import com.averi.worldscribe.GenericFileProvider;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.StringListAdapter;
 import com.averi.worldscribe.adapters.StringListContext;
@@ -44,8 +43,6 @@ import clouds.nextcloud.UploadToNextcloudTask;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AppPreferences;
 import com.averi.worldscribe.utilities.ErrorLoggingActivity;
-import com.averi.worldscribe.utilities.ExternalReader;
-import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.FileRetriever;
 import com.averi.worldscribe.utilities.IntentFields;
 import com.averi.worldscribe.utilities.LogErrorTask;
@@ -57,18 +54,23 @@ import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
+import com.dropbox.core.oauth.DbxCredential;
+import com.dropbox.core.oauth.DbxOAuthException;
+import com.dropbox.core.oauth.DbxRefreshResult;
 import com.dropbox.core.v2.DbxClientV2;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientFactory;
 import com.owncloud.android.lib.common.OwnCloudCredentialsFactory;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ArticleListActivity extends ThemedActivity
         implements StringListContext, BottomBarActivity, CloudActivity, ErrorLoggingActivity {
 
     public static final String DROPBOX_APP_KEY = "5pzb74tti855m61";
+    public static final String DROPBOX_CLIENT_IDENTIFIER = "WorldScribe/1.7.0";
     private static final String DROPBOX_ERROR_LOG_MESSAGE = "An error occurred while trying to " +
             "upload a " +
             "file/folder with path '%s'.";
@@ -200,24 +202,35 @@ public class ArticleListActivity extends ThemedActivity
         viewModel.loadArticleNamesFromStorage(worldName, category);
 
         if (syncWorldToDropboxOnResume) {
-            storeDropboxAccessToken();
+            storeDropboxCredentials();
             syncWorldToDropbox();
             syncWorldToDropboxOnResume = false;
         }
     }
 
     /**
-     * Stores a user access token generated from Dropbox's servers into SharedPreferences,
-     * if the user has authenticated their account.
+     * Stores a Dropbox short-lived access token, refresh token, and expiration date after
+     * a successful Dropbox authentication flow.
      */
-    private void storeDropboxAccessToken() {
-        String accessToken = Auth.getOAuth2Token();
+    private void storeDropboxCredentials() {
+        DbxCredential dbxCredential = Auth.getDbxCredential();
+        String accessToken = dbxCredential.getAccessToken();
+        String refreshToken = dbxCredential.getRefreshToken();
+        Long expiresAt = dbxCredential.getExpiresAt();
 
+        SharedPreferences preferences = getSharedPreferences(
+                AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
         if (accessToken != null) {
-            SharedPreferences preferences = getSharedPreferences(
-                    AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
             preferences.edit().putString(
                     AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
+        }
+        if (refreshToken != null) {
+            preferences.edit().putString(
+                    AppPreferences.DROPBOX_REFRESH_TOKEN, refreshToken).apply();
+        }
+        if (expiresAt != null) {
+            preferences.edit().putLong(
+                    AppPreferences.DROPBOX_EXPIRES_AT, expiresAt).apply();
         }
     }
 
@@ -523,8 +536,10 @@ public class ArticleListActivity extends ThemedActivity
      * </p>
      */
     private void syncWorldToDropbox() {
-        if (!(AppPreferences.dropboxAccessTokenExists(this))) {
-            Auth.startOAuth2Authentication(getApplicationContext(), DROPBOX_APP_KEY);
+        if (!(AppPreferences.dropboxAccessTokenAndRefreshTokenExist(this))) {
+            List<String> dropboxScopes = Arrays.asList("account_info.read", "files.content.read", "files.content.write");
+            DbxRequestConfig dropboxRequestConfig = new DbxRequestConfig(DROPBOX_CLIENT_IDENTIFIER);
+            Auth.startOAuth2PKCE(getApplicationContext(), DROPBOX_APP_KEY, dropboxRequestConfig, dropboxScopes);
             // Since the Authentication Activity interrupts the flow of this method,
             // the actual syncing should occur when the user returns to this Activity after
             // authentication.
@@ -538,12 +553,10 @@ public class ArticleListActivity extends ThemedActivity
                     .setMessage(this.getString(R.string.confirmBackupToCloud, worldName, cloudType.name()))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        String accessToken = getDropboxAccessToken();
-                        DbxClientV2 client = getDropboxClient(accessToken);
-                        DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, worldName, false);
-                        new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this, context).execute();
+                            DbxClientV2 client = getDropboxClient();
+                            DocumentFile worldDirectory = FileRetriever.getWorldDirectory(context, worldName, false);
+                            new UploadToDropboxTask(client, worldDirectory, ArticleListActivity.this, context).execute();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
         }
@@ -606,21 +619,25 @@ public class ArticleListActivity extends ThemedActivity
     /**
      * @return The Dropbox account access token currently stored in SharedPreferences.
      */
-    private String getDropboxAccessToken() {
-        return getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+    private DbxCredential getDropboxCredential() {
+        String accessToken = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
                 MODE_PRIVATE).getString(AppPreferences.DROPBOX_ACCESS_TOKEN, "");
+        String refreshToken = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+                MODE_PRIVATE).getString(AppPreferences.DROPBOX_REFRESH_TOKEN, "");
+        Long expiresAt = getSharedPreferences(AppPreferences.PREFERENCES_FILE_NAME,
+                MODE_PRIVATE).getLong(AppPreferences.DROPBOX_EXPIRES_AT, 0);
+        return new DbxCredential(accessToken, expiresAt, refreshToken, DROPBOX_APP_KEY);
     }
 
     /**
      * Builds and returns a Dropbox Client object for a Dropbox account given that account's
      * access token.
-     * @param ACCESS_TOKEN The token used in accessing the user's Dropbox account
      * @return A Dropbox Client object containing all of the given account's info
      */
-    private DbxClientV2 getDropboxClient(final String ACCESS_TOKEN) {
+    private DbxClientV2 getDropboxClient() {
         String clientIdentifier = getString(R.string.app_name) + "/" + getVersionName();
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
-        return new DbxClientV2(config, ACCESS_TOKEN);
+        return new DbxClientV2(config, getDropboxCredential());
     }
 
     /**
@@ -646,7 +663,9 @@ public class ArticleListActivity extends ThemedActivity
         dropboxProgressDialog.dismiss();
 
         syncWorldToDropboxOnResume = true;
-        Auth.startOAuth2Authentication(this, DROPBOX_APP_KEY);
+        List<String> dropboxScopes = Arrays.asList("account_info.read", "files.content.read", "files.content.write");
+        DbxRequestConfig dropboxRequestConfig = new DbxRequestConfig(DROPBOX_CLIENT_IDENTIFIER);
+        Auth.startOAuth2PKCE(getApplicationContext(), DROPBOX_APP_KEY, dropboxRequestConfig, dropboxScopes);
     }
 
     public void onCloudUploadSuccess() {
@@ -670,6 +689,8 @@ public class ArticleListActivity extends ThemedActivity
         } catch (Exception ex) {
             Log.e("WorldScribe",  "Exception when creating log file:\n" + exception.getMessage());
         }
+
+        displayErrorDialog(exception);
     }
 
     public void onErrorLoggingCompletion(String errorMessage, final DocumentFile errorLogFile) {
