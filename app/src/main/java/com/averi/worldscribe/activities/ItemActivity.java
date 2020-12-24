@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.averi.worldscribe.ArticleTextField;
@@ -111,6 +112,21 @@ public class ItemActivity extends ArticleActivity {
     @Override
     protected ViewGroup getSnippetsLayout() {
         return (LinearLayout) findViewById(R.id.linearSnippets);
+    }
+
+    @Override
+    protected ProgressBar getConnectionsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.connectionsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getSnippetsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.snippetsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getImageProgressCircle() {
+        return (ProgressBar) findViewById(R.id.articleImageProgressCircle);
     }
 
 }

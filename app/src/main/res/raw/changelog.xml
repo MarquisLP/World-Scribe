@@ -2,6 +2,17 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.7.0" changeDate="Dec 23, 2020">
+        <changelogtext>[b]Performance has been significantly improved for devices running Android
+            10 and above![/b] Navigating the app is much faster now, and the app should no longer
+            freeze while using it.
+        </changelogtext>
+        <changelogtext>[b]Dropbox integration has been updated to comply with new Dropbox API
+            specifications.[/b] This will prevent the upload feature from breaking when new
+            Dropbox changes go into effect in late 2021. Uploading to Dropbox will still work the
+            same way, although you may be asked to re-authenticate the next time you upload.
+        </changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.6.3" changeDate="Nov 15, 2020">
         <changelogtext>[b]An Announcements feature has been added![/b] Check it out to stay up-to-date
             with important news about World Scribe. You can access it by opening the menu in the

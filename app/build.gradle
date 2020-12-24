@@ -28,8 +28,8 @@ android {
         applicationId "com.averi.worldscribe"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 25
-        versionName "1.6.3"
+        versionCode 26
+        versionName "1.7.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
@@ -54,9 +54,12 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation "commons-httpclient:commons-httpclient:3.1@jar"
     implementation project(':flipper')
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     api 'com.github.nextcloud:android-library:-SNAPSHOT'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     api 'com.google.guava:guava:28.0-jre'
-    api 'com.dropbox.core:dropbox-core-sdk:3.0.3'
+    api 'com.dropbox.core:dropbox-core-sdk:3.1.5'
     api 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 }

@@ -1,26 +1,30 @@
 package com.averi.worldscribe.activities;
 
+import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.averi.worldscribe.Connection;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.AttributeGetter;
+import com.averi.worldscribe.utilities.TaskRunner;
 import com.averi.worldscribe.utilities.ThemedSnackbar;
-import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.tasks.SaveConnectionTask;
 
 public class EditConnectionActivity extends BackButtonActivity {
 
@@ -31,9 +35,13 @@ public class EditConnectionActivity extends BackButtonActivity {
     private EditText mainArticleRelationText;
     private TextView otherArticleNameText;
     private EditText otherArticleRelationText;
+    private LinearLayout mainLayout;
+    private LinearLayout loadingLayout;
 
     private boolean mainArticleRelationWasEdited = false;
     private boolean otherArticleRelationWasEdited = false;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,8 @@ public class EditConnectionActivity extends BackButtonActivity {
         mainArticleRelationText = (EditText) findViewById(R.id.editCurrentArticleRelation);
         otherArticleNameText = (TextView) findViewById(R.id.textOtherArticleName);
         otherArticleRelationText = (EditText) findViewById(R.id.editOtherArticleRelation);
+        mainLayout = (LinearLayout) findViewById(R.id.linearScreen);
+        loadingLayout = (LinearLayout) findViewById(R.id.linearLoadingEditConnection);
 
         connection = (Connection) getIntent().getSerializableExtra(IntentFields.CONNECTION);
         mainArticleNameText.setText(connection.articleName);
@@ -124,7 +134,6 @@ public class EditConnectionActivity extends BackButtonActivity {
             case R.id.saveEditItem:
                 if (relationFieldsAreNotEmpty()) {
                     saveRelationsIfEdited();
-                    finish();
                 }
                 return true;
             default:
@@ -164,29 +173,26 @@ public class EditConnectionActivity extends BackButtonActivity {
      * If either or both relations fail to save, an error message is displayed.
      */
     public void saveRelationsIfEdited() {
-        boolean errorSavingMainArticleRelation = false;
-        boolean errorSavingOtherArticleRelation = false;
+        if (mainArticleRelationWasEdited || otherArticleRelationWasEdited) {
+            connection.articleRelation = mainArticleRelationText.getText().toString();
+            connection.connectedArticleRelation = otherArticleRelationText.getText().toString();
 
-        if (mainArticleRelationWasEdited) {
-            errorSavingMainArticleRelation = (!(ExternalWriter.saveConnectionRelation(
-                    this, connection.worldName, connection.articleCategory,
-                    connection.articleName, connection.connectedArticleCategory,
-                    connection.connectedArticleName,
-                    mainArticleRelationText.getText().toString())));
-        }
+            loadingLayout.setVisibility(View.VISIBLE);
+            mainLayout.setVisibility(View.GONE);
 
-        if (otherArticleRelationWasEdited) {
-            errorSavingOtherArticleRelation = (!(ExternalWriter.saveConnectionRelation(
-                    this, connection.worldName, connection.connectedArticleCategory,
-                    connection.connectedArticleName, connection.articleCategory,
-                    connection.articleName, otherArticleRelationText.getText().toString())));
+            final Activity activity = this;
+            taskRunner.executeAsync(new SaveConnectionTask(connection),
+                    (result) -> { activity.finish(); },
+                    this::displayErrorDialog
+                    );
         }
+    }
 
-        if ((errorSavingMainArticleRelation) || (errorSavingOtherArticleRelation)) {
-            Toast.makeText(this, getString(R.string.saveConnectionError),
-                    Toast.LENGTH_SHORT).show();
-            // TODO: Delete both relation files to prevent possible crashes.
-        }
+    private void displayErrorDialog(Exception exception) {
+        mainLayout.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface -> {})).show();
     }
 
 }

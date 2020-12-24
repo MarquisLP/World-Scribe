@@ -105,4 +105,23 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/linearLoadingEditConnection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/saveConnectionLoadingCircle"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/progressCircleSize"
+            android:maxHeight="@dimen/progressCircleSize"
+            android:minWidth="@dimen/progressCircleSize"
+            android:minHeight="@dimen/progressCircleSize" />
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

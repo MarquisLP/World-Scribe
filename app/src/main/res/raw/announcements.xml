@@ -2,6 +2,14 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="false">
+    <changelogversion versionName="Dec 23, 2020" changeDate="">
+        <changelogtext>[b]Performance issues on Android 10 and above have been fixed![/b] A large
+            portion of the app was rewritten to make navigation faster and prevent the app from
+            freezing. Thank you for your patience in waiting for this update. Because this is a large
+            update, you may encounter errors. If you do, please let us know in an email, with
+            screenshots if possible, at: support@averistudios.com
+        </changelogtext>
+    </changelogversion>
     <changelogversion versionName="Nov 15, 2020" changeDate="">
         <changelogtext>[b]Please be aware that if you upgrade your device to Android 10 or Android
             11, the app may perform significantly slower.[/b] This is due to changes by Google in

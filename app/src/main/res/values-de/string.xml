@@ -187,5 +187,11 @@
     <string name="privacyPolicyAgreeButton">Annehmen</string>
     <string name="privacyPolicyDisagreeButton">Ablehnen</string>
 
+    <string name="deletingArticleDialogTitle">Lösche Artikel...</string>
+    <string name="deletingWorldDialogTitle">Lösche Welt...</string>
+
+    <string name="exceptionDialogTitle">Fehlerbehebung</string>
+    <string name="exceptionDialogUserInstructions">Ein unerwarteter Fehler ist aufgetreten. Bitte machen Sie Screenshots dieser Nachricht und senden Sie sie per E-Mail an: support@averistudios.com</string>
+
     <string name="changelog_header_version">""</string>
 </resources>

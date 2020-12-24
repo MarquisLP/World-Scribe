@@ -25,4 +25,12 @@
         android:textSize="@dimen/standardTextSize"
         android:layout_marginLeft="@dimen/dialogTextboxHorizontalMargin"
         android:layout_marginRight="@dimen/dialogTextboxHorizontalMargin" />
+
+    <ProgressBar
+        android:id="@+id/renamingWorldProgressCircle"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
 </LinearLayout>

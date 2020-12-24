@@ -164,9 +164,7 @@ implements ArticleLinkAdapter {
         this.activity = activity;
         this.worldName = worldName;
         this.articleName = articleName;
-
-        connections = ExternalReader.getConnections(activity, worldName, category, articleName);
-        Collections.sort(connections);
+        connections = new ArrayList<>();
     }
 
     @Override
@@ -195,6 +193,16 @@ implements ArticleLinkAdapter {
         }
 
         return linkedArticleList;
+    }
+
+    /**
+     * Replaces the Connections held by this adapter with new contents.
+     * @param newConnections The list of Connections that this adapter will hold onto.
+     */
+    public void updateList(ArrayList<Connection> newConnections) {
+        connections.clear();
+        connections.addAll(newConnections);
+        Collections.sort(connections);
     }
 
     /**

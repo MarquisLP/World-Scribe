@@ -1,17 +1,23 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +34,9 @@ import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.SaveResidenceTask;
+import com.averi.worldscribe.viewmodels.PersonViewModel;
 import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -44,13 +53,19 @@ public class PersonActivity extends ArticleActivity {
      */
     public static final int RESULT_NEW_RESIDENCE = 400;
 
+    private PersonViewModel viewModel;
+
     private RadioGroup genderGroup;
     private RecyclerView membershipsList;
+    private ProgressBar membershipsProgressCircle;
     private RecyclerView residencesList;
+    private ProgressBar residencesProgressCircle;
     private Button addMembershipButton;
     private Button addResidenceButton;
     private Boolean genderWasEditedSinceLastSave = false;
     private RadioGroup.OnCheckedChangeListener genderListener;
+
+    private final TaskRunner taskRunner = new TaskRunner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +73,17 @@ public class PersonActivity extends ArticleActivity {
 
         genderGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
         membershipsList = (RecyclerView) findViewById(R.id.recyclerMemberships);
+        membershipsProgressCircle = (ProgressBar)  findViewById(R.id.membershipsProgressCircle);
         residencesList = (RecyclerView) findViewById(R.id.recyclerResidences);
+        residencesProgressCircle = (ProgressBar)  findViewById(R.id.residencesProgressCircle);
         addMembershipButton = (Button) findViewById(R.id.buttonAddMembership);
         addResidenceButton = (Button) findViewById(R.id.buttonAddResidence);
+
+        viewModel = new ViewModelProvider(this).get(PersonViewModel.class);
+
+        setupMembershipsList();
+        setupResidencesList();
+        setupErrorDialog();
 
         genderListener = new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -198,6 +221,21 @@ public class PersonActivity extends ArticleActivity {
     }
 
     @Override
+    protected ProgressBar getConnectionsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.connectionsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getSnippetsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.snippetsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getImageProgressCircle() {
+        return (ProgressBar) findViewById(R.id.articleImageProgressCircle);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -220,9 +258,16 @@ public class PersonActivity extends ArticleActivity {
                     newResidence.worldName = getWorldName();
                     newResidence.residentName = getArticleName();
                     newResidence.placeName = data.getStringExtra(IntentFields.ARTICLE_NAME);
-                    ExternalWriter.saveResidence(this, newResidence);
+                    taskRunner.executeAsync(new SaveResidenceTask(newResidence),
+                            (result) -> { this.populateResidences(); },
+                            this::displayErrorDialog);
                 }
         }
+    }
+
+    private void displayErrorDialog(Exception exception) {
+        ActivityUtilities.buildExceptionDialog(this,
+                Log.getStackTraceString(exception), (dialogInterface) -> {}).show();
     }
 
     /**
@@ -250,20 +295,74 @@ public class PersonActivity extends ArticleActivity {
         genderGroup.setOnCheckedChangeListener(genderListener);
     }
 
+    private void setupMembershipsList() {
+        MembershipsAdapter adapter = new MembershipsAdapter(this, getWorldName(), getArticleName());
+        viewModel.getMemberships().observe(this, new Observer<ArrayList<Membership>>() {
+            @Override
+            public void onChanged(ArrayList<Membership> memberships) {
+                if (memberships == null) {
+                    membershipsProgressCircle.setVisibility(View.VISIBLE);
+                    membershipsList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(memberships);
+                    adapter.notifyDataSetChanged();
+                    membershipsList.setVisibility(View.VISIBLE);
+                    membershipsProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        membershipsList.setAdapter(adapter);
+        membershipsList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     /**
      * Populate the Memberships RecyclerView with cards for this Person's Memberships.
      */
     private void populateMemberships() {
-        membershipsList.setLayoutManager(new LinearLayoutManager(this));
-        membershipsList.setAdapter(new MembershipsAdapter(this, getWorldName(), getArticleName()));
+        viewModel.loadMemberships(getWorldName(), getArticleName());
+    }
+
+    private void setupResidencesList() {
+        ResidencesAdapter adapter = new ResidencesAdapter(this, getWorldName(), getArticleName());
+        viewModel.getResidences().observe(this, new Observer<ArrayList<Residence>>() {
+            @Override
+            public void onChanged(ArrayList<Residence> residences) {
+                if (residences == null) {
+                    residencesProgressCircle.setVisibility(View.VISIBLE);
+                    residencesList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(residences);
+                    adapter.notifyDataSetChanged();
+                    residencesList.setVisibility(View.VISIBLE);
+                    residencesProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        residencesList.setAdapter(adapter);
+        residencesList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                    ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                            dialogInterface -> viewModel.clearErrorMessage()
+                    ).show();
+                }
+            }
+        });
     }
 
     /**
      * Populate the Residences RecyclerView with cards for this Person's Residences.
      */
     private void populateResidences() {
-        residencesList.setLayoutManager(new LinearLayoutManager(this));
-        residencesList.setAdapter(new ResidencesAdapter(this, getWorldName(), getArticleName()));
+        viewModel.loadResidences(getWorldName(), getArticleName());
     }
 
     @Override
@@ -336,133 +435,4 @@ public class PersonActivity extends ArticleActivity {
                 residencesAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_RESIDENCE);
     }
-
-    @Override
-    protected void deleteArticle() {
-        if ((deleteAllMemberships()) && (deleteAllResidences())) {
-            super.deleteArticle();
-        } else {
-            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Deletes all of this Person's Memberships to different Groups.
-     * @return True if all Memberships were deleted successfully; false otherwise.
-     */
-    private boolean deleteAllMemberships() {
-        boolean membershipsWereDeleted = true;
-
-        ArrayList<Membership> allMemberships = (
-                (MembershipsAdapter) membershipsList.getAdapter()).getMemberships();
-
-        Membership membership;
-        int index = 0;
-        while ((index < allMemberships.size()) && (membershipsWereDeleted)) {
-            membership = allMemberships.get(index);
-            membershipsWereDeleted = ExternalDeleter.deleteMembership(this, membership);
-            index++;
-        }
-
-        return membershipsWereDeleted;
-    }
-
-    /**
-     * Deletes all of this Person's Residences at different Places.
-     * @return True if all Residences were deleted successfully; false otherwise.
-     */
-    private boolean deleteAllResidences() {
-        boolean residencesWereDeleted = true;
-
-        ArrayList<Residence> allResidences = (
-                (ResidencesAdapter) residencesList.getAdapter()).getResidences();
-
-        Residence residence;
-        int index = 0;
-        while ((index < allResidences.size()) && (residencesWereDeleted)) {
-            residence = allResidences.get(index);
-            residencesWereDeleted = ExternalDeleter.deleteResidence(this, residence);
-            index++;
-        }
-
-        return residencesWereDeleted;
-    }
-
-    @Override
-    protected boolean renameArticle(String newName) {
-        boolean renameWasSuccessful = false;
-
-        if ((renamePersonInMemberships(newName)) && (renamePersonInResidences(newName))) {
-            renameWasSuccessful = super.renameArticle(newName);
-        } else {
-            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
-        }
-
-        return renameWasSuccessful;
-    }
-
-    /**
-     * <p>
-     *     Updates all of this Person's Memberships to reflect a new name for this Person.
-     * </p>
-     * <p>
-     *     If one or more Memberships failed to be updated, an error message is displayed.
-     * </p>
-     * @param newName The new name for this Person.
-     * @return True if all Memberships updated successfully; false otherwise.
-     */
-    private boolean renamePersonInMemberships(String newName) {
-        boolean membershipsWereUpdated = true;
-        MembershipsAdapter adapter = (MembershipsAdapter) membershipsList.getAdapter();
-        ArrayList<Membership> memberships = adapter.getMemberships();
-
-        int index = 0;
-        Membership membership;
-        while ((index < memberships.size()) && (membershipsWereUpdated)) {
-            membership = memberships.get(index);
-
-            if (ExternalWriter.renameMemberInMembership(this, membership, newName)) {
-                membership.memberName = newName;
-            } else {
-                membershipsWereUpdated = false;
-            }
-
-            index++;
-        }
-
-        return membershipsWereUpdated;
-    }
-
-    /**
-     * <p>
-     *     Updates all of this Person's Residences to reflect a new name for this Person.
-     * </p>
-     * <p>
-     *     If one or more Residences failed to be updated, an error message is displayed.
-     * </p>
-     * @param newName The new name for this Person.
-     * @return True if all Residences updated successfully; false otherwise.
-     */
-    private boolean renamePersonInResidences(String newName) {
-        boolean residencesWereUpdated = true;
-        ResidencesAdapter adapter = (ResidencesAdapter) residencesList.getAdapter();
-        ArrayList<Residence> residences = adapter.getResidences();
-
-        int index = 0;
-        Residence residence;
-        while ((index < residences.size()) && (residencesWereUpdated)) {
-            residence = residences.get(index);
-
-            if (ExternalWriter.renameResidentInResidence(this, residence, newName)) {
-                residence.residentName = newName;
-            } else {
-                residencesWereUpdated = false;
-            }
-
-            index++;
-        }
-
-        return residencesWereUpdated;
-    }
-
 }

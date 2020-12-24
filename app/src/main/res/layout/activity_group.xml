@@ -10,11 +10,9 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".activities.PersonActivity"
         android:id="@+id/relativeScreen"
         android:descendantFocusability="beforeDescendants"
@@ -53,6 +51,13 @@
                 android:paddingLeft="@dimen/pagePadding"
                 android:paddingRight="@dimen/pagePadding"
                 android:paddingBottom="@dimen/scrollBottomPadding" >
+
+                <ProgressBar
+                    android:id="@+id/articleImageProgressCircle"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/articleImageWidth"
+                    android:layout_gravity="center_horizontal" />
 
                 <ImageView
                     android:layout_width="@dimen/articleImageHeight"
@@ -164,6 +169,12 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
 
+                    <ProgressBar
+                        android:id="@+id/membersProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
@@ -222,6 +233,12 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
 
+                    <ProgressBar
+                        android:id="@+id/connectionsProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="@dimen/verticalSpacing" />
@@ -279,6 +296,12 @@
                         android:minHeight="22sp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/addConnectionSnippetTextSize" />
+
+                    <ProgressBar
+                        android:id="@+id/snippetsProgressCircle"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <Space
                         android:layout_width="0dp"

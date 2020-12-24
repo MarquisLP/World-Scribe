@@ -13,6 +13,8 @@ public class AppPreferences {
     public static final String APP_THEME = "appTheme";
     public static final String NIGHT_MODE_IS_ENABLED = "nightModeIsEnabled";
     public static final String DROPBOX_ACCESS_TOKEN = "dropboxAccessToken";
+    public static final String DROPBOX_REFRESH_TOKEN = "dropboxRefreshToken";
+    public static final String DROPBOX_EXPIRES_AT = "dropboxExpiresAt";
     public static final String LAST_OPENED_VERSION_CODE = "lastOpenedVersionCode";
     public static final String LAST_NEXTCLOUD_SERVER = "nextcloudServer";
     public static final String LAST_NEXTCLOUD_USER = "nextcloudUser";
@@ -88,13 +90,13 @@ public class AppPreferences {
 
     /**
      * Checks if this app has access to the user's Dropbox account by seeing if an access token
-     * for that account exists in preferences.
+     * and refresh token for that account exists in preferences.
      * @param context The context calling this method
-     * @return True if a Dropbox access token exists in SharedPreferences; false otherwise
+     * @return True if Dropbox access token and refresh token exist in SharedPreferences; false otherwise
      */
-    public static boolean dropboxAccessTokenExists(Context context) {
+    public static boolean dropboxAccessTokenAndRefreshTokenExist(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME,
                 Context.MODE_PRIVATE);
-        return preferences.contains(DROPBOX_ACCESS_TOKEN);
+        return (preferences.contains(DROPBOX_ACCESS_TOKEN) && preferences.contains(DROPBOX_REFRESH_TOKEN));
     }
 }

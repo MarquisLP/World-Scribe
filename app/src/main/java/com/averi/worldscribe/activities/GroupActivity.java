@@ -1,17 +1,22 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +25,11 @@ import com.averi.worldscribe.Category;
 import com.averi.worldscribe.Membership;
 import com.averi.worldscribe.R;
 import com.averi.worldscribe.adapters.MembersAdapter;
+import com.averi.worldscribe.utilities.ActivityUtilities;
 import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.viewmodels.GroupViewModel;
 import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 
@@ -32,8 +39,11 @@ public class GroupActivity extends ArticleActivity {
 
     public static final int RESULT_NEW_MEMBER = 300;
 
+    private GroupViewModel viewModel;
+
     private RecyclerView membersList;
     private Button addMemberButton;
+    private ProgressBar membersProgressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,12 @@ public class GroupActivity extends ArticleActivity {
 
         membersList = (RecyclerView) findViewById(R.id.recyclerMembers);
         addMemberButton = (Button) findViewById(R.id.buttonAddMember);
+        membersProgressCircle = (ProgressBar)  findViewById(R.id.membersProgressCircle);
+
+        viewModel = new ViewModelProvider(this).get(GroupViewModel.class);
+
+        setupMembersList();
+        setupErrorDialog();
 
         addMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +153,21 @@ public class GroupActivity extends ArticleActivity {
     }
 
     @Override
+    protected ProgressBar getConnectionsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.connectionsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getSnippetsProgressCircle() {
+        return (ProgressBar) findViewById(R.id.snippetsProgressCircle);
+    }
+
+    @Override
+    protected ProgressBar getImageProgressCircle() {
+        return (ProgressBar) findViewById(R.id.articleImageProgressCircle);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         populateMembers();
@@ -171,9 +202,43 @@ public class GroupActivity extends ArticleActivity {
         super.addSectionCollapsers();
     }
 
-    private void populateMembers() {
+    private void setupMembersList() {
+        MembersAdapter adapter = new MembersAdapter(this, getWorldName(), getArticleName());
+        viewModel.getMembers().observe(this, new Observer<ArrayList<Membership>>() {
+            @Override
+            public void onChanged(ArrayList<Membership> members) {
+                if (members == null) {
+                    membersProgressCircle.setVisibility(View.VISIBLE);
+                    membersList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(members);
+                    adapter.notifyDataSetChanged();
+                    membersList.setVisibility(View.VISIBLE);
+                    membersProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        membersList.setAdapter(adapter);
         membersList.setLayoutManager(new LinearLayoutManager(this));
-        membersList.setAdapter(new MembersAdapter(this, getWorldName(), getArticleName()));
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                    ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                            dialogInterface -> viewModel.clearErrorMessage()
+                    ).show();
+                }
+            }
+        });
+    }
+
+    private void populateMembers() {
+        viewModel.loadMembers(getWorldName(), getArticleName());
     }
 
     /**
@@ -191,80 +256,4 @@ public class GroupActivity extends ArticleActivity {
                 membersAdapter.getLinkedArticleList());
         startActivityForResult(selectGroupIntent, RESULT_NEW_MEMBER);
     }
-
-    @Override
-    protected void deleteArticle() {
-        if (removeAllMembers()) {
-            super.deleteArticle();
-        } else {
-            Toast.makeText(this, getString(R.string.deleteArticleError), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Deletes all Memberships to this Group.
-     * @return True if all Memberships were deleted successfully; false otherwise.
-     */
-    private boolean removeAllMembers() {
-        boolean membersWereRemoved = true;
-
-        ArrayList<Membership> allMemberships = (
-                (MembersAdapter) membersList.getAdapter()).getMemberships();
-
-        Membership membership;
-        int index = 0;
-        while ((index < allMemberships.size()) && (membersWereRemoved)) {
-            membership = allMemberships.get(index);
-            membersWereRemoved = ExternalDeleter.deleteMembership(this, membership);
-            index++;
-        }
-
-        return membersWereRemoved;
-    }
-
-    @Override
-    protected boolean renameArticle(String newName) {
-        boolean renameWasSuccessful = false;
-
-        if (renameGroupInMemberships(newName)) {
-            renameWasSuccessful = super.renameArticle(newName);
-        } else {
-            Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT).show();
-        }
-
-        return renameWasSuccessful;
-    }
-
-    /**
-     * <p>
-     *     Updates all Memberships to this Group to reflect a new Group name.
-     * </p>
-     * <p>
-     *     If one or more Memberships failed to be updated, an error message is displayed.
-     * </p>
-     * @param newName The new name for this Group.
-     * @return True if all Memberships updated successfully; false otherwise.
-     */
-    private boolean renameGroupInMemberships(String newName) {
-        boolean membershipsWereUpdated = true;
-        MembersAdapter adapter = (MembersAdapter) membersList.getAdapter();
-        ArrayList<Membership> memberships = adapter.getMemberships();
-
-        int index = 0;
-        Membership membership;
-        while ((index < memberships.size()) && (membershipsWereUpdated)) {
-            membership = memberships.get(index);
-
-            if (ExternalWriter.renameGroupInMembership(this, membership, newName)) {
-                membership.groupName = newName;
-            } else {
-                membershipsWereUpdated = false;
-            }
-
-            index++;
-        }
-
-        return membershipsWereUpdated;
-    }
-
 }

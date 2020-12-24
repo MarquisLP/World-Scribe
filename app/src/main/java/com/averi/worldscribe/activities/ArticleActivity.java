@@ -1,5 +1,6 @@
 package com.averi.worldscribe.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,9 +10,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,11 @@ import com.averi.worldscribe.utilities.ExternalDeleter;
 import com.averi.worldscribe.utilities.ExternalReader;
 import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
+import com.averi.worldscribe.utilities.TaskRunner;
+import com.averi.worldscribe.utilities.tasks.DeleteArticleTask;
+import com.averi.worldscribe.utilities.tasks.GetFilenamesInFolderTask;
+import com.averi.worldscribe.utilities.tasks.RenameArticleTask;
+import com.averi.worldscribe.viewmodels.ArticleViewModel;
 import com.averi.worldscribe.views.ArticleSectionCollapser;
 import com.averi.worldscribe.views.BottomBar;
 import com.averi.worldscribe.views.BottomBarActivity;
@@ -78,6 +89,10 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      */
     private ImageView imageView;
     /**
+     * Loading circle shown while loading the Article's image.
+     */
+    private ProgressBar imageProgressCircle;
+    /**
      * The BottomBar navigation View.
      */
     private BottomBar bottomBar;
@@ -109,9 +124,17 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      */
     private RecyclerView connectionsList;
     /**
+     * Loading circle shown while loading Connections.
+     */
+    private ProgressBar connectionsProgressCircle;
+    /**
      * Clicking this begins Connection creation.
      */
     private Button addConnectionButton;
+    /**
+     * Loading circle shown while loading Snippets.
+     */
+    private ProgressBar snippetsProgressCircle;
     /**
      * Contains cards for all of the Article's Snippets.
      */
@@ -123,22 +146,31 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
 
     private AlertDialog currentDialog;
 
+    private ArticleViewModel viewModel;
+
+    private final TaskRunner taskRunner = new TaskRunner();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         rootLayout = getRootLayout();
         imageView = getImageView();
+        imageProgressCircle = getImageProgressCircle();
         bottomBar = getBottomBar();
         Intent intent = getIntent();
         worldName = intent.getStringExtra(IntentFields.WORLD_NAME);
         category = (Category) intent.getSerializableExtra(IntentFields.CATEGORY);
         articleName = intent.getStringExtra(IntentFields.ARTICLE_NAME);
         connectionsList = getConnectionsRecycler();
+        connectionsProgressCircle = getConnectionsProgressCircle();
         addConnectionButton = getAddConnectionButton();
         snippetsList = getSnippetsRecycler();
+        snippetsProgressCircle = getSnippetsProgressCircle();
         addSnippetButton = getAddSnippetButton();
         textFields = getTextFields();
+
+        viewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +191,9 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
             }
         });
 
-        connectionsList.setLayoutManager(new LinearLayoutManager(this));
-        snippetsList.setLayoutManager(new LinearLayoutManager(this));
+        setupConnectionsList();
+        setupSnippetsList();
+        setupErrorDialog();
 
         addSectionCollapsers();
 
@@ -217,6 +250,11 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
     protected abstract ImageView getImageView();
 
     /**
+     * @return The ProgressBar displayed while loading the Article's image.
+     */
+    protected abstract ProgressBar getImageProgressCircle();
+
+    /**
      * @return The bottom navigation bar for this Activity.
      */
     protected abstract BottomBar getBottomBar();
@@ -268,6 +306,11 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
     protected abstract ViewGroup getConnectionsLayout();
 
     /**
+     * @return The ProgressBar that displays while loading Connections.
+     */
+    protected abstract ProgressBar getConnectionsProgressCircle();
+
+    /**
      * @return The header for the 'Snippets' section of this Article.
      */
     protected abstract TextView getSnippetsHeader();
@@ -276,6 +319,11 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      * @return The Layout containing the content of the General Info section.
      */
     protected abstract ViewGroup getSnippetsLayout();
+
+    /**
+     * @return The ProgressBar that displays while loading Snippets.
+     */
+    protected abstract ProgressBar getSnippetsProgressCircle();
 
     /**
      * Adds ArticleSectionCollapsers to all sections for this Article.
@@ -331,19 +379,75 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
         getSupportActionBar().setTitle(articleName);
     }
 
+    private void setupSnippetsList() {
+        SnippetsAdapter adapter = new SnippetsAdapter(this, worldName, category, articleName, nightModeIsEnabled());
+        viewModel.getSnippetNames().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> newSnippetNames) {
+                if (newSnippetNames == null) {
+                    snippetsProgressCircle.setVisibility(View.VISIBLE);
+                    snippetsList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(newSnippetNames);
+                    adapter.notifyDataSetChanged();
+                    snippetsList.setVisibility(View.VISIBLE);
+                    snippetsProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        snippetsList.setAdapter(adapter);
+        snippetsList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupErrorDialog() {
+        final Context context = this;
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String newErrorMessage) {
+                if (!(newErrorMessage.isEmpty())) {
+                    ActivityUtilities.buildExceptionDialog(context, newErrorMessage,
+                            dialogInterface -> viewModel.clearErrorMessage()
+                    ).show();
+                }
+            }
+        });
+    }
+
+    private void setupConnectionsList() {
+        ConnectionsAdapter adapter = new ConnectionsAdapter(this, worldName, category, articleName);
+        viewModel.getConnections().observe(this, new Observer<ArrayList<Connection>>() {
+            @Override
+            public void onChanged(ArrayList<Connection> newConnections) {
+                if (newConnections == null) {
+                    connectionsProgressCircle.setVisibility(View.VISIBLE);
+                    connectionsList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.updateList(newConnections);
+                    adapter.notifyDataSetChanged();
+                    connectionsList.setVisibility(View.VISIBLE);
+                    connectionsProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+        connectionsList.setAdapter(adapter);
+        connectionsList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     /**
      * Populate the Connections RecyclerView with cards for this Article's
      * {@link com.averi.worldscribe.Connection Connection}s.
      */
     private void populateConnections() {
-        connectionsList.setAdapter(new ConnectionsAdapter(this, worldName, category, articleName));
+        viewModel.loadConnections(worldName, category, articleName);
     }
 
     /**
      * Populate the Snippets RecyclerView with cards for this Article's Snippets.
      */
     private void populateSnippets() {
-        snippetsList.setAdapter(new SnippetsAdapter(this, worldName, category, articleName, nightModeIsEnabled()));
+        viewModel.loadSnippetNames(worldName, category, articleName);
     }
 
     /**
@@ -351,27 +455,39 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      * If the image is unset or could not be loaded, a default "unset" image is displayed.
      */
     private void setArticleImage() {
+        viewModel.getImage().observe(this, new Observer<Bitmap>() {
+            @Override
+            public void onChanged(Bitmap articleImage) {
+                if (articleImage == null) {
+                    imageProgressCircle.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.GONE);
+                }
+                else {
+                    imageView.setImageBitmap(articleImage);
+                    imageView.setVisibility(View.VISIBLE);
+                    imageProgressCircle.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        final Context context = this;
+        viewModel.getImageColorFilterIsOn().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean imageColorFilterIsOn) {
+                if (imageColorFilterIsOn) {
+                    imageView.setColorFilter(AttributeGetter.getColorAttribute(context, R.attr.colorPrimary),
+                            PorterDuff.Mode.SRC_ATOP);
+                }
+                else {
+                    imageView.setColorFilter(null);
+                }
+            }
+        });
+
         Resources resources = getResources();
-        Bitmap articleImage = null;
-        try {
-            articleImage = ExternalReader.getArticleImage(this, worldName, category, articleName,
-                    (int) resources.getDimension(R.dimen.articleImageWidth),
-                    (int) resources.getDimension(R.dimen.articleImageHeight));
-        }
-        catch (FileNotFoundException exception) {
-            //TODO: Display an error if file cannot be found
-            return;
-        }
-
-        if (articleImage == null) {
-            articleImage = ExternalReader.getUnsetImageBitmap(this, category);
-            imageView.setColorFilter(AttributeGetter.getColorAttribute(this, R.attr.colorPrimary),
-                    PorterDuff.Mode.SRC_ATOP);
-        } else {
-            imageView.setColorFilter(null);
-        }
-
-        imageView.setImageBitmap(articleImage);
+        viewModel.loadImage(worldName, category, articleName,
+                (int) resources.getDimension(R.dimen.articleImageWidth),
+                (int) resources.getDimension(R.dimen.articleImageHeight));
     }
 
     /**
@@ -511,68 +627,20 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
      * <p>
      * If the Article couldn't be deleted, an error message is displayed.
      * </p>
-     * <p>
-     * Subclasses for Articles of Categories that have additional subdirectories must override
-     * this method and empty out those subdirectories before calling super. Otherwise, the deletion
-     * will fail.
-     * </p>
      */
     protected void deleteArticle() {
-        Toast errorToast =  Toast.makeText(this, getString(R.string.deleteArticleError),
-                Toast.LENGTH_SHORT);
+        AlertDialog deletingProgressDialog = new AlertDialog.Builder(this, R.style.NormalDialog)
+                .setCancelable(false)
+                .setTitle(R.string.deletingArticleDialogTitle)
+                .setView(new ProgressBar(this))
+                .show();
 
-        if ((deleteAllConnections()) && (deleteAllSnippets())) {
-             if (ExternalDeleter.deleteArticleDirectory(this, worldName, category, articleName)) {
-                 finish();
-             } else {
-                 errorToast.show();
-             }
-        } else {
-            errorToast.show();
-        }
-    }
-
-    /**
-     * Deletes all of the Connections linked to this Article.
-     * @return True if all Connections were deleted successfully; false otherwise.
-     */
-    private boolean deleteAllConnections() {
-        boolean connectionsWereDeleted = true;
-
-        ArrayList<Connection> allConnections = (
-                (ConnectionsAdapter) connectionsList.getAdapter()).getConnections();
-
-        Connection connection;
-        int index = 0;
-        while ((index < allConnections.size()) && (connectionsWereDeleted)) {
-            connection = allConnections.get(index);
-            connectionsWereDeleted = ExternalDeleter.deleteConnection(this, connection);
-            index++;
-        }
-
-        return connectionsWereDeleted;
-    }
-
-    /**
-     * Deletes all of the Snippets possessed by this Article.
-     * @return True if all Snippets were deleted successfully; false otherwise.
-     */
-    private boolean deleteAllSnippets() {
-        boolean snippetsWereDeleted = true;
-
-        ArrayList<String> allSnippets = (
-                (SnippetsAdapter) snippetsList.getAdapter()).getSnippetNames();
-
-        String snippetName;
-        int index = 0;
-        while ((index < allSnippets.size()) && (snippetsWereDeleted)) {
-            snippetName = allSnippets.get(index);
-            snippetsWereDeleted = ExternalDeleter.deleteSnippet(this, worldName, category,
-                    articleName, snippetName);
-            index++;
-        }
-
-        return snippetsWereDeleted;
+        taskRunner.executeAsync(new DeleteArticleTask(worldName, category, articleName),
+                (result) -> { finish(); },
+                (exception) -> {
+                    deletingProgressDialog.dismiss();
+                    displayErrorDialog(exception);
+                });
     }
 
     /**
@@ -582,7 +650,7 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
         AlertDialog.Builder builder = ActivityUtilities.getThemedDialogBuilder(this,
                 nightModeIsEnabled());
         LayoutInflater inflater = this.getLayoutInflater();
-        View content = inflater.inflate(R.layout.rename_article_dialog, null);
+        final View content = inflater.inflate(R.layout.rename_article_dialog, null);
 
         final EditText nameField = (EditText) content.findViewById(R.id.nameField);
         nameField.setText(articleName);
@@ -595,6 +663,8 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
                 .setNegativeButton(android.R.string.cancel, null).create();
         dialog.show();
 
+        final ArticleActivity activity = this;
+
         // Handle onClick here to prevent the dialog from closing if the user enters
         // an invalid name.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
@@ -605,125 +675,89 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
                     {
                         String newName = nameField.getText().toString();
 
-                        if (newArticleNameIsValid(newName)) {
-                            if (!(newName.equals(articleName))) {
-                                renameArticle(newName);
-                            }
+                        if (newName.equals(articleName)) {
                             dialog.dismiss();
+                            return;
+                        }
+
+                        if (newName.isEmpty()) {
+                            Toast.makeText(activity, R.string.emptyArticleNameError, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            ProgressBar renamingLoadingCircle = content.findViewById(R.id.renamingArticleProgressCircle);
+
+                            renamingLoadingCircle.setVisibility(View.VISIBLE);
+                            nameField.setVisibility(View.GONE);
+                            dialog.setCancelable(false);
+                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+
+                            String categoryFolderPath = worldName + "/" + category.pluralName(activity);
+                                taskRunner.executeAsync(new GetFilenamesInFolderTask(categoryFolderPath, false),
+                                        (existingArticleNames) -> {
+                                            if (existingArticleNames.contains(newName)) {
+                                                nameField.setVisibility(View.VISIBLE);
+                                                renamingLoadingCircle.setVisibility(View.GONE);
+                                                dialog.setCancelable(true);
+                                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);
+                                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                                Toast.makeText(activity,
+                                                        activity.getString(R.string.renameArticleToExistingError, category.name(), newName),
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                            else {
+                                                taskRunner.executeAsync(new RenameArticleTask(worldName, category, articleName, newName),
+                                                        (result) -> {
+                                                            dialog.dismiss();
+                                                            activity.restartActivityWithNewArticleName(newName);
+                                                        },
+                                                        (Exception exception) -> {
+                                                            dialog.dismiss();
+                                                            activity.displayErrorDialog(exception);
+                                                        });
+                                            }
+                                        },
+                                        (Exception exception) -> {
+                                            dialog.dismiss();
+                                            activity.displayErrorDialog(exception);
+                                        });
                         }
                     }
                 });
     }
 
-    /**
-     * <p>
-     *     Checks whether a new name for this Article is valid, i.e. non-empty and not in use by
-     *     other Articles of the same Category.
-     * </p>
-     * <p>
-     *     If the name is invalid, an error message is displayed.
-     * </p>
-     * @param newName The new name requested for this Article.
-     * @return True if the new name is valid; false otherwise.
-     */
-    private boolean newArticleNameIsValid(String newName) {
-        boolean newNameIsValid;
-
-        if (newName.isEmpty()) {
-            Toast.makeText(this, R.string.emptyArticleNameError, Toast.LENGTH_SHORT).show();
-            newNameIsValid = false;
-        } else if (newName.equals(articleName)) {   // Name was not changed.
-            newNameIsValid = true;
-        } else if (ExternalReader.articleExists(this, worldName, category, newName)) {
-            Toast.makeText(this,
-                    getString(R.string.renameArticleToExistingError, category.name(), newName),
-                    Toast.LENGTH_SHORT).show();
-            newNameIsValid = false;
-        } else {
-            newNameIsValid = true;
+    private void restartActivityWithNewArticleName(String newArticleName) {
+        Intent restartActivityIntent;
+        switch (category) {
+            case Person:
+                restartActivityIntent = new Intent(this, PersonActivity.class);
+                break;
+            case Group:
+                restartActivityIntent = new Intent(this, GroupActivity.class);
+                break;
+            case Place:
+                restartActivityIntent = new Intent(this, PlaceActivity.class);
+                break;
+            case Item:
+                restartActivityIntent = new Intent(this, ItemActivity.class);
+                break;
+            case Concept:
+            default:
+                restartActivityIntent = new Intent(this, ConceptActivity.class);
+                break;
         }
+        restartActivityIntent.putExtra(IntentFields.WORLD_NAME, worldName);
+        restartActivityIntent.putExtra(IntentFields.CATEGORY, category);
+        restartActivityIntent.putExtra(IntentFields.ARTICLE_NAME, newArticleName);
 
-        return newNameIsValid;
+        finish();
+        startActivity(restartActivityIntent);
     }
 
-    /**
-     * <p>
-     *     Renames the Article; all references to it from other Articles are also updated to reflect
-     *     the new name.
-     * </p>
-     * <p>
-     *     If the Article couldn't be renamed, an error message is displayed.
-     * </p>
-     * <p>
-     *     Subclasses for Articles of Categories that have additional types of references (e.g.
-     *     Residences) must override this method and update the Article's name within those
-     *     references as well. Otherwise, those references on other Articles' pages will break.
-     * </p>
-     * @param newName The new name for the Article.
-     * @return True if the Article was renamed successfully; false otherwise.
-     */
-    protected boolean renameArticle(String newName) {
-        boolean renameWasSuccessful = false;
-        Toast errorToast = Toast.makeText(this, R.string.renameArticleError, Toast.LENGTH_SHORT);
-
-        if (renameArticleInConnections(newName)) {
-            if (ExternalWriter.renameArticleDirectory(this, worldName, category,
-                    articleName, newName)) {
-                renameWasSuccessful = true;
-                articleName = newName;
-                setAppBar();
-                renameArticleInTextFields(newName);
-                populateSnippets();
-            } else {
-                errorToast.show();
-            }
-        } else {
-            errorToast.show();
-        }
-
-        return renameWasSuccessful;
-    }
-
-    /**
-     * <p>
-     *     Updates all of this Article's Connections to reflect a new Article name.
-     * </p>
-     * <p>
-     *     If one or more Connections failed to be updated, an error message is displayed.
-     * </p>
-     * @param newName The new name for this Article.
-     * @return True if all Connections updated successfully; false otherwise.
-     */
-    private boolean renameArticleInConnections(String newName) {
-        boolean connectionsWereUpdated = true;
-        ConnectionsAdapter adapter = (ConnectionsAdapter) connectionsList.getAdapter();
-        ArrayList<Connection> connections = adapter.getConnections();
-
-        int index = 0;
-        Connection currentConnection;
-        while ((index < connections.size()) && (connectionsWereUpdated)) {
-            currentConnection = connections.get(index);
-
-            if (ExternalWriter.renameArticleInConnection(this, currentConnection, newName)) {
-                currentConnection.articleName = newName;
-            } else {
-                connectionsWereUpdated = false;
-            }
-
-            index++;
-        }
-
-        return connectionsWereUpdated;
-    }
-
-    /**
-     * Updates the Article name within all of this Article's text fields.
-     * @param newName The new name for this Article.
-     */
-    private void renameArticleInTextFields(String newName) {
-        for (ArticleTextField textField : textFields) {
-            textField.changeArticleName(newName);
-        }
+    private void displayErrorDialog(Exception exception) {
+        Log.d("WorldScribe", Log.getStackTraceString(exception));
+        ActivityUtilities.buildExceptionDialog(this, Log.getStackTraceString(exception),
+                (dialogInterface -> {})).show();
     }
 
     public void respondToBottomBarButton(Category category) {

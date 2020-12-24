@@ -146,9 +146,7 @@ implements ArticleLinkAdapter {
      */
     public ResidencesAdapter(ArticleActivity activity, String worldName, String personName) {
         this.activity = activity;
-
-        residences = ExternalReader.getResidences(activity, worldName, personName);
-        Collections.sort(residences, new Residence.ByPlaceNameComparator());
+        residences = new ArrayList<>();
     }
 
     @Override
@@ -166,6 +164,16 @@ implements ArticleLinkAdapter {
     @Override
     public int getItemCount() {
         return residences.size();
+    }
+
+    /**
+     * Replace the list of Residences attached to this adapter.
+     * @param newResidences The new list of Residences to attach to this adapter.
+     */
+    public void updateList(ArrayList<Residence> newResidences) {
+        residences.clear();
+        residences.addAll(newResidences);
+        Collections.sort(residences, new Residence.ByPlaceNameComparator());
     }
 
     public LinkedArticleList getLinkedArticleList() {

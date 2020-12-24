@@ -25,6 +25,7 @@ import com.averi.worldscribe.utilities.ExternalWriter;
 import com.averi.worldscribe.utilities.IntentFields;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by mark on 02/07/16.
@@ -246,7 +247,7 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
         this.category = category;
         this.articleName = articleName;
         this.nightModeIsEnabled = nightModeIsEnabled;
-        snippets = ExternalReader.getSnippetNames(activity, worldName, category, articleName);
+        snippets = new ArrayList<>();
     }
 
     @Override
@@ -264,6 +265,16 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
     @Override
     public int getItemCount() {
         return snippets.size();
+    }
+
+    /**
+     * Replace the list of snippets in the adapter with new contents.
+     * @param newList The new list of snippets that the adapter will hold.
+     */
+    public void updateList(ArrayList<String> newList) {
+        snippets.clear();
+        snippets.addAll(newList);
+        Collections.sort(snippets);
     }
 
     /**
