@@ -214,23 +214,25 @@ public class ArticleListActivity extends ThemedActivity
      */
     private void storeDropboxCredentials() {
         DbxCredential dbxCredential = Auth.getDbxCredential();
-        String accessToken = dbxCredential.getAccessToken();
-        String refreshToken = dbxCredential.getRefreshToken();
-        Long expiresAt = dbxCredential.getExpiresAt();
+        if (dbxCredential != null) {
+            String accessToken = dbxCredential.getAccessToken();
+            String refreshToken = dbxCredential.getRefreshToken();
+            Long expiresAt = dbxCredential.getExpiresAt();
 
-        SharedPreferences preferences = getSharedPreferences(
-                AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
-        if (accessToken != null) {
-            preferences.edit().putString(
-                    AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
-        }
-        if (refreshToken != null) {
-            preferences.edit().putString(
-                    AppPreferences.DROPBOX_REFRESH_TOKEN, refreshToken).apply();
-        }
-        if (expiresAt != null) {
-            preferences.edit().putLong(
-                    AppPreferences.DROPBOX_EXPIRES_AT, expiresAt).apply();
+            SharedPreferences preferences = getSharedPreferences(
+                    AppPreferences.PREFERENCES_FILE_NAME, MODE_PRIVATE);
+            if (accessToken != null) {
+                preferences.edit().putString(
+                        AppPreferences.DROPBOX_ACCESS_TOKEN, accessToken).apply();
+            }
+            if (refreshToken != null) {
+                preferences.edit().putString(
+                        AppPreferences.DROPBOX_REFRESH_TOKEN, refreshToken).apply();
+            }
+            if (expiresAt != null) {
+                preferences.edit().putLong(
+                        AppPreferences.DROPBOX_EXPIRES_AT, expiresAt).apply();
+            }
         }
     }
 
