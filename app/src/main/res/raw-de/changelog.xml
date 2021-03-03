@@ -2,6 +2,13 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.7.1" changeDate="Mar 3, 2021">
+        <changelogtext>[b]Fixed a crash that occurred when exiting the Dropbox login prompt.[/b]</changelogtext>
+        <changelogtext>[b]The characters "." and "/" are now forbidden in World, Article,
+            and Snippet names.[/b] These characters are reserved in the local file system,
+            which is where World Scribe stores data. Using these characters in World,
+            Article, or Snippet names would cause glitches in World data.</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.7.0" changeDate="23. Dez. 2020">
         <changelogtext>[b]Die Leistung wurde für Geräte mit Android
             10 und höher erheblich verbessert![/b] Das Navigieren in der App ist jetzt viel schneller und
