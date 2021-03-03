@@ -120,6 +120,12 @@ public class CreateWorldActivity extends BackButtonActivity {
     public void clickCreate(View view) {
         String worldName = getWorldName();
 
+        if (ActivityUtilities.nameHasInvalidCharacters(worldName)) {
+            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
+                    getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()));
+            return;
+        }
+
         creatingWorldProgressCircle.setVisibility(View.VISIBLE);
         editName.setVisibility(View.GONE);
         createButton.setVisibility(View.GONE);

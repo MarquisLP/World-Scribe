@@ -28,6 +28,8 @@ import com.averi.worldscribe.activities.SettingsActivity;
 import com.averi.worldscribe.adapters.StringListAdapter;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mark on 23/06/16.
@@ -202,6 +204,31 @@ public class ActivityUtilities {
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> { })
                 .setOnDismissListener(onClose);
+    }
+
+    public static final List<String> INVALID_NAME_CHARACTERS = Arrays.asList(
+            "/",
+            "."
+    );
+
+    public static boolean nameHasInvalidCharacters(String name) {
+        for (String invalidCharacter : INVALID_NAME_CHARACTERS) {
+            if (name.contains(invalidCharacter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String getInvalidNameCharactersString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < INVALID_NAME_CHARACTERS.size(); i++) {
+            stringBuilder.append(INVALID_NAME_CHARACTERS.get(i));
+            if (i < INVALID_NAME_CHARACTERS.size() - 1) {
+                stringBuilder.append(" ");
+            }
+        }
+        return stringBuilder.toString();
     }
 
 }

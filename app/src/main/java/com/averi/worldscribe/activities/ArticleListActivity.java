@@ -355,6 +355,12 @@ public class ArticleListActivity extends ThemedActivity
                         if (newName.isEmpty()) {
                             Toast.makeText(activity, R.string.emptyWorldNameError, Toast.LENGTH_SHORT).show();
                         }
+                        else if (ActivityUtilities.nameHasInvalidCharacters(newName)) {
+                            Toast.makeText(
+                                    activity,
+                                    activity.getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()),
+                                    Toast.LENGTH_LONG).show();
+                        }
                         else {
 
                             ProgressBar renamingWorldProgressCircle = dialog.findViewById(R.id.renamingWorldProgressCircle);
