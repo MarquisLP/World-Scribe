@@ -150,7 +150,7 @@
     <string name="deleteArticleError">Fehler beim löschen dieses Beitrags.</string>
     <string name="emptySnippetNameError">Ausschnitt darf nicht leer sein.</string>
     <string name="renameSnippetError">Fehler beim umbennen von %1$s.</string>
-    <string name="renameWithInvalidCharactersError">You may not use these characters in names: %1$s</string>
+    <string name="renameWithInvalidCharactersError">Diese Zeichen dürfen in Namen nicht verwendet werden: %1$s</string>
     <string name="emptyArticleNameError">Beitragname darf nicht leer sein.</string>
     <string name="renameArticleToExistingError">Ein %1$s mit dem Namen %2$s existiert bereits.\nBitte wähle einen anderen Name.</string>
     <string name="renameArticleError">Fehler beim umbennen von diesem Beitrag.</string>
