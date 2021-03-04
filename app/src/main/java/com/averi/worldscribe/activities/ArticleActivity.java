@@ -705,6 +705,16 @@ public abstract class ArticleActivity extends ReaderModeActivity implements Bott
                                                         activity.getString(R.string.renameArticleToExistingError, category.name(), newName),
                                                         Toast.LENGTH_SHORT).show();
                                             }
+                                            else if (ActivityUtilities.nameHasInvalidCharacters(newName)) {
+                                                nameField.setVisibility(View.VISIBLE);
+                                                renamingLoadingCircle.setVisibility(View.GONE);
+                                                dialog.setCancelable(true);
+                                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);
+                                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                                Toast.makeText(activity,
+                                                        activity.getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()),
+                                                        Toast.LENGTH_LONG).show();
+                                            }
                                             else {
                                                 taskRunner.executeAsync(new RenameArticleTask(worldName, category, articleName, newName),
                                                         (result) -> {

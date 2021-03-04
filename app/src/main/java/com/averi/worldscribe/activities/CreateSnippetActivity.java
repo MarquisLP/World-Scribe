@@ -130,6 +130,12 @@ public class CreateSnippetActivity extends BackButtonActivity {
     public void clickCreate(View view) {
         String newSnippetName = nameField.getText().toString();
 
+        if (ActivityUtilities.nameHasInvalidCharacters(newSnippetName)) {
+            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
+                    getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()));
+            return;
+        }
+
         savingSnippetProgressCircle.setVisibility(View.VISIBLE);
         nameField.setVisibility(View.GONE);
         createButton.setVisibility(View.GONE);

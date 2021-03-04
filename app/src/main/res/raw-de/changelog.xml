@@ -2,6 +2,10 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.7.1" changeDate="3. Mär. 2021">
+        <changelogtext>[b]Es wurde ein Absturz behoben, der beim Beenden der Dropbox-Anmeldeaufforderung auftrat.[/b]</changelogtext>
+        <changelogtext>[b]Die Zeichen "." und "/" sind nun für Welten-, Artikel- und Ausschnitsnamen verboten.[/b] Diese Zeichen sind reserviert für das Dateisystem, indem World Scribe seine Daten speichert. Wenn diese Zeichen in Welt-, Artikel- oder Ausschnitsnamen verwendet werden, dann kommt es zu Fehlern in den Weltdaten.</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.7.0" changeDate="23. Dez. 2020">
         <changelogtext>[b]Die Leistung wurde für Geräte mit Android
             10 und höher erheblich verbessert![/b] Das Navigieren in der App ist jetzt viel schneller und

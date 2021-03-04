@@ -174,12 +174,18 @@ public class CreateArticleActivity extends BackButtonActivity {
      * @param view The View this method is bound to.
      */
     public void createArticle(View view) {
+        String articleName = getArticleName();
+
+        if (ActivityUtilities.nameHasInvalidCharacters(articleName)) {
+            ThemedSnackbar.showSnackbarMessage(this, coordinatorLayout,
+                    getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()));
+            return;
+        }
+
         loadingLayout.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
-
         Category category = Category.getCategoryFromName(this,
                 categorySpinner.getSelectedItem().toString());
-        String articleName = getArticleName();
 
         String categoryFolderPath = worldName + "/" + category.pluralName(this);
         taskRunner.executeAsync(new GetFilenamesInFolderTask(categoryFolderPath),

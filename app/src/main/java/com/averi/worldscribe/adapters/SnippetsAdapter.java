@@ -163,6 +163,11 @@ public class SnippetsAdapter extends RecyclerView.Adapter<SnippetsAdapter.Snippe
                 renameWasSuccessful = false;
             } else if (newName.equals(snippetName)) {   // Name was not changed.
                 renameWasSuccessful = true;
+            } else if (ActivityUtilities.nameHasInvalidCharacters(newName)) {
+                Toast.makeText(activity,
+                        activity.getString(R.string.renameWithInvalidCharactersError, ActivityUtilities.getInvalidNameCharactersString()),
+                        Toast.LENGTH_LONG).show();
+                renameWasSuccessful = false;
             } else if (ExternalReader.snippetExists(activity, worldName, category, articleName,
                     newName)) {
                 Toast.makeText(activity,

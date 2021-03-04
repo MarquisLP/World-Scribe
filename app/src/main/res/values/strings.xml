@@ -151,6 +151,7 @@
     <string name="emptyArticleNameError">Article name cannot be empty.</string>
     <string name="renameArticleToExistingError">A %1$s named %2$s already exists.\nPlease choose a different name.</string>
     <string name="renameArticleError">An error occurred while renaming this Article.</string>
+    <string name="renameWithInvalidCharactersError">You may not use these characters in names: %1$s</string>
     <string name="emptyWorldNameError">World name cannot be empty.</string>
     <string name="renameWorldToExistingError">A World named %1$s already exists. Please choose a different name.</string>
     <string name="renameWorldError">An error occurred while renaming this World.</string>
