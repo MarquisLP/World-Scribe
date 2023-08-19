@@ -11,7 +11,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -27,9 +27,9 @@ android {
     defaultConfig {
         applicationId "com.averi.worldscribe"
         minSdkVersion 19
-        targetSdkVersion 31
-        versionCode 28
-        versionName "1.8.0"
+        targetSdkVersion 33
+        versionCode 29
+        versionName "1.8.1"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
