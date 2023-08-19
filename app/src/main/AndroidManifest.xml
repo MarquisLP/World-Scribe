@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.NextcloudLoginActivity"></activity>
-        <activity android:name=".activities.PrivacyPolicyActivity">
+        <activity
+            android:name=".activities.PrivacyPolicyActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,6 +61,7 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity
             android:name="com.dropbox.core.android.AuthActivity"
+            android:exported="true"
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask">
             <intent-filter>
