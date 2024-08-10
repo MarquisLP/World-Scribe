@@ -2,6 +2,10 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.9.0" changeDate="Aug 10, 2024">
+        <changelogtext>[b]Upgraded app's source code to new standard required by Google Play.[/b] This is in response
+            to a mandatory update that Google Play requires by August 31, 2024.</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.8.1" changeDate="Aug 19, 2023">
         <changelogtext>[b]Upgraded app's source code to new standard required by Google Play.[/b] This is in response
             to a mandatory update that Google Play requires by August 31, 2023.</changelogtext>

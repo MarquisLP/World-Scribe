@@ -2,6 +2,29 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="false">
+    <changelogversion versionName="Aug 10, 2024" changeDate="">
+        <changelogtext>[b]This is the final update for World Scribe for Android.[/b] It is with a
+            heavy heart that we announce that further development of the official World Scribe
+            Android app will be ceasing after this update. World Scribe began as a simple hobby
+            project in 2016. At the time, we decided the app would use simple text files in external
+            storage so that World data could be easily copied over to another device, or even edited
+            in other apps. However, recent changes in Android 13 have severely limited access to
+            external storage. As a result, World Scribe's core functionality is no longer compatible
+            with Android. Making the app work with Android 13+ would require a rewrite of the app,
+            and for a free project that we built in our spare time, this is not something that we
+            can pursue at this time due to other life commitments. But that doesn't mean World
+            Scribe is going away completely! We have also released [b][a href="https://worldscribe2.averistudios.com/"]World Scribe 2[/a][/b],
+            a successor to World Scribe that you can use on your desktop PC. If you have an older
+            Android device and would still like to use the Android app, you can download the APK
+            installation files [b][a href="https://github.com/MarquisLP/World-Scribe/releases"]here[/a][/b].
+            If you are an Android developer, feel free to fork the [b][a href="https://github.com/MarquisLP/World-Scribe"]source code repository[/a][/b]
+            and develop your own version of World Scribe. [b]If your device is on Android 13 or
+            later and the app is no longer working for you, you can recover your World data by
+            searching for a "WorldScribe" folder in your device's file storage.[/b] Thank you so
+            much for all of your support over the years, and we hope you continue to broaden the
+            limits of imagination through world-building.
+        </changelogtext>
+    </changelogversion>
     <changelogversion versionName="Dec 23, 2020" changeDate="">
         <changelogtext>[b]Performance issues on Android 10 and above have been fixed![/b] A large
             portion of the app was rewritten to make navigation faster and prevent the app from
