@@ -2,6 +2,9 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="true">
+    <changelogversion versionName="1.9.0" changeDate="10. Aug. 2024">
+        <changelogtext>[b]Quellcode wurde an die neusten Richtlinien von Google Play angepasst.[/b] Diese Änderungen werden von Google Play ab dem 31. August 2024 verlangt.</changelogtext>
+    </changelogversion>
     <changelogversion versionName="1.8.1" changeDate="Aug 19, 2023">
         <changelogtext>[b]Quellcode wurde an die neusten Richtlinien von Google Play angepasst.[/b] Diese Änderungen werden von Google Play ab dem 31. August 2023 verlangt.</changelogtext>
     </changelogversion>
