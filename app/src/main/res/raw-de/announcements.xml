@@ -2,6 +2,29 @@
 <!--Credit to Gabriele Mariotti for the ChangeLog Library:-->
 <!--https://github.com/gabrielemariotti/changeloglib-->
 <changelog bulletedList="false">
+    <changelogversion versionName="10. Aug. 2024" changeDate="">
+        <changelogtext>[b]Dies ist das letzte Update für World Scribe für Android.[/b] Schweren Herzens geben
+            wir bekannt, dass die weitere Entwicklung der offiziellen World Scribe Android-App nach diesem Update
+            eingestellt wird. World Scribe begann als einfaches Hobbyprojekt im Jahr 2016.
+            Damals beschlossen wir, dass die App einfache Textdateien im externen Speicher verwenden sollte, damit
+            die Weltdaten leicht auf ein anderes Gerät kopiert oder sogar in anderen Apps bearbeitet werden können.
+            Die jüngsten Änderungen in Android 13 haben jedoch den Zugriff auf externen Speicher stark eingeschränkt.
+            Infolgedessen ist die Kernfunktionalität von World Scribe nicht mehr kompatibel mit Android.
+            Damit die App mit Android 13+ funktioniert, müsste die App neu geschrieben werden, und für ein kostenloses Projekt,
+            das wir in unserer Freizeit entwickelt haben, ist dies etwas, das wir aufgrund anderer Lebensverpflichtungen
+            zur Zeit nicht verfolgen können. Aber das bedeutet nicht, dass World Scribe komplett verschwindet!
+            Wir haben auch [b][a href="https://worldscribe2.averistudios.com/"]World Scribe 2[/a][/b] veröffentlicht,
+            einen Nachfolger von World Scribe, den Sie auf Ihrem Desktop-PC verwenden können. Wenn Sie ein älteres
+            Android-Gerät haben und dennoch die Android-App verwenden möchten, können Sie die APK-Installationsdateien
+            [b][a href="https://github.com/MarquisLP/World-Scribe/releases"]hier[/a][/b] herunterladen.
+            Wenn due ein Android-Entwickler bist, kannst du einen fork vom [b][a href="https://github.com/MarquisLP/World-Scribe"]Repository[/a][/b]
+            machen und eine eigene Version von World Scribe entwickeln. [b]Wenn Ihr Gerät auf Android 13 oder
+            höher ist und die App nicht mehr funktioniert, können Sie Ihre World-Daten wiederherstellen,
+            indem Sie nach einem "WorldScribe"-Ordner im Dateispeicher Ihres Geräts suchen.[/b] Wir danken euch
+            für eure Unterstützung in all den Jahren und hoffen, dass ihr auch weiterhin die Grenzen der
+            Vorstellungskraft durch den Bau von Welten durchbricht.
+        </changelogtext>
+    </changelogversion>
     <changelogversion versionName="23. Dez. 2020" changeDate="">
         <changelogtext>[b]Leistungsprobleme unter Android 10 und höher wurden behoben![/b] Ein großer Teil der App wurde neu geschrieben, um die Navigation
             schneller zu machen und das Einfrieren der App zu verhindern. Vielen Dank für Ihre Geduld beim Warten auf dieses Update. Da es sich um ein großes Update handelt,
